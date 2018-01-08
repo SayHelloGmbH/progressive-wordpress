@@ -1,0 +1,3 @@
+(function ($, theme) {
+
+})(jQuery, ThemeJSVars);
