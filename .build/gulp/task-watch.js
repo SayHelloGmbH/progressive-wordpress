@@ -10,9 +10,6 @@ module.exports = function (key, config, gulp, $, errorLog) {
         console.log('starting styles..');
         gulp.watch(mainConfig.styles.args.src, ['styles']);
 
-        console.log('starting fonts..');
-        gulp.watch(mainConfig.fonts.args.src, ['fonts']);
-
         for (let subtask of mainConfig.scripts.subtasks) {
             console.log(`starting scripts:${subtask}..`);
             gulp.watch(`${mainConfig.scripts.args.build}${subtask}/**/*.js`, [`scripts:${subtask}`]);

@@ -1,10 +1,10 @@
 <?php
 
-namespace nicomartin;
+namespace nicomartin\ProgressiveWordPress;
 
 /**
  * Class Settings
- * @package nicomartin\AdvancedWPPerformance
+ * @package nicomartin\ProgressiveWordPress
  */
 
 class Settings {
