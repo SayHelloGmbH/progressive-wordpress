@@ -51,12 +51,16 @@ class Init {
 		// translators: Thank you for using plugin_name
 		echo '<p><b>' . sprintf( __( 'Thank you for using %s!', 'pwp' ), pwp_get_instance()->name ) . '</b></p>';
 		echo '<p>';
-		// translators: This Plugin was developed by Nico Martin to deliver the best pagespeed performance possible.
-		echo sprintf( __( 'This Plugin was developed by %s to deliver the best pagespeed performance possible.', 'pwp' ), '<a href="https://niomartin.ch" target="_blank">Nico Martin</a> - <a href="https://sayhello.ch" target="_blank">Say Hello GmbH</a>' );
-		echo '<br>' . __( 'In contrst to other performance Plugins, this one sets focus on HTTP/2 Standards (like Server Push and SPDY).', 'pwp' );
+		// translators: Why it was developed.
+		echo sprintf( __( 'This Plugin was developed by %s to turn your WordPress website into a progressive web application.', 'pwp' ), '<a href="https://niomartin.ch" target="_blank">Nico Martin</a> - <a href="https://sayhello.ch" target="_blank">Say Hello GmbH</a>' );
+		echo '</p><p>';
+		// translators: feature 1
+		echo __( 'You are able to create a web-app-manifest, which makes your website installable.', 'pwp' );
+		// translators: feature 2
+		echo '<br>' . __( 'It also enables offline usage and in the future you will even be able to send push notifications!', 'pwp' );
 		echo '</p>';
 		$buyabeer = '<a href="https://www.paypal.me/NicoMartin" target="_blank">' . __( 'buy me a beer', 'pwp' ) . '</a>';
-		$github   = '<a href="https://github.com/nico-martin/Advanced-WPPerformance" target="_blank">GitHub</a>';
+		$github   = '<a href="https://github.com/nico-martin/progressive-wordpress" target="_blank">GitHub</a>';
 		// translators: If you like this Plugin feel free to buy me a beer or get involved in the development on GitHub
 		echo '<p>' . sprintf( __( 'If you like this Plugin feel free to %1$s or get involved with the development on %2$s', 'pwp' ), $buyabeer, $github ) . '</p>';
 		echo '</div>';

@@ -16,3 +16,7 @@ function pwp_exit_ajax( $type, $msg = '', $add = [] ) {
 function pwp_get_setting( $key ) {
 	return pwp_settings()->get_setting( $key );
 }
+
+function pwp_settings_page_manifest() {
+	return pwp_settings()->add_page( 'manifest', __( 'Manifest', 'pwp' ) );
+}

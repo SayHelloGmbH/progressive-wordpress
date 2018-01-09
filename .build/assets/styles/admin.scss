@@ -2,5 +2,13 @@
 @import "compass/css3";
 @import "../../../assets/settings.json";
 
+$default-box-shadow-color: rgba(#000, 0.05);
+$default-box-shadow-h-offset: 0px;
+$default-box-shadow-v-offset: 1px;
+$default-box-shadow-blur: 1px;
+
+$default-transition-duration: $settings_easing_speed + 0ms;
+
+@import "admin/pwp-text";
 @import "admin/settings-wrap";
 @import "admin/pwp-wrap";

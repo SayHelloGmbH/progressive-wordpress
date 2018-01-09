@@ -5,7 +5,7 @@ Plugin Name: Progressive WordPress
 Plugin URI: https://github.com/nico-martin/progressive-wordpress
 Description: This plugin adds progressive features to your WordPress site and turns it into a Progressive Web App.
 Author: Nico Martin
-Version: 0.0.2
+Version: 0.0.3
 Author URI: https://nicomartin.ch
 Text Domain: pwp
 Domain Path: /languages
@@ -65,4 +65,20 @@ if ( version_compare( $wp_version, '4.7', '<' ) || version_compare( PHP_VERSION,
 
 	pwp_settings()->set_parent_page( PWP_SETTINGS_PARENT );
 	//pwp_settings()->set_debug( true );
+
+	/**
+	 * Serviceworker
+	 */
+
+	require_once 'Classes/class-serviceworker.php';
+	pwp_get_instance()->Serviceworker = new nicomartin\ProgressiveWordPress\Serviceworker();
+	pwp_get_instance()->Serviceworker->run();
+
+	/**
+	 * Manifest
+	 */
+
+	require_once 'Classes/class-manifest.php';
+	pwp_get_instance()->Manifest = new nicomartin\ProgressiveWordPress\Manifest();
+	pwp_get_instance()->Manifest->run();
 } // End if().

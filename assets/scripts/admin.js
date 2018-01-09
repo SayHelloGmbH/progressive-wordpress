@@ -67,8 +67,75 @@
 /* 0 */
 /***/ (function(module, exports, __webpack_require__) {
 
+__webpack_require__(1);
+module.exports = __webpack_require__(2);
+
+
+/***/ }),
+/* 1 */
+/***/ (function(module, exports, __webpack_require__) {
+
 "use strict";
 
+
+/***/ }),
+/* 2 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+(function ($, theme, wp) {
+	$(function () {
+
+		var $container = $('.pwp-wrap');
+		var $fileuploader = $container.find('.settings--fileuploader');
+
+		$fileuploader.each(function () {
+
+			var $e = $(this);
+			var $input = $e.find('input[type=hidden]');
+			var $upload = $e.find('.select-file');
+			var $delete = $e.find('.delete-file');
+			var $preview = $e.find('.fileuploader__preview');
+			var frame = void 0;
+
+			$delete.on('click', function () {
+				$e.attr('data-fileid', 0);
+				$preview.html('');
+				$input.val(0);
+			});
+
+			$upload.on('click', function () {
+				frame = wp.media({
+					title: 'Select or Upload a file',
+					button: {
+						text: 'Select file'
+					},
+					multiple: false // Set to true to allow multiple files to be selected
+				});
+
+				frame.on('select', function () {
+
+					var attachment = frame.state().get('selection').first().toJSON();
+					var preview = '';
+
+					if (attachment.type === 'image') {
+						preview = '<img src=\'' + attachment.sizes.thumbnail.url + '\' />';
+					} else {
+						preview = '<a target="_blank" href="' + attachment.url + '">' + attachment.title + '</a> (' + attachment.mime + ')';
+					}
+
+					$e.attr('data-fileid', attachment.id);
+					$preview.html(preview);
+					$input.val(attachment.id);
+				});
+
+				frame.open();
+			});
+		});
+	});
+})(jQuery, PwpJsVars, wp);
 
 /***/ })
 /******/ ]);

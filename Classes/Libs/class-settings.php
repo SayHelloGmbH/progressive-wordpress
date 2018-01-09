@@ -19,6 +19,7 @@ class Settings {
 	public $init_action = '';
 	public $sanitize_filter = '';
 	public $sanitize_action = '';
+	public $aftersave_action = '';
 
 	private $pages = '';
 	private $sections = '';
@@ -36,13 +37,14 @@ class Settings {
 
 	private function __construct( $key ) {
 
-		$this->parent_page     = 'options-general.php';
-		$this->prefix          = $key;
-		$this->capability      = 'administrator';
-		$this->option_key      = "{$key}-settings";
-		$this->init_action     = "{$key}_settings";
-		$this->sanitize_action = "{$key}_on_sanitize"; // {sanitize_on_action}_{field_key}
-		$this->sanitize_filter = "{$key}_sanitize"; // {sanitize_filter}_{field_key}
+		$this->parent_page      = 'options-general.php';
+		$this->prefix           = $key;
+		$this->capability       = 'administrator';
+		$this->option_key       = "{$key}-settings";
+		$this->init_action      = "{$key}_settings";
+		$this->sanitize_action  = "{$key}_on_sanitize"; // {sanitize_on_action}_{field_key}
+		$this->sanitize_filter  = "{$key}_sanitize"; // {sanitize_filter}_{field_key}
+		$this->aftersave_action = "{$key}_after_save";
 
 		$this->pages    = [];
 		$this->sections = [];
@@ -51,7 +53,6 @@ class Settings {
 		add_action( 'init', [ $this, 'settings_init_hook' ] );
 		add_action( 'admin_menu', [ $this, 'register_pages' ] );
 		add_action( 'admin_init', [ $this, 'register_settings' ] );
-
 	}
 
 	public function settings_init_hook() {
@@ -166,9 +167,34 @@ class Settings {
 			case 'message':
 				$return .= $val;
 				break;
+			case 'file':
+				$file_id = $val;
+				if ( 'attachment' != get_post_type( intval( $file_id ) ) ) {
+					$file_id = 0;
+				}
+
+				if ( 0 == $file_id ) {
+					$preview = '';
+				} elseif ( wp_attachment_is_image( $file_id ) ) {
+					$preview = wp_get_attachment_image( $file_id );
+				} else {
+					$file    = get_post( $file_id );
+					$preview = '<a target="_blank" href="' . wp_get_attachment_url( $file_id ) . '">' . get_the_title( $file_id ) . "</a> ({$file->post_mime_type})";
+				}
+
+				wp_enqueue_media();
+				$return .= "<div class='settings--fileuploader' data-fileid='{$file_id}'>";
+				$return .= '<div class="fileuploader__preview">' . $preview . '</div>';
+				$return .= '<p class="fileuploader__controls">';
+				$return .= '<a class="button button-primary select-file">Upload</a>';
+				$return .= '<a class="button button-delete delete-file">Delete</a>';
+				$return .= '</p>';
+				$return .= sprintf( '<input type="hidden" name="%1$s[%2$s]" id="%2$s" value="%3$s" />', $this->option_key, $key, $val );
+				$return .= '</div>';
+				break;
 			default:
 				$return .= sprintf( '<input type="text" name="%1$s[%2$s]" id="%2$s" value="%3$s" />', $this->option_key, $key, $val );
-		}
+		} // End switch().
 
 		return $return;
 	}
@@ -355,6 +381,27 @@ class Settings {
 			'name'    => $name,
 			'type'    => 'message',
 			'default' => $message,
+			'args'    => $args,
+		];
+
+		return $key;
+	}
+
+	public function add_file( $section, $key, $name, $default = '', $args = [] ) {
+		if ( ! isset( $this->sections[ $section ] ) ) {
+			return false;
+		}
+
+		if ( 'attachment' != get_post_type( intval( $default ) ) ) {
+			$default = 0;
+		}
+
+		$this->settings[ $key ] = [
+			'page'    => $this->sections[ $section ]['page'],
+			'section' => $section,
+			'name'    => $name,
+			'type'    => 'file',
+			'default' => $default,
 			'args'    => $args,
 		];
 

@@ -15,7 +15,8 @@ $padding: 15px;
 		border-bottom: 1px solid #e5e5e5;
 	}
 
-	&.settings-sections {}
+	&.settings-sections {
+	}
 
 	.form-table {
 		td {
@@ -25,11 +26,32 @@ $padding: 15px;
 			width: 150px;
 		}
 		textarea,
-		input[type=text]{
+		input[type=text] {
 			width: 100%;
 		}
 		textarea {
 			min-height: 100px;
+		}
+	}
+
+	.settings--fileuploader {
+		.fileuploader__controls {
+			margin-top: 1rem !important;
+			.delete-file {
+				margin-left: 1em;
+			}
+		}
+
+		.delete-file {
+			display: inline-block;
+		}
+		&[data-fileid='0'] {
+			.fileuploader__controls {
+				margin-top: 0rem !important;
+			}
+			.delete-file {
+				display: none;
+			}
 		}
 	}
 }
