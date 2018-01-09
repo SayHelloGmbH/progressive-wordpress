@@ -24,6 +24,9 @@ class Manifest {
 
 		$section = pwp_settings()->add_section( pwp_settings_page_manifest(), 'pwp_manifest', __( 'Manifest.json values', 'pwp' ) );
 
+		pwp_settings()->add_checkbox( $section, 'manifest-enabled', __( 'Manifest enabled', 'pwp' ), true, [
+			'after_field' => '<p class="pwp-smaller">' . __( 'Adds the manifest to the wp_head.', 'pwp' ) . '</p>',
+		] );
 		pwp_settings()->add_input( $section, 'manifest-name', __( 'Name', 'pwp' ) );
 		pwp_settings()->add_input( $section, 'manifest-short-name', __( 'Short Name', 'pwp' ), '', [
 			'after_field' => '<p class="pwp-smaller">' . __( 'max. 12 Chars', 'pwp' ) . '</p>',
@@ -80,10 +83,13 @@ class Manifest {
 
 		$content = json_encode( $manifest, JSON_UNESCAPED_SLASHES );
 		file_put_contents( $this->manifest_path, $content );
-		pwp_get_instance()->Serviceworker->regenerate();
 	}
 
 	public function add_to_header() {
+		if ( ! pwp_get_setting( 'manifest-enabled' ) ) {
+			return;
+		}
+
 		echo '<link rel="manifest" href="' . $this->manifest_url . '">';
 	}
 }
