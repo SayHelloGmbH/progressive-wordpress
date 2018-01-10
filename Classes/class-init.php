@@ -31,8 +31,8 @@ class Init {
 	 */
 	public function add_menu_page() {
 		$icon = plugin_dir_url( pwp_get_instance()->file ) . '/assets/img/pwa-menu-icon.png';
-		add_menu_page( pwp_get_instance()->name, $this->menu_title, $this->capability, PWP_SETTINGS_PARENT, [ $this, 'basics_menu_page' ], $icon, 100 );
-		//add_submenu_page( PWP_SETTINGS_PARENT, __( 'Basics', 'pwp' ), __( 'Basics', 'pwp' ), $this->capability, PWP_SETTINGS_PARENT, [ $this, 'basics_menu_page' ] );
+		add_menu_page( pwp_get_instance()->name, $this->menu_title, $this->capability, PWP_SETTINGS_PARENT, '', $icon, 100 );
+		add_submenu_page( PWP_SETTINGS_PARENT, __( 'About', 'pwp' ), __( 'About', 'pwp' ), $this->capability, PWP_SETTINGS_PARENT, [ $this, 'basics_menu_page' ] );
 	}
 
 	public function basics_menu_page() {
@@ -59,6 +59,8 @@ class Init {
 		// translators: feature 2
 		echo '<br>' . __( 'It also enables offline usage and in the future you will even be able to send push notifications!', 'pwp' );
 		echo '</p>';
+		$sw_link = 'https://caniuse.com/#feat=serviceworkers';
+		echo '<p><b>' . __( 'To deliver those app-like features this plugin uses a serviceworker.js. This technology is not yet supported on all browsers!', 'pwp' ) . '</b><br><a href="' . $sw_link . '" target="_blank">' . $sw_link . '</a></p>';
 		$buyabeer = '<a href="https://www.paypal.me/NicoMartin" target="_blank">' . __( 'buy me a beer', 'pwp' ) . '</a>';
 		$github   = '<a href="https://github.com/nico-martin/progressive-wordpress" target="_blank">GitHub</a>';
 		// translators: If you like this Plugin feel free to buy me a beer or get involved in the development on GitHub

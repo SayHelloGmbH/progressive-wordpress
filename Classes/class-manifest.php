@@ -22,7 +22,9 @@ class Manifest {
 
 	public function register_settings() {
 
-		$section = pwp_settings()->add_section( pwp_settings_page_manifest(), 'pwp_manifest', __( 'Manifest.json values', 'pwp' ) );
+		$section_desc = '<b>' . __( 'Make your website installable!', 'pwp' ) . '</b><br>';
+		$section_desc .= __( 'This values are used to create a manifest.json which provides the data to make your website installable.', 'pwp' );
+		$section      = pwp_settings()->add_section( pwp_settings_page_manifest(), 'pwp_manifest', __( 'Manifest.json values', 'pwp' ), $section_desc );
 
 		pwp_settings()->add_checkbox( $section, 'manifest-enabled', __( 'Manifest enabled', 'pwp' ), true, [
 			'after_field' => '<p class="pwp-smaller">' . __( 'Adds the manifest to the wp_head.', 'pwp' ) . '</p>',
