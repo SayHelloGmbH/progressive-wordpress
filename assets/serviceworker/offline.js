@@ -1,8 +1,5 @@
 const offlinePage = '{{offline_page}}';
-const staticCachePages = [
-	'/',
-	'/' + offlinePage
-];
+const staticCachePages = {{cached_pages}};
 const key = 'ProgressiveWordPress';
 const staticCacheName = `${key}-Static-${version}`;
 

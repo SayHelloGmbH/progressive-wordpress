@@ -24,6 +24,8 @@ class Manifest {
 
 		$section_desc = '<b>' . __( 'Make your website installable!', 'pwp' ) . '</b><br>';
 		$section_desc .= __( 'This values are used to create a manifest.json which provides the data to make your website installable.', 'pwp' );
+		$url          = 'https://developer.mozilla.org/de/docs/Web/Manifest';
+		$section_desc .= '<br>' . __( 'Read all about the web app manifest:.', 'pwp' ) . ' <a target="_blank" href="' . $url . '">' . $url . '</a>';
 		$section      = pwp_settings()->add_section( pwp_settings_page_manifest(), 'pwp_manifest', __( 'Manifest.json values', 'pwp' ), $section_desc );
 
 		pwp_settings()->add_checkbox( $section, 'manifest-enabled', __( 'Manifest enabled', 'pwp' ), true, [
@@ -41,10 +43,9 @@ class Manifest {
 			'fullscreen' => 'Fullscreen',
 			'standalone' => 'Standalone',
 			'minimal-ui' => 'Minimal',
-			'browser'    => 'Browser',
 		];
 		$link    = 'https://developer.mozilla.org/de/docs/Web/Manifest#display';
-		pwp_settings()->add_select( $section, 'manifest-display', __( 'Display mode', 'pwp' ), $choices, 'browser', [
+		pwp_settings()->add_select( $section, 'manifest-display', __( 'Display mode', 'pwp' ), $choices, 'standalone', [
 			'after_field' => '<p class="pwp-smaller">' . __( 'possible display modes', 'pwp' ) . ": <a href='$link' target='_blank'>$link</a></p>",
 		] );
 
@@ -76,7 +77,7 @@ class Manifest {
 			$mime = get_post_mime_type( $data['manifest-icon'] );
 			foreach ( $sizes as $size ) {
 				$manifest['icons'][] = [
-					'src'   => str_replace( get_home_url(), '', pwp_get_instance()->image_resize( $data['manifest-icon'], $size, $size, true )['url'] ),
+					'src'   => pwp_register_url( pwp_get_instance()->image_resize( $data['manifest-icon'], $size, $size, true )['url'] ),
 					'type'  => $mime,
 					'sizes' => "{$size}x{$size}",
 				];
@@ -92,6 +93,7 @@ class Manifest {
 			return;
 		}
 
-		echo '<link rel="manifest" href="' . $this->manifest_url . '">';
+		$url = untrailingslashit( get_home_url() ) . $this->manifest_url;
+		echo '<link rel="manifest" href="' . pwp_register_url( $url ) . '">';
 	}
 }

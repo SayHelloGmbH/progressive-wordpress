@@ -37,11 +37,13 @@ class Serviceworker {
 	}
 
 	public function add_to_header() {
+
+		$url = untrailingslashit( get_home_url() ) . $this->sw_url;
 		?>
 		<script id="serviceworker">
 			if ('serviceWorker' in navigator) {
 				window.addEventListener('load', function () {
-					navigator.serviceWorker.register('<?php echo $this->sw_url; ?>');
+					navigator.serviceWorker.register('<?php echo pwp_register_url( $url ); ?>');
 				});
 			}
 		</script>
@@ -58,11 +60,23 @@ class Serviceworker {
 
 		$offline_enabled = pwp_get_setting( 'offline-enabled' );
 		$offline_page_id = intval( pwp_get_setting( 'offline-page' ) );
-		$offline_link    = str_replace( trailingslashit( get_home_url() ), '', get_permalink( $offline_page_id ) );
+		$offline_url     = pwp_register_url( get_permalink( $offline_page_id ) );
+		$home_url        = pwp_register_url( trailingslashit( get_home_url() ) );
+
+		$cache_pages   = [];
+		$cache_pages[] = $home_url;
+		$cache_pages[] = $offline_url;
+		$cache_pages   = apply_filters( 'pwp_cache_pages', $cache_pages );
+
+		$cache_pages_quoted = [];
+		foreach ( $cache_pages as $url ) {
+			$cache_pages_quoted[] = "'$url'";
+		}
 
 		$sw_data = [
 			'offline'      => $offline_enabled,
-			'offline_page' => $offline_link,
+			'offline_page' => str_replace( trailingslashit( get_home_url() ), '', get_permalink( $offline_page_id ) ),
+			'cached_pages' => '[' . implode( ',', $cache_pages_quoted ) . ']',
 		];
 
 		if ( get_option( $sw_option ) == $sw_data ) {
