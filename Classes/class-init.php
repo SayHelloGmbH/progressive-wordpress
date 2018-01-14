@@ -19,7 +19,7 @@ class Init {
 		add_action( 'pwp_basics_section', [ $this, 'intro_text' ], 1 );
 
 		// Assets
-		//add_action( 'wp_enqueue_scripts', [ $this, 'add_assets' ] );
+		add_action( 'wp_enqueue_scripts', [ $this, 'add_assets' ] );
 		add_action( 'admin_enqueue_scripts', [ $this, 'add_admin_assets' ] );
 
 		// Helper

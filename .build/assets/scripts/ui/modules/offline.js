@@ -1,110 +1,13 @@
-/******/ (function(modules) { // webpackBootstrap
-/******/ 	// The module cache
-/******/ 	var installedModules = {};
-/******/
-/******/ 	// The require function
-/******/ 	function __webpack_require__(moduleId) {
-/******/
-/******/ 		// Check if module is in cache
-/******/ 		if(installedModules[moduleId]) {
-/******/ 			return installedModules[moduleId].exports;
-/******/ 		}
-/******/ 		// Create a new module (and put it into the cache)
-/******/ 		var module = installedModules[moduleId] = {
-/******/ 			i: moduleId,
-/******/ 			l: false,
-/******/ 			exports: {}
-/******/ 		};
-/******/
-/******/ 		// Execute the module function
-/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
-/******/
-/******/ 		// Flag the module as loaded
-/******/ 		module.l = true;
-/******/
-/******/ 		// Return the exports of the module
-/******/ 		return module.exports;
-/******/ 	}
-/******/
-/******/
-/******/ 	// expose the modules object (__webpack_modules__)
-/******/ 	__webpack_require__.m = modules;
-/******/
-/******/ 	// expose the module cache
-/******/ 	__webpack_require__.c = installedModules;
-/******/
-/******/ 	// define getter function for harmony exports
-/******/ 	__webpack_require__.d = function(exports, name, getter) {
-/******/ 		if(!__webpack_require__.o(exports, name)) {
-/******/ 			Object.defineProperty(exports, name, {
-/******/ 				configurable: false,
-/******/ 				enumerable: true,
-/******/ 				get: getter
-/******/ 			});
-/******/ 		}
-/******/ 	};
-/******/
-/******/ 	// getDefaultExport function for compatibility with non-harmony modules
-/******/ 	__webpack_require__.n = function(module) {
-/******/ 		var getter = module && module.__esModule ?
-/******/ 			function getDefault() { return module['default']; } :
-/******/ 			function getModuleExports() { return module; };
-/******/ 		__webpack_require__.d(getter, 'a', getter);
-/******/ 		return getter;
-/******/ 	};
-/******/
-/******/ 	// Object.prototype.hasOwnProperty.call
-/******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
-/******/
-/******/ 	// __webpack_public_path__
-/******/ 	__webpack_require__.p = "";
-/******/
-/******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 0);
-/******/ })
-/************************************************************************/
-/******/ ([
-/* 0 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-__webpack_require__(1);
-
-(function ($) {
-
-	var offlineClass = 'pwp-offline';
-	var Offline = window.Offline;
-
-	Offline.on('up', function () {
-		$('body').removeClass(offlineClass);
-	});
-
-	Offline.on('down', function () {
-		$('body').addClass(offlineClass);
-	});
-})(jQuery);
-
-/***/ }),
-/* 1 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-
 (function () {
 	var Offline, checkXHR, defaultOptions, extendNative, grab, handlers, init;
 
-	extendNative = function extendNative(to, from) {
+	extendNative = function (to, from) {
 		var e, key, results, val;
 		results = [];
 		for (key in from.prototype) {
 			try {
 				val = from.prototype[key];
-				if (to[key] == null && typeof val !== 'function') {
+				if ((to[key] == null) && typeof val !== 'function') {
 					results.push(to[key] = val);
 				} else {
 					results.push(void 0);
@@ -123,15 +26,15 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 	defaultOptions = {
 		checks: {
 			xhr: {
-				url: function url() {
-					return "/favicon.ico?_=" + new Date().getTime();
+				url: function () {
+					return "/favicon.ico?_=" + ((new Date()).getTime());
 				},
 				timeout: 5000,
 				type: 'HEAD'
 			},
 			image: {
-				url: function url() {
-					return "/favicon.ico?_=" + new Date().getTime();
+				url: function () {
+					return "/favicon.ico?_=" + ((new Date()).getTime());
 				}
 			},
 			active: 'xhr'
@@ -142,14 +45,14 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 		deDupBody: false
 	};
 
-	grab = function grab(obj, key) {
+	grab = function (obj, key) {
 		var cur, i, j, len, part, parts;
 		cur = obj;
 		parts = key.split('.');
 		for (i = j = 0, len = parts.length; j < len; i = ++j) {
 			part = parts[i];
 			cur = cur[part];
-			if ((typeof cur === 'undefined' ? 'undefined' : _typeof(cur)) !== 'object') {
+			if (typeof cur !== 'object') {
 				break;
 			}
 		}
@@ -257,9 +160,9 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 		}
 	};
 
-	checkXHR = function checkXHR(xhr, onUp, onDown) {
+	checkXHR = function (xhr, onUp, onDown) {
 		var _onerror, _onload, _onreadystatechange, _ontimeout, checkStatus;
-		checkStatus = function checkStatus() {
+		checkStatus = function () {
 			if (xhr.status && xhr.status < 12000) {
 				return onUp();
 			} else {
@@ -299,7 +202,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
 	Offline.checks.xhr = function () {
 		var e, xhr;
-		xhr = new XMLHttpRequest();
+		xhr = new XMLHttpRequest;
 		xhr.offline = false;
 		xhr.open(Offline.getOption('checks.xhr.type'), Offline.getOption('checks.xhr.url'), true);
 		if (xhr.timeout != null) {
@@ -337,7 +240,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
 	Offline.onXHR = function (cb) {
 		var _XDomainRequest, _XMLHttpRequest, monitorXHR;
-		monitorXHR = function monitorXHR(req, flags) {
+		monitorXHR = function (req, flags) {
 			var _open;
 			_open = req.open;
 			return req.open = function (type, url, async, user, password) {
@@ -376,7 +279,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 			_XDomainRequest = window.XDomainRequest;
 			window.XDomainRequest = function () {
 				var req;
-				req = new _XDomainRequest();
+				req = new _XDomainRequest;
 				monitorXHR(req);
 				return req;
 			};
@@ -384,7 +287,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 		}
 	};
 
-	init = function init() {
+	init = function () {
 		if (Offline.getOption('interceptRequests')) {
 			Offline.onXHR(function (arg) {
 				var xhr;
@@ -402,7 +305,5 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 	setTimeout(init, 0);
 
 	window.Offline = Offline;
-}).call(undefined);
 
-/***/ })
-/******/ ]);
+}).call(this);
