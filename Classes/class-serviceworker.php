@@ -42,9 +42,9 @@ class Serviceworker {
 		?>
 		<script id="serviceworker">
 			if (!'serviceWorker' in navigator) {
-				console.log('<?php echo addslashes( __( 'Your browser does not support Progressive Web Apps', 'pwp' ) ); ?> [Progressive WordPress]');
+				console.log('[Progressive WordPress] <?php echo addslashes( __( 'Your browser does not support Progressive Web Apps', 'pwp' ) ); ?>');
 			} else if (location.protocol !== 'https:') {
-				console.log('<?php echo addslashes( __( 'Your site needs to be served via HTTPS to use Progressive Web Apps', 'pwp' ) ); ?> [Progressive WordPress]');
+				console.log('[Progressive WordPress] <?php echo addslashes( __( 'Your site needs to be served via HTTPS to use Progressive Web Apps', 'pwp' ) ); ?>');
 			} else {
 				window.addEventListener('load', function () {
 					navigator.serviceWorker.register('<?php echo pwp_register_url( $url ); ?>');
