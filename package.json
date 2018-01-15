@@ -1,7 +1,7 @@
 {
   "name": "progressive-wordpress",
   "version": "0.0.1",
-  "description": "This plugin adds several performance improvements to your WordPress site. In contrst to other performance Plugins, this one sets focus on HTTP\\2 Standards (like Server Push and SPDY).\r ### minify assets\r This plugin minifies all CSS and JS Files and caches them. It will **not** merge them into on file. This way you are still able to use conditional assets and if you are using HTTP/2, which I highly recommend, it's not necessary to do so.",
+  "description": "This plugin adds progressive features to your WordPress site and turns it into a Progressive Web App.",
   "main": "gulpfile.babel.js",
   "repository": {
     "type": "git",
