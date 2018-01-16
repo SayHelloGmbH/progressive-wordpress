@@ -1,7 +1,7 @@
 # Progressive WordPress
 
 ## Description
-This plugin adds Progressive Web App features to your WordPress site and turns it into a PWA.
+This plugin adds progressive web app features to your WordPress site.
 
 ### Web App Manifest
 Create a web app manifest using the WordPress backend. **No coding skills required!**
