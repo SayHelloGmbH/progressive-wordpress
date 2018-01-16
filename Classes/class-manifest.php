@@ -23,7 +23,7 @@ class Manifest {
 	public function register_settings() {
 
 		$section_desc = '<b>' . __( 'Make your website installable!', 'pwp' ) . '</b><br>';
-		$section_desc .= __( 'This values are used to create a manifest.json which provides the data to make your website installable.', 'pwp' );
+		$section_desc .= __( 'This values are used to create a manifest.json file, which provides the data to make your website installable.', 'pwp' );
 		$url          = 'https://developer.mozilla.org/de/docs/Web/Manifest';
 		$section_desc .= '<br>' . __( 'Read all about the web app manifest:.', 'pwp' ) . ' <a target="_blank" href="' . $url . '">' . $url . '</a>';
 		$section      = pwp_settings()->add_section( pwp_settings_page_manifest(), 'pwp_manifest', __( 'Manifest.json values', 'pwp' ), $section_desc );

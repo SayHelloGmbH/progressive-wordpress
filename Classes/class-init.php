@@ -52,7 +52,7 @@ class Init {
 		echo '<p><b>' . sprintf( __( 'Thank you for using %s!', 'pwp' ), pwp_get_instance()->name ) . '</b></p>';
 		echo '<p>';
 		// translators: Why it was developed.
-		echo sprintf( __( 'This Plugin was developed by %s to turn your WordPress website into a progressive web application.', 'pwp' ), '<a href="https://niomartin.ch" target="_blank">Nico Martin</a> - <a href="https://sayhello.ch" target="_blank">Say Hello GmbH</a>' );
+		echo sprintf( __( 'This plugin was developed by %s to use progressive web app features for your WordPress wesbsite.', 'pwp' ), '<a href="https://nicomartin.ch" target="_blank">Nico Martin</a>' );
 		echo '</p><p>';
 		// translators: feature 1
 		echo __( 'You are able to create a web-app-manifest, which makes your website installable.', 'pwp' );
@@ -60,11 +60,11 @@ class Init {
 		echo '<br>' . __( 'It also enables offline usage and in the future you will even be able to send push notifications!', 'pwp' );
 		echo '</p>';
 		$sw_link = 'https://caniuse.com/#feat=serviceworkers';
-		echo '<p><b>' . __( 'To deliver those app-like features this plugin uses a serviceworker.js. This technology is not yet supported on all browsers!', 'pwp' ) . '</b><br><a href="' . $sw_link . '" target="_blank">' . $sw_link . '</a></p>';
+		echo '<p><b>' . __( 'To deliver app-like features this plugin uses a serviceworker.js file. This technology is not yet supported in all browsers!', 'pwp' ) . '</b><br><a href="' . $sw_link . '" target="_blank">' . $sw_link . '</a></p>';
 		$buyabeer = '<a href="https://www.paypal.me/NicoMartin" target="_blank">' . __( 'buy me a beer', 'pwp' ) . '</a>';
 		$github   = '<a href="https://github.com/nico-martin/progressive-wordpress" target="_blank">GitHub</a>';
-		// translators: If you like this Plugin feel free to buy me a beer or get involved in the development on GitHub
-		echo '<p>' . sprintf( __( 'If you like this Plugin feel free to %1$s or get involved with the development on %2$s', 'pwp' ), $buyabeer, $github ) . '</p>';
+		// translators: If you like this plugin feel free to buy me a beer or get involved in the development on GitHub
+		echo '<p>' . sprintf( __( 'If you like this plugin feel free to %1$s or get involved with the development on %2$s', 'pwp' ), $buyabeer, $github ) . '</p>';
 		echo '</div>';
 	}
 
