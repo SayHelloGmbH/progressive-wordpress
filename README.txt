@@ -11,7 +11,7 @@ License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
 == Description ==
 
-This plugin adds Progressive Web App features to your WordPress site and turns it into a PWA.
+This plugin adds progressive web app features to your WordPress site.
 
 **This plugin is currently in an open beta phase. I'd love to get some feedback from the community! [nico@sayhello.ch](mailto:nico@sayhello.ch)**
 
