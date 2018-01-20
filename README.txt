@@ -59,5 +59,10 @@ A development version of this plugin is hosted on GitHub. If you have any ideas 
 
 == Changelog ==
 
+= 0.1.1 =
+* Grammatical changes by [Mark Howells-Mead](https://profiles.wordpress.org/markhowellsmead/)
+* "installable" is now optional
+* Manifest Icon has to be png and min. 144x144px.
+
 = 0.1.0 =
 * Initial version
