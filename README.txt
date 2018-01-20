@@ -3,8 +3,8 @@ Contributors: nico_martin
 Donate link: https://www.paypal.me/NicoMartin
 Tags: PWA, Progressive Web App, Progressive Web Application, progressive, installable, offline, offline usage, push notifications, manifest, web app manifest, serviceworker
 Requires at least: 4.7
-Tested up to: 4.9.1
-Stable tag: 0.1.0
+Tested up to: 4.9.2
+Stable tag: 0.1.1
 Requires PHP: 5.4
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
