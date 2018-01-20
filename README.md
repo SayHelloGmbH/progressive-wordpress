@@ -18,6 +18,9 @@ A copy of each page is stored in the browser cache as the visitor views it. This
 Coming soon..
 
 ## Changelog
+### 0.1.1
+* Grammatical changes by [Mark Howells-Mead](https://profiles.wordpress.org/markhowellsmead/)
+* "installable" is now optional
 
 ### 0.1.0
 * Initial version from 2018

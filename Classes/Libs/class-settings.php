@@ -50,9 +50,17 @@ class Settings {
 		$this->sections = [];
 		$this->settings = [];
 
+		add_action( 'admin_init', [ $this, 'after_saved_hook' ] );
 		add_action( 'init', [ $this, 'settings_init_hook' ] );
 		add_action( 'admin_menu', [ $this, 'register_pages' ] );
 		add_action( 'admin_init', [ $this, 'register_settings' ] );
+	}
+
+	public function after_saved_hook() {
+		if ( get_option( "{$this->prefix}_sanitize_ongoing" ) == true ) {
+			do_action( $this->aftersave_action );
+		}
+		update_option( "{$this->prefix}_sanitize_ongoing", false );
 	}
 
 	public function settings_init_hook() {
@@ -121,6 +129,8 @@ class Settings {
 	}
 
 	public function sanitize( $input ) {
+
+		update_option( "{$this->prefix}_sanitize_ongoing", true );
 
 		do_action( "{$this->sanitize_action}", $input );
 		foreach ( $input as $key => $val ) {

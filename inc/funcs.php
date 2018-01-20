@@ -18,7 +18,7 @@ function pwp_get_setting( $key ) {
 }
 
 function pwp_settings_page_manifest() {
-	return pwp_settings()->add_page( 'manifest', __( 'Manifest', 'pwp' ) );
+	return pwp_settings()->add_page( 'manifest', __( 'Installable', 'pwp' ) );
 }
 
 function pwp_settings_page_offlineusage() {

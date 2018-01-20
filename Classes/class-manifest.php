@@ -14,7 +14,8 @@ class Manifest {
 
 	public function run() {
 		add_action( 'pwp_settings', [ $this, 'register_settings' ] );
-		add_action( 'pwp_on_sanitize', [ $this, 'save_manifest' ] );
+		add_action( 'pwp_settings', [ $this, 'register_settings' ] );
+		add_action( 'pwp_after_save', [ $this, 'save_manifest' ] );
 		if ( file_exists( $this->manifest_path ) ) {
 			add_action( 'wp_head', [ $this, 'add_to_header' ], 1 );
 		}
@@ -22,15 +23,12 @@ class Manifest {
 
 	public function register_settings() {
 
-		$section_desc = '<b>' . __( 'Make your website installable!', 'pwp' ) . '</b><br>';
-		$section_desc .= __( 'This values are used to create a manifest.json file, which provides the data to make your website installable.', 'pwp' );
+		//$section_desc = '<b>' . __( 'Make your website installable!', 'pwp' ) . '</b><br>';
+		$section_desc = __( 'This values are used to create a manifest.json file, which provides the data to make your website installable.', 'pwp' );
 		$url          = 'https://developer.mozilla.org/de/docs/Web/Manifest';
 		$section_desc .= '<br>' . __( 'Read all about the web app manifest:.', 'pwp' ) . ' <a target="_blank" href="' . $url . '">' . $url . '</a>';
 		$section      = pwp_settings()->add_section( pwp_settings_page_manifest(), 'pwp_manifest', __( 'Manifest.json values', 'pwp' ), $section_desc );
 
-		pwp_settings()->add_checkbox( $section, 'manifest-enabled', __( 'Manifest enabled', 'pwp' ), true, [
-			'after_field' => '<p class="pwp-smaller">' . __( 'Adds the manifest to the wp_head.', 'pwp' ) . '</p>',
-		] );
 		pwp_settings()->add_input( $section, 'manifest-name', __( 'Name', 'pwp' ) );
 		pwp_settings()->add_input( $section, 'manifest-short-name', __( 'Short Name', 'pwp' ), '', [
 			'after_field' => '<p class="pwp-smaller">' . __( 'max. 12 Chars', 'pwp' ) . '</p>',
@@ -56,40 +54,39 @@ class Manifest {
 		pwp_settings()->add_input( $section, 'manifest-background-color', __( 'Background Color', 'pwp' ), '', $args );
 	}
 
-	public function save_manifest( $data ) {
-		if ( ! array_key_exists( 'manifest-name', $data ) ) {
-			return;
-		}
+	public function save_manifest() {
 
 		$manifest                     = [];
-		$manifest['name']             = $data['manifest-name'];
-		$manifest['short_name']       = str_replace( ' ', '', $data['manifest-short-name'] );
+		$manifest['name']             = pwp_get_setting( 'manifest-name' );
+		$manifest['short_name']       = str_replace( ' ', '', pwp_get_setting( 'manifest-short-name' ) );
 		$manifest['start_url']        = './';
-		$manifest['description']      = $data['manifest-description'];
-		$manifest['theme_color']      = sanitize_hex_color( $data['manifest-theme-color'] );
-		$manifest['background_color'] = sanitize_hex_color( $data['manifest-background-color'] );
-		$manifest['display']          = $data['manifest-display'];
+		$manifest['description']      = pwp_get_setting( 'manifest-description' );
+		$manifest['theme_color']      = sanitize_hex_color( pwp_get_setting( 'manifest-theme-color' ) );
+		$manifest['background_color'] = sanitize_hex_color( pwp_get_setting( 'manifest-background-color' ) );
+		$manifest['display']          = pwp_get_setting( 'manifest-display' );
 		$manifest['lang']             = '';
 		$manifest['orientation']      = 'any';
 
 		$sizes = [ 128, 512 ];
-		if ( array_key_exists( 'manifest-icon', $data ) && wp_attachment_is_image( intval( $data['manifest-icon'] ) ) ) {
-			$mime = get_post_mime_type( $data['manifest-icon'] );
+		$icon  = pwp_get_setting( 'manifest-icon' );
+		if ( wp_attachment_is_image( intval( $icon ) ) ) {
+			$mime = get_post_mime_type( $icon );
 			foreach ( $sizes as $size ) {
 				$manifest['icons'][] = [
-					'src'   => pwp_register_url( pwp_get_instance()->image_resize( $data['manifest-icon'], $size, $size, true )['url'] ),
+					'src'   => pwp_register_url( pwp_get_instance()->image_resize( $icon, $size, $size, true )['url'] ),
 					'type'  => $mime,
 					'sizes' => "{$size}x{$size}",
 				];
 			}
 		}
 
-		$content = json_encode( $manifest, JSON_UNESCAPED_SLASHES );
+		$manifest = apply_filters( 'pwp_manifest_values', $manifest );
+		$content  = json_encode( $manifest, JSON_UNESCAPED_SLASHES );
 		file_put_contents( $this->manifest_path, $content );
 	}
 
 	public function add_to_header() {
-		if ( ! pwp_get_setting( 'manifest-enabled' ) ) {
+		if ( ! is_file( $this->manifest_path ) ) {
 			return;
 		}
 

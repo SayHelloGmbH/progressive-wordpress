@@ -25,7 +25,10 @@
 					button: {
 						text: 'Select file'
 					},
-					multiple: false  // Set to true to allow multiple files to be selected
+					multiple: false,
+					filters: {
+						type: 'jpg'
+					}
 				});
 
 				frame.on('select', function () {
