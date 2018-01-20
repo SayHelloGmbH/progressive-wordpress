@@ -20,6 +20,7 @@ Coming soon..
 ## Changelog
 
 ### 0.1.1
+* added offline indicator
 * Grammatical changes by [Mark Howells-Mead](https://profiles.wordpress.org/markhowellsmead/)
 * "installable" is now optional
 * Manifest Icon has to be png and min. 144x144px.
