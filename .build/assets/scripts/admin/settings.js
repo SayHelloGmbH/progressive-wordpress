@@ -11,6 +11,13 @@
 			const $upload = $e.find('.select-file');
 			const $delete = $e.find('.delete-file');
 			const $preview = $e.find('.fileuploader__preview');
+
+			const checkMime = $e.attr('data-mimes');
+			const checkMaxWidth = $e.attr('data-max-width');
+			const checkMinWidth = $e.attr('data-min-width');
+			const checkMaxHeight = $e.attr('data-max-height');
+			const checkMinHeight = $e.attr('data-min-height');
+
 			let frame;
 
 			$delete.on('click', function () {
@@ -34,6 +41,38 @@
 				frame.on('select', function () {
 
 					const attachment = frame.state().get('selection').first().toJSON();
+					console.log(attachment);
+					let errors = [];
+
+					if (checkMime !== '') {
+						const mimesArray = checkMime.split(', ');
+						const fileMime = attachment.subtype;
+						if ($.inArray(fileMime, mimesArray) === -1) {
+							errors.push("This file should be one of the following file types:\n" + checkMime);
+						}
+					}
+
+					if (checkMaxHeight !== '' && attachment.height > checkMaxHeight) {
+						errors.push(`Image can't be higher than ${checkMaxHeight}px.`);
+					}
+
+					if (checkMinHeight !== '' && attachment.height < checkMinHeight) {
+						errors.push(`Image should be at least ${checkMinHeight}px high.`);
+					}
+
+					if (checkMaxWidth !== '' && attachment.width > checkMaxWidth) {
+						errors.push(`Image can't be wider than ${checkMaxWidth}px.`);
+					}
+
+					if (checkMinWidth !== '' && attachment.width < checkMinWidth) {
+						errors.push(`Image should be at least ${checkMinHeight}px wide.`);
+					}
+
+					if (errors.length) {
+						alert(errors.join("\n\n"));
+						return;
+					}
+
 					let preview = '';
 
 					if (attachment.type === 'image') {

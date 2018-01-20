@@ -116,13 +116,13 @@ class Settings {
 					$choices = $values['choices'];
 				}
 
-				$args = shortcode_atts( [
+				$args = array_merge( [
 					'pre_field'   => '',
 					'after_field' => '',
 				], $values['args'] );
 
 				echo $args['pre_field'];
-				echo $this->do_field( $key, $values['type'], $choices );
+				echo $this->do_field( $key, $values['type'], $choices, $args );
 				echo $args['after_field'];
 			}, $values['page'], $values['section'], $args );
 		}
@@ -156,7 +156,7 @@ class Settings {
 	 * Helpers
 	 */
 
-	private function do_field( $key, $type, $choices = [] ) {
+	private function do_field( $key, $type, $choices = [], $args = [] ) {
 		$val    = $this->get_setting( $key );
 		$return = '';
 		switch ( $type ) {
@@ -193,7 +193,33 @@ class Settings {
 				}
 
 				wp_enqueue_media();
-				$return .= "<div class='settings--fileuploader' data-fileid='{$file_id}'>";
+				$data = [
+					'mimes'      => '',
+					'min-width'  => '',
+					'max-width'  => '',
+					'min-height' => '',
+					'max-height' => '',
+				];
+
+				if ( array_key_exists( 'mimes', $args ) ) {
+					$data['mimes'] = explode( ',', $args['mimes'] );
+					$data['mimes'] = array_map( 'sanitize_title', $data['mimes'] );
+					$data['mimes'] = esc_attr( implode( ', ', $data['mimes'] ) );
+				}
+
+				foreach ( [ 'min-width', 'max-width', 'min-height', 'max-height' ] as $size ) {
+					if ( array_key_exists( $size, $args ) ) {
+						$data[ $size ] = intval( $args[ $size ] );
+					}
+				}
+
+				$data_atts = [];
+				foreach ( $data as $d_key => $d_val ) {
+					$data_atts[] = "data-$d_key='$d_val'";
+				}
+				$data_atts = implode( ' ', $data_atts );
+
+				$return .= "<div class='settings--fileuploader' data-fileid='{$file_id}' $data_atts>";
 				$return .= '<div class="fileuploader__preview">' . $preview . '</div>';
 				$return .= '<p class="fileuploader__controls">';
 				$return .= '<a class="button button-primary select-file">Upload</a>';

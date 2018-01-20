@@ -35,7 +35,11 @@ class Manifest {
 		] );
 
 		pwp_settings()->add_textarea( $section, 'manifest-description', __( 'Description', 'pwp' ), '', [] );
-		pwp_settings()->add_file( $section, 'manifest-icon', __( 'Icon', 'pwp' ) );
+		pwp_settings()->add_file( $section, 'manifest-icon', __( 'Icon', 'pwp' ), 0, [
+			'mimes'      => 'png',
+			'min-width'  => 144,
+			'min-height' => 144,
+		] );
 
 		$choices = [
 			'fullscreen' => 'Fullscreen',
