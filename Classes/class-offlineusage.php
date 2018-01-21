@@ -31,7 +31,9 @@ class Offlineusage {
 		foreach ( get_pages() as $post ) {
 			$choices[ $post->ID ] = get_the_title( $post );
 		}
-		pwp_settings()->add_select( $section, 'offline-page', __( 'Offline Page', 'pwp' ), $choices );
+		pwp_settings()->add_select( $section, 'offline-page', __( 'Offline Page', 'pwp' ), $choices, '', [
+			'after_field' => '<p class="pwp-smaller">' . __( 'This page should contain a message explaining why the requested content is not aviable.', 'pwp' ) . '</p>',
+		] );
 	}
 
 	public function sw_content( $content ) {
@@ -86,7 +88,8 @@ class Offlineusage {
 	}
 
 	public function offline_indicator_settings() {
-		$section = pwp_settings()->add_section( pwp_settings_page_offlineusage(), 'pwp_offlineindicator', __( 'offline indicator  ', 'pwp' ) );
+		$section_desc = __( 'This adds a little notice which will be displayed if the device is offline.', 'pwp' ) . '<br>';
+		$section      = pwp_settings()->add_section( pwp_settings_page_offlineusage(), 'pwp_offlineindicator', __( 'offline indicator  ', 'pwp' ), $section_desc );
 		pwp_settings()->add_checkbox( $section, 'offline-indicator', __( 'Offline indicator', 'pwp' ), false );
 		pwp_settings()->add_input( $section, 'offline-indicator-text', __( 'Message', 'pwp' ), $this->indicator_text );
 		pwp_settings()->add_select( $section, 'offline-indicator-position', __( 'Position', 'pwp' ), [

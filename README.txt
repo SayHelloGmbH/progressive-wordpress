@@ -61,6 +61,8 @@ A development version of this plugin is hosted on GitHub. If you have any ideas 
 
 = 0.3.0 =
 * changed offline indicator
+* added better instructions
+* codepattern improvements
 
 = 0.2.0 =
 * added offline indicator
