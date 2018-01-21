@@ -70,8 +70,6 @@
 "use strict";
 
 
-//import './modules/offline';
-
 (function ($, theme) {
 
 	var $body = $('body');

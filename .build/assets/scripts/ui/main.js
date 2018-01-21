@@ -1,5 +1,3 @@
-//import './modules/offline';
-
 (function ($, theme) {
 
 	const $body = $('body');
