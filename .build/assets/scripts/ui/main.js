@@ -1,16 +1,23 @@
-import './modules/offline';
+//import './modules/offline';
 
-(function ($) {
+(function ($, theme) {
 
+	const $body = $('body');
 	const offlineClass = 'pwp-offline';
-	const Offline = window.Offline;
 
-	Offline.on('up', () => {
-		$('body').removeClass(offlineClass);
+	function updateOnlineStatus(event) {
+		if (navigator.onLine) {
+			$body.removeClass(offlineClass);
+		} else {
+			$body.addClass(offlineClass);
+		}
+	}
+
+	$(function () {
+		updateOnlineStatus();
 	});
 
-	Offline.on('down', () => {
-		$('body').addClass(offlineClass);
-	});
+	window.addEventListener('online', updateOnlineStatus);
+	window.addEventListener('offline', updateOnlineStatus);
 
-})(jQuery);
+})(jQuery, ThemeJSVars);

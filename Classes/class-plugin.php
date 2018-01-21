@@ -9,6 +9,7 @@ class Plugin {
 	public $name = '';
 	public $prefix = '';
 	public $version = '';
+	public $debug = '';
 	public $file = '';
 
 	public $option_key = 'pwp_data';

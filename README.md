@@ -19,6 +19,9 @@ Coming soon..
 
 ## Changelog
 
+### 0.3.0
+* changed offline indicator
+
 ### 0.2.0
 * added offline indicator
 * Grammatical changes by [Mark Howells-Mead](https://profiles.wordpress.org/markhowellsmead/)
