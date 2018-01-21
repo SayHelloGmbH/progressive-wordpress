@@ -14,6 +14,7 @@ class Offlineusage {
 
 	public function run() {
 		add_action( 'pwp_settings', [ $this, 'settings' ] );
+		add_filter( 'pwp_sw_content', [ $this, 'sw_content' ] );
 		add_action( 'pwp_settings', [ $this, 'offline_indicator_settings' ] );
 		add_action( 'wp_footer', [ $this, 'offline_indicator_template' ] );
 	}
@@ -31,6 +32,57 @@ class Offlineusage {
 			$choices[ $post->ID ] = get_the_title( $post );
 		}
 		pwp_settings()->add_select( $section, 'offline-page', __( 'Offline Page', 'pwp' ), $choices );
+	}
+
+	public function sw_content( $content ) {
+
+		$offline_enabled = pwp_get_setting( 'offline-enabled' );
+		if ( ! $offline_enabled ) {
+			return $content;
+		}
+
+		$offline_content = '';
+		$offline_page_id = intval( pwp_get_setting( 'offline-page' ) );
+		$offline_url     = pwp_register_url( get_permalink( $offline_page_id ) );
+		$home_url        = pwp_register_url( trailingslashit( get_home_url() ) );
+
+		$cache_pages   = [];
+		$cache_pages[] = $home_url;
+		$cache_pages[] = $offline_url;
+		$cache_pages   = apply_filters( 'pwp_cache_pages', $cache_pages );
+
+		$cache_pages_quoted = [];
+		foreach ( $cache_pages as $url ) {
+			$cache_pages_quoted[] = "'$url'";
+		}
+
+		$sw_data = [
+			'offline'      => $offline_enabled,
+			'offline_page' => str_replace( trailingslashit( get_home_url() ), '', get_permalink( $offline_page_id ) ),
+			'cached_pages' => '[' . implode( ',', $cache_pages_quoted ) . ']',
+		];
+
+		$offline_file = plugin_dir_path( pwp_get_instance()->file ) . '/assets/serviceworker/offline.js';
+		if ( file_exists( $offline_file ) && $offline_enabled ) {
+
+			$offline_content .= file_get_contents( $offline_file );
+		} else {
+			return $content;
+		}
+
+		foreach ( $sw_data as $key => $val ) {
+			$offline_content = str_replace( "{{{$key}}}", $val, $offline_content );
+		}
+
+		$path = plugin_dir_path( pwp_get_instance()->file ) . 'Classes/Libs';
+		require_once $path . '/minify/autoload.php';
+		require_once $path . '/path-converter/autoload.php';
+		$minifier = new \MatthiasMullie\Minify\JS( $offline_content );
+
+		$offline_content = $minifier->minify();
+
+		return $content . $offline_content;
+
 	}
 
 	public function offline_indicator_settings() {
