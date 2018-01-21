@@ -70,7 +70,7 @@
 "use strict";
 
 
-(function ($, theme) {
+(function ($, vars) {
 
 	var $body = $('body');
 	var offlineClass = 'pwp-offline';
@@ -89,7 +89,7 @@
 
 	window.addEventListener('online', updateOnlineStatus);
 	window.addEventListener('offline', updateOnlineStatus);
-})(jQuery, ThemeJSVars);
+})(jQuery, PwpJsVars);
 
 /***/ })
 /******/ ]);

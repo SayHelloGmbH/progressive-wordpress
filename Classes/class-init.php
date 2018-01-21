@@ -23,6 +23,7 @@ class Init {
 		add_action( 'admin_enqueue_scripts', [ $this, 'add_admin_assets' ] );
 
 		// Helper
+		add_action( 'wp_footer', [ $this, 'footer_js' ], 1 );
 		add_action( 'admin_footer', [ $this, 'admin_footer_js' ], 1 );
 	}
 
@@ -96,6 +97,19 @@ class Init {
 	/**
 	 * Helper
 	 */
+	public function footer_js() {
+		$defaults = [
+			'AjaxURL' => admin_url( 'admin-ajax.php' ),
+			'homeurl' => trailingslashit( get_home_url() ),
+		];
+
+		$vars = apply_filters( 'pwp_footer_js', $defaults );
+
+		echo "<script id='pwp-js-vars'>\r\n";
+		echo 'var PwpJsVars = ' . json_encode( $vars );
+		echo '</script>';
+	}
+
 	public function admin_footer_js() {
 		$defaults = [
 			'AjaxURL' => admin_url( 'admin-ajax.php' ),

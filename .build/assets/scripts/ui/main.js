@@ -1,4 +1,4 @@
-(function ($, theme) {
+(function ($, vars) {
 
 	const $body = $('body');
 	const offlineClass = 'pwp-offline';
@@ -18,4 +18,4 @@
 	window.addEventListener('online', updateOnlineStatus);
 	window.addEventListener('offline', updateOnlineStatus);
 
-})(jQuery, ThemeJSVars);
+})(jQuery, PwpJsVars);
