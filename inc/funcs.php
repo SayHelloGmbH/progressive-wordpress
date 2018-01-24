@@ -25,6 +25,10 @@ function pwp_settings_page_offlineusage() {
 	return pwp_settings()->add_page( 'offlineusage', __( 'Offline usage', 'pwp' ) );
 }
 
+function pwp_settings_page_push() {
+	return pwp_settings()->add_page( 'push', __( 'Push Notifications', 'pwp' ) );
+}
+
 function pwp_register_url( $url ) {
 
 	$home_url  = untrailingslashit( get_home_url() );

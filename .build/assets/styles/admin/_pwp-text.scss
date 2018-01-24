@@ -2,17 +2,20 @@
 	font-size: smaller !important;
 }
 
-.wp-core-ui p .button-delete {
-	background-color: transparent;
-	border: none;
-	@include box-shadow(none);
-	color: #a00;
-	&:hover {
-		color: #dc3232;
-	}
-	&:active {
+.wp-core-ui p,
+.pwp-wrap {
+	.button-delete {
 		background-color: transparent;
-		border-color: none;
+		border: none;
 		@include box-shadow(none);
+		color: #a00;
+		&:hover {
+			color: #dc3232;
+		}
+		&:active {
+			background-color: transparent;
+			border-color: none;
+			@include box-shadow(none);
+		}
 	}
 }

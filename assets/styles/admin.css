@@ -2,7 +2,8 @@
   font-size: smaller !important;
 }
 
-.wp-core-ui p .button-delete {
+.wp-core-ui p .button-delete,
+.pwp-wrap .button-delete {
   background-color: transparent;
   border: none;
   -moz-box-shadow: none;
@@ -10,10 +11,12 @@
   box-shadow: none;
   color: #a00;
 }
-.wp-core-ui p .button-delete:hover {
+.wp-core-ui p .button-delete:hover,
+.pwp-wrap .button-delete:hover {
   color: #dc3232;
 }
-.wp-core-ui p .button-delete:active {
+.wp-core-ui p .button-delete:active,
+.pwp-wrap .button-delete:active {
   background-color: transparent;
   border-color: none;
   -moz-box-shadow: none;
@@ -65,6 +68,10 @@
   margin-bottom: 15px;
   padding: 15px;
   border-bottom: 1px solid #e5e5e5;
+}
+.pwp-wrap__section ul {
+  padding-left: 20px;
+  list-style: disc;
 }
 .pwp-wrap__section .form-table td {
   vertical-align: top;

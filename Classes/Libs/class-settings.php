@@ -149,6 +149,8 @@ class Settings {
 			}
 		}
 
+		apply_filters( "{$this->sanitize_filter}", $input );
+
 		return $input;
 	}
 
