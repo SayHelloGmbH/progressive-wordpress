@@ -104,6 +104,7 @@ class Plugin {
 	}
 
 	public function deactivate() {
+		do_action( 'pwp_on_deactivate' );
 		delete_option( pwp_get_instance()->option_key );
 	}
 

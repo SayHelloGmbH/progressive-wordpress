@@ -15,6 +15,9 @@ class Serviceworker {
 	public function run() {
 		add_action( 'admin_notices', [ $this, 'ssl_error_notice' ] );
 		add_action( 'pwp_after_save', [ $this, 'regenerate' ] );
+		add_action( 'pwp_on_update', [ $this, 'regenerate' ] );
+		add_action( 'pwp_on_deactivate', [ $this, 'delete_serviceworker' ] );
+
 		if ( file_exists( $this->sw_path ) ) {
 			add_action( 'wp_head', [ $this, 'add_to_header' ], 1 );
 		}
@@ -75,7 +78,10 @@ class Serviceworker {
 		 * check if not the same:
 		 * this provides a way that the version will only be updated if there are changes in the sw-file.
 		 */
-		$current_content   = file_get_contents( $this->sw_path );
+		$current_content = '';
+		if ( is_file( $this->sw_path ) ) {
+			$current_content = file_get_contents( $this->sw_path );
+		}
 		$new_content_check = str_replace( '{{time}}', get_option( 'pwp_sw_time' ), $content );
 		if ( $current_content == $new_content_check ) {
 			return;
@@ -86,7 +92,23 @@ class Serviceworker {
 		 */
 		$time    = time();
 		$content = str_replace( '{{time}}', $time, $content );
-		file_put_contents( $this->sw_path, $content );
+		$save    = file_put_contents( $this->sw_path, $content );
+		if ( ! $save ) {
+			add_action( 'admin_notices', function () {
+				echo '<div class="notice notice-error">';
+				// translators: There was a problem generating your serviceworker file. Please check your permissions for ABSPATH
+				echo '<p>' . sprintf( __( 'There was a problem generating your serviceworker file. Please check your permissions for %s', 'pwp' ), '<code>' . ABSPATH . '</code>' ) . '</p>';
+				echo '</div>';
+			} );
+
+			return;
+		}
 		update_option( 'pwp_sw_time', $time );
+	}
+
+	public function delete_serviceworker() {
+		if ( is_file( $this->sw_path ) ) {
+			unlink( $this->sw_path );
+		}
 	}
 }

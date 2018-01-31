@@ -5,8 +5,8 @@ namespace nicomartin\ProgressiveWordPress;
 class Manifest {
 
 	public $capability = '';
-	public $manifest_path = ABSPATH . 'manifest.json';
-	public $manifest_url = '/manifest.json';
+	public $manifest_path = ABSPATH . 'pwp-manifest.json';
+	public $manifest_url = '/pwp-manifest.json';
 
 	public function __construct() {
 		$this->capability = pwp_get_instance()->Init->capability;
@@ -16,6 +16,10 @@ class Manifest {
 		add_action( 'pwp_settings', [ $this, 'register_settings' ] );
 		add_action( 'pwp_settings', [ $this, 'register_settings' ] );
 		add_action( 'pwp_after_save', [ $this, 'save_manifest' ] );
+		add_action( 'pwp_on_update', [ $this, 'save_manifest' ] );
+
+		add_action( 'pwp_on_deactivate', [ $this, 'delete_manifest' ] );
+
 		if ( file_exists( $this->manifest_path ) ) {
 			add_action( 'wp_head', [ $this, 'add_to_header' ], 1 );
 		}
@@ -60,6 +64,10 @@ class Manifest {
 
 	public function save_manifest() {
 
+		if ( '' == pwp_get_setting( 'manifest-name' ) ) {
+			return;
+		}
+
 		$manifest                     = [];
 		$manifest['name']             = pwp_get_setting( 'manifest-name' );
 		$manifest['short_name']       = str_replace( ' ', '', pwp_get_setting( 'manifest-short-name' ) );
@@ -86,7 +94,15 @@ class Manifest {
 
 		$manifest = apply_filters( 'pwp_manifest_values', $manifest );
 		$content  = json_encode( $manifest, JSON_UNESCAPED_SLASHES );
-		file_put_contents( $this->manifest_path, $content );
+		$save     = file_put_contents( $this->manifest_path, $content );
+		if ( ! $save ) {
+			add_action( 'admin_notices', function () {
+				echo '<div class="notice notice-error">';
+				// translators: There was a problem generating your manifest file. Please check your permissions for ABSPATH
+				echo '<p>' . sprintf( __( 'There was a problem generating your manifest file. Please check your permissions for %s', 'pwp' ), '<code>' . ABSPATH . '</code>' ) . '</p>';
+				echo '</div>';
+			} );
+		}
 	}
 
 	public function add_to_header() {
@@ -96,5 +112,14 @@ class Manifest {
 
 		$url = untrailingslashit( get_home_url() ) . $this->manifest_url;
 		echo '<link rel="manifest" href="' . pwp_register_url( $url ) . '">';
+	}
+
+	public function delete_manifest() {
+		if ( file_exists( ABSPATH . 'manifest.json' ) ) {
+			unlink( ABSPATH . 'manifest.json' );
+		}
+		if ( file_exists( $this->manifest_path ) ) {
+			unlink( $this->manifest_path );
+		}
 	}
 }

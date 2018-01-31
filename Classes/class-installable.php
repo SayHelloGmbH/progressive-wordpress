@@ -27,8 +27,6 @@ class Installable {
 		if ( ! pwp_get_setting( 'installable-enabled' ) ) {
 			$values['display'] = 'browser';
 		}
-		$values['test']   = 'browser';
-		$values['test_2'] = pwp_get_setting( 'installable-enabled' );
 
 		return $values;
 	}
