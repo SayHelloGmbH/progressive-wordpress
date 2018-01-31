@@ -18,6 +18,8 @@ class Manifest {
 		add_action( 'pwp_after_save', [ $this, 'save_manifest' ] );
 		add_action( 'pwp_on_update', [ $this, 'save_manifest' ] );
 
+		add_filter( 'pwp_sanitize_manifest-starturl', [ $this, 'starturl_sanitize' ] );
+
 		add_action( 'pwp_on_deactivate', [ $this, 'delete_manifest' ] );
 
 		if ( file_exists( $this->manifest_path ) ) {
@@ -37,6 +39,8 @@ class Manifest {
 		pwp_settings()->add_input( $section, 'manifest-short-name', __( 'Short Name', 'pwp' ), '', [
 			'after_field' => '<p class="pwp-smaller">' . __( 'max. 12 Chars', 'pwp' ) . '</p>',
 		] );
+
+		pwp_settings()->add_input( $section, 'manifest-starturl', __( 'Start URL', 'pwp' ), './' );
 
 		pwp_settings()->add_textarea( $section, 'manifest-description', __( 'Description', 'pwp' ), '', [] );
 		pwp_settings()->add_file( $section, 'manifest-icon', __( 'Icon', 'pwp' ), 0, [
@@ -103,6 +107,16 @@ class Manifest {
 				echo '</div>';
 			} );
 		}
+	}
+
+	public function starturl_sanitize( $value ) {
+		$value = preg_replace( '~[^\\pL0-9_\/.]+~u', '-', $value );
+		$value = trim( $value, '-' );
+		$value = iconv( 'utf-8', 'us-ascii//TRANSLIT', $value );
+		$value = strtolower( $value );
+		$value = preg_replace( '~[^-a-z0-9_\/.]+~', '', $value );
+
+		return $value;
 	}
 
 	public function add_to_header() {

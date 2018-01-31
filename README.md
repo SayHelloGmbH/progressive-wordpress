@@ -19,6 +19,10 @@ Coming soon..
 
 ## Changelog
 
+### 0.4.0
+* you can now change the manifest start_url
+* Bugfixes
+
 ### 0.3.0
 * changed offline indicator
 * added better instructions
