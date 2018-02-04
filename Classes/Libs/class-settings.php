@@ -50,7 +50,7 @@ class Settings {
 		$this->sections = [];
 		$this->settings = [];
 
-		add_action( 'admin_init', [ $this, 'after_saved_hook' ] );
+		add_action( 'admin_init', [ $this, 'after_saved_hook' ], 50 );
 		add_action( 'init', [ $this, 'settings_init_hook' ] );
 		add_action( 'admin_menu', [ $this, 'register_pages' ] );
 		add_action( 'admin_init', [ $this, 'register_settings' ] );

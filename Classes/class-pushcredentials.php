@@ -14,6 +14,8 @@ class PushCredentials {
 		add_action( 'pwp_settings', [ $this, 'settings' ] );
 		add_action( 'pwp_sanitize', [ $this, 'check_firebase_creds' ] );
 		add_action( 'admin_action_pwp_remove_firebase_creds', [ $this, 'remove_firebase_creds' ] );
+		add_action( 'admin_notices', [ $this, 'creds_error' ] );
+		add_filter( 'pwp_manifest_values', [ $this, 'add_sender_id_to_manifest' ] );
 	}
 
 	public function settings() {
@@ -50,7 +52,7 @@ class PushCredentials {
 
 				$val = pwp_settings()->get_setting( $key );
 				if ( strlen( $val ) > 4 ) {
-					$val = str_repeat( '*', strlen( $val ) - 4 ) . substr( $val, - 4 );
+					//$val = str_repeat( '*', strlen( $val ) - 4 ) . substr( $val, - 4 );
 				}
 				$phkey   = "$key-placeholder";
 				$content = "<input type='text' name='$key' value='$val' disabled/>";
@@ -63,21 +65,38 @@ class PushCredentials {
 	}
 
 	public function check_firebase_creds( $data ) {
-		/**
-		 * check creds and update check option
-		 */
 
 		if ( get_option( $this->cred_option ) == 'yes' ) {
 			return $data;
 		}
+
 		if ( ! array_key_exists( 'firebase-serverkey', $data ) || ! array_key_exists( 'firebase-senderid', $data ) ) {
 			return $data;
 		}
+
 		if ( '' == $data['firebase-serverkey'] || '' == $data['firebase-senderid'] ) {
 			return $data;
 		}
 
-		update_option( $this->cred_option, 'yes' );
+		/**
+		 * validate server key
+		 */
+		$error       = false;
+		$server_key  = $data['firebase-serverkey'];
+		$first_block = explode( ':', $server_key )[0];
+		if ( 152 != strlen( $server_key ) || 11 != strlen( $first_block ) ) {
+			$error = true;
+		}
+
+		/**
+		 * validate sender ID
+		 */
+		$data['firebase-senderid'] = intval( $data['firebase-senderid'] );
+		if ( 0 == $data['firebase-senderid'] ) {
+			$error = true;
+		}
+
+		update_option( $this->cred_option, ( $error ? 'error' : 'yes' ) );
 
 		return $data;
 	}
@@ -99,4 +118,59 @@ class PushCredentials {
 		wp_redirect( esc_url_raw( $sendback ) );
 		exit;
 	}
+
+	public function creds_error() {
+
+		if ( get_option( $this->cred_option ) != 'error' ) {
+			return;
+		}
+
+		update_option( $this->cred_option, 'no' );
+
+		$class   = 'notice notice-error';
+		$message = __( 'Server Key or Sender ID could not be verified.', 'pwp' );
+
+		printf( '<div class="%1$s"><p>%2$s</p></div>', esc_attr( $class ), esc_html( $message ) );
+	}
+
+	public function add_sender_id_to_manifest( $args ) {
+
+		if ( get_option( $this->cred_option ) != 'yes' ) {
+			return $args;
+		}
+
+		$args['gcm_sender_id'] = pwp_get_setting( 'firebase-senderid' );
+
+		return $args;
+	}
+
+	/*
+	public function do_push( $server_key = '', $fields ) {
+
+		if ( '' == $server_key ) {
+			$server_key = pwp_get_setting( 'firebase-serverkey' );
+		}
+
+		$headers = [
+			'Authorization: key=' . $server_key,
+			'Content-Type: application/json',
+		];
+
+		$ch = curl_init();
+
+		curl_setopt( $ch, CURLOPT_URL, 'https://android.googleapis.com/gcm/send' );
+		curl_setopt( $ch, CURLOPT_POST, true );
+		curl_setopt( $ch, CURLOPT_HTTPHEADER, $headers );
+		curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
+		curl_setopt( $ch, CURLOPT_POSTFIELDS, json_encode( $fields ) );
+		curl_setopt( $ch, CURLOPT_SSL_VERIFYHOST, false );
+		curl_setopt( $ch, CURLOPT_SSL_VERIFYPEER, false );
+		$result = curl_exec( $ch );
+		curl_close( $ch );
+
+		$result = json_decode( $result, true );
+
+		return $result;
+	}
+	*/
 }
