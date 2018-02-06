@@ -1,3 +1,5 @@
+import 'clientjs';
+
 (function ($, plugin) {
 
 	let active = false;
@@ -6,29 +8,37 @@
 
 	$(function () {
 
-		/**
-		 * Show / Hide Toggler
-		 */
+		handleSubscriptionID(1, 'add');
 
 		if (!'serviceWorker' in navigator || !'PushManager' in window) {
 			return;
 		}
 
-		$toggler.on('click', function () {
-			if (active) {
-				deregisterPushDevice();
-			} else {
-				registerPushDevice();
-			}
-		});
-
-		/**
-		 * Check if already registered
-		 */
-
 		navigator.serviceWorker.ready
 			.then(function (registration) {
+
+				/**
+				 * Show toggler (hidden by default)
+				 */
+
 				$body.addClass('pwp-notification');
+
+				/**
+				 * add trigger
+				 */
+
+				$toggler.on('click', function () {
+					if (active) {
+						deregisterPushDevice();
+					} else {
+						registerPushDevice();
+					}
+				});
+
+				/**
+				 * check if is already registered
+				 */
+
 				registration.pushManager.getSubscription()
 					.then(function (subscription) {
 						if (subscription) {
@@ -93,10 +103,26 @@
 
 	function handleSubscriptionID(subscription_id, handle) {
 
-		console.log('ToDo save ID');
-		return;
+		const client = new ClientJS();
+		const clientData = {
+			'browser': {
+				'browser': client.getBrowser(),
+				'version': client.getBrowserVersion(),
+				'major': client.getBrowserMajorVersion(),
+			},
+			'os': {
+				'os': client.getOS(),
+				'version': client.getOSVersion(),
+			},
+			'device': {
+				'device': client.getDevice(),
+				'type': client.getDeviceType(),
+				'vendor': client.getDeviceVendor()
+			}
+		};
 
-		const action = 'hellopwa_handle_device_id';
+		console.log(clientData);
+		const action = 'pwp_ajax_handle_device_id';
 
 		$.ajax({
 			url: plugin['AjaxURL'],
@@ -105,7 +131,8 @@
 			data: {
 				action: action,
 				user_id: subscription_id,
-				handle: handle
+				handle: handle,
+				clientData: clientData,
 			}
 		}).done(function (data) {
 			//console.log(data);

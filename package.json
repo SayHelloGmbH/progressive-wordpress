@@ -8,6 +8,7 @@
         "url": "git+ssh://git@github.com/nico-martin/progressive-wordpress.git"
     },
     "dependencies": {
+        "clientjs": "^0.1.11",
         "verge": "^1.9.1"
     },
     "devDependencies": {
