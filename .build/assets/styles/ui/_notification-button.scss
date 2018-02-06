@@ -5,6 +5,8 @@
 	position: fixed;
 	bottom: 20px;
 	left: 20px;
+	width: 2.5em;
+	height: 2.5em;
 	padding: 0;
 	@include border-radius(50%);
 	z-index: 9000;
@@ -13,6 +15,33 @@
 	@include transition-duration($settings_easing_speed/2+ms);
 	&:hover {
 		@include scale(1.04);
+	}
+	&:after {
+		content: '';
+		position: absolute;
+		z-index: 5500;
+		top: 50%;
+		left: 50%;
+		margin-top: -.6em;
+		margin-left: -.6em;
+
+		// spinner
+		$background: transparent;
+		$size: 1.2em;
+		$duration: .65s;
+		background-color: transparent;
+		border: 3px solid currentColor;
+		border-radius: 50%;
+		border-top-color: $background;
+		border-right-color: $background;
+		width: $size;
+		height: $size;
+		vertical-align: middle;
+		@include box-sizing(border-box);
+		@include animation(spinner-animation $duration infinite linear);
+
+		// hide
+		display: none;
 	}
 }
 
@@ -24,7 +53,13 @@ body.pwp-notification {
 
 .notification-button__icon {
 	display: block;
-	padding: .8em;
+	width: 1em;
+	height: 1em;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	margin-top: -.5em;
+	margin-left: -.5em;
 	svg {
 		width: 1em;
 		height: 1em;
@@ -44,5 +79,15 @@ body.pwp-notification--on {
 
 	.notification-button__icon--off {
 		display: none;
+	}
+}
+
+body.pwp-notification--loader {
+	.notification-button__icon--on,
+	.notification-button__icon--off {
+		display: none;
+	}
+	.notification-button:after {
+		display: block;
 	}
 }

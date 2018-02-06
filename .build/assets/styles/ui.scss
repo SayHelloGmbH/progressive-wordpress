@@ -7,5 +7,7 @@ $default-transition-duration: $settings_easing_speed+ms;
 $default-transition-function: ease-in-out;
 $default-transition-delay: false;
 
+@import "ui/spinner/spinner";
+
 @import "ui/offline-indicator";
 @import "ui/notification-button";
