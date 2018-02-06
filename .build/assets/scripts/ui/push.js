@@ -1,0 +1,118 @@
+(function ($, plugin) {
+
+	let active = false;
+	const $toggler = $('#pwp-notification-button');
+	const $body = $('body');
+
+	$(function () {
+
+		/**
+		 * Show / Hide Toggler
+		 */
+
+		if (!'serviceWorker' in navigator || !'PushManager' in window) {
+			return;
+		}
+
+		$toggler.on('click', function () {
+			if (active) {
+				deregisterPushDevice();
+			} else {
+				registerPushDevice();
+			}
+		});
+
+		/**
+		 * Check if already registered
+		 */
+
+		navigator.serviceWorker.ready
+			.then(function (registration) {
+				$body.addClass('pwp-notification');
+				registration.pushManager.getSubscription()
+					.then(function (subscription) {
+						if (subscription) {
+							changePushStatus(true);
+						}
+					});
+			});
+	});
+
+	function changePushStatus(status) {
+		active = status;
+		$body.removeClass('pwp-notification--loader');
+		if (status) {
+			$body.addClass('pwp-notification--on');
+		} else {
+			$body.removeClass('pwp-notification--on');
+		}
+	}
+
+	const registerPushDevice = function () {
+		$body.addClass('pwp-notification--loader');
+		navigator.serviceWorker.ready
+			.then(function (registration) {
+
+				registration.pushManager.subscribe({
+					userVisibleOnly: true
+				})
+					.then(function (subscription) {
+						const subscription_id = subscription.endpoint.split('gcm/send/')[1];
+						handleSubscriptionID(subscription_id, 'add');
+						changePushStatus(true);
+					})
+					.catch(function () {
+						changePushStatus(false);
+						alert(plugin['message_pushadd_failed']);
+					});
+			});
+	};
+
+	const deregisterPushDevice = function () {
+		$body.addClass('pwp-notification--loader');
+		navigator.serviceWorker.ready
+			.then(function (registration) {
+				registration.pushManager.getSubscription()
+					.then(function (subscription) {
+						if (!subscription) {
+							return;
+						}
+						subscription.unsubscribe()
+							.then(function () {
+								const subscription_id = subscription.endpoint.split('gcm/send/')[1];
+								handleSubscriptionID(subscription_id, 'remove');
+								changePushStatus(false);
+							})
+							.catch(function () {
+								changePushStatus(true);
+								alert(plugin['message_pushremove_failed']);
+							});
+					});
+			});
+	};
+
+	function handleSubscriptionID(subscription_id, handle) {
+
+		console.log('ToDo save ID');
+		return;
+
+		const action = 'hellopwa_handle_device_id';
+
+		$.ajax({
+			url: plugin['AjaxURL'],
+			type: 'POST',
+			dataType: 'json',
+			data: {
+				action: action,
+				user_id: subscription_id,
+				handle: handle
+			}
+		}).done(function (data) {
+			//console.log(data);
+		});
+	}
+
+	window.registerPushDevice = registerPushDevice;
+	window.deregisterPushDevice = deregisterPushDevice;
+
+})(jQuery, PwpJsVars);

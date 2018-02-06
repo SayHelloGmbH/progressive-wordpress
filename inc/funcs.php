@@ -1,5 +1,9 @@
 <?php
 
+function pwp_push_set() {
+	return ( get_option( 'pwp_firebase_credentials_set' ) == 'yes' );
+}
+
 function pwp_exit_ajax( $type, $msg = '', $add = [] ) {
 
 	$return = [

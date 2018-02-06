@@ -67,6 +67,14 @@
 /* 0 */
 /***/ (function(module, exports, __webpack_require__) {
 
+__webpack_require__(1);
+module.exports = __webpack_require__(2);
+
+
+/***/ }),
+/* 1 */
+/***/ (function(module, exports, __webpack_require__) {
+
 "use strict";
 
 
@@ -89,6 +97,122 @@
 
 	window.addEventListener('online', updateOnlineStatus);
 	window.addEventListener('offline', updateOnlineStatus);
+})(jQuery, PwpJsVars);
+
+/***/ }),
+/* 2 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+(function ($, plugin) {
+
+	var active = false;
+	var $toggler = $('#pwp-notification-button');
+	var $body = $('body');
+
+	$(function () {
+
+		/**
+   * Show / Hide Toggler
+   */
+
+		if (!'serviceWorker' in navigator || !'PushManager' in window) {
+			return;
+		}
+
+		$toggler.on('click', function () {
+			if (active) {
+				deregisterPushDevice();
+			} else {
+				registerPushDevice();
+			}
+		});
+
+		/**
+   * Check if already registered
+   */
+
+		navigator.serviceWorker.ready.then(function (registration) {
+			$body.addClass('pwp-notification');
+			registration.pushManager.getSubscription().then(function (subscription) {
+				if (subscription) {
+					changePushStatus(true);
+				}
+			});
+		});
+	});
+
+	function changePushStatus(status) {
+		active = status;
+		$body.removeClass('pwp-notification--loader');
+		if (status) {
+			$body.addClass('pwp-notification--on');
+		} else {
+			$body.removeClass('pwp-notification--on');
+		}
+	}
+
+	var registerPushDevice = function registerPushDevice() {
+		$body.addClass('pwp-notification--loader');
+		navigator.serviceWorker.ready.then(function (registration) {
+
+			registration.pushManager.subscribe({
+				userVisibleOnly: true
+			}).then(function (subscription) {
+				var subscription_id = subscription.endpoint.split('gcm/send/')[1];
+				handleSubscriptionID(subscription_id, 'add');
+				changePushStatus(true);
+			}).catch(function () {
+				changePushStatus(false);
+				alert(plugin['message_pushadd_failed']);
+			});
+		});
+	};
+
+	var deregisterPushDevice = function deregisterPushDevice() {
+		$body.addClass('pwp-notification--loader');
+		navigator.serviceWorker.ready.then(function (registration) {
+			registration.pushManager.getSubscription().then(function (subscription) {
+				if (!subscription) {
+					return;
+				}
+				subscription.unsubscribe().then(function () {
+					var subscription_id = subscription.endpoint.split('gcm/send/')[1];
+					handleSubscriptionID(subscription_id, 'remove');
+					changePushStatus(false);
+				}).catch(function () {
+					changePushStatus(true);
+					alert(plugin['message_pushremove_failed']);
+				});
+			});
+		});
+	};
+
+	function handleSubscriptionID(subscription_id, handle) {
+
+		console.log('ToDo save ID');
+		return;
+
+		var action = 'hellopwa_handle_device_id';
+
+		$.ajax({
+			url: plugin['AjaxURL'],
+			type: 'POST',
+			dataType: 'json',
+			data: {
+				action: action,
+				user_id: subscription_id,
+				handle: handle
+			}
+		}).done(function (data) {
+			//console.log(data);
+		});
+	}
+
+	window.registerPushDevice = registerPushDevice;
+	window.deregisterPushDevice = deregisterPushDevice;
 })(jQuery, PwpJsVars);
 
 /***/ })

@@ -1,0 +1,32 @@
+.offline-indicator {
+	background-color: #000;
+	color: #fff;
+	padding: .9rem;
+	position: fixed;
+	z-index: 9999;
+	left: 0;
+	bottom: 0;
+	width: 100%;
+	@include translateY(100%);
+	will-change: transform;
+	@include single-transition(transform);
+	p {
+		margin: 0 0 0 0;
+		color: #fff;
+		font-size: .9rem;
+		text-align: center;
+	}
+}
+
+.offline-indicator--top {
+	bottom: inherit;
+	top: 0;
+	@include translateY(-100%);
+}
+
+body.pwp-offline {
+	.offline-indicator,
+	.offline-indicator--top {
+		@include translateY(0);
+	}
+}

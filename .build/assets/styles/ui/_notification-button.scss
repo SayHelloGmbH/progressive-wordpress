@@ -1,0 +1,48 @@
+.notification-button {
+	@include scale(0);
+	outline: none;
+	border: none;
+	position: fixed;
+	bottom: 20px;
+	left: 20px;
+	padding: 0;
+	@include border-radius(50%);
+	z-index: 9000;
+	cursor: pointer;
+	@include transition();
+	@include transition-duration($settings_easing_speed/2+ms);
+	&:hover {
+		@include scale(1.04);
+	}
+}
+
+body.pwp-notification {
+	.notification-button {
+		@include scale(1);
+	}
+}
+
+.notification-button__icon {
+	display: block;
+	padding: .8em;
+	svg {
+		width: 1em;
+		height: 1em;
+		display: block;
+	}
+}
+
+.notification-button__icon--on {
+	display: none;
+}
+
+body.pwp-notification--on {
+
+	.notification-button__icon--on {
+		display: block;
+	}
+
+	.notification-button__icon--off {
+		display: none;
+	}
+}

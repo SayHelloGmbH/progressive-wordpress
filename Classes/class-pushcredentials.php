@@ -26,7 +26,7 @@ class PushCredentials {
 		];
 
 		$cred_set = false;
-		if ( get_option( $this->cred_option ) == 'yes' ) {
+		if ( pwp_push_set() ) {
 			$cred_set = true;
 		}
 		$section_desc = '';
@@ -43,7 +43,7 @@ class PushCredentials {
 			$section_desc .= '</ul>';
 		}
 
-		$section = pwp_settings()->add_section( pwp_settings_page_push(), 'pwp_firebase', __( 'Firebase', 'pwp' ), $section_desc );
+		$section = pwp_settings()->add_section( pwp_settings_page_push(), 'pwp_firebase', __( 'Firebase credentials', 'pwp' ), $section_desc );
 
 		foreach ( $fields as $key => $name ) {
 			if ( 0 == $cred_set ) {
