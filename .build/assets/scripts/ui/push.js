@@ -8,8 +8,6 @@ import 'clientjs';
 
 	$(function () {
 
-		handleSubscriptionID(1, 'add');
-
 		if (!'serviceWorker' in navigator || !'PushManager' in window) {
 			return;
 		}
@@ -121,7 +119,6 @@ import 'clientjs';
 			}
 		};
 
-		console.log(clientData);
 		const action = 'pwp_ajax_handle_device_id';
 
 		$.ajax({

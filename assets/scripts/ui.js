@@ -116,8 +116,6 @@ __webpack_require__(3);
 
 	$(function () {
 
-		handleSubscriptionID(1, 'add');
-
 		if (!'serviceWorker' in navigator || !'PushManager' in window) {
 			return;
 		}
@@ -220,7 +218,6 @@ __webpack_require__(3);
 			}
 		};
 
-		console.log(clientData);
 		var action = 'pwp_ajax_handle_device_id';
 
 		$.ajax({
