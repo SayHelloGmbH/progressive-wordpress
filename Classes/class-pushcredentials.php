@@ -60,7 +60,7 @@ class PushCredentials {
 			}
 		}
 		if ( $cred_set ) {
-			pwp_settings()->add_message( $section, 'remove-firebase-creds', '', '<p style="text-align: right;"><a href="admin.php?action=pwp_remove_firebase_creds&site=' . get_current_blog_id() . '" class="button button-delete" style="top: -24px; font-size: 12px; position:relative; padding-right: 0;">' . __( 'remove credentials', 'pwp' ) . '</a></p>' );
+			pwp_settings()->add_message( $section, 'remove-firebase-creds', '', '<p style="text-align: right;"><a href="admin.php?action=pwp_remove_firebase_creds&site=' . get_current_blog_id() . '" class="button button-pwpdelete" style="top: -24px; font-size: 12px; position:relative; padding-right: 0;">' . __( 'remove credentials', 'pwp' ) . '</a></p>' );
 		}
 	}
 

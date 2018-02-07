@@ -1,22 +1,57 @@
+@-moz-keyframes spinner-animation {
+  0% {
+    -moz-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -moz-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+@-webkit-keyframes spinner-animation {
+  0% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+@keyframes spinner-animation {
+  0% {
+    -moz-transform: rotate(0deg);
+    -ms-transform: rotate(0deg);
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -moz-transform: rotate(360deg);
+    -ms-transform: rotate(360deg);
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
 .pwp-smaller {
   font-size: smaller !important;
 }
 
-.wp-core-ui p .button-delete,
-.pwp-wrap .button-delete {
+.wp-core-ui p .button-pwpdelete,
+.pwp-wrap .button-pwpdelete {
   background-color: transparent;
   border: none;
   -moz-box-shadow: none;
   -webkit-box-shadow: none;
   box-shadow: none;
   color: #a00;
+  padding: 0;
 }
-.wp-core-ui p .button-delete:hover,
-.pwp-wrap .button-delete:hover {
+.wp-core-ui p .button-pwpdelete:hover,
+.pwp-wrap .button-pwpdelete:hover {
   color: #dc3232;
 }
-.wp-core-ui p .button-delete:active,
-.pwp-wrap .button-delete:active {
+.wp-core-ui p .button-pwpdelete:active,
+.pwp-wrap .button-pwpdelete:active {
   background-color: transparent;
   border-color: none;
   -moz-box-shadow: none;
@@ -100,4 +135,97 @@
 }
 .pwp-wrap__section .settings--fileuploader[data-fileid='0'] .delete-file {
   display: none;
+}
+
+.pwp-devicestable__container {
+  width: 100%;
+  border: 1px solid #e5e5e5;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
+  max-height: 400px;
+  overflow: auto;
+  position: relative;
+}
+.pwp-devicestable__container:after, .pwp-devicestable__container:before {
+  position: absolute;
+  z-index: 200;
+  display: none;
+  content: '';
+}
+.pwp-devicestable__container:after {
+  background-color: transparent;
+  border: 5px solid currentColor;
+  border-top-color: transparent;
+  border-right-color: transparent;
+  width: 35px;
+  height: 35px;
+  margin-top: -17.5px;
+  margin-left: -17.5px;
+  top: 50%;
+  left: 50%;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  -moz-border-radius: 50%;
+  -webkit-border-radius: 50%;
+  border-radius: 50%;
+  -moz-animation: spinner-animation 0.65s infinite linear;
+  -webkit-animation: spinner-animation 0.65s infinite linear;
+  animation: spinner-animation 0.65s infinite linear;
+}
+.pwp-devicestable__container:before {
+  bottom: 0;
+  right: 0;
+  left: 0;
+  top: 0;
+  background: rgba(255, 255, 255, 0.8);
+}
+
+.pwp-devicestable__container--loading:after, .pwp-devicestable__container--loading:before {
+  display: block;
+}
+
+.pwp-devicestable {
+  width: 100%;
+  border-spacing: 0;
+}
+.pwp-devicestable td, .pwp-devicestable th {
+  text-align: left;
+  padding: 8px 10px;
+}
+.pwp-devicestable td:last-child {
+  text-align: right;
+}
+.pwp-devicestable td.empty {
+  text-align: center;
+}
+.pwp-devicestable th {
+  border-bottom: 1px solid #e1e1e1;
+}
+.pwp-devicestable tr td {
+  background-color: #f9f9f9;
+  vertical-align: top;
+}
+.pwp-devicestable tr:nth-child(even) td {
+  background-color: #fff;
+}
+.pwp-devicestable .devices-item,
+.pwp-devicestable .devices-actions {
+  display: block;
+}
+.pwp-devicestable .devices-item--os {
+  font-size: 10px;
+  opacity: .6;
+}
+.pwp-devicestable .devices-item--user {
+  font-weight: bold;
+}
+.pwp-devicestable .devices-actions--delete {
+  margin-top: 10px;
+  opacity: 0;
+}
+.pwp-devicestable .devices-actions--delete .button {
+  font-size: 10px;
+}
+.pwp-devicestable tr:hover .devices-actions--delete {
+  opacity: 1;
 }

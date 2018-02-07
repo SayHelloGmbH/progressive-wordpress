@@ -68,7 +68,8 @@
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(1);
-module.exports = __webpack_require__(2);
+__webpack_require__(2);
+module.exports = __webpack_require__(3);
 
 
 /***/ }),
@@ -80,6 +81,47 @@ module.exports = __webpack_require__(2);
 
 /***/ }),
 /* 2 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+(function ($, plugin) {
+	$(function () {
+		var $delete = $('#pwpDeleteDevice');
+
+		$delete.on('click', function () {
+
+			var $e = $(this);
+			var $container = $e.parents('.pwp-devicestable__container');
+			var subscription_id = $e.attr('data-deviceid');
+			var action = 'pwp_ajax_handle_device_id';
+
+			$container.addClass('pwp-devicestable__container--loading');
+
+			$.ajax({
+				url: plugin['AjaxURL'],
+				type: 'POST',
+				dataType: 'json',
+				data: {
+					action: action,
+					user_id: subscription_id,
+					handle: 'remove',
+					clientData: {}
+				}
+			}).done(function (data) {
+				$e.parents('tr').remove();
+			}).fail(function () {
+				console.log('remove failed');
+			}).always(function () {
+				$container.removeClass('pwp-devicestable__container--loading');
+			});
+		});
+	});
+})(jQuery, PwpJsVars);
+
+/***/ }),
+/* 3 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";

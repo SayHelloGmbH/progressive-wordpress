@@ -45,11 +45,52 @@ class Push {
 	}
 
 	public function device_settings() {
-		$section_desc = __( 'This adds a fixed push notification button to the bottom of your page.', 'pwp' );
-		$section_desc = '';
-		$section      = pwp_settings()->add_section( pwp_settings_page_push(), 'pwp_devices', __( 'Devices', 'pwp' ), $section_desc );
 
-		pwp_settings()->add_message( $section, 'notification-button-heading', '<pre>' . print_r( get_option( $this->devices_option ), true ) . '</pre>' );
+		$devices = get_option( $this->devices_option );
+		$table   = '';
+		$table   .= '<table class="pwp-devicestable">';
+		$table   .= '<thead><tr><th>' . __( 'Device', 'pwp' ) . '</th><th>' . __( 'Registered', 'pwp' ) . '</th><th></th></tr></thead>';
+		$table   .= '<tbody>';
+		if ( empty( $devices ) ) {
+			$table .= '<tr><td colspan="3" class="empty">' . __( 'No devices registered', 'pwp' ) . '</td></tr>';
+		} else {
+			foreach ( $devices as $device ) {
+				//$table .= '<pre>' . print_r( get_option( $this->devices_option ), true ) . '</pre>';
+				$table .= '<tr>';
+				$table .= '<td>';
+				if ( isset( $device['data']['device']['vendor'] ) && isset( $device['data']['device']['device'] ) ) {
+					$table .= "<span class='devices-item devices-item--device'>{$device['data']['device']['vendor']} {$device['data']['device']['device']}</span>";
+				}
+				if ( isset( $device['data']['browser']['browser'] ) && isset( $device['data']['browser']['major'] ) ) {
+					$title = __( 'Browser', 'pwp' );
+					$table .= "<span class='devices-item devices-item--browser'>$title: {$device['data']['browser']['browser']} {$device['data']['browser']['major']}</span>";
+				}
+				if ( isset( $device['data']['os']['os'] ) && isset( $device['data']['os']['version'] ) ) {
+					//$title = __( 'Operating system', 'pwp' );
+					$table .= "<span class='devices-item devices-item--os'>{$device['data']['os']['os']} {$device['data']['os']['version']}</span>";
+				}
+				$table .= '</td>';
+				$table .= '<td>';
+				$date  = date( get_option( 'date_format' ) . ' ' . get_option( 'time_format' ), $device['time'] );
+				$table .= "<span class='devices-item devices-item--date'>{$date}</span>";
+				if ( 0 != $device['wp_user'] ) {
+					$display_name = get_userdata( $device['wp_user'] )->display_name;
+					$table        .= "<span class='devices-item devices-item--user'>{$display_name}</span>";
+				}
+				$table .= '</td>';
+				$table .= '<td>';
+				$table .= '<span class="devices-actions devices-actions--send"><a class="button" onclick="alert(\'Sorry not yet ready\');">send push</a></span>';
+				$table .= '<span class="devices-actions devices-actions--delete"><a id="pwpDeleteDevice" data-deviceid="' . $device['id'] . '" class="button button-pwpdelete">' . __( 'Remove device', 'pwp' ) . '</a></span>';
+				$table .= '</td>';
+				$table .= '</tr>';
+			}
+		}
+		$table .= '</tbody>';
+		$table .= '</table>';
+
+		$section = pwp_settings()->add_section( pwp_settings_page_push(), 'pwp_devices', __( 'Devices', 'pwp' ), "<div class='pwp-devicestable__container'>$table</div>" );
+
+		//pwp_settings()->add_message( $section, 'notification-button-heading', '', $table );
 	}
 
 	public function footer_template() {

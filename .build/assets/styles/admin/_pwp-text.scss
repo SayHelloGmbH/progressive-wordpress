@@ -4,11 +4,12 @@
 
 .wp-core-ui p,
 .pwp-wrap {
-	.button-delete {
+	.button-pwpdelete {
 		background-color: transparent;
 		border: none;
 		@include box-shadow(none);
 		color: #a00;
+		padding: 0;
 		&:hover {
 			color: #dc3232;
 		}
