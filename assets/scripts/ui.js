@@ -116,6 +116,23 @@ __webpack_require__(3);
 
 	$(function () {
 
+		/*
+  $toggler.on('click', function () {
+  	if ($body.hasClass('pwp-notification--on')) {
+  		$body.removeClass('pwp-notification--on');
+  		$body.addClass('pwp-notification--loader');
+  	} else if ($body.hasClass('pwp-notification--loader')) {
+  		$body.removeClass('pwp-notification--on');
+  		$body.removeClass('pwp-notification--loader');
+  	} else {
+  		$body.addClass('pwp-notification--on');
+  		$body.removeClass('pwp-notification--loader');
+  	}
+  });
+  $body.addClass('pwp-notification');
+  return;
+  */
+
 		if (!'serviceWorker' in navigator || !'PushManager' in window) {
 			return;
 		}

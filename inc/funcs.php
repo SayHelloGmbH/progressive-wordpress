@@ -1,5 +1,25 @@
 <?php
 
+function pwp_get_notification_button( $class = '', $style = '' ) {
+	$dir      = plugin_dir_path( pwp_get_instance()->file ) . 'assets/img/icon/';
+	$icon_on  = $dir . 'bell-ring.svg';
+	$icon_off = $dir . 'bell-off.svg';
+	if ( ! is_file( $icon_on ) || ! is_file( $icon_off ) ) {
+		return '';
+	}
+	$icon_on  = file_get_contents( $icon_on );
+	$icon_off = file_get_contents( $icon_off );
+
+	$html = '';
+	$html .= "<button id='pwp-notification-button' class='notification-button $class' style='$style'>";
+	$html .= "<span class='notification-button__icon notification-button__icon--on'>$icon_on</span>";
+	$html .= "<span class='notification-button__icon notification-button__icon--off'>$icon_off</span>";
+	$html .= "<span class='notification-button__icon notification-button__icon--spinner'></span>";
+	$html .= '</button>';
+
+	return $html;
+}
+
 function pwp_push_set() {
 	return ( get_option( 'pwp_firebase_credentials_set' ) == 'yes' );
 }

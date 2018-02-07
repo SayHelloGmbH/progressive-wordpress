@@ -52,19 +52,10 @@ class Push {
 			$icon_color = '#fff';
 		}
 
-		$dir      = plugin_dir_path( pwp_get_instance()->file ) . 'assets/img/icon/';
-		$icon_on  = $dir . 'bell-ring.svg';
-		$icon_off = $dir . 'bell-off.svg';
-		if ( ! is_file( $icon_on ) || ! is_file( $icon_off ) ) {
-			return;
-		}
-		$icon_on  = file_get_contents( $icon_on );
-		$icon_off = file_get_contents( $icon_off );
+		$class = 'notification-button--fixedfooter';
+		$style = "background-color: $background_color; color: $icon_color; font-size: 35px";
 
-		echo "<button id='pwp-notification-button' class='notification-button' style='background-color: $background_color; color: $icon_color; font-size: 25px'>";
-		echo "<span class='notification-button__icon notification-button__icon--on'>$icon_on</span>";
-		echo "<span class='notification-button__icon notification-button__icon--off'>$icon_off</span>";
-		echo '</button>';
+		echo pwp_get_notification_button( $class, $style );
 	}
 
 	public function footer_js( $args ) {
