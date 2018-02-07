@@ -62,10 +62,12 @@ class Push {
 			$icon_color = '#fff';
 		}
 
-		$class = 'notification-button--fixedfooter';
-		$style = "background-color: $background_color; color: $icon_color; font-size: 35px";
+		$atts = [
+			'class' => 'notification-button--fixedfooter',
+			'style' => "background-color: $background_color; color: $icon_color; font-size: 35px",
+		];
 
-		echo pwp_get_notification_button( $class, $style );
+		echo pwp_get_notification_button( $atts );
 	}
 
 	public function shortcode_template( $atts, $content = '' ) {
@@ -75,10 +77,12 @@ class Push {
 			'class' => '',
 		], $atts );
 
-		$class = $atts['class'];
-		$style = "font-size: {$atts['size']};";
+		$attributes = [
+			'class' => $atts['class'],
+			'style' => "font-size: {$atts['size']};",
+		];
 
-		return pwp_get_notification_button( $class, $style );
+		return pwp_get_notification_button( $attributes );
 	}
 
 	public function footer_js( $args ) {

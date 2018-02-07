@@ -1,6 +1,6 @@
 <?php
 
-function pwp_get_notification_button( $class = '', $style = '' ) {
+function pwp_get_notification_button( $attributes = [] ) {
 	$dir      = plugin_dir_path( pwp_get_instance()->file ) . 'assets/img/icon/';
 	$icon_on  = $dir . 'bell-ring.svg';
 	$icon_off = $dir . 'bell-off.svg';
@@ -10,8 +10,21 @@ function pwp_get_notification_button( $class = '', $style = '' ) {
 	$icon_on  = file_get_contents( $icon_on );
 	$icon_off = file_get_contents( $icon_off );
 
+	$atts       = apply_filters( 'pwp_notification_button_attributes', $attributes );
+	$attributes = [];
+	foreach ( $atts as $key => $val ) {
+		$key = sanitize_title( $key );
+		$val = esc_attr( $val );
+		if ( 'class' == $key ) {
+			$val = 'notification-button ' . $val;
+		}
+		$attributes[] = "$key='$val'";
+	}
+
+	$attributes = implode( ' ', $attributes );
+
 	$html = '';
-	$html .= "<button id='pwp-notification-button' class='notification-button $class' style='$style'>";
+	$html .= "<button id='pwp-notification-button' $attributes>";
 	$html .= "<span class='notification-button__icon notification-button__icon--on'>$icon_on</span>";
 	$html .= "<span class='notification-button__icon notification-button__icon--off'>$icon_off</span>";
 	$html .= "<span class='notification-button__icon notification-button__icon--spinner'></span>";
