@@ -17,8 +17,18 @@ class Push {
 
 		add_action( 'pwp_settings', [ $this, 'settings' ] );
 		add_action( 'pwp_settings', [ $this, 'device_settings' ] );
-		add_action( 'wp_footer', [ $this, 'footer_template' ] );
 		add_filter( 'pwp_footer_js', [ $this, 'footer_js' ] );
+
+		/**
+		 * Notifications Button
+		 */
+
+		add_action( 'wp_footer', [ $this, 'footer_template' ] );
+		add_shortcode( 'pwp_notification_button', [ $this, 'shortcode_template' ] );
+
+		/**
+		 * Ajax
+		 */
 
 		add_action( 'wp_ajax_pwp_ajax_handle_device_id', [ $this, 'handle_device_id' ] );
 		add_action( 'wp_ajax_nopriv_pwp_ajax_handle_device_id', [ $this, 'handle_device_id' ] );
@@ -56,6 +66,19 @@ class Push {
 		$style = "background-color: $background_color; color: $icon_color; font-size: 35px";
 
 		echo pwp_get_notification_button( $class, $style );
+	}
+
+	public function shortcode_template( $atts, $content = '' ) {
+
+		$atts = shortcode_atts( [
+			'size'  => '1rem',
+			'class' => '',
+		], $atts );
+
+		$class = $atts['class'];
+		$style = "font-size: {$atts['size']};";
+
+		return pwp_get_notification_button( $class, $style );
 	}
 
 	public function footer_js( $args ) {
