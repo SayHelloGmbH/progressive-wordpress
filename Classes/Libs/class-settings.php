@@ -224,8 +224,8 @@ class Settings {
 				$return .= "<div class='settings--fileuploader' data-fileid='{$file_id}' $data_atts>";
 				$return .= '<div class="fileuploader__preview">' . $preview . '</div>';
 				$return .= '<p class="fileuploader__controls">';
-				$return .= '<a class="button button-primary select-file">Upload</a>';
-				$return .= '<a class="button button-delete delete-file">Delete</a>';
+				$return .= '<a class="button select-file">Upload</a>';
+				$return .= '<a class="button button--pwp-settings-delete delete-file">Delete</a>';
 				$return .= '</p>';
 				$return .= sprintf( '<input type="hidden" name="%1$s[%2$s]" id="%2$s" value="%3$s" />', $this->option_key, $key, $val );
 				$return .= '</div>';

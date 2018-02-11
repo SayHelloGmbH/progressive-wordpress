@@ -77,7 +77,7 @@ class Manifest {
 			$mime = get_post_mime_type( $icon );
 			foreach ( $sizes as $size ) {
 				$manifest['icons'][] = [
-					'src'   => pwp_register_url( pwp_get_instance()->image_resize( $icon, $size, $size, true )['url'] ),
+					'src'   => pwp_register_url( pwp_get_instance()->image_resize( $icon, $size, $size, true )[0] ),
 					'type'  => $mime,
 					'sizes' => "{$size}x{$size}",
 				];

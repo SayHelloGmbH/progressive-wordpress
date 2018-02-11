@@ -71,6 +71,7 @@ class Plugin {
 		add_action( 'plugins_loaded', array( $this, 'load_plugin_textdomain' ) );
 		add_action( 'admin_init', array( $this, 'update_plugin_data' ) );
 		register_deactivation_hook( pwp_get_instance()->file, array( $this, 'deactivate' ) );
+
 	}
 
 	/**
@@ -111,78 +112,95 @@ class Plugin {
 	 * Helpers
 	 */
 
+	/**
+	 * @param $attach_id
+	 * @param $width
+	 * @param $height
+	 * @param bool $crop
+	 *
+	 * @return false|array Returns an array (url, width, height, is_intermediate), or false, if no image is available.
+	 */
+
 	public function image_resize( $attach_id, $width, $height, $crop = false ) {
 
-		$image_src     = wp_get_attachment_image_src( $attach_id, 'full' );
-		$manifest_path = get_attached_file( $attach_id );
+		/**
+		 * wrong attachment id
+		 */
 
-		$file_info = pathinfo( $manifest_path );
-		$base_file = $file_info['dirname'] . '/' . $file_info['filename'] . '.' . $file_info['extension'];
-		if ( ! file_exists( $base_file ) ) {
-			return;
+		if ( 'attachment' != get_post_type( $attach_id ) ) {
+			return false;
 		}
-		$extension        = '.' . $file_info['extension'];
-		$no_ext_path      = $file_info['dirname'] . '/' . $file_info['filename'];
-		$cropped_img_path = $no_ext_path . '-' . $width . 'x' . $height . $extension;
 
-		if ( $image_src[1] > $width ) {
-			// the file is larger, check if the resized version already exists (for $crop = true but will also work for $crop = false if the sizes match)
-			if ( file_exists( $cropped_img_path ) ) {
-				$cropped_img_url = str_replace( basename( $image_src[0] ), basename( $cropped_img_path ), $image_src[0] );
-				$vt_image        = array(
-					'url'    => $cropped_img_url,
-					'width'  => $width,
-					'height' => $height,
-				);
+		$width  = intval( $width );
+		$height = intval( $height );
 
-				return $vt_image;
-			}
-			if ( $crop == false OR ! $height ) {
+		$src_img       = wp_get_attachment_image_src( $attach_id, 'full' );
+		$src_img_ratio = $src_img[1] / $src_img[2];
+		$src_img_path  = get_attached_file( $attach_id );
 
-				$proportional_size = wp_constrain_dimensions( $image_src[1], $image_src[2], $width, $height );
-				$resized_img_path  = $no_ext_path . '-' . $proportional_size[0] . 'x' . $proportional_size[1] . $extension;
+		/**
+		 * error: somehow file does not exist ¯\_(ツ)_/¯
+		 */
 
-				if ( file_exists( $resized_img_path ) ) {
-					$resized_img_url = str_replace( basename( $image_src[0] ), basename( $resized_img_path ), $image_src[0] );
-					$vt_image        = array(
-						'url'    => $resized_img_url,
-						'width'  => $proportional_size[0],
-						'height' => $proportional_size[1],
-					);
+		if ( ! file_exists( $src_img_path ) ) {
+			return false;
+		}
 
-					return $vt_image;
-				}
-			}
+		$src_img_info = pathinfo( $src_img_path );
 
-			$img_size = getimagesize( $manifest_path );
-			if ( $img_size[0] <= $width ) {
-				$width = $img_size[0];
-			}
+		if ( $crop ) {
+			$new_width  = $width;
+			$new_height = $height;
+		} elseif ( $width / $height <= $src_img_ratio ) {
+			$new_width  = $width;
+			$new_height = 1 / $src_img_ratio * $width;
+		} else {
+			$new_width  = $height * $src_img_ratio;
+			$new_height = $height;
+		}
 
-			if ( ! function_exists( 'imagecreatetruecolor' ) ) {
-				echo 'GD Library Error: imagecreatetruecolor does not exist - please contact your webhost and ask them to install the GD library';
+		$new_width  = round( $new_width );
+		$new_height = round( $new_height );
 
-				return;
-			}
+		/**
+		 * return the source image if the requested is bigger than the original image
+		 */
 
-			@$new_img_path = image_resize( $manifest_path, $width, $height, $crop );
-			$new_img_size = getimagesize( $new_img_path );
-			$new_img      = str_replace( basename( $image_src[0] ), basename( $new_img_path ), $image_src[0] );
+		if ( $new_width > $src_img[1] || $new_height > $src_img[2] ) {
+			return $src_img;
+		}
 
-			$vt_image = array(
-				'url'    => $new_img,
-				'width'  => $new_img_size[0],
-				'height' => $new_img_size[1],
-			);
+		$new_img_path = "{$src_img_info['dirname']}/{$src_img_info['filename']}-{$new_width}x{$new_height}.{$src_img_info['extension']}";
+		$new_img_url  = str_replace( trailingslashit( ABSPATH ), trailingslashit( get_home_url() ), $new_img_path );
 
-			return $vt_image;
-		} // End if().
-		$vt_image = array(
-			'url'    => $image_src[0],
-			'width'  => $width,
-			'height' => $height,
-		);
+		/**
+		 * return if already exists
+		 */
 
-		return $vt_image;
+		if ( file_exists( $new_img_path ) ) {
+			return [
+				$new_img_url,
+				$new_width,
+				$new_height,
+			];
+		}
+
+		/**
+		 * crop, save and return image
+		 */
+
+		$image = wp_get_image_editor( $src_img_path );
+		if ( ! is_wp_error( $image ) ) {
+			$image->resize( $width, $height, $crop );
+			$image->save( $new_img_path );
+
+			return [
+				$new_img_url,
+				$new_width,
+				$new_height,
+			];
+		}
+
+		return false;
 	}
 }

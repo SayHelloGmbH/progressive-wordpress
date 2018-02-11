@@ -135,32 +135,51 @@
   display: none;
 }
 
-.pwp-settings-wrap .form-table td {
+.pwp-wrap .form-table td {
   vertical-align: top;
 }
-.pwp-settings-wrap h1 {
+.pwp-wrap h1 {
   margin-bottom: 20px;
 }
-.pwp-settings-wrap form {
+.pwp-wrap form {
   margin-top: 20px;
 }
-.pwp-settings-wrap form select {
+.pwp-wrap form select {
   width: 150px;
 }
-.pwp-settings-wrap form textarea {
+.pwp-wrap form textarea {
   width: 100%;
 }
-.pwp-settings-wrap .beta p {
+.pwp-wrap .beta p {
   font-size: smaller;
 }
-.pwp-settings-wrap p.error {
+.pwp-wrap p.error {
   font-weight: bold;
   color: red;
 }
-.pwp-settings-wrap .settings-sub {
+.pwp-wrap .settings-sub {
   margin-top: 20px;
   max-width: 430px;
   width: 100%;
+}
+.pwp-wrap .button--pwp-settings-delete {
+  background-color: transparent;
+  border: none;
+  -moz-box-shadow: none;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  color: #a00;
+  padding: 0;
+}
+.pwp-wrap .button--pwp-settings-delete:hover {
+  color: #dc3232;
+}
+.pwp-wrap .button--pwp-settings-delete:active {
+  background-color: transparent;
+  border-color: none;
+  -moz-box-shadow: none;
+  -webkit-box-shadow: none;
+  box-shadow: none;
 }
 
 .pwp-wrap__section {

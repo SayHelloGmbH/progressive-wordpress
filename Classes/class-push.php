@@ -15,8 +15,9 @@ class Push {
 			return;
 		}
 
-		add_action( 'pwp_settings', [ $this, 'settings' ] );
-		add_action( 'pwp_settings', [ $this, 'device_settings' ] );
+		add_action( 'pwp_settings', [ $this, 'settings_button' ] );
+		add_action( 'pwp_settings', [ $this, 'settings_devices' ] );
+		add_action( 'pwp_settings', [ $this, 'settings_push' ] );
 		add_filter( 'pwp_footer_js', [ $this, 'footer_js' ] );
 
 		/**
@@ -36,7 +37,7 @@ class Push {
 		add_action( 'wp_ajax_pwp_push_do_push', [ $this, 'do_modal_push' ] );
 	}
 
-	public function settings() {
+	public function settings_button() {
 		$section_desc = __( 'This adds a fixed push notification button to the bottom of your page.', 'pwp' );
 		$section      = pwp_settings()->add_section( pwp_settings_page_push(), 'pwp_push_button', __( 'Push Button', 'pwp' ), $section_desc );
 
@@ -46,7 +47,7 @@ class Push {
 		pwp_settings()->add_input( $section, 'notification-button-bkg-color', __( 'Background color', 'pwa' ), '#333' );
 	}
 
-	public function device_settings() {
+	public function settings_devices() {
 
 		$devices = get_option( $this->devices_option );
 		$table   = '';
@@ -92,8 +93,19 @@ class Push {
 		$table .= '</table>';
 
 		$section = pwp_settings()->add_section( pwp_settings_page_push(), 'pwp_devices', __( 'Devices', 'pwp' ), "<div class='pwp-devicestable__container'>$table</div>" );
+	}
 
-		//pwp_settings()->add_message( $section, 'notification-button-heading', '', $table );
+	public function settings_push() {
+		$section_desc = __( 'This adds a fixed push notification button to the bottom of your page.', 'pwp' );
+		$section_desc = '';
+		$section      = pwp_settings()->add_section( pwp_settings_page_push(), 'pwp_push_push', __( 'Push default settings', 'pwp' ), $section_desc );
+
+		pwp_settings()->add_file( $section, 'push-badge', __( 'Notification Bar Icon', 'pwp' ), 0, [
+			'mimes'       => 'png',
+			'min-width'   => 96,
+			'min-height'  => 96,
+			'after_field' => '<p class="pwp-smaller">' . __( 'This image will represent the notification when there is not enough space to display the notification itself such as, for example, the Android Notification Bar. It will be automatically masked. For the best result use a single-color graphic with transparent background.', 'pwp' ) . '</p>',
+		] );
 	}
 
 	public function footer_js( $args ) {
@@ -229,7 +241,7 @@ class Push {
 		if ( 'attachment' != get_post_type( $image_id ) ) {
 			$image_id = ''; //todo: get default image
 		}
-		$image_url =  pwp_get_instance()->image_resize( $image_id, 500, 500, true )['url'];
+		$image_url = pwp_get_instance()->image_resize( $image_id, 500, 500, true )[0];
 
 		$data = [
 			'title'     => sanitize_text_field( $_POST['pwp-push-title'] ),
