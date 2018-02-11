@@ -15,9 +15,10 @@ class Push {
 			return;
 		}
 
+		add_action( 'pwp_settings', [ $this, 'settings_push' ] );
 		add_action( 'pwp_settings', [ $this, 'settings_button' ] );
 		add_action( 'pwp_settings', [ $this, 'settings_devices' ] );
-		add_action( 'pwp_settings', [ $this, 'settings_push' ] );
+
 		add_filter( 'pwp_footer_js', [ $this, 'footer_js' ] );
 
 		/**
@@ -35,6 +36,19 @@ class Push {
 		add_action( 'wp_ajax_nopriv_pwp_ajax_handle_device_id', [ $this, 'handle_device_id' ] );
 
 		add_action( 'wp_ajax_pwp_push_do_push', [ $this, 'do_modal_push' ] );
+	}
+
+	public function settings_push() {
+		$section_desc = __( 'This adds a fixed push notification button to the bottom of your page.', 'pwp' );
+		$section_desc = '';
+		$section      = pwp_settings()->add_section( pwp_settings_page_push(), 'pwp_push_push', __( 'Push Notification default settings', 'pwp' ), $section_desc );
+
+		pwp_settings()->add_file( $section, 'push-badge', __( 'Notification Bar Icon', 'pwp' ), 0, [
+			'mimes'       => 'png',
+			'min-width'   => 96,
+			'min-height'  => 96,
+			'after_field' => '<p class="pwp-smaller">' . __( 'This image will represent the notification when there is not enough space to display the notification itself such as, for example, the Android Notification Bar. It will be automatically masked. For the best result use a single-color graphic with transparent background.', 'pwp' ) . '</p>',
+		] );
 	}
 
 	public function settings_button() {
@@ -93,19 +107,6 @@ class Push {
 		$table .= '</table>';
 
 		$section = pwp_settings()->add_section( pwp_settings_page_push(), 'pwp_devices', __( 'Devices', 'pwp' ), "<div class='pwp-devicestable__container'>$table</div>" );
-	}
-
-	public function settings_push() {
-		$section_desc = __( 'This adds a fixed push notification button to the bottom of your page.', 'pwp' );
-		$section_desc = '';
-		$section      = pwp_settings()->add_section( pwp_settings_page_push(), 'pwp_push_push', __( 'Push default settings', 'pwp' ), $section_desc );
-
-		pwp_settings()->add_file( $section, 'push-badge', __( 'Notification Bar Icon', 'pwp' ), 0, [
-			'mimes'       => 'png',
-			'min-width'   => 96,
-			'min-height'  => 96,
-			'after_field' => '<p class="pwp-smaller">' . __( 'This image will represent the notification when there is not enough space to display the notification itself such as, for example, the Android Notification Bar. It will be automatically masked. For the best result use a single-color graphic with transparent background.', 'pwp' ) . '</p>',
-		] );
 	}
 
 	public function footer_js( $args ) {
