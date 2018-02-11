@@ -32,6 +32,8 @@ class Push {
 
 		add_action( 'wp_ajax_pwp_ajax_handle_device_id', [ $this, 'handle_device_id' ] );
 		add_action( 'wp_ajax_nopriv_pwp_ajax_handle_device_id', [ $this, 'handle_device_id' ] );
+
+		add_action( 'wp_ajax_pwp_push_do_push', [ $this, 'do_modal_push' ] );
 	}
 
 	public function settings() {
@@ -79,7 +81,8 @@ class Push {
 				}
 				$table .= '</td>';
 				$table .= '<td>';
-				$table .= '<span class="devices-actions devices-actions--send"><a class="button" onclick="alert(\'Sorry not yet ready\');">send push</a></span>';
+				//$table .= '<span class="devices-actions devices-actions--send"><a class="button" onclick="alert(\'Sorry not yet ready\');">send push</a></span>';
+				$table .= $this->render_push_modal( '', '', '', 177, $device['id'] );
 				$table .= '<span class="devices-actions devices-actions--delete"><a id="pwpDeleteDevice" data-deviceid="' . $device['id'] . '" class="button button-pwpdelete">' . __( 'Remove device', 'pwp' ) . '</a></span>';
 				$table .= '</td>';
 				$table .= '</tr>';
@@ -92,6 +95,17 @@ class Push {
 
 		//pwp_settings()->add_message( $section, 'notification-button-heading', '', $table );
 	}
+
+	public function footer_js( $args ) {
+		$args['message_pushremove_failed'] = __( 'Gerät konnte nicht entfernt werden.', 'pwp' );
+		$args['message_pushadd_failed']    = __( 'Gerät konnte nicht registriert werden.', 'pwp' );
+
+		return $args;
+	}
+
+	/**
+	 * notification Button
+	 */
 
 	public function footer_template() {
 		$background_color = pwp_get_setting( 'notification-button-bkg-color' );
@@ -126,12 +140,9 @@ class Push {
 		return pwp_get_notification_button( $attributes );
 	}
 
-	public function footer_js( $args ) {
-		$args['message_pushremove_failed'] = __( 'Gerät konnte nicht entfernt werden.', 'pwp' );
-		$args['message_pushadd_failed']    = __( 'Gerät konnte nicht registriert werden.', 'pwp' );
-
-		return $args;
-	}
+	/**
+	 * Ajax
+	 */
 
 	public function handle_device_id() {
 
@@ -197,7 +208,7 @@ class Push {
 		if ( $do_first_push ) {
 			$data = [
 				'title'    => 'hello!',
-				'body'     => __( 'Sie werden von nun an auf diesem Weg ab und zu ausgewählte Neuigkeiten erhalten.', 'sht' ),
+				'body'     => __( 'Sie werden von nun an auf diesem Weg ab und zu ausgewählte Neuigkeiten erhalten.', 'pwp' ),
 				'redirect' => '',
 				'groups'   => [
 					$device_id,
@@ -207,6 +218,261 @@ class Push {
 		}
 		*/
 		pwp_exit_ajax( 'success', "Device ID $device_id successfully $handled" );
+	}
+
+	public function do_modal_push() {
+		if ( ! wp_verify_nonce( $_POST['pwp-push-nonce'], 'pwp-push-action' ) ) {
+			sht_exit_ajax( 'success', 'Error' );
+		}
+
+		$image_id = $_POST['pwp-push-image'];
+		if ( 'attachment' != get_post_type( $image_id ) ) {
+			$image_id = ''; //todo: get default image
+		}
+		$image_url =  pwp_get_instance()->image_resize( $image_id, 500, 500, true )['url'];
+
+		$data = [
+			'title'     => sanitize_text_field( $_POST['pwp-push-title'] ),
+			'body'      => sanitize_text_field( $_POST['pwp-push-body'] ),
+			'redirect'  => esc_url_raw( $_POST['pwp-push-url'] ),
+			'image_url' => esc_url_raw( $image_url ),
+			'groups'    => [],
+		];
+
+		if ( '' != $_POST['pwp-push-limit'] ) {
+			$post_groups = explode( ', ', $_POST['sht-push-limit'] );
+			foreach ( $post_groups as $group ) {
+				$data['groups'][] = $group;
+			}
+		}
+
+		$return = $this->do_push( $data );
+
+		sht_exit_ajax( $return['type'], $return['message'], $return );
+	}
+
+	/**
+	 * Send push
+	 */
+
+	private function render_push_modal( $title = '', $body = '', $url = '', $image_id = 0, $limit = '' ) {
+
+		if ( is_admin() ) {
+			add_thickbox();
+			wp_enqueue_media();
+		}
+
+		$image_thumbnail = '';
+		if ( 'attachment' != get_post_type( $image_id ) ) {
+			$image_id = 0;
+		} else {
+			$image_thumbnail = wp_get_attachment_image( $image_id );
+		}
+
+		if ( '' == $url ) {
+			$url = trailingslashit( get_home_url() );
+		}
+
+		$fields = [
+			'title' => [
+				'name'  => __( 'Title', 'pwp' ),
+				'value' => $title,
+			],
+			'body'  => [
+				'name'  => __( 'Body', 'pwp' ),
+				'value' => $body,
+			],
+			'url'   => [
+				'name'  => __( 'URL', 'pwp' ),
+				'value' => $url,
+			],
+			'image' => [
+				'name'  => __( 'Image', 'pwp' ),
+				'value' => $image_id,
+			],
+		];
+
+		$r = '';
+		$r .= '<a id="pwp-pushmodal-trigger" href="#TB_inline&inlineId=pwp-pushmodal-container&width=400&height=510" class="thickbox button">' . __( 'Create push notification', 'pwp' ) . '</a>';
+		$r .= '<div id="pwp-pushmodal-container" style="display: none;">';
+		$r .= '<div class="pwp-pushmodal">';
+		$r .= '<h3>' . __( 'New Push-Notification', 'pwp' ) . '</h3>';
+		if ( '' != $limit ) {
+			$r .= '<b>' . __( 'This notification will be sent to the selected device.', 'pwp' ) . '</b><br><br>';
+		}
+		foreach ( $fields as $key => $args ) {
+			$r .= "<label class='pwp-pushmodal__label pwp-pushmodal__label--$key'><b>{$args['name']}:</b>";
+			if ( 'image' == $key ) {
+				$r .= "<input type='hidden' name='pwp-push-{$key}' value='{$args['value']}' />";
+				$r .= '<span class="pwpmodal-uploader">';
+				$r .= '<span class="pwpmodal-uploader__image">' . $image_thumbnail . '</span><a id="uploadImage" class="button">' . __( 'upload image', 'pwp' ) . '</a><a id="removeImage" class="button button-pwpdelete">' . __( 'remove image', 'pwp' ) . '</a>';
+				$r .= '</span>';
+			} else {
+				$r .= "<input type='text' name='pwp-push-{$key}' value='{$args['value']}' />";
+			}
+			$r .= '</label>';
+		}
+		$r .= "<input type='hidden' name='pwp-push-limit' value='$limit' />";
+		$r .= '<input type="hidden" name="pwp-push-action" value="pwp_push_do_push" />';
+		$r .= wp_nonce_field( 'pwp-push-action', 'pwp-push-nonce', true, false );
+		$r .= '<div class="pwp-pushmodal__label pwp-pushmodal__controls"><a id="send" class="button button-primary">' . __( 'Send push', 'pwp' ) . '</a></div>';
+		$r .= '<div class="loader"></div>';
+		$r .= '</div>';
+		$r .= '</div>';
+
+		return $r;
+	}
+
+	private function do_push( $data ) {
+
+		return [
+			'type'    => 'error',
+			'message' => 'Not yet ready',
+		];
+
+		/*
+
+		$send_tos = $data['groups'];
+		unset( $data['groups'] );
+
+		$devices = [];
+		foreach ( get_option( $this->devices_option ) as $device_data ) {
+			$add_device = false;
+			if ( empty( $send_tos ) ) {
+				// send if no limitation set
+				$add_device = true;
+			} else {
+				foreach ( $send_tos as $send_to ) {
+					if ( in_array( $send_to, $device_data['groups'] ) ) {
+						$add_device = true;
+					} elseif ( $device_data['id'] == $send_to ) {
+						$add_device = true;
+					}
+				}
+			}
+			if ( $add_device ) {
+				$devices[] = $device_data['id'];
+			}
+		}
+
+		if ( ! is_array( $devices ) || count( $devices ) == 0 ) {
+			return [
+				'type'    => 'error',
+				'message' => 'No devices set',
+			];
+		}
+
+		if ( strlen( $this->server_key ) < 8 ) {
+			return [
+				'type'    => 'error',
+				'message' => 'Server API Key not set',
+			];
+		}
+
+		$badge = get_field( hello_theme()->pfx . '-notification-bar-icon', 'option' );
+		if ( array_key_exists( 'image_url', $data ) ) {
+			$icon_url = $data['image_url'];
+		} else {
+			$image_id = get_field( hello_theme()->pfx . '-manifest-icon', 'option' );
+			$icon_url = self::image_resize( $image_id, 500, 500, true )['url'];
+		}
+
+		$data = shortcode_atts( [
+			'title'    => 'Say Hello GmbH', // Notification title
+			'badge'    => ( $badge ? self::image_resize( $badge, 96, 96, true )['url'] : '' ), // small Icon for the notificaion bar (96x96 px, png)
+			'body'     => '', // Notification message
+			'icon'     => $icon_url, // small image
+			'image'    => '', // bigger image
+			'redirect' => '', // url
+		], $data );
+
+		$fields = [
+			'registration_ids' => $devices,
+			'data'             => [
+				'message' => $data,
+			],
+		];
+
+		file_put_contents( $this->latest_push_path, json_encode( $data ) );
+
+		$headers = [
+			'Authorization: key=' . $this->server_key,
+			'Content-Type: application/json',
+		];
+
+		$ch = curl_init();
+
+		curl_setopt( $ch, CURLOPT_URL, 'https://android.googleapis.com/gcm/send' );
+		curl_setopt( $ch, CURLOPT_POST, true );
+		curl_setopt( $ch, CURLOPT_HTTPHEADER, $headers );
+		curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
+		curl_setopt( $ch, CURLOPT_POSTFIELDS, json_encode( $fields ) );
+		curl_setopt( $ch, CURLOPT_SSL_VERIFYHOST, false );
+		curl_setopt( $ch, CURLOPT_SSL_VERIFYPEER, false );
+		$result = curl_exec( $ch );
+		curl_close( $ch );
+
+		$result = json_decode( $result, true );
+
+		*/
+
+		/**
+		 * Check for failed push keys
+		 */
+
+		/*
+
+		$success = [];
+		$failed  = [];
+		foreach ( $result['results'] as $key => $answer ) {
+			if ( array_key_exists( 'error', $answer ) ) {
+				$failed[] = $devices[ $key ];
+			} else {
+				$success[] = $devices[ $key ];
+			}
+		}
+
+		*/
+
+		/**
+		 * remove failed push keys
+		 */
+
+		/*
+
+		if ( ! empty( $failed ) ) {
+			$old_devices = get_option( $this->devices_option );
+			foreach ( $failed as $f ) {
+				$f_key = sanitize_key( $f );
+				unset( $old_devices[ $f_key ] );
+			}
+			update_option( $this->devices_option, $old_devices );
+		}
+
+		*/
+
+		/**
+		 * Save Push
+		 */
+
+		/*
+
+		$latest_pushes = get_option( $this->latestpushes_option );
+		if ( ! is_array( $latest_pushes ) ) {
+			$latest_pushes = [];
+		}
+		$latest_pushes[ time() ] = array_merge( $data, [
+			'failed'  => count( $failed ),
+			'success' => count( $success ),
+			'groups'  => $send_tos,
+		] );
+		update_option( $this->latestpushes_option, $latest_pushes );
+
+		return [
+			'type'    => 'success',
+			'message' => '',
+		];
+		*/
 	}
 
 	/**

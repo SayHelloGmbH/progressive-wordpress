@@ -19,6 +19,7 @@ $default-transition-duration: $settings_easing_speed + 0ms;
 }
 
 @import "admin/pwp-text";
+@import "admin/pwp-pushmodal";
 @import "admin/settings-wrap";
 @import "admin/pwp-wrap";
 @import "admin/devices-table";

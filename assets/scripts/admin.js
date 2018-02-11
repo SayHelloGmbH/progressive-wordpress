@@ -69,7 +69,8 @@
 
 __webpack_require__(1);
 __webpack_require__(2);
-module.exports = __webpack_require__(3);
+__webpack_require__(3);
+module.exports = __webpack_require__(4);
 
 
 /***/ }),
@@ -127,6 +128,104 @@ module.exports = __webpack_require__(3);
 "use strict";
 
 
+(function ($, plugin, wp) {
+
+	$(function () {
+
+		$('input[name=pwp-push-image]').each(function () {
+
+			var $e = $(this);
+			var $container = $e.parent().find('.pwpmodal-uploader');
+			var $upload = $container.find('#uploadImage');
+			var $delete = $container.find('#removeImage');
+			var $preview = $container.find('.pwpmodal-uploader__image');
+
+			var frame = void 0;
+
+			$e.addClass('pwpmodal-input');
+
+			$upload.on('click', function () {
+				frame = wp.media({
+					title: 'Select or Upload a file',
+					button: {
+						text: 'Select file'
+					},
+					multiple: false,
+					filters: {
+						type: 'jpg'
+					}
+				});
+
+				frame.on('select', function () {
+
+					var attachment = frame.state().get('selection').first().toJSON();
+
+					var preview = '';
+
+					if (attachment.type === 'image') {
+						preview = '<img src=\'' + attachment.sizes.thumbnail.url + '\' />';
+					} else {
+						preview = '<a target="_blank" href="' + attachment.url + '">' + attachment.title + '</a> (' + attachment.mime + ')';
+					}
+
+					$preview.html(preview);
+					$e.val(attachment.id);
+				});
+
+				frame.open();
+			});
+
+			$delete.on('click', function () {
+				$e.val(0);
+				$preview.html('');
+			});
+		});
+
+		$('.pwp-pushmodal').each(function () {
+
+			var $container = $(this);
+			var $loader = $container.find('.loader');
+			var $button = $container.find('#send');
+
+			$button.on('click', function () {
+
+				$loader.fadeIn();
+
+				var data = {};
+				data['action'] = $container.find('input[name=pwp-push-action]').val();
+				$container.find('input, select').each(function () {
+					data[$(this).attr('name')] = $(this).val();
+				});
+
+				$.ajax({
+					url: plugin['AjaxURL'],
+					type: 'POST',
+					dataType: 'json',
+					data: data
+				}).always(function (data) {
+
+					if (data['type'] === null || data['type'] !== 'success') {
+
+						var msg_content = data['message'];
+						if (msg_content === '' || typeof msg_content === 'undefined') {
+							msg_content = plugin['GeneralError'];
+						}
+						alert(msg_content);
+					}
+					$loader.fadeOut();
+				});
+			});
+		});
+	});
+})(jQuery, PwpJsVars, wp);
+
+/***/ }),
+/* 4 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
 (function ($, theme, wp) {
 	$(function () {
 
@@ -170,7 +269,6 @@ module.exports = __webpack_require__(3);
 				frame.on('select', function () {
 
 					var attachment = frame.state().get('selection').first().toJSON();
-					console.log(attachment);
 					var errors = [];
 
 					if (checkMime !== '') {
