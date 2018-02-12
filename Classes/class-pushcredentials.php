@@ -78,25 +78,24 @@ class PushCredentials {
 			return $data;
 		}
 
+		$has_error = false;
 		/**
 		 * validate server key
 		 */
-		$error       = false;
-		$server_key  = $data['firebase-serverkey'];
-		$first_block = explode( ':', $server_key )[0];
-		if ( 152 != strlen( $server_key ) || 11 != strlen( $first_block ) ) {
-			$error = true;
+		if ( ! $this->validate_serverkey( $data['firebase-serverkey'] ) ) {
+			$has_error = true;
 		}
 
 		/**
 		 * validate sender ID
 		 */
+
 		$data['firebase-senderid'] = intval( $data['firebase-senderid'] );
 		if ( 0 == $data['firebase-senderid'] ) {
-			$error = true;
+			$has_error = true;
 		}
 
-		update_option( $this->cred_option, ( $error ? 'error' : 'yes' ) );
+		update_option( $this->cred_option, ( $has_error ? 'error' : 'yes' ) );
 
 		return $data;
 	}
@@ -144,33 +143,16 @@ class PushCredentials {
 		return $args;
 	}
 
-	/*
-	public function do_push( $server_key = '', $fields ) {
+	/**
+	 * Helpers
+	 */
 
-		if ( '' == $server_key ) {
-			$server_key = pwp_get_setting( 'firebase-serverkey' );
+	public function validate_serverkey( $server_key ) {
+		$first_block = explode( ':', $server_key )[0];
+		if ( 152 != strlen( $server_key ) || 11 != strlen( $first_block ) ) {
+			return false;
 		}
 
-		$headers = [
-			'Authorization: key=' . $server_key,
-			'Content-Type: application/json',
-		];
-
-		$ch = curl_init();
-
-		curl_setopt( $ch, CURLOPT_URL, 'https://android.googleapis.com/gcm/send' );
-		curl_setopt( $ch, CURLOPT_POST, true );
-		curl_setopt( $ch, CURLOPT_HTTPHEADER, $headers );
-		curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
-		curl_setopt( $ch, CURLOPT_POSTFIELDS, json_encode( $fields ) );
-		curl_setopt( $ch, CURLOPT_SSL_VERIFYHOST, false );
-		curl_setopt( $ch, CURLOPT_SSL_VERIFYPEER, false );
-		$result = curl_exec( $ch );
-		curl_close( $ch );
-
-		$result = json_decode( $result, true );
-
-		return $result;
+		return true;
 	}
-	*/
 }

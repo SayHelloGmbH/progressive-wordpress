@@ -55,6 +55,7 @@
 
 			const $container = $(this);
 			const $loader = $container.find('.loader');
+			const $success = $container.find('.success');
 			const $button = $container.find('#send');
 
 			$button.on('click', function () {
@@ -77,11 +78,13 @@
 					if (data['type'] === null || data['type'] !== 'success') {
 
 						let msg_content = data['message'];
-						if (msg_content === '' || typeof msg_content === 'undefined' ) {
+						if (msg_content === '' || typeof msg_content === 'undefined') {
 							msg_content = plugin['GeneralError'];
 						}
 						alert(msg_content);
 
+					} else {
+						$success.fadeIn();
 					}
 					$loader.fadeOut();
 				});

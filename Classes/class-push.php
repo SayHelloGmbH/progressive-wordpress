@@ -5,15 +5,22 @@ namespace nicomartin\ProgressiveWordPress;
 class Push {
 
 	public $devices_option = 'pwp-push-devices';
+	public $latestpushes_option = 'pwp-latest-pushes';
+	public $latest_push_path = '';
+	public $latest_push_url = '';
 
 	public function __construct() {
-
+		$this->latest_push_path          = WP_CONTENT_DIR . '/pwp-latest-push.json';
+		$this->latest_push_url           = content_url() . '/pwp-latest-push.json';
+		$GLOBALS['pwp_push_modal_count'] = 0;
 	}
 
 	public function run() {
 		if ( ! pwp_push_set() ) {
 			return;
 		}
+
+		add_filter( 'pwp_sw_content', [ $this, 'sw_content' ], 1 );
 
 		add_action( 'pwp_settings', [ $this, 'settings_push' ] );
 		add_action( 'pwp_settings', [ $this, 'settings_button' ] );
@@ -38,11 +45,26 @@ class Push {
 		add_action( 'wp_ajax_pwp_push_do_push', [ $this, 'do_modal_push' ] );
 	}
 
-	public function settings_push() {
-		$section_desc = __( 'This adds a fixed push notification button to the bottom of your page.', 'pwp' );
-		$section_desc = '';
-		$section      = pwp_settings()->add_section( pwp_settings_page_push(), 'pwp_push_push', __( 'Push Notification default settings', 'pwp' ), $section_desc );
+	public function sw_content( $content ) {
 
+		$push_content = '';
+		$push_file    = plugin_dir_path( pwp_get_instance()->file ) . '/assets/serviceworker/push.js';
+		if ( file_exists( $push_file ) ) {
+
+			$push_content .= file_get_contents( $push_file );
+		} else {
+			return $content;
+		}
+
+		return $content . $push_content;
+
+	}
+
+	public function settings_push() {
+
+		$section = pwp_settings()->add_section( pwp_settings_page_push(), 'pwp_push_push', __( 'Push Notification settings', 'pwp' ) );
+
+		pwp_settings()->add_checkbox( $section, 'push-failed-remove', __( 'Remove devices if failed once', 'pwp' ), false );
 		pwp_settings()->add_file( $section, 'push-badge', __( 'Notification Bar Icon', 'pwp' ), 0, [
 			'mimes'       => 'png',
 			'min-width'   => 96,
@@ -65,9 +87,10 @@ class Push {
 
 		$devices = get_option( $this->devices_option );
 		$table   = '';
-		$table   .= '<table class="pwp-devicestable">';
-		$table   .= '<thead><tr><th>' . __( 'Device', 'pwp' ) . '</th><th>' . __( 'Registered', 'pwp' ) . '</th><th></th></tr></thead>';
-		$table   .= '<tbody>';
+		//$table   .= '<pre>' . print_r( $devices, true ) . '</pre>';
+		$table .= '<table class="pwp-devicestable">';
+		$table .= '<thead><tr><th>' . __( 'Device', 'pwp' ) . '</th><th>' . __( 'Registered', 'pwp' ) . '</th><th></th></tr></thead>';
+		$table .= '<tbody>';
 		if ( empty( $devices ) ) {
 			$table .= '<tr><td colspan="3" class="empty">' . __( 'No devices registered', 'pwp' ) . '</td></tr>';
 		} else {
@@ -97,7 +120,7 @@ class Push {
 				$table .= '</td>';
 				$table .= '<td>';
 				//$table .= '<span class="devices-actions devices-actions--send"><a class="button" onclick="alert(\'Sorry not yet ready\');">send push</a></span>';
-				$table .= $this->render_push_modal( '', '', '', 177, $device['id'] );
+				$table .= $this->render_push_modal( '', '', '', 0, $device['id'] );
 				$table .= '<span class="devices-actions devices-actions--delete"><a id="pwpDeleteDevice" data-deviceid="' . $device['id'] . '" class="button button-pwpdelete">' . __( 'Remove device', 'pwp' ) . '</a></span>';
 				$table .= '</td>';
 				$table .= '</tr>';
@@ -235,14 +258,17 @@ class Push {
 
 	public function do_modal_push() {
 		if ( ! wp_verify_nonce( $_POST['pwp-push-nonce'], 'pwp-push-action' ) ) {
-			sht_exit_ajax( 'success', 'Error' );
+			pwp_exit_ajax( 'success', 'Error' );
 		}
 
-		$image_id = $_POST['pwp-push-image'];
-		if ( 'attachment' != get_post_type( $image_id ) ) {
-			$image_id = ''; //todo: get default image
+		$image_id  = $_POST['pwp-push-image'];
+		$image_url = '';
+		if ( 'attachment' == get_post_type( $image_id ) ) {
+			$image = pwp_get_instance()->image_resize( $image_id, 500, 500, true );
+			if ( $image ) {
+				$image_url = $image[0];
+			}
 		}
-		$image_url = pwp_get_instance()->image_resize( $image_id, 500, 500, true )[0];
 
 		$data = [
 			'title'     => sanitize_text_field( $_POST['pwp-push-title'] ),
@@ -253,7 +279,7 @@ class Push {
 		];
 
 		if ( '' != $_POST['pwp-push-limit'] ) {
-			$post_groups = explode( ', ', $_POST['sht-push-limit'] );
+			$post_groups = explode( ', ', $_POST['pwp-push-limit'] );
 			foreach ( $post_groups as $group ) {
 				$data['groups'][] = $group;
 			}
@@ -261,7 +287,7 @@ class Push {
 
 		$return = $this->do_push( $data );
 
-		sht_exit_ajax( $return['type'], $return['message'], $return );
+		pwp_exit_ajax( $return['type'], $return['message'], $return );
 	}
 
 	/**
@@ -305,9 +331,17 @@ class Push {
 			],
 		];
 
+		$icon      = '';
+		$icon_path = plugin_dir_path( pwp_get_instance()->file ) . 'assets/img/icon/check.svg';
+		if ( file_exists( $icon_path ) ) {
+			$icon = file_get_contents( $icon_path );
+		}
+
+		$GLOBALS['pwp_push_modal_count'] ++;
+
 		$r = '';
-		$r .= '<a id="pwp-pushmodal-trigger" href="#TB_inline&inlineId=pwp-pushmodal-container&width=400&height=510" class="thickbox button">' . __( 'Create push notification', 'pwp' ) . '</a>';
-		$r .= '<div id="pwp-pushmodal-container" style="display: none;">';
+		$r .= '<a id="pwp-pushmodal-trigger" href="#TB_inline&inlineId=pwp-pushmodal-container-' . $GLOBALS['pwp_push_modal_count'] . '&width=400&height=510" class="thickbox button">' . __( 'Create push notification', 'pwp' ) . '</a>';
+		$r .= '<div id="pwp-pushmodal-container-' . $GLOBALS['pwp_push_modal_count'] . '" style="display: none;">';
 		$r .= '<div class="pwp-pushmodal">';
 		$r .= '<h3>' . __( 'New Push-Notification', 'pwp' ) . '</h3>';
 		if ( '' != $limit ) {
@@ -330,6 +364,7 @@ class Push {
 		$r .= wp_nonce_field( 'pwp-push-action', 'pwp-push-nonce', true, false );
 		$r .= '<div class="pwp-pushmodal__label pwp-pushmodal__controls"><a id="send" class="button button-primary">' . __( 'Send push', 'pwp' ) . '</a></div>';
 		$r .= '<div class="loader"></div>';
+		$r .= '<div class="success"><div class="success__content">' . $icon . __( 'Notifications have been sent', 'pwp' ) . '</div></div>';
 		$r .= '</div>';
 		$r .= '</div>';
 
@@ -338,12 +373,13 @@ class Push {
 
 	private function do_push( $data ) {
 
-		return [
-			'type'    => 'error',
-			'message' => 'Not yet ready',
-		];
-
-		/*
+		$server_key = pwp_get_setting( 'firebase-serverkey' );
+		if ( ! pwp_get_instance()->PushCredentials->validate_serverkey( $server_key ) ) {
+			return [
+				'type'    => 'error',
+				'message' => __( 'Invalid firebase server key', 'pwp' ),
+			];
+		}
 
 		$send_tos = $data['groups'];
 		unset( $data['groups'] );
@@ -356,9 +392,7 @@ class Push {
 				$add_device = true;
 			} else {
 				foreach ( $send_tos as $send_to ) {
-					if ( in_array( $send_to, $device_data['groups'] ) ) {
-						$add_device = true;
-					} elseif ( $device_data['id'] == $send_to ) {
+					if ( $device_data['id'] == $send_to ) {
 						$add_device = true;
 					}
 				}
@@ -371,30 +405,40 @@ class Push {
 		if ( ! is_array( $devices ) || count( $devices ) == 0 ) {
 			return [
 				'type'    => 'error',
-				'message' => 'No devices set',
+				'message' => __( 'No devices set', 'pwp' ),
 			];
 		}
 
-		if ( strlen( $this->server_key ) < 8 ) {
-			return [
-				'type'    => 'error',
-				'message' => 'Server API Key not set',
-			];
-		}
+		/**
+		 * Badge
+		 */
 
-		$badge = get_field( hello_theme()->pfx . '-notification-bar-icon', 'option' );
-		if ( array_key_exists( 'image_url', $data ) ) {
-			$icon_url = $data['image_url'];
+		$badge     = pwp_get_setting( 'push-badge' );
+		$badge_url = '';
+		if ( 'attachment' == get_post_type( $badge ) ) {
+			$badge_image = pwp_get_instance()->image_resize( $badge, 96, 96, true );
+			if ( $badge_image ) {
+				$badge_url = $badge_image[0];
+			}
 		} else {
-			$image_id = get_field( hello_theme()->pfx . '-manifest-icon', 'option' );
-			$icon_url = self::image_resize( $image_id, 500, 500, true )['url'];
+			$badge_url = '';
 		}
+
+		/**
+		 * Icon
+		 */
+
+		$data['icon'] = $data['image_url'];
+
+		/**
+		 * Full data
+		 */
 
 		$data = shortcode_atts( [
 			'title'    => 'Say Hello GmbH', // Notification title
-			'badge'    => ( $badge ? self::image_resize( $badge, 96, 96, true )['url'] : '' ), // small Icon for the notificaion bar (96x96 px, png)
+			'badge'    => $badge_url, // small Icon for the notificaion bar (96x96 px, png)
 			'body'     => '', // Notification message
-			'icon'     => $icon_url, // small image
+			'icon'     => '', // small image
 			'image'    => '', // bigger image
 			'redirect' => '', // url
 		], $data );
@@ -409,7 +453,7 @@ class Push {
 		file_put_contents( $this->latest_push_path, json_encode( $data ) );
 
 		$headers = [
-			'Authorization: key=' . $this->server_key,
+			'Authorization: key=' . $server_key,
 			'Content-Type: application/json',
 		];
 
@@ -427,48 +471,41 @@ class Push {
 
 		$result = json_decode( $result, true );
 
-		*/
+		return [
+			'type'    => 'success',
+			'message' => '',
+			'result'  => $result,
+		];
 
 		/**
-		 * Check for failed push keys
+		 * Check for failed push keys and remove them
 		 */
-
-		/*
 
 		$success = [];
 		$failed  = [];
-		foreach ( $result['results'] as $key => $answer ) {
-			if ( array_key_exists( 'error', $answer ) ) {
-				$failed[] = $devices[ $key ];
-			} else {
-				$success[] = $devices[ $key ];
+
+		if ( pwp_get_setting( 'push-failed-remove' ) ) {
+			foreach ( $result['results'] as $key => $answer ) {
+				if ( array_key_exists( 'error', $answer ) ) {
+					$failed[] = $devices[ $key ];
+				} else {
+					$success[] = $devices[ $key ];
+				}
+			}
+
+			if ( ! empty( $failed ) ) {
+				$old_devices = get_option( $this->devices_option );
+				foreach ( $failed as $f ) {
+					$f_key = sanitize_key( $f );
+					unset( $old_devices[ $f_key ] );
+				}
+				update_option( $this->devices_option, $old_devices );
 			}
 		}
-
-		*/
-
-		/**
-		 * remove failed push keys
-		 */
-
-		/*
-
-		if ( ! empty( $failed ) ) {
-			$old_devices = get_option( $this->devices_option );
-			foreach ( $failed as $f ) {
-				$f_key = sanitize_key( $f );
-				unset( $old_devices[ $f_key ] );
-			}
-			update_option( $this->devices_option, $old_devices );
-		}
-
-		*/
 
 		/**
 		 * Save Push
 		 */
-
-		/*
 
 		$latest_pushes = get_option( $this->latestpushes_option );
 		if ( ! is_array( $latest_pushes ) ) {
@@ -485,7 +522,6 @@ class Push {
 			'type'    => 'success',
 			'message' => '',
 		];
-		*/
 	}
 
 	/**

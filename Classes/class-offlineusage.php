@@ -76,13 +76,6 @@ class Offlineusage {
 			$offline_content = str_replace( "{{{$key}}}", $val, $offline_content );
 		}
 
-		$path = plugin_dir_path( pwp_get_instance()->file ) . 'Classes/Libs';
-		require_once $path . '/minify/autoload.php';
-		require_once $path . '/path-converter/autoload.php';
-		$minifier = new \MatthiasMullie\Minify\JS( $offline_content );
-
-		$offline_content = $minifier->minify();
-
 		return $content . $offline_content;
 
 	}

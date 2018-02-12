@@ -185,6 +185,7 @@ module.exports = __webpack_require__(4);
 
 			var $container = $(this);
 			var $loader = $container.find('.loader');
+			var $success = $container.find('.success');
 			var $button = $container.find('#send');
 
 			$button.on('click', function () {
@@ -211,6 +212,8 @@ module.exports = __webpack_require__(4);
 							msg_content = plugin['GeneralError'];
 						}
 						alert(msg_content);
+					} else {
+						$success.fadeIn();
 					}
 					$loader.fadeOut();
 				});
