@@ -1,10 +1,10 @@
-=== Progressive WordPress ===
+=== Progressive WordPress (PWA) ===
 Contributors: nico_martin
 Donate link: https://www.paypal.me/NicoMartin
 Tags: PWA, Progressive Web App, Progressive Web Application, progressive, installable, offline, offline usage, push notifications, manifest, web app manifest, serviceworker
 Requires at least: 4.7
 Tested up to: 4.9.2
-Stable tag: 0.4.0
+Stable tag: 0.5.0
 Requires PHP: 5.4
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -31,7 +31,20 @@ A copy of each page is stored in the browser cache as the visitor views it. This
 
 = Push notifications =
 
-Coming soon..
+**Send push notifications from the WP Admin interface!**
+
+This plugin uses Firebase Cloud Messaging as a messaging service: [https://firebase.google.com/](https://firebase.google.com/)
+Please register your application there. You will need the `Server Key` and the `Sender ID`.
+
+Progressive WordPress comes with an integrated notification button where the user can register an unregister for push notification. You can either use the built in fixed button from the admin panel or you can add your own button as a shortcode `[pwp_notification_button size="1rem"]`.
+You are also free to create your own button. The states are indicated as body classes:
+* `body.pwp-notification` if push notifications are supported
+* `body.pwp-notification.pwp-notification--on` if the device is registered
+* `body.pwp-notification.pwp-notification--loader` if there is something loading
+
+You can then use `pwpRegisterPushDevice()` and `pwpDeregisterPushDevice()` as JavaScript functions from the widow object.
+
+After those steps you will have an overview about all registered devices, you can manage them and you can send push notifications to all of them or selected devices. Awesome, right!?
 
 == Screenshots ==
 
@@ -39,6 +52,9 @@ Coming soon..
 2. Create a Web App Manifest..
 3. ..no coding skills required
 4. Make your app ready for offline use
+5. Manage the registered devices
+6. create a push notification from the admin intefrace
+7. let the magic happen
 
 == Installation ==
 
@@ -48,9 +64,16 @@ Coming soon..
 
 == Frequently Asked Questions ==
 
-= No questions yet =
+= Nothing happens after installation =
 
-There are no questions so far. Please use the support forum. I'll update this section as soon as there are actually some FAQs.
+1. Please visit the "Status" section on the "About" page. Everything green?
+2. Are you using a device/browser that supports serviceworkers? [https://caniuse.com/#feat=serviceworkers](https://caniuse.com/#feat=serviceworkers)
+
+If they are both allright, please contact me at nico@sayhello.ch
+
+= Does it also work on iOS? =
+
+No. At the moment, iOS does not support serviceworkers. Right now (February 2018), the support aleady in beta phase and planned for the next version of Safari. So it will only be a matter of weeks!
 
 == Contribute ==
 
@@ -58,6 +81,15 @@ A development version of this plugin is hosted on GitHub. If you have any ideas 
 [https://github.com/nico-martin/progressive-wordpress](https://github.com/nico-martin/progressive-wordpress)
 
 == Changelog ==
+
+= 0.5.0 =
+* Added push notifications!
+    * let the user manage their subscription
+    * manage all registered deivces
+    * send push notifications to all or specific devices
+* added ad status checks
+* force the browser to unregister all other serviceworkers
+* minor bugfixes and improvements
 
 = 0.4.0 =
 * you can now change the manifest start_url

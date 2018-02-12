@@ -1,11 +1,11 @@
 <?php
 
 /*
-Plugin Name: Progressive WordPress
+Plugin Name: Progressive WordPress (PWA)
 Plugin URI: https://github.com/nico-martin/progressive-wordpress
-Description: This plugin adds progressive web app features to your WordPress site.
+Description: Turn your website into a Progressive Web App and make it installable, offline ready and send push notifications.
 Author: Nico Martin
-Version: 0.4.4
+Version: 0.5.0
 Author URI: https://nicomartin.ch
 Text Domain: pwp
 Domain Path: /languages
