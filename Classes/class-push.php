@@ -85,6 +85,8 @@ class Push {
 
 	public function settings_devices() {
 
+		$send = '<p style="margin-bottom: 30px;line-height: 250%"><b>' . __( 'Send to all devices', 'pwp' ) . ':</b><br>' . $this->render_push_modal() . '</p>';
+
 		$devices = get_option( $this->devices_option );
 		$table   = '';
 		//$table   .= '<pre>' . print_r( $devices, true ) . '</pre>';
@@ -129,7 +131,7 @@ class Push {
 		$table .= '</tbody>';
 		$table .= '</table>';
 
-		$section = pwp_settings()->add_section( pwp_settings_page_push(), 'pwp_devices', __( 'Devices', 'pwp' ), "<div class='pwp-devicestable__container'>$table</div>" );
+		$section = pwp_settings()->add_section( pwp_settings_page_push(), 'pwp_devices', __( 'Devices', 'pwp' ), $send . "<div class='pwp-devicestable__container'>$table</div>" );
 	}
 
 	public function footer_js( $args ) {
