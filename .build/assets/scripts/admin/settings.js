@@ -41,7 +41,6 @@
 				frame.on('select', function () {
 
 					const attachment = frame.state().get('selection').first().toJSON();
-					console.log(attachment);
 					let errors = [];
 
 					if (checkMime !== '') {

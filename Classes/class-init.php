@@ -112,8 +112,9 @@ class Init {
 
 	public function admin_footer_js() {
 		$defaults = [
-			'AjaxURL' => admin_url( 'admin-ajax.php' ),
-			'homeurl' => trailingslashit( get_home_url() ),
+			'AjaxURL'      => admin_url( 'admin-ajax.php' ),
+			'homeurl'      => trailingslashit( get_home_url() ),
+			'GeneralError' => __( 'An unexpected error occured', 'pwp' ),
 		];
 
 		$vars = apply_filters( 'pwp_admin_footer_js', $defaults );

@@ -1,0 +1,101 @@
+.pwp-pushmodal {
+	position: relative;
+	.loader {
+		display: none;
+		background-color: rgba(#fff, .8);
+		position: absolute;
+		bottom: 0;
+		right: 0;
+		left: 0;
+		top: 0;
+		&:after {
+			position: absolute;
+			content: '';
+			top: 50%;
+			left: 50%;
+			margin-top: -20px;
+			margin-left: -20px;
+			background-color: transparent;
+			border: 5px solid #898989;
+			border-top-color: transparent;
+			border-right-color: transparent;
+			width: 40px;
+			height: 40px;
+			@include box-sizing(border-box);
+			@include border-radius(50%);
+			@include animation(spinner-animation .65s infinite linear);
+		}
+	}
+
+	.success {
+		display: none;
+		background-color: #fff;
+		position: absolute;
+		bottom: -2px;
+		right: -2px;
+		left: -2px;
+		top: -2px;
+		.success__content {
+			content: '';
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			display: inline-block;
+			@include translate3d(-50%, -50%);
+			text-align: center;
+			font-size: 16px;
+			width: 100%;
+			svg {
+				display: block;
+				width: 80px;
+				height: 80px;
+				border: 7px solid #1ca868;
+				padding: 10px;
+				margin: 0 auto 40px auto;
+				@include border-radius(50%);
+				color: #1ca868;
+			}
+		}
+	}
+}
+
+.pwp-pushmodal__label {
+	display: block;
+	margin-bottom: 10px;
+	input[type=text] {
+		margin-top: 5px;
+		width: 100%;
+	}
+	b, i {
+		display: block;
+	}
+}
+
+.pwp-pushmodal__controls {
+	text-align: right;
+}
+
+/**
+ * Uploader
+ */
+
+.pwpmodal-uploader {
+	display: block;
+	.button {
+		margin: 1rem 1rem 0 0;
+	}
+}
+
+.pwpmodal-uploader__image {
+	display: block;
+	img {
+		display: block;
+		width: 80px;
+		height: auto;
+		margin-top: .5rem;
+	}
+}
+
+.pwpmodal-input[value="0"] + .pwpmodal-uploader .button-pwpdelete {
+	display: none;
+}

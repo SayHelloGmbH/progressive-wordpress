@@ -50,7 +50,7 @@ class Settings {
 		$this->sections = [];
 		$this->settings = [];
 
-		add_action( 'admin_init', [ $this, 'after_saved_hook' ] );
+		add_action( 'admin_init', [ $this, 'after_saved_hook' ], 50 );
 		add_action( 'init', [ $this, 'settings_init_hook' ] );
 		add_action( 'admin_menu', [ $this, 'register_pages' ] );
 		add_action( 'admin_init', [ $this, 'register_settings' ] );
@@ -149,6 +149,8 @@ class Settings {
 			}
 		}
 
+		apply_filters( "{$this->sanitize_filter}", $input );
+
 		return $input;
 	}
 
@@ -222,8 +224,8 @@ class Settings {
 				$return .= "<div class='settings--fileuploader' data-fileid='{$file_id}' $data_atts>";
 				$return .= '<div class="fileuploader__preview">' . $preview . '</div>';
 				$return .= '<p class="fileuploader__controls">';
-				$return .= '<a class="button button-primary select-file">Upload</a>';
-				$return .= '<a class="button button-delete delete-file">Delete</a>';
+				$return .= '<a class="button select-file">Upload</a>';
+				$return .= '<a class="button button--pwp-settings-delete delete-file">Delete</a>';
 				$return .= '</p>';
 				$return .= sprintf( '<input type="hidden" name="%1$s[%2$s]" id="%2$s" value="%3$s" />', $this->option_key, $key, $val );
 				$return .= '</div>';

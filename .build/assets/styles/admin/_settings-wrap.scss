@@ -1,4 +1,4 @@
-.pwp-settings-wrap {
+.pwp-wrap {
 	.form-table td {
 		vertical-align: top;
 	}
@@ -28,5 +28,21 @@
 		margin-top: 20px;
 		max-width: 430px;
 		width: 100%;
+	}
+
+	.button--pwp-settings-delete {
+		background-color: transparent;
+		border: none;
+		@include box-shadow(none);
+		color: #a00;
+		padding: 0;
+		&:hover {
+			color: #dc3232;
+		}
+		&:active {
+			background-color: transparent;
+			border-color: none;
+			@include box-shadow(none);
+		}
 	}
 }
