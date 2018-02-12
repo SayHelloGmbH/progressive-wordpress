@@ -54,16 +54,20 @@ function pwp_get_setting( $key ) {
 	return pwp_settings()->get_setting( $key );
 }
 
+function pwp_settings_page_main() {
+	return pwp_settings()->add_page( PWP_SETTINGS_PARENT, __( 'About', 'pwp' ) );
+}
+
 function pwp_settings_page_manifest() {
-	return pwp_settings()->add_page( 'manifest', __( 'Installable', 'pwp' ) );
+	return pwp_settings()->add_page( 'pwp-manifest', __( 'Installable', 'pwp' ) );
 }
 
 function pwp_settings_page_offlineusage() {
-	return pwp_settings()->add_page( 'offlineusage', __( 'Offline usage', 'pwp' ) );
+	return pwp_settings()->add_page( 'pwp-offlineusage', __( 'Offline usage', 'pwp' ) );
 }
 
 function pwp_settings_page_push() {
-	return pwp_settings()->add_page( 'push', __( 'Push Notifications', 'pwp' ) );
+	return pwp_settings()->add_page( 'pwp-push', __( 'Push Notifications', 'pwp' ) );
 }
 
 function pwp_register_url( $url ) {

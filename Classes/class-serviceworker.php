@@ -19,7 +19,7 @@ class Serviceworker {
 		add_action( 'pwp_on_deactivate', [ $this, 'delete_serviceworker' ] );
 
 		if ( file_exists( $this->sw_path ) ) {
-			add_action( 'wp_head', [ $this, 'add_to_header' ], 1 );
+			add_action( 'wp_head', [ $this, 'add_to_header' ], 500 );
 		}
 	}
 
@@ -53,6 +53,25 @@ class Serviceworker {
 					navigator.serviceWorker.register('<?php echo pwp_register_url( $url ); ?>');
 				});
 			}
+			<?php
+			if ( pwp_get_setting( 'pwp-force-deregister-sw' ) ) {
+			?>
+			navigator.serviceWorker.getRegistrations().then(function (registrations) {
+				registrations.forEach(function (registration) {
+					if (registration.active.scriptURL !== window.location.origin + '<?php echo pwp_register_url( $url ); ?>') {
+						registration.unregister().then(function (boolean) {
+							if (boolean) {
+								console.log(registration.active.scriptURL + ' unregistered');
+							} else {
+								console.log(registration.active.scriptURL + ' unregistration failed');
+							}
+						});
+					}
+				});
+			});
+			<?php
+			}
+			?>
 		</script>
 		<?php
 	}

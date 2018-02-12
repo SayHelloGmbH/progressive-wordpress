@@ -473,12 +473,6 @@ class Push {
 
 		$result = json_decode( $result, true );
 
-		return [
-			'type'    => 'success',
-			'message' => '',
-			'result'  => $result,
-		];
-
 		/**
 		 * Check for failed push keys and remove them
 		 */
@@ -521,8 +515,10 @@ class Push {
 		update_option( $this->latestpushes_option, $latest_pushes );
 
 		return [
-			'type'    => 'success',
-			'message' => '',
+			'type'            => 'success',
+			'message'         => '',
+			'result'          => $result,
+			'devices_removed' => $failed,
 		];
 	}
 

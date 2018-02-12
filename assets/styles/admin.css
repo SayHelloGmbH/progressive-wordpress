@@ -59,6 +59,24 @@
   box-shadow: none;
 }
 
+.pwp-status__icon {
+  display: inline-block;
+  margin-right: .5rem;
+}
+.pwp-status__icon svg {
+  width: 1em;
+  height: 1em;
+  margin-bottom: -.15em;
+}
+
+.pwp-status--success .pwp-status__icon {
+  color: #1ca868;
+}
+
+.pwp-status--error .pwp-status__icon {
+  color: #dc3232;
+}
+
 .pwp-pushmodal {
   position: relative;
 }

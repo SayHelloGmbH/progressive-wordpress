@@ -308,7 +308,6 @@ class Settings {
 	}
 
 	public function add_page( $key, $title ) {
-		$key                 = "{$this->prefix}-{$key}";
 		$this->pages[ $key ] = $title;
 
 		return $key;

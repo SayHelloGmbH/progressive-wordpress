@@ -15,8 +15,9 @@ class Init {
 
 	public function run() {
 		// Basics Page
+		add_action( 'pwp_settings', [ $this, 'settings_intro' ] );
+		add_action( 'pwp_settings', [ $this, 'settings_stats' ] );
 		add_action( 'admin_menu', [ $this, 'add_menu_page' ] );
-		add_action( 'pwp_basics_section', [ $this, 'intro_text' ], 1 );
 
 		// Assets
 		add_action( 'wp_enqueue_scripts', [ $this, 'add_assets' ] );
@@ -30,43 +31,81 @@ class Init {
 	/**
 	 * Basics Page
 	 */
-	public function add_menu_page() {
-		$icon = plugin_dir_url( pwp_get_instance()->file ) . '/assets/img/pwa-menu-icon.png';
-		add_menu_page( pwp_get_instance()->name, $this->menu_title, $this->capability, PWP_SETTINGS_PARENT, '', $icon, 100 );
-		add_submenu_page( PWP_SETTINGS_PARENT, __( 'About', 'pwp' ), __( 'About', 'pwp' ), $this->capability, PWP_SETTINGS_PARENT, [ $this, 'basics_menu_page' ] );
-	}
 
-	public function basics_menu_page() {
-		?>
-		<div class="wrap pwp-wrap">
-			<h1><?php echo pwp_get_instance()->name; ?></h1>
-			<div class="pwp-wrap__content">
-				<?php do_action( 'pwp_basics_section' ); ?>
-			</div>
-		</div>
-		<?php
-	}
-
-	public function intro_text() {
-		echo '<div class="pwp-wrap__section">';
+	public function settings_intro() {
+		$html = '';
 		// translators: Thank you for using plugin_name
-		echo '<p><b>' . sprintf( __( 'Thank you for using %s!', 'pwp' ), pwp_get_instance()->name ) . '</b></p>';
-		echo '<p>';
+		$html .= '<p><b>' . sprintf( __( 'Thank you for using %s!', 'pwp' ), pwp_get_instance()->name ) . '</b></p>';
+		$html .= '<p>';
 		// translators: Why it was developed.
-		echo sprintf( __( 'This plugin was developed by %s to use progressive web app features for your WordPress wesbsite.', 'pwp' ), '<a href="https://nicomartin.ch" target="_blank">Nico Martin</a>' );
-		echo '</p><p>';
+		$html .= sprintf( __( 'This plugin was developed by %s to use progressive web app features for your WordPress wesbsite.', 'pwp' ), '<a href="https://nicomartin.ch" target="_blank">Nico Martin</a>' );
+		$html .= '</p><p>';
 		// translators: feature 1
-		echo __( 'You are able to create a web-app-manifest, which makes your website installable.', 'pwp' );
+		$html .= __( 'You are able to create a web-app-manifest, which makes your website installable.', 'pwp' );
 		// translators: feature 2
-		echo '<br>' . __( 'It also enables offline usage and in the future you will even be able to send push notifications!', 'pwp' );
-		echo '</p>';
-		$sw_link = 'https://caniuse.com/#feat=serviceworkers';
-		echo '<p><b>' . __( 'To deliver app-like features this plugin uses a serviceworker.js file. This technology is not yet supported in all browsers!', 'pwp' ) . '</b><br><a href="' . $sw_link . '" target="_blank">' . $sw_link . '</a></p>';
+		$html     .= '<br>' . __( 'It also enables offline usage and in the future you will even be able to send push notifications!', 'pwp' );
+		$html     .= '</p>';
+		$sw_link  = 'https://caniuse.com/#feat=serviceworkers';
+		$html     .= '<p><b>' . __( 'To deliver app-like features this plugin uses a serviceworker.js file. This technology is not yet supported in all browsers!', 'pwp' ) . '</b><br><a href="' . $sw_link . '" target="_blank">' . $sw_link . '</a></p>';
 		$buyabeer = '<a href="https://www.paypal.me/NicoMartin" target="_blank">' . __( 'buy me a beer', 'pwp' ) . '</a>';
 		$github   = '<a href="https://github.com/nico-martin/progressive-wordpress" target="_blank">GitHub</a>';
 		// translators: If you like this plugin feel free to buy me a beer or get involved in the development on GitHub
-		echo '<p>' . sprintf( __( 'If you like this plugin feel free to %1$s or get involved with the development on %2$s', 'pwp' ), $buyabeer, $github ) . '</p>';
-		echo '</div>';
+		$html .= '<p>' . sprintf( __( 'If you like this plugin feel free to %1$s or get involved with the development on %2$s', 'pwp' ), $buyabeer, $github ) . '</p>';
+
+		$section = pwp_settings()->add_section( pwp_settings_page_main(), 'pwp_intro_text', '', $html );
+	}
+
+
+	public function settings_stats() {
+		$section = pwp_settings()->add_section( pwp_settings_page_main(), 'pwp_intro_stats', __( 'Status', 'pwp' ) );
+
+		$check = [
+			'manifest'     => [
+				'title'      => __( 'Manifest', 'pwp' ),
+				'true'       => file_exists( pwp_get_instance()->Manifest->manifest_path ),
+				'text_true'  => __( 'Manifest generated successfully.', 'pwp' ),
+				'text_false' => __( 'Manifest not generated.', 'pwp' ),
+			],
+			'sw'           => [
+				'title'      => __( 'ServiceWorker', 'pwp' ),
+				'true'       => file_exists( pwp_get_instance()->Serviceworker->sw_path ),
+				'text_true'  => __( 'ServiceWorker generated successfully.', 'pwp' ),
+				'text_false' => __( 'ServiceWorker not generated.', 'pwp' ),
+			],
+			'rootwritable' => [
+				'title'      => __( 'Root Folder', 'pwp' ),
+				'true'       => is_writable( trailingslashit( ABSPATH ) ),
+				'text_true'  => __( 'Root Folder is writable.', 'pwp' ),
+				'text_false' => __( 'Root Folder is not writable.', 'pwp' ),
+			],
+			'https' => [
+				'title'      => __( 'HTTPS', 'pwp' ),
+				'true'       => is_ssl(),
+				'text_true'  => __( 'Your site is serverd over HTTPS.', 'pwp' ),
+				'text_false' => __( 'Your site has to be served over HTTPS.', 'pwp' ),
+			],
+		];
+
+		foreach ( $check as $key => $vals ) {
+			$html       = '';
+			$icon_check = $this->get_icon( 'check' );
+			$icon_close = $this->get_icon( 'close' );
+
+			if ( $vals['true'] ) {
+				$html .= "<span class='pwp-status pwp-status--success'><span class='pwp-status__icon'>$icon_check</span>{$vals['text_true']}</span>";
+			} else {
+				$html .= "<span class='pwp-status pwp-status--error'><span class='pwp-status__icon'>$icon_close</span>{$vals['text_false']}</span>";
+			}
+			pwp_settings()->add_message( $section, "pwp_intro_stats_$key", $vals['title'], $html );
+		}
+
+		pwp_settings()->add_checkbox( $section, 'pwp-force-deregister-sw', __( 'Unregister all other serviceworkers', 'pwp' ), false );
+
+	}
+
+	public function add_menu_page() {
+		$icon = plugin_dir_url( pwp_get_instance()->file ) . '/assets/img/pwa-menu-icon.png';
+		add_menu_page( pwp_get_instance()->name, $this->menu_title, $this->capability, PWP_SETTINGS_PARENT, '', $icon, 100 );
 	}
 
 	/**
@@ -122,5 +161,14 @@ class Init {
 		echo "<script id='pwp-js-vars'>\r\n";
 		echo 'var PwpJsVars = ' . json_encode( $vars );
 		echo '</script>';
+	}
+
+	public function get_icon( $key ) {
+		$icon_path = plugin_dir_path( pwp_get_instance()->file ) . "assets/img/icon/$key.svg";
+		if ( file_exists( $icon_path ) ) {
+			return file_get_contents( $icon_path );
+		}
+
+		return false;
 	}
 }
