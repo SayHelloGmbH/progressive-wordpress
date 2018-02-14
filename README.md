@@ -36,6 +36,7 @@ After those steps you will have an overview about all registered devices, you ca
 ### 0.6.0
 * Added offline content
 * select front page as offline Page
+* Improvement: better hex check for manifest colors
 
 ### 0.5.1
 * Bugfix: notification Button always visible
