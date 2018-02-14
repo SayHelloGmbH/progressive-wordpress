@@ -146,6 +146,11 @@ class Push {
 	 */
 
 	public function footer_template() {
+
+		if ( ! pwp_get_setting( 'notification-button' ) ) {
+			return;
+		}
+
 		$background_color = pwp_get_setting( 'notification-button-bkg-color' );
 		$icon_color       = pwp_get_setting( 'notification-button-icon-color' );
 		if ( ! $this->is_hex( $background_color ) ) {

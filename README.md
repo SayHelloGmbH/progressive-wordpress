@@ -33,6 +33,9 @@ After those steps you will have an overview about all registered devices, you ca
 
 ## Changelog
 
+### 0.5.1
+* Bugfix: notification Button always visible
+
 ### 0.5.0
 * Added push notifications!
     * let the user manage their subscription
