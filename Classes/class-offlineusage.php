@@ -14,6 +14,7 @@ class Offlineusage {
 
 	public function run() {
 		add_action( 'pwp_settings', [ $this, 'settings' ] );
+		add_filter( pwp_settings()->sanitize_filter . '_offline-content', [ $this, 'sanitize_offline_content' ] );
 		add_filter( 'pwp_sw_content', [ $this, 'sw_content' ] );
 		add_action( 'pwp_settings', [ $this, 'offline_indicator_settings' ] );
 		add_action( 'wp_footer', [ $this, 'offline_indicator_template' ] );
@@ -28,12 +29,43 @@ class Offlineusage {
 		pwp_settings()->add_checkbox( $section, 'offline-enabled', __( 'Offline Usage enabled', 'pwp' ) );
 
 		$choices = [];
+		if ( 'page' != get_post_type( get_option( 'page_on_front' ) ) ) {
+			$choices[0] = __( 'Front Page', 'options' );
+		}
 		foreach ( get_pages() as $post ) {
 			$choices[ $post->ID ] = get_the_title( $post );
 		}
 		pwp_settings()->add_select( $section, 'offline-page', __( 'Offline Page', 'pwp' ), $choices, '', [
 			'after_field' => '<p class="pwp-smaller">' . __( 'This page should contain a message explaining why the requested content is not aviable.', 'pwp' ) . '</p>',
 		] );
+
+		$text = __( 'Pages and files that should be saved for offline usage on first interaction. One URL per line.', 'pwp' ) . '<br>';
+		// translators: Every URL has to start with: [home_url]
+		$text .= sprintf( __( 'Every URL has to start with: %1$s', 'pwp' ), '<code>' . untrailingslashit( get_home_url() ) . '</code>' );
+
+		pwp_settings()->add_textarea( $section, 'offline-content', __( 'Offline Content', 'pwp' ), '', [
+			'after_field' => '<p class="pwp-smaller">' . $text . '</p>',
+		] );
+	}
+
+	public function sanitize_offline_content( $content ) {
+		$files = explode( "\n", $content );
+		if ( ! is_array( $files ) ) {
+			return $files;
+		}
+
+		$new_files = [];
+		foreach ( $files as $key => $file ) {
+
+			$file     = esc_url( $file );
+			$home_url = untrailingslashit( get_home_url() );
+
+			if ( strpos( $file, $home_url ) === 0 ) {
+				$new_files[] = $file;
+			}
+		}
+
+		return implode( "\n", $new_files );
 	}
 
 	public function sw_content( $content ) {
@@ -44,15 +76,25 @@ class Offlineusage {
 		}
 
 		$offline_content = '';
-		$offline_page_id = intval( pwp_get_setting( 'offline-page' ) );
-		$offline_url     = pwp_register_url( get_permalink( $offline_page_id ) );
+		$cache_pages     = [];
 		$home_url        = pwp_register_url( trailingslashit( get_home_url() ) );
+		$cache_pages[]   = $home_url;
 
-		$cache_pages   = [];
-		$cache_pages[] = $home_url;
-		$cache_pages[] = $offline_url;
-		$cache_pages   = apply_filters( 'pwp_cache_pages', $cache_pages );
+		$offline_page_id = intval( pwp_get_setting( 'offline-page' ) );
+		if ( 'page' == get_post_type( $offline_page_id ) ) {
+			$offline_url   = pwp_register_url( get_permalink( $offline_page_id ) );
+			$cache_pages[] = $offline_url;
+		}
 
+		$additional_urls = pwp_get_setting( 'offline-content' );
+		$additional_urls = explode( "\n", $additional_urls );
+		if ( is_array( $additional_urls ) ) {
+			foreach ( $additional_urls as $url ) {
+				$cache_pages[] = pwp_register_url( $url );
+			}
+		}
+
+		$cache_pages        = apply_filters( 'pwp_cache_pages', $cache_pages );
 		$cache_pages_quoted = [];
 		foreach ( $cache_pages as $url ) {
 			$cache_pages_quoted[] = "'$url'";

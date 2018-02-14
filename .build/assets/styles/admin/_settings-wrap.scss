@@ -45,4 +45,11 @@
 			@include box-shadow(none);
 		}
 	}
+
+	textarea#offline-content {
+		height: 150px;
+		line-height: 180%;
+		font-size: 12px;
+		white-space: nowrap;
+	}
 }

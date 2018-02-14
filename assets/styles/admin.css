@@ -35,6 +35,9 @@
 .pwp-smaller {
   font-size: smaller !important;
 }
+.pwp-smaller code {
+  font-size: smaller !important;
+}
 
 .wp-core-ui p .button-pwpdelete,
 .pwp-wrap .button-pwpdelete {
@@ -232,6 +235,12 @@
   -moz-box-shadow: none;
   -webkit-box-shadow: none;
   box-shadow: none;
+}
+.pwp-wrap textarea#offline-content {
+  height: 150px;
+  line-height: 180%;
+  font-size: 12px;
+  white-space: nowrap;
 }
 
 .pwp-wrap__section {
