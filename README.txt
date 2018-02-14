@@ -82,6 +82,9 @@ A development version of this plugin is hosted on GitHub. If you have any ideas 
 
 == Changelog ==
 
+= 0.6.0 =
+* Improvement: better hex check for manifest colors
+
 = 0.5.1 =
 * Bugfix: notification Button always visible
 

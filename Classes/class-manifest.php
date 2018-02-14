@@ -62,8 +62,8 @@ class Manifest {
 		$args = [
 			'after_field' => '<p class="pwp-smaller">' . __( 'hex value', 'pwp' ) . '</p>',
 		];
-		pwp_settings()->add_input( $section, 'manifest-theme-color', __( 'Theme Color', 'pwp' ), '', $args );
-		pwp_settings()->add_input( $section, 'manifest-background-color', __( 'Background Color', 'pwp' ), '', $args );
+		pwp_settings()->add_input( $section, 'manifest-theme-color', __( 'Theme Color', 'pwp' ), '#000000', $args );
+		pwp_settings()->add_input( $section, 'manifest-background-color', __( 'Background Color', 'pwp' ), '#ffffff', $args );
 	}
 
 	public function save_manifest() {
@@ -77,8 +77,8 @@ class Manifest {
 		$manifest['short_name']       = str_replace( ' ', '', pwp_get_setting( 'manifest-short-name' ) );
 		$manifest['start_url']        = './';
 		$manifest['description']      = pwp_get_setting( 'manifest-description' );
-		$manifest['theme_color']      = sanitize_hex_color( pwp_get_setting( 'manifest-theme-color' ) );
-		$manifest['background_color'] = sanitize_hex_color( pwp_get_setting( 'manifest-background-color' ) );
+		$manifest['theme_color']      = $this->sanitize_hex( pwp_get_setting( 'manifest-theme-color' ), '#000000' );
+		$manifest['background_color'] = $this->sanitize_hex( pwp_get_setting( 'manifest-background-color' ), '#ffffff' );
 		$manifest['display']          = pwp_get_setting( 'manifest-display' );
 		$manifest['lang']             = '';
 		$manifest['orientation']      = 'any';
@@ -134,6 +134,19 @@ class Manifest {
 		}
 		if ( file_exists( $this->manifest_path ) ) {
 			unlink( $this->manifest_path );
+		}
+	}
+
+	/**
+	 * Helpers
+	 */
+
+	public function sanitize_hex( $hex, $default = '#ffffff' ) {
+		$hex = sanitize_hex_color( $hex );
+		if ( '' == $hex ) {
+			return $default;
+		} else {
+			return $hex;
 		}
 	}
 }
