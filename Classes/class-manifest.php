@@ -40,7 +40,7 @@ class Manifest {
 			'after_field' => '<p class="pwp-smaller">' . __( 'max. 12 Chars', 'pwp' ) . '</p>',
 		] );
 
-		pwp_settings()->add_input( $section, 'manifest-starturl', __( 'Start URL', 'pwp' ), './' );
+		pwp_settings()->add_input( $section, 'manifest-starturl', __( 'Start URL', 'pwp' ), '/' );
 
 		pwp_settings()->add_textarea( $section, 'manifest-description', __( 'Description', 'pwp' ), '', [] );
 		pwp_settings()->add_file( $section, 'manifest-icon', __( 'Icon', 'pwp' ), 0, [

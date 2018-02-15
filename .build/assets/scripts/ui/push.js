@@ -8,42 +8,41 @@ import 'clientjs';
 
 	$(function () {
 
-		if (!'serviceWorker' in navigator || !'PushManager' in window) {
-			return;
-		}
+		if ('serviceWorker' in navigator && 'PushManager' in window) {
 
-		navigator.serviceWorker.ready
-			.then(function (registration) {
+			navigator.serviceWorker.ready
+				.then(function (registration) {
 
-				/**
-				 * Show toggler (hidden by default)
-				 */
+					/**
+					 * Show toggler (hidden by default)
+					 */
 
-				$body.addClass('pwp-notification');
+					$body.addClass('pwp-notification');
 
-				/**
-				 * add trigger
-				 */
+					/**
+					 * add trigger
+					 */
 
-				$toggler.on('click', function () {
-					if (active) {
-						deregisterPushDevice();
-					} else {
-						registerPushDevice();
-					}
-				});
-
-				/**
-				 * check if is already registered
-				 */
-
-				registration.pushManager.getSubscription()
-					.then(function (subscription) {
-						if (subscription) {
-							changePushStatus(true);
+					$toggler.on('click', function () {
+						if (active) {
+							deregisterPushDevice();
+						} else {
+							registerPushDevice();
 						}
 					});
-			});
+
+					/**
+					 * check if is already registered
+					 */
+
+					registration.pushManager.getSubscription()
+						.then(function (subscription) {
+							if (subscription) {
+								changePushStatus(true);
+							}
+						});
+				});
+		}
 	});
 
 	function changePushStatus(status) {

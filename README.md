@@ -33,6 +33,9 @@ After those steps you will have an overview about all registered devices, you ca
 
 ## Changelog
 
+### 0.6.1
+* Bugfix: prohibit console error if sw not supported
+
 ### 0.6.0
 * Added offline content
 * select front page as offline Page
