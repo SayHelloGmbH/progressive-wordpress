@@ -4,7 +4,7 @@ Donate link: https://www.paypal.me/NicoMartin
 Tags: PWA, Progressive Web App, Progressive Web Application, progressive, installable, offline, offline usage, push notifications, manifest, web app manifest, serviceworker
 Requires at least: 4.7
 Tested up to: 4.9.2
-Stable tag: 0.6.1
+Stable tag: 0.6.2
 Requires PHP: 5.4
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -81,6 +81,9 @@ A development version of this plugin is hosted on GitHub. If you have any ideas 
 [https://github.com/nico-martin/progressive-wordpress](https://github.com/nico-martin/progressive-wordpress)
 
 == Changelog ==
+
+= 0.6.2 =
+* Bugfix: featured image could not be changed if push notifications are enabled
 
 = 0.6.1 =
 * Bugfix: prohibit console error if sw not supported

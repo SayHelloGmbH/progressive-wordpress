@@ -305,7 +305,6 @@ class Push {
 
 		if ( is_admin() ) {
 			add_thickbox();
-			wp_enqueue_media();
 		}
 
 		$image_thumbnail = '';

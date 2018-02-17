@@ -33,6 +33,9 @@ After those steps you will have an overview about all registered devices, you ca
 
 ## Changelog
 
+### 0.6.2
+* Bugfix: featured image could not be changed if push notifications are enabled
+
 ### 0.6.1
 * Bugfix: prohibit console error if sw not supported
 
