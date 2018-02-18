@@ -33,6 +33,11 @@ After those steps you will have an overview about all registered devices, you ca
 
 ## Changelog
 
+### 0.7.0
+* Added "orientation" to manifest
+* Added colorpicker to settings
+* Fix: is_ssl() improvement
+
 ### 0.6.2
 * Bugfix: featured image could not be changed if push notifications are enabled
 

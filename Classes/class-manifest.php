@@ -59,11 +59,17 @@ class Manifest {
 			'after_field' => '<p class="pwp-smaller">' . __( 'possible display modes', 'pwp' ) . ": <a href='$link' target='_blank'>$link</a></p>",
 		] );
 
+		pwp_settings()->add_select( $section, 'manifest-orientation', __( 'Orientation', 'pwp' ), [
+			'any'       => __( 'Both', 'pwp' ),
+			'landscape' => __( 'Landscape', 'pwp' ),
+			'portrait'  => __( 'Portrait', 'pwp' ),
+		], 'any' );
+
 		$args = [
 			'after_field' => '<p class="pwp-smaller">' . __( 'hex value', 'pwp' ) . '</p>',
 		];
-		pwp_settings()->add_input( $section, 'manifest-theme-color', __( 'Theme Color', 'pwp' ), '#000000', $args );
-		pwp_settings()->add_input( $section, 'manifest-background-color', __( 'Background Color', 'pwp' ), '#ffffff', $args );
+		pwp_settings()->add_color( $section, 'manifest-theme-color', __( 'Theme Color', 'pwp' ), '#000000', $args );
+		pwp_settings()->add_color( $section, 'manifest-background-color', __( 'Background Color', 'pwp' ), '#ffffff', $args );
 	}
 
 	public function save_manifest() {
@@ -80,8 +86,8 @@ class Manifest {
 		$manifest['theme_color']      = $this->sanitize_hex( pwp_get_setting( 'manifest-theme-color' ), '#000000' );
 		$manifest['background_color'] = $this->sanitize_hex( pwp_get_setting( 'manifest-background-color' ), '#ffffff' );
 		$manifest['display']          = pwp_get_setting( 'manifest-display' );
-		$manifest['lang']             = '';
-		$manifest['orientation']      = 'any';
+		$manifest['lang']             = get_locale();
+		$manifest['orientation']      = pwp_get_setting( 'manifest-orientation' );
 
 		$sizes = [ 128, 512 ];
 		$icon  = pwp_get_setting( 'manifest-icon' );

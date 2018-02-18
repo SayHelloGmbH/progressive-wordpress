@@ -26,6 +26,11 @@ class Init {
 		// Helper
 		add_action( 'wp_footer', [ $this, 'footer_js' ], 1 );
 		add_action( 'admin_footer', [ $this, 'admin_footer_js' ], 1 );
+
+		// is_ssl() fix for cloudflare: https://snippets.webaware.com.au/snippets/wordpress-is_ssl-doesnt-work-behind-some-load-balancers/
+		if ( stripos( get_option( 'siteurl' ), 'https://' ) === 0 ) {
+			$_SERVER['HTTPS'] = 'on';
+		}
 	}
 
 	/**
@@ -78,7 +83,7 @@ class Init {
 				'text_true'  => __( 'Root Folder is writable.', 'pwp' ),
 				'text_false' => __( 'Root Folder is not writable.', 'pwp' ),
 			],
-			'https' => [
+			'https'        => [
 				'title'      => __( 'HTTPS', 'pwp' ),
 				'true'       => is_ssl(),
 				'text_true'  => __( 'Your site is serverd over HTTPS.', 'pwp' ),

@@ -3,6 +3,7 @@
 
 		const $container = $('.pwp-wrap');
 		const $fileuploader = $container.find('.settings--fileuploader');
+		const $colorpicker = $container.find('.settings--colorpicker');
 
 		$fileuploader.each(function () {
 
@@ -88,5 +89,7 @@
 				frame.open();
 			});
 		});
+
+		$colorpicker.wpColorPicker();
 	});
 })(jQuery, PwpJsVars, wp);

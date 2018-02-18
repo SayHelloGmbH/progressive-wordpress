@@ -176,6 +176,13 @@ class Settings {
 			case 'textarea':
 				$return .= sprintf( '<textarea name="%1$s[%2$s]" id="%2$s">%3$s</textarea>', $this->option_key, $key, $val );
 				break;
+			case 'color':
+				if ( is_admin() ) {
+					wp_enqueue_style( 'wp-color-picker' );
+					wp_enqueue_script( 'wp-color-picker' );
+				}
+				$return .= sprintf( '<input type="text" name="%1$s[%2$s]" class="settings--colorpicker" id="%2$s" value="%3$s" />', $this->option_key, $key, $val );
+				break;
 			case 'message':
 				$return .= $val;
 				break;
@@ -438,6 +445,23 @@ class Settings {
 			'section' => $section,
 			'name'    => $name,
 			'type'    => 'file',
+			'default' => $default,
+			'args'    => $args,
+		];
+
+		return $key;
+	}
+
+	public function add_color( $section, $key, $name, $default = '', $args = [] ) {
+		if ( ! isset( $this->sections[ $section ] ) ) {
+			return false;
+		}
+
+		$this->settings[ $key ] = [
+			'page'    => $this->sections[ $section ]['page'],
+			'section' => $section,
+			'name'    => $name,
+			'type'    => 'color',
 			'default' => $default,
 			'args'    => $args,
 		];

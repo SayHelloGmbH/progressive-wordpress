@@ -234,6 +234,7 @@ module.exports = __webpack_require__(4);
 
 		var $container = $('.pwp-wrap');
 		var $fileuploader = $container.find('.settings--fileuploader');
+		var $colorpicker = $container.find('.settings--colorpicker');
 
 		$fileuploader.each(function () {
 
@@ -319,6 +320,8 @@ module.exports = __webpack_require__(4);
 				frame.open();
 			});
 		});
+
+		$colorpicker.wpColorPicker();
 	});
 })(jQuery, PwpJsVars, wp);
 
