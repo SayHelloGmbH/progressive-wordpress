@@ -16,7 +16,6 @@ class Init {
 	public function run() {
 		// Basics Page
 		add_action( 'pwp_settings', [ $this, 'settings_intro' ] );
-		add_action( 'pwp_settings', [ $this, 'settings_stats' ] );
 		add_action( 'admin_menu', [ $this, 'add_menu_page' ] );
 
 		// Assets
@@ -60,54 +59,6 @@ class Init {
 		$section = pwp_settings()->add_section( pwp_settings_page_main(), 'pwp_intro_text', '', $html );
 	}
 
-
-	public function settings_stats() {
-		$section = pwp_settings()->add_section( pwp_settings_page_main(), 'pwp_intro_stats', __( 'Status', 'pwp' ) );
-
-		$check = [
-			'manifest'     => [
-				'title'      => __( 'Manifest', 'pwp' ),
-				'true'       => file_exists( pwp_get_instance()->Manifest->manifest_path ),
-				'text_true'  => __( 'Manifest generated successfully.', 'pwp' ),
-				'text_false' => __( 'Manifest not generated.', 'pwp' ),
-			],
-			'sw'           => [
-				'title'      => __( 'ServiceWorker', 'pwp' ),
-				'true'       => file_exists( pwp_get_instance()->Serviceworker->sw_path ),
-				'text_true'  => __( 'ServiceWorker generated successfully.', 'pwp' ),
-				'text_false' => __( 'ServiceWorker not generated.', 'pwp' ),
-			],
-			'rootwritable' => [
-				'title'      => __( 'Root Folder', 'pwp' ),
-				'true'       => is_writable( trailingslashit( ABSPATH ) ),
-				'text_true'  => __( 'Root Folder is writable.', 'pwp' ),
-				'text_false' => __( 'Root Folder is not writable.', 'pwp' ),
-			],
-			'https'        => [
-				'title'      => __( 'HTTPS', 'pwp' ),
-				'true'       => is_ssl(),
-				'text_true'  => __( 'Your site is serverd over HTTPS.', 'pwp' ),
-				'text_false' => __( 'Your site has to be served over HTTPS.', 'pwp' ),
-			],
-		];
-
-		foreach ( $check as $key => $vals ) {
-			$html       = '';
-			$icon_check = $this->get_icon( 'check' );
-			$icon_close = $this->get_icon( 'close' );
-
-			if ( $vals['true'] ) {
-				$html .= "<span class='pwp-status pwp-status--success'><span class='pwp-status__icon'>$icon_check</span>{$vals['text_true']}</span>";
-			} else {
-				$html .= "<span class='pwp-status pwp-status--error'><span class='pwp-status__icon'>$icon_close</span>{$vals['text_false']}</span>";
-			}
-			pwp_settings()->add_message( $section, "pwp_intro_stats_$key", $vals['title'], $html );
-		}
-
-		pwp_settings()->add_checkbox( $section, 'pwp-force-deregister-sw', __( 'Unregister all other serviceworkers', 'pwp' ), false );
-
-	}
-
 	public function add_menu_page() {
 		$icon = plugin_dir_url( pwp_get_instance()->file ) . '/assets/img/pwa-menu-icon.png';
 		add_menu_page( pwp_get_instance()->name, $this->menu_title, $this->capability, PWP_SETTINGS_PARENT, '', $icon, 100 );
@@ -133,6 +84,10 @@ class Init {
 		if ( pwp_get_instance()->debug && is_user_logged_in() ) {
 			$min = false;
 		}
+
+		wp_enqueue_style( 'wp-color-picker' );
+		wp_enqueue_script( 'wp-color-picker' );
+
 		$dir_uri = trailingslashit( plugin_dir_url( pwp_get_instance()->file ) );
 		wp_enqueue_style( pwp_get_instance()->prefix . '-admin-style', $dir_uri . 'assets/styles/admin' . ( $min ? '.min' : '' ) . '.css', [], $script_version );
 		wp_enqueue_script( pwp_get_instance()->prefix . '-admin-script', $dir_uri . 'assets/scripts/admin' . ( $min ? '.min' : '' ) . '.js', [ 'jquery' ], $script_version, true );
@@ -166,14 +121,5 @@ class Init {
 		echo "<script id='pwp-js-vars'>\r\n";
 		echo 'var PwpJsVars = ' . json_encode( $vars );
 		echo '</script>';
-	}
-
-	public function get_icon( $key ) {
-		$icon_path = plugin_dir_path( pwp_get_instance()->file ) . "assets/img/icon/$key.svg";
-		if ( file_exists( $icon_path ) ) {
-			return file_get_contents( $icon_path );
-		}
-
-		return false;
 	}
 }

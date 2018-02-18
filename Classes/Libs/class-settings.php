@@ -177,10 +177,6 @@ class Settings {
 				$return .= sprintf( '<textarea name="%1$s[%2$s]" id="%2$s">%3$s</textarea>', $this->option_key, $key, $val );
 				break;
 			case 'color':
-				if ( is_admin() ) {
-					wp_enqueue_style( 'wp-color-picker' );
-					wp_enqueue_script( 'wp-color-picker' );
-				}
 				$return .= sprintf( '<input type="text" name="%1$s[%2$s]" class="settings--colorpicker" id="%2$s" value="%3$s" />', $this->option_key, $key, $val );
 				break;
 			case 'message':

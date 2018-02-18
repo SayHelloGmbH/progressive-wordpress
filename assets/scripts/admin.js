@@ -70,7 +70,8 @@
 __webpack_require__(1);
 __webpack_require__(2);
 __webpack_require__(3);
-module.exports = __webpack_require__(4);
+__webpack_require__(4);
+module.exports = __webpack_require__(5);
 
 
 /***/ }),
@@ -82,6 +83,55 @@ module.exports = __webpack_require__(4);
 
 /***/ }),
 /* 2 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+(function ($, plugin) {
+	$(function () {
+		var $button = $('.pwp-download-log');
+
+		$button.on('click', function () {
+
+			var $e = $(this);
+			var logtype = $e.attr('data-log');
+
+			if (typeof logtype === 'undefined') {
+				return;
+			}
+
+			$e.prop('disabled', true);
+
+			$.ajax({
+				url: plugin['AjaxURL'],
+				type: 'POST',
+				dataType: 'json',
+				data: {
+					action: 'pwp_ajax_download_log',
+					logtype: logtype
+				}
+			}).always(function (data) {
+
+				if (data['type'] === null || data['type'] !== 'success') {
+
+					var msg_content = data['message'];
+					if (msg_content === '' || msg_content === undefined) {
+						msg_content = 'error';
+					}
+
+					alert(msg_content);
+				} else {
+					console.log(data['message']);
+				}
+				$e.removeAttr('disabled');
+			});
+		});
+	});
+})(jQuery, PwpJsVars);
+
+/***/ }),
+/* 3 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -122,7 +172,7 @@ module.exports = __webpack_require__(4);
 })(jQuery, PwpJsVars);
 
 /***/ }),
-/* 3 */
+/* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -223,7 +273,7 @@ module.exports = __webpack_require__(4);
 })(jQuery, PwpJsVars, wp);
 
 /***/ }),
-/* 4 */
+/* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
