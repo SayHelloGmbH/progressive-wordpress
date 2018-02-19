@@ -104,7 +104,8 @@ class Manifest {
 
 		$manifest = apply_filters( 'pwp_manifest_values', $manifest );
 		$content  = json_encode( $manifest, JSON_UNESCAPED_SLASHES );
-		$save     = pwp_put_contents( $this->manifest_path, $content );
+		pwp_delete( $this->manifest_path );
+		$save = pwp_put_contents( $this->manifest_path, $content );
 		if ( ! $save ) {
 			add_action( 'admin_notices', function () {
 				echo '<div class="notice notice-error">';
@@ -135,12 +136,7 @@ class Manifest {
 	}
 
 	public function delete_manifest() {
-		if ( file_exists( ABSPATH . 'manifest.json' ) ) {
-			unlink( ABSPATH . 'manifest.json' );
-		}
-		if ( file_exists( $this->manifest_path ) ) {
-			unlink( $this->manifest_path );
-		}
+		pwp_delete( $this->manifest_path );
 	}
 
 	/**

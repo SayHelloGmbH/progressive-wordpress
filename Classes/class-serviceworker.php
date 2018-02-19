@@ -127,7 +127,8 @@ class Serviceworker {
 		 */
 		$time    = time();
 		$content = str_replace( '{{time}}', $time, $content );
-		$save    = pwp_put_contents( $this->sw_path, $content );
+		pwp_delete( $this->sw_path );
+		$save = pwp_put_contents( $this->sw_path, $content );
 		if ( ! $save ) {
 			add_action( 'admin_notices', function () {
 				echo '<div class="notice notice-error">';
@@ -142,8 +143,6 @@ class Serviceworker {
 	}
 
 	public function delete_serviceworker() {
-		if ( is_file( $this->sw_path ) ) {
-			unlink( $this->sw_path );
-		}
+		pwp_delete( $this->sw_path );
 	}
 }

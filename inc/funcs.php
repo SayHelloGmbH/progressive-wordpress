@@ -101,6 +101,20 @@ function pwp_put_contents( $file, $content = null ) {
 	return true;
 }
 
+function pwp_delete( $file ) {
+
+	// Return false if no filename is provided
+	if ( empty( $file ) ) {
+		return false;
+	}
+
+	// Initialize the WP filesystem
+	pwp_wp_filesystem_init();
+	global $wp_filesystem;
+
+	return $wp_filesystem->delete( $file );
+}
+
 function pwp_wp_filesystem_init() {
 
 	global $wp_filesystem;
