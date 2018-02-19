@@ -104,8 +104,10 @@ class Manifest {
 
 		$manifest = apply_filters( 'pwp_manifest_values', $manifest );
 		$content  = json_encode( $manifest, JSON_UNESCAPED_SLASHES );
-		if ( file_get_contents( $this->manifest_path ) == $content ) {
-			return;
+		if ( file_exists( $this->manifest_path ) ) {
+			if ( file_get_contents( $this->manifest_path ) == $content ) {
+				return;
+			}
 		}
 
 		pwp_delete( $this->manifest_path );
