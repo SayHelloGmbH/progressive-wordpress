@@ -58,6 +58,11 @@ class Settings {
 
 	public function after_saved_hook() {
 		if ( get_option( "{$this->prefix}_sanitize_ongoing" ) == 'true' ) {
+			add_action( 'admin_notices', function () {
+				echo '<div id="setting-error-pwp_settings_updated" class="notice notice-success is-dismissible">';
+				echo '<p><strong>' . __( 'Settings saved.', 'pwp' ) . '</strong></p>';
+				echo '</div>';
+			} );
 			do_action( $this->aftersave_action );
 		}
 		update_option( "{$this->prefix}_sanitize_ongoing", 'false' );
