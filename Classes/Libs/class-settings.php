@@ -57,10 +57,10 @@ class Settings {
 	}
 
 	public function after_saved_hook() {
-		if ( get_option( "{$this->prefix}_sanitize_ongoing" ) == true ) {
+		if ( get_option( "{$this->prefix}_sanitize_ongoing" ) == 'true' ) {
 			do_action( $this->aftersave_action );
 		}
-		update_option( "{$this->prefix}_sanitize_ongoing", false );
+		update_option( "{$this->prefix}_sanitize_ongoing", 'false' );
 	}
 
 	public function settings_init_hook() {
@@ -130,7 +130,7 @@ class Settings {
 
 	public function sanitize( $input ) {
 
-		update_option( "{$this->prefix}_sanitize_ongoing", true );
+		update_option( "{$this->prefix}_sanitize_ongoing", 'true' );
 
 		do_action( "{$this->sanitize_action}", $input );
 		foreach ( $input as $key => $val ) {

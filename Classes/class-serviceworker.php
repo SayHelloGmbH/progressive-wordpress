@@ -138,6 +138,13 @@ class Serviceworker {
 			} );
 
 			return;
+		} else {
+			add_action( 'admin_notices', function () {
+				echo '<div class="notice notice-success">';
+				// translators: There was a problem generating your serviceworker file. Please check your permissions for ABSPATH
+				echo '<p>' . __( 'ServiceWorker regenerated', 'pwp' ) . '</p>';
+				echo '</div>';
+			} );
 		}
 		update_option( 'pwp_sw_time', $time );
 	}

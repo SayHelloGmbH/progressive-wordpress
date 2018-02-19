@@ -104,6 +104,10 @@ class Manifest {
 
 		$manifest = apply_filters( 'pwp_manifest_values', $manifest );
 		$content  = json_encode( $manifest, JSON_UNESCAPED_SLASHES );
+		if ( file_get_contents( $this->manifest_path ) == $content ) {
+			return;
+		}
+
 		pwp_delete( $this->manifest_path );
 		$save = pwp_put_contents( $this->manifest_path, $content );
 		if ( ! $save ) {
@@ -111,6 +115,13 @@ class Manifest {
 				echo '<div class="notice notice-error">';
 				// translators: There was a problem generating your manifest file. Please check your permissions for ABSPATH
 				echo '<p>' . sprintf( __( 'There was a problem generating your manifest file. Please check your permissions for %s', 'pwp' ), '<code>' . ABSPATH . '</code>' ) . '</p>';
+				echo '</div>';
+			} );
+		} else {
+			add_action( 'admin_notices', function () {
+				echo '<div class="notice notice-success">';
+				// translators: There was a problem generating your serviceworker file. Please check your permissions for ABSPATH
+				echo '<p>' . __( 'Web App Manifest regenerated', 'pwp' ) . '</p>';
 				echo '</div>';
 			} );
 		}
