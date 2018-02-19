@@ -132,13 +132,8 @@ class Offlineusage {
 			'top'    => __( 'Top', 'pwp' ),
 		], 'bottom' );
 
-		pwp_settings()->add_input( $section, 'offline-indicator-color-text', __( 'Textcolor', 'pwp' ), '#ffffff', [
-			'after_field' => __( 'Hex value', 'pwp' ),
-		] );
-		pwp_settings()->add_input( $section, 'offline-indicator-color-background', __( 'Background-Color', 'pwp' ), '#000000', [
-			'after_field' => __( 'Hex value', 'pwp' ),
-		] );
-
+		pwp_settings()->add_color( $section, 'offline-indicator-color-text', __( 'Textcolor', 'pwp' ), '#ffffff' );
+		pwp_settings()->add_color( $section, 'offline-indicator-color-background', __( 'Background-Color', 'pwp' ), '#000000' );
 	}
 
 	public function offline_indicator_template() {

@@ -456,7 +456,7 @@ class Push {
 			],
 		];
 
-		file_put_contents( $this->latest_push_path, json_encode( $data ) );
+		pwp_put_contents( $this->latest_push_path, json_encode( $data ) );
 
 		$headers = [
 			'Authorization: key=' . $server_key,

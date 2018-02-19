@@ -127,7 +127,7 @@ class Serviceworker {
 		 */
 		$time    = time();
 		$content = str_replace( '{{time}}', $time, $content );
-		$save    = file_put_contents( $this->sw_path, $content );
+		$save    = pwp_put_contents( $this->sw_path, $content );
 		if ( ! $save ) {
 			add_action( 'admin_notices', function () {
 				echo '<div class="notice notice-error">';

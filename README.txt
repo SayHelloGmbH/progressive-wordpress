@@ -82,6 +82,12 @@ A development version of this plugin is hosted on GitHub. If you have any ideas 
 
 == Changelog ==
 
+= 0.7.0 =
+* using `WP_Filesystem` API instead of php `file_put_contents`
+* Added "orientation" to manifest
+* Added colorpicker to settings
+* Fix: is_ssl() improvement
+
 = 0.6.2 =
 * Bugfix: featured image could not be changed if push notifications are enabled
 

@@ -126,7 +126,7 @@ class Status {
 		$log['multisite'] = is_multisite();
 
 		$file = 'debug_log_' . time() . '.json';
-		$put  = file_put_contents( $this->upload_dir . $file, json_encode( $log ) );
+		$put  = pwp_put_contents( $this->upload_dir . $file, json_encode( $log ) );
 		if ( ! $put ) {
 			return false;
 		}

@@ -82,3 +82,31 @@ function pwp_register_url( $url ) {
 
 	return str_replace( $base_url, '', $url );
 }
+
+function pwp_put_contents( $file, $content = null ) {
+
+	// Return false if no filename is provided
+	if ( empty( $file ) ) {
+		return false;
+	}
+
+	// Initialize the WP filesystem
+	pwp_wp_filesystem_init();
+	global $wp_filesystem;
+
+	if ( ! $wp_filesystem->put_contents( $file, $content, 0644 ) ) {
+		return false;
+	}
+
+	return true;
+}
+
+function pwp_wp_filesystem_init() {
+
+	global $wp_filesystem;
+
+	if ( empty( $wp_filesystem ) ) {
+		require_once( trailingslashit( ABSPATH ) . 'wp-admin/includes/file.php' );
+		WP_Filesystem();
+	}
+}

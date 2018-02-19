@@ -104,7 +104,7 @@ class Manifest {
 
 		$manifest = apply_filters( 'pwp_manifest_values', $manifest );
 		$content  = json_encode( $manifest, JSON_UNESCAPED_SLASHES );
-		$save     = file_put_contents( $this->manifest_path, $content );
+		$save     = pwp_put_contents( $this->manifest_path, $content );
 		if ( ! $save ) {
 			add_action( 'admin_notices', function () {
 				echo '<div class="notice notice-error">';
