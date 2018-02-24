@@ -32,11 +32,22 @@
 
 					alert(msg_content);
 				} else {
-					console.log(data['message']);
 
+					download(data['message'], 'progressive-wp-debug-log.json');
 				}
 				$e.removeAttr('disabled');
 			});
 		});
+
+
+		function download(dataurl, filename) {
+			const $a = document.createElement("a");
+			$a.href = dataurl;
+			$a.setAttribute("download", filename);
+			const b = document.createEvent("MouseEvents");
+			b.initEvent("click", false, true);
+			$a.dispatchEvent(b);
+			return false;
+		}
 	});
 })(jQuery, PwpJsVars);

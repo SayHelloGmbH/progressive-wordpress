@@ -122,11 +122,22 @@ module.exports = __webpack_require__(5);
 
 					alert(msg_content);
 				} else {
-					console.log(data['message']);
+
+					download(data['message'], 'progressive-wp-debug-log.json');
 				}
 				$e.removeAttr('disabled');
 			});
 		});
+
+		function download(dataurl, filename) {
+			var $a = document.createElement("a");
+			$a.href = dataurl;
+			$a.setAttribute("download", filename);
+			var b = document.createEvent("MouseEvents");
+			b.initEvent("click", false, true);
+			$a.dispatchEvent(b);
+			return false;
+		}
 	});
 })(jQuery, PwpJsVars);
 

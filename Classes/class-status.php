@@ -33,6 +33,12 @@ class Status {
 
 		add_action( 'wp_ajax_pwp_ajax_download_log', [ $this, 'download_log' ] );
 
+		/**
+		 * Clear
+		 */
+
+		add_action( 'init', [ $this, 'delete_logfiles' ] );
+
 	}
 
 	/**
@@ -91,15 +97,22 @@ class Status {
 		pwp_exit_ajax( 'error', 'ok' );
 	}
 
+	public function delete_logfiles() {
+		if ( is_dir( $this->upload_dir ) ) {
+			self::emptyDir( $this->upload_dir );
+		}
+	}
+
 	/**
 	 * Helpers
 	 */
 
 	public function generate_debug_log() {
 
-		$log             = [];
-		$log['site_url'] = get_option( 'siteurl' );
-		$log['home_url'] = get_home_url();
+		$log              = [];
+		$log['generated'] = date( 'Y-m-d H:i (T)' );
+		$log['site_url']  = get_option( 'siteurl' );
+		$log['home_url']  = get_home_url();
 		global $wp_version;
 		$log['wpversion']  = $wp_version;
 		$log['multisite']  = is_multisite();
@@ -172,5 +185,23 @@ class Status {
 				'text_false' => __( 'Your site has to be served over HTTPS.', 'pwp' ),
 			],
 		];
+	}
+
+	public static function emptyDir( $dirPath ) {
+		if ( ! is_dir( $dirPath ) ) {
+			throw new InvalidArgumentException( "$dirPath must be a directory" );
+		}
+		if ( substr( $dirPath, strlen( $dirPath ) - 1, 1 ) != '/' ) {
+			$dirPath .= '/';
+		}
+		$files = glob( $dirPath . '*', GLOB_MARK );
+		foreach ( $files as $file ) {
+			if ( is_dir( $file ) ) {
+				self::emptyDir( $file );
+			} else {
+				unlink( $file );
+			}
+		}
+		//rmdir( $dirPath );
 	}
 }
