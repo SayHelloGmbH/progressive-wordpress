@@ -100,6 +100,10 @@ class Status {
 		$log             = [];
 		$log['site_url'] = get_option( 'siteurl' );
 		$log['home_url'] = get_home_url();
+		global $wp_version;
+		$log['wpversion']  = $wp_version;
+		$log['multisite']  = is_multisite();
+		$log['phpversion'] = phpversion();
 
 		$log['stats'] = [];
 		$stats        = $this->get_stats();
@@ -122,8 +126,6 @@ class Status {
 			'template_dir'   => get_template_directory(),
 			'stylesheet_dir' => get_stylesheet_directory(),
 		];
-
-		$log['multisite'] = is_multisite();
 
 		$file = 'debug_log_' . time() . '.json';
 		$put  = pwp_put_contents( $this->upload_dir . $file, json_encode( $log ) );
