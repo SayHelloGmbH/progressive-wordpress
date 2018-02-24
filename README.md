@@ -34,6 +34,7 @@ After those steps you will have an overview about all registered devices, you ca
 ## Changelog
 
 ### 0.7.0
+* added a debug log
 * using `WP_Filesystem` API instead of php `file_put_contents`
 * Added "orientation" to manifest
 * Added colorpicker to settings
