@@ -4,21 +4,16 @@ namespace nicomartin\ProgressiveWordPress;
 
 class Status {
 
-	public $logtypes = '';
 	public $upload_dir = '';
 	public $upload_url = '';
 
 	public function __construct() {
-		$this->logtypes   = [ 'debug-log' ];
-		$this->upload_dir = wp_upload_dir()['basedir'] . '/progressive-wp/';
-		$this->upload_url = wp_upload_dir()['baseurl'] . '/progressive-wp/';
+
+		$this->upload_dir = pwp_get_instance()->upload_dir . '/debug/';
+		$this->upload_url = pwp_get_instance()->upload_url . '/debug/';
 	}
 
 	public function run() {
-
-		if ( ! is_dir( $this->upload_dir ) ) {
-			mkdir( $this->upload_dir );
-		}
 
 		/**
 		 * Page
@@ -31,7 +26,7 @@ class Status {
 		 * Ajax
 		 */
 
-		add_action( 'wp_ajax_pwp_ajax_download_log', [ $this, 'download_log' ] );
+		add_action( 'wp_ajax_pwp_ajax_download_log-debug-log', [ $this, 'download_log' ] );
 
 		/**
 		 * Clear
@@ -68,11 +63,16 @@ class Status {
 	}
 
 	public function settings_logs() {
-		$section = pwp_settings()->add_section( pwp_settings_page_main(), 'pwp_intro_logs', __( 'Logs', 'pwp' ) );
+
+		// translators: Please make sure your device supports progressive web apps and the status above is green.
+		$html = sprintf( __( 'Please make sure the status above is all green and your device supports %s.', 'pwp' ), '<a href="https://caniuse.com/#feat=serviceworkers" target="_blank">Progressive Web Apps</a>' ) . '<br>';
+		// translators: Still not working? Please visit the support forum.
+		$html .= sprintf( __( 'Still not working? Please visit the %s.', 'pwp' ), '<a href="https://wordpress.org/support/plugin/progressive-wp/" target="_blank">' . __( 'support forum', 'pwp' ) . '</a>' );
+
+		$section = pwp_settings()->add_section( pwp_settings_page_main(), 'pwp_intro_help', __( 'Need Help?', 'pwp' ), '<p>' . $html . '</p>' );
 
 		$html = '<button class="button pwp-download-log" data-log="debug-log">' . __( 'Download Logfile', 'pwp' ) . '</button>';
 		pwp_settings()->add_message( $section, 'pwp_intro_logs_debug', __( 'Debug Log', 'pwp' ), $html );
-
 	}
 
 	/**
@@ -81,25 +81,22 @@ class Status {
 
 	public function download_log() {
 
-		if ( ! in_array( $_POST['logtype'], $this->logtypes ) ) {
-			pwp_exit_ajax( 'error', __( 'Error', 'pwp' ) );
+		$log = $this->generate_debug_log();
+		if ( $log ) {
+			pwp_exit_ajax( 'success', '', [
+				'url'  => $log,
+				'file' => 'progressive-wp-debug-log.json',
+			] );
+		} else {
+			pwp_exit_ajax( 'error', __( 'Logfile could not be created', 'pwp' ) );
 		}
 
-		if ( 'debug-log' == $_POST['logtype'] ) {
-			$log = $this->generate_debug_log();
-			if ( $log ) {
-				pwp_exit_ajax( 'success', $log );
-			} else {
-				pwp_exit_ajax( 'error', __( 'Logfile could not be created', 'pwp' ) );
-			}
-		}
-
-		pwp_exit_ajax( 'error', 'ok' );
+		pwp_exit_ajax( 'error', __( 'Error', 'pwp' ) );
 	}
 
 	public function delete_logfiles() {
 		if ( is_dir( $this->upload_dir ) ) {
-			self::emptyDir( $this->upload_dir );
+			self::empty_dir( $this->upload_dir );
 		}
 	}
 
@@ -108,6 +105,10 @@ class Status {
 	 */
 
 	public function generate_debug_log() {
+
+		if ( ! is_dir( $this->upload_dir ) ) {
+			mkdir( $this->upload_dir );
+		}
 
 		$log              = [];
 		$log['generated'] = date( 'Y-m-d H:i (T)' );
@@ -187,21 +188,21 @@ class Status {
 		];
 	}
 
-	public static function emptyDir( $dirPath ) {
-		if ( ! is_dir( $dirPath ) ) {
-			throw new InvalidArgumentException( "$dirPath must be a directory" );
+	public static function empty_dir( $dir ) {
+		if ( ! is_dir( $dir ) ) {
+			throw new InvalidArgumentException( "$dir must be a directory" );
 		}
-		if ( substr( $dirPath, strlen( $dirPath ) - 1, 1 ) != '/' ) {
-			$dirPath .= '/';
+		if ( substr( $dir, strlen( $dir ) - 1, 1 ) != '/' ) {
+			$dir .= '/';
 		}
-		$files = glob( $dirPath . '*', GLOB_MARK );
+		$files = glob( $dir . '*', GLOB_MARK );
 		foreach ( $files as $file ) {
 			if ( is_dir( $file ) ) {
-				self::emptyDir( $file );
+				self::empty_dir( $file );
 			} else {
 				unlink( $file );
 			}
 		}
-		//rmdir( $dirPath );
+		rmdir( $dir );
 	}
 }

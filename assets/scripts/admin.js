@@ -108,8 +108,7 @@ module.exports = __webpack_require__(5);
 				type: 'POST',
 				dataType: 'json',
 				data: {
-					action: 'pwp_ajax_download_log',
-					logtype: logtype
+					action: 'pwp_ajax_download_log-' + logtype
 				}
 			}).always(function (data) {
 
@@ -123,7 +122,7 @@ module.exports = __webpack_require__(5);
 					alert(msg_content);
 				} else {
 
-					download(data['message'], 'progressive-wp-debug-log.json');
+					download(data['add']['url'], data['add']['file']);
 				}
 				$e.removeAttr('disabled');
 			});

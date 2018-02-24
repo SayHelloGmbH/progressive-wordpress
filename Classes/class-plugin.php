@@ -12,6 +12,9 @@ class Plugin {
 	public $debug = '';
 	public $file = '';
 
+	public $upload_dir = '';
+	public $upload_url = '';
+
 	public $option_key = 'pwp_data';
 
 	/**
@@ -44,6 +47,9 @@ class Plugin {
 			self::$instance->debug  = true;
 			self::$instance->file   = $file;
 
+			self::$instance->upload_dir = wp_upload_dir()['basedir'] . '/progressive-wp/';
+			self::$instance->upload_url = wp_upload_dir()['baseurl'] . '/progressive-wp/';
+
 			self::$instance->run();
 		}
 
@@ -72,6 +78,9 @@ class Plugin {
 		add_action( 'admin_init', array( $this, 'update_plugin_data' ) );
 		register_deactivation_hook( pwp_get_instance()->file, array( $this, 'deactivate' ) );
 
+		if ( ! is_dir( pwp_get_instance()->upload_dir ) ) {
+			mkdir( pwp_get_instance()->upload_dir );
+		}
 	}
 
 	/**

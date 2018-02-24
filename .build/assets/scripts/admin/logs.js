@@ -18,8 +18,7 @@
 				type: 'POST',
 				dataType: 'json',
 				data: {
-					action: 'pwp_ajax_download_log',
-					logtype: logtype
+					action: `pwp_ajax_download_log-${logtype}`,
 				}
 			}).always(function (data) {
 
@@ -33,7 +32,7 @@
 					alert(msg_content);
 				} else {
 
-					download(data['message'], 'progressive-wp-debug-log.json');
+					download(data['add']['url'], data['add']['file']);
 				}
 				$e.removeAttr('disabled');
 			});

@@ -8,16 +8,25 @@ class Push {
 	public $latestpushes_option = 'pwp-latest-pushes';
 	public $latest_push_path = '';
 	public $latest_push_url = '';
+	public $upload_dir = '';
+	public $upload_url = '';
 
 	public function __construct() {
 		$this->latest_push_path          = WP_CONTENT_DIR . '/pwp-latest-push.json';
 		$this->latest_push_url           = content_url() . '/pwp-latest-push.json';
+		$this->upload_dir                = pwp_get_instance()->upload_dir . '/push-log/';
+		$this->upload_url                = pwp_get_instance()->upload_url . '/push-log/';
 		$GLOBALS['pwp_push_modal_count'] = 0;
 	}
 
 	public function run() {
+
 		if ( ! pwp_push_set() ) {
 			return;
+		}
+
+		if ( ! is_dir( $this->upload_dir ) ) {
+			mkdir( $this->upload_dir );
 		}
 
 		add_filter( 'pwp_sw_content', [ $this, 'sw_content' ], 1 );
@@ -43,6 +52,14 @@ class Push {
 		add_action( 'wp_ajax_nopriv_pwp_ajax_handle_device_id', [ $this, 'handle_device_id' ] );
 
 		add_action( 'wp_ajax_pwp_push_do_push', [ $this, 'do_modal_push' ] );
+
+		/**
+		 * Log
+		 */
+
+		add_action( 'pwp_settings', [ $this, 'settings_log' ], 50 );
+		add_action( 'wp_ajax_pwp_ajax_download_log-push-log', [ $this, 'download_log' ] );
+
 	}
 
 	public function sw_content( $content ) {
@@ -264,6 +281,7 @@ class Push {
 	}
 
 	public function do_modal_push() {
+
 		if ( ! wp_verify_nonce( $_POST['pwp-push-nonce'], 'pwp-push-action' ) ) {
 			pwp_exit_ajax( 'success', 'Error' );
 		}
@@ -295,6 +313,35 @@ class Push {
 		$return = $this->do_push( $data );
 
 		pwp_exit_ajax( $return['type'], $return['message'], $return );
+	}
+
+	/**
+	 * Log
+	 */
+
+	public function settings_log() {
+
+		if ( ! $this->latest_push_log() ) {
+			return;
+		}
+
+		$html = '<button class="button pwp-download-log" data-log="push-log">' . __( 'Download Logfile', 'pwp' ) . '</button>';
+		pwp_settings()->add_message( 'pwp-section-pwp_intro_help', 'pwp_intro_logs_push', __( 'Latest Push Log', 'pwp' ), $html );
+	}
+
+	public function download_log() {
+
+		$log = $this->latest_push_log();
+		if ( $log ) {
+			pwp_exit_ajax( 'success', '', [
+				'url'  => $log,
+				'file' => 'progressive-wp-latest-push-log.json',
+			] );
+		} else {
+			pwp_exit_ajax( 'error', __( 'Logfile could not be created', 'pwp' ) );
+		}
+
+		pwp_exit_ajax( 'error', __( 'Error', 'pwp' ) );
 	}
 
 	/**
@@ -379,6 +426,8 @@ class Push {
 
 	private function do_push( $data ) {
 
+		$log = [];
+
 		$server_key = pwp_get_setting( 'firebase-serverkey' );
 		if ( ! pwp_get_instance()->PushCredentials->validate_serverkey( $server_key ) ) {
 			return [
@@ -404,7 +453,8 @@ class Push {
 				}
 			}
 			if ( $add_device ) {
-				$devices[] = $device_data['id'];
+				$devices[]        = $device_data['id'];
+				$log['devices'][] = $device_data;
 			}
 		}
 
@@ -448,6 +498,8 @@ class Push {
 			'image'    => '', // bigger image
 			'redirect' => '', // url
 		], $data );
+
+		$log['message'] = $data;
 
 		$fields = [
 			'registration_ids' => $devices,
@@ -507,6 +559,13 @@ class Push {
 		 * Save Push
 		 */
 
+		$log['resp'] = $result;
+
+		$file = 'push_log_' . time() . wp_generate_password( 30, false ) . '.json';
+		$put  = pwp_put_contents( $this->upload_dir . $file, json_encode( $log ) );
+
+		/*
+
 		$latest_pushes = get_option( $this->latestpushes_option );
 		if ( ! is_array( $latest_pushes ) ) {
 			$latest_pushes = [];
@@ -517,6 +576,8 @@ class Push {
 			'groups'  => $send_tos,
 		] );
 		update_option( $this->latestpushes_option, $latest_pushes );
+
+		*/
 
 		return [
 			'type'            => 'success',
@@ -532,5 +593,19 @@ class Push {
 
 	private function is_hex( $value ) {
 		return preg_match( '/#([a-f]|[A-F]|[0-9]){3}(([a-f]|[A-F]|[0-9]){3})?\b/', $value );
+	}
+
+	private function latest_push_log() {
+		$files = scandir( $this->upload_dir, SCANDIR_SORT_DESCENDING );
+		if ( ! $files || empty( $files ) ) {
+			return false;
+		}
+
+		$newest_file = $files[0];
+		if ( '..' == $newest_file || '.' == $newest_file ) {
+			return false;
+		}
+
+		return $this->upload_url . $newest_file;
 	}
 }
