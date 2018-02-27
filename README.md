@@ -21,7 +21,66 @@ A copy of each page is stored in the browser cache as the visitor views it. This
 This plugin uses Firebase Cloud Messaging as a messaging service: [https://firebase.google.com/](https://firebase.google.com/)  
 Please register your application there. You will need the `Server Key` and the `Sender ID`.
 
-Progressive WordPress comes with an integrated notification button where the user can register an unregister for push notification. You can either use the built in fixed button from the admin panel or you can add your own button as a shortcode `[pwp_notification_button size="1rem"]`.  
+Progressive WordPress comes with an integrated notification button where the user can register an unregister for push notification. You can either use the built in fixed button from the admin panel or you could have a look at the **Developers** section.
+
+After those steps you will have an overview about all registered devices, you can manage them and you can send push notifications to all of them or selected devices. Awesome, right!?
+
+## Developers
+Progressive WordPress offers a lot of possibilities for developers the extend it the way they need it.
+
+### ServiceWorker
+**Add content to the serviceworker:**  
+```php
+function myplugin_sw_content($content){
+    return $content; //needs to be valid serviceworker JavaScript
+}
+add_filter('pwp_sw_content', 'myplugin_sw_content');
+```
+**Regenerate serviceworker:**  
+The Serviceworker (`pwp-sw.js`) will be regenerated as soon as new settings are saved (but only if the settings actually changed).
+You can regenerate it by using `pwp_serviceworker_regenerate();`.
+
+### Manifest
+**Add content to the manifest:**  
+```php
+function myplugin_manifest_content($values){
+    $values['new'] = 'New';
+    return $values; //needs to be valid an array (will be json_endoded)
+}
+add_filter('pwp_sw_content', 'myplugin_manifest_content');
+```
+**Regenerate manifest:**  
+The Manifest (`pwp-manifest.json`) will be regenerated as soon some plugin settings are saved.
+You can regenerate it by using `pwp_manifest_regenerate();`.
+
+### Push notifications
+**customoize Button**  
+If you don't want to use the built in Button, you can create your own from a shortcode or a php function:  
+```php
+// Shortcode
+[pwp_notification_button size="1rem" class="your-class"]
+
+// Function
+$atts = [
+    'class' => 'notification-button--fixedfooter',
+    'style' => "background-color: #ff0000; color: #00ff00; font-size: 35px",
+];
+pwp_get_notification_button( $atts ); // returns the html template.
+```
+
+**Filter: `pwp_notification_button_attributes`**
+
+This filter adds custom attributes to the notification button:
+```php
+function myplugin_notification_button_atttibutes( $attributes ) {
+    $attributes['data-test'] = 'My value';
+    return $attributes;
+}
+add_filter( 'pwp_notification_button_attributes', 'myplugin_notification_button_atttibutes' );
+```
+The key will be used as attribute key (will be sanitized `sanitize_title()`), the value will be used as attribute value (sanitized with `esc_attr()`).
+
+**Create your own button**  
 You are also free to create your own button. The states are indicated as body classes:
 * `body.pwp-notification` if push notifications are supported
 * `body.pwp-notification.pwp-notification--on` if the device is registered
@@ -29,11 +88,10 @@ You are also free to create your own button. The states are indicated as body cl
 
 You can then use `pwpRegisterPushDevice()` and `pwpDeregisterPushDevice()` as JavaScript functions from the widow object.
 
-After those steps you will have an overview about all registered devices, you can manage them and you can send push notifications to all of them or selected devices. Awesome, right!?
-
 ## Changelog
 
 ### 0.7.0
+* added a latest push log
 * added a debug log
 * using `WP_Filesystem` API instead of php `file_put_contents`
 * Added "orientation" to manifest

@@ -83,6 +83,8 @@ A development version of this plugin is hosted on GitHub. If you have any ideas 
 == Changelog ==
 
 = 0.7.0 =
+* added a latest push log
+* added a debug log
 * using `WP_Filesystem` API instead of php `file_put_contents`
 * Added "orientation" to manifest
 * Added colorpicker to settings

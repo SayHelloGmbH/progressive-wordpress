@@ -564,21 +564,6 @@ class Push {
 		$file = 'push_log_' . time() . wp_generate_password( 30, false ) . '.json';
 		$put  = pwp_put_contents( $this->upload_dir . $file, json_encode( $log ) );
 
-		/*
-
-		$latest_pushes = get_option( $this->latestpushes_option );
-		if ( ! is_array( $latest_pushes ) ) {
-			$latest_pushes = [];
-		}
-		$latest_pushes[ time() ] = array_merge( $data, [
-			'failed'  => count( $failed ),
-			'success' => count( $success ),
-			'groups'  => $send_tos,
-		] );
-		update_option( $this->latestpushes_option, $latest_pushes );
-
-		*/
-
 		return [
 			'type'            => 'success',
 			'message'         => '',
