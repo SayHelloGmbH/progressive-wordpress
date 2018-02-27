@@ -31,10 +31,10 @@ Progressive WordPress offers a lot of possibilities for developers the extend it
 ### ServiceWorker
 **Add content to the serviceworker:**  
 ```php
-function myplugin_sw_content($content){
+function myplugin_sw_content( $content ) {
     return $content; //needs to be valid serviceworker JavaScript
 }
-add_filter('pwp_sw_content', 'myplugin_sw_content');
+add_filter( 'pwp_sw_content', 'myplugin_sw_content' );
 ```
 **Regenerate serviceworker:**  
 The Serviceworker (`pwp-sw.js`) will be regenerated as soon as new settings are saved (but only if the settings actually changed).
@@ -43,11 +43,11 @@ You can regenerate it by using `pwp_serviceworker_regenerate();`.
 ### Manifest
 **Add content to the manifest:**  
 ```php
-function myplugin_manifest_content($values){
+function myplugin_manifest_content( $values ) {
     $values['new'] = 'New';
     return $values; //needs to be valid an array (will be json_endoded)
 }
-add_filter('pwp_sw_content', 'myplugin_manifest_content');
+add_filter( 'pwp_sw_content', 'myplugin_manifest_content' );
 ```
 **Regenerate manifest:**  
 The Manifest (`pwp-manifest.json`) will be regenerated as soon some plugin settings are saved.
@@ -86,11 +86,12 @@ You are also free to create your own button. The states are indicated as body cl
 * `body.pwp-notification.pwp-notification--on` if the device is registered
 * `body.pwp-notification.pwp-notification--loader` if there is something loading
 
-You can then use `pwpRegisterPushDevice()` and `pwpDeregisterPushDevice()` as JavaScript functions from the widow object.
+You can then use the JS functions `pwpRegisterPushDevice();` and `pwpDeregisterPushDevice();`.
 
 ## Changelog
 
 ### 0.7.0
+* extended developer functionalities
 * added a latest push log
 * added a debug log
 * using `WP_Filesystem` API instead of php `file_put_contents`

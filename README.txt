@@ -4,7 +4,7 @@ Donate link: https://www.paypal.me/NicoMartin
 Tags: PWA, Progressive Web App, Progressive Web Application, progressive, installable, offline, offline usage, push notifications, manifest, web app manifest, serviceworker
 Requires at least: 4.7
 Tested up to: 4.9.2
-Stable tag: 0.6.2
+Stable tag: 0.7.0
 Requires PHP: 5.4
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -36,15 +36,13 @@ A copy of each page is stored in the browser cache as the visitor views it. This
 This plugin uses Firebase Cloud Messaging as a messaging service: [https://firebase.google.com/](https://firebase.google.com/)
 Please register your application there. You will need the `Server Key` and the `Sender ID`.
 
-Progressive WordPress comes with an integrated notification button where the user can register an unregister for push notification. You can either use the built in fixed button from the admin panel or you can add your own button as a shortcode `[pwp_notification_button size="1rem"]`.
-You are also free to create your own button. The states are indicated as body classes:
-* `body.pwp-notification` if push notifications are supported
-* `body.pwp-notification.pwp-notification--on` if the device is registered
-* `body.pwp-notification.pwp-notification--loader` if there is something loading
-
-You can then use `pwpRegisterPushDevice()` and `pwpDeregisterPushDevice()` as JavaScript functions from the widow object.
+Progressive WordPress comes with an integrated notification button where the user can register an unregister for push notification. You can either use the built in fixed button from the admin panel or you could have a look at the **Developers** section.
 
 After those steps you will have an overview about all registered devices, you can manage them and you can send push notifications to all of them or selected devices. Awesome, right!?
+
+= Push notifications =
+Progressive WordPress offers a lot of possibilities for developers the extend it the way they need it.
+[https://github.com/nico-martin/progressive-wordpress#developers](https://github.com/nico-martin/progressive-wordpress#developers)
 
 == Screenshots ==
 
