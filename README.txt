@@ -40,7 +40,7 @@ Progressive WordPress comes with an integrated notification button where the use
 
 After those steps you will have an overview about all registered devices, you can manage them and you can send push notifications to all of them or selected devices. Awesome, right!?
 
-= Push notifications =
+= Developers =
 Progressive WordPress offers a lot of possibilities for developers the extend it the way they need it.
 [https://github.com/nico-martin/progressive-wordpress#developers](https://github.com/nico-martin/progressive-wordpress#developers)
 
