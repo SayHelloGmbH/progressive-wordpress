@@ -37,7 +37,7 @@ function myplugin_sw_content( $content ) {
 add_filter( 'pwp_sw_content', 'myplugin_sw_content' );
 ```
 **Regenerate serviceworker:**  
-The Serviceworker (`pwp-sw.js`) will be regenerated as soon as new settings are saved (but only if the settings actually changed).
+The Serviceworker (`pwp-serviceworker.js`) will be regenerated as soon as new settings are saved (but only if the settings actually changed).
 You can regenerate it by using `pwp_serviceworker_regenerate();`.
 
 ### Manifest

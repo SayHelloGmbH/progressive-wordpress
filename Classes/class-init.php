@@ -22,10 +22,6 @@ class Init {
 		add_action( 'wp_enqueue_scripts', [ $this, 'add_assets' ] );
 		add_action( 'admin_enqueue_scripts', [ $this, 'add_admin_assets' ] );
 
-		// Helper
-		add_action( 'wp_footer', [ $this, 'footer_js' ], 1 );
-		add_action( 'admin_footer', [ $this, 'admin_footer_js' ], 1 );
-
 		// is_ssl() fix for cloudflare: https://snippets.webaware.com.au/snippets/wordpress-is_ssl-doesnt-work-behind-some-load-balancers/
 		if ( stripos( get_option( 'siteurl' ), 'https://' ) === 0 ) {
 			$_SERVER['HTTPS'] = 'on';
@@ -76,6 +72,19 @@ class Init {
 		$dir_uri = trailingslashit( plugin_dir_url( pwp_get_instance()->file ) );
 		wp_enqueue_style( pwp_get_instance()->prefix . '-style', $dir_uri . 'assets/styles/ui' . ( $min ? '.min' : '' ) . '.css', [], $script_version );
 		wp_enqueue_script( pwp_get_instance()->prefix . '-script', $dir_uri . 'assets/scripts/ui' . ( $min ? '.min' : '' ) . '.js', [ 'jquery' ], $script_version, true );
+
+		/**
+		 * Footer JS
+		 */
+
+		$defaults = [
+			'AjaxURL' => admin_url( 'admin-ajax.php' ),
+			'homeurl' => trailingslashit( get_home_url() ),
+		];
+
+		$vars = json_encode( apply_filters( 'pwp_footer_js', $defaults ) );
+
+		wp_add_inline_script( pwp_get_instance()->prefix . '-script', "var PwpJsVars = {$vars};", 'before' );
 	}
 
 	public function add_admin_assets() {
@@ -91,35 +100,19 @@ class Init {
 		$dir_uri = trailingslashit( plugin_dir_url( pwp_get_instance()->file ) );
 		wp_enqueue_style( pwp_get_instance()->prefix . '-admin-style', $dir_uri . 'assets/styles/admin' . ( $min ? '.min' : '' ) . '.css', [], $script_version );
 		wp_enqueue_script( pwp_get_instance()->prefix . '-admin-script', $dir_uri . 'assets/scripts/admin' . ( $min ? '.min' : '' ) . '.js', [ 'jquery' ], $script_version, true );
-	}
 
-	/**
-	 * Helper
-	 */
-	public function footer_js() {
-		$defaults = [
-			'AjaxURL' => admin_url( 'admin-ajax.php' ),
-			'homeurl' => trailingslashit( get_home_url() ),
-		];
+		/**
+		 * Admin Footer JS
+		 */
 
-		$vars = apply_filters( 'pwp_footer_js', $defaults );
-
-		echo "<script id='pwp-js-vars'>\r\n";
-		echo 'var PwpJsVars = ' . json_encode( $vars );
-		echo '</script>';
-	}
-
-	public function admin_footer_js() {
 		$defaults = [
 			'AjaxURL'      => admin_url( 'admin-ajax.php' ),
 			'homeurl'      => trailingslashit( get_home_url() ),
 			'GeneralError' => __( 'An unexpected error occured', 'pwp' ),
 		];
 
-		$vars = apply_filters( 'pwp_admin_footer_js', $defaults );
+		$vars = json_encode( apply_filters( 'pwp_admin_footer_js', $defaults ) );
 
-		echo "<script id='pwp-js-vars'>\r\n";
-		echo 'var PwpJsVars = ' . json_encode( $vars );
-		echo '</script>';
+		wp_add_inline_script( pwp_get_instance()->prefix . '-admin-script', "var PwpJsVars = {$vars};", 'before' );
 	}
 }
