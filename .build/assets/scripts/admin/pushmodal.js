@@ -85,6 +85,10 @@
 
 					} else {
 						$success.fadeIn();
+						const $metabox = $('.pushpost-meta-container');
+						if ($metabox.length) {
+							$metabox.addClass('pushpost-done');
+						}
 					}
 					$loader.fadeOut();
 				});

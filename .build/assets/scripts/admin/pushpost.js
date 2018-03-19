@@ -32,5 +32,15 @@
 				}
 			});
 		});
+
+		const $pushpostMeta = $('.pushpost-meta-container');
+		$pushpostMeta.each(function () {
+			const $box = $(this);
+			$(this).find('.pushpost-meta__sendagain').on('click', function () {
+				if (confirm($(this).attr('data-confirmation'))) {
+					$box.removeClass('pushpost-done');
+				}
+			});
+		});
 	});
 })(jQuery, PwpJsVars);

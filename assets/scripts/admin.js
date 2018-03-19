@@ -275,6 +275,10 @@ module.exports = __webpack_require__(6);
 						alert(msg_content);
 					} else {
 						$success.fadeIn();
+						var $metabox = $('.pushpost-meta-container');
+						if ($metabox.length) {
+							$metabox.addClass('pushpost-done');
+						}
 					}
 					$loader.fadeOut();
 				});
@@ -321,6 +325,16 @@ module.exports = __webpack_require__(6);
 				} else {
 					$titleTr.hide();
 					$bodyTr.hide();
+				}
+			});
+		});
+
+		var $pushpostMeta = $('.pushpost-meta-container');
+		$pushpostMeta.each(function () {
+			var $box = $(this);
+			$(this).find('.pushpost-meta__sendagain').on('click', function () {
+				if (confirm($(this).attr('data-confirmation'))) {
+					$box.removeClass('pushpost-done');
 				}
 			});
 		});

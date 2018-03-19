@@ -141,7 +141,7 @@
   display: block;
   width: 80px;
   height: 80px;
-  border: 7px solid #1ca868;
+  border: 12px solid #1ca868;
   padding: 10px;
   margin: 0 auto 40px auto;
   -moz-border-radius: 50%;
@@ -188,6 +188,22 @@
 
 .pwpmodal-input[value="0"] + .pwpmodal-uploader .button-pwpdelete {
   display: none;
+}
+
+.pushpost-meta-container .pushpost-meta--send {
+  display: block;
+}
+.pushpost-meta-container .pushpost-meta--done {
+  display: none;
+}
+.pushpost-meta-container.pushpost-done .pushpost-meta--send {
+  display: none;
+}
+.pushpost-meta-container.pushpost-done .pushpost-meta--done {
+  display: block;
+}
+.pushpost-meta-container .pushpost-meta__sendagain {
+  cursor: pointer;
 }
 
 .pwp-wrap .form-table td {

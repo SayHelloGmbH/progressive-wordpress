@@ -311,6 +311,9 @@ class Push {
 		}
 
 		$return = $this->do_push( $data );
+		if ( 'success' == $return['type'] && $_POST['pwp-push-pushpost'] ) {
+			update_post_meta( $_POST['pwp-push-pushpost'], 'pwp_pushpost', 'done' );
+		}
 
 		pwp_exit_ajax( $return['type'], $return['message'], $return );
 	}
@@ -348,7 +351,7 @@ class Push {
 	 * Send push
 	 */
 
-	private function render_push_modal( $title = '', $body = '', $url = '', $image_id = 0, $limit = '' ) {
+	public function render_push_modal( $title = '', $body = '', $url = '', $image_id = 0, $limit = '', $pushpost = '' ) {
 
 		if ( is_admin() ) {
 			add_thickbox();
@@ -414,6 +417,7 @@ class Push {
 		}
 		$r .= "<input type='hidden' name='pwp-push-limit' value='$limit' />";
 		$r .= '<input type="hidden" name="pwp-push-action" value="pwp_push_do_push" />';
+		$r .= '<input type="hidden" name="pwp-push-pushpost" value="' . $pushpost . '" />';
 		$r .= wp_nonce_field( 'pwp-push-action', 'pwp-push-nonce', true, false );
 		$r .= '<div class="pwp-pushmodal__label pwp-pushmodal__controls"><a id="send" class="button button-primary">' . __( 'Send push', 'pwp' ) . '</a></div>';
 		$r .= '<div class="loader"></div>';

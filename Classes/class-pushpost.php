@@ -13,9 +13,42 @@ class PushPost {
 			return;
 		}
 
+		add_action( 'add_meta_boxes', [ $this, 'meta_box' ] );
+
 		add_action( 'admin_init', [ $this, 'save_post_types' ], 50 );
 		add_action( 'pwp_settings', [ $this, 'settings' ] );
 		add_filter( 'pwp_admin_footer_js', [ $this, 'post_types_footer' ] );
+	}
+
+	public function meta_box() {
+		foreach ( get_option( 'pwp_post_types' ) as $pt ) {
+			if ( ! pwp_get_setting( "pwp_pushpost_active_{$pt}" ) ) {
+				continue;
+			}
+			add_meta_box( 'pushpost-meta-box', __( 'PWA Push', 'pwp' ), function ( $post ) use ( $pt ) {
+
+				$title = pwp_get_setting( "pwp_pushpost_title_{$pt}" );
+				$title = str_replace( '{post_title}', get_the_title( $post ), $title );
+				$body  = pwp_get_setting( "pwp_pushpost_body_{$pt}" );
+				$body  = str_replace( '{post_title}', get_the_title( $post ), $body );
+
+				$class = '';
+				if ( get_post_meta( $post->ID, 'pwp_pushpost', true ) == 'done' ) {
+					$class = 'pushpost-done';
+				}
+				echo '<div class="pushpost-meta-container ' . $class . '">';
+				echo '<div class="pushpost-meta pushpost-meta--send">';
+				echo '<p>' . __( 'This function opens the push notification modal for this post.', 'pwp' ) . '</p>';
+				echo pwp_get_instance()->Push->render_push_modal( $title, $body, get_permalink( $post ), get_post_thumbnail_id( $post ), '', $post->ID );
+				echo '</div>';
+
+				echo '<div class="pushpost-meta pushpost-meta--done">';
+				echo '<p>' . __( 'Push notification has already been sent. Do you want to send it again?', 'pwp' ) . '</p>';
+				echo '<p><a class="pushpost-meta__sendagain" data-confirmation="' . esc_attr( __( 'Are you sure you want to send a new push notification?', 'pwp' ) ) . '">' . __( 'Send again', 'pwp' ) . '</a></p>';
+				echo '</div>';
+				echo '</div>';
+			}, $pt, 'side' );
+		}
 	}
 
 	public function save_post_types() {
