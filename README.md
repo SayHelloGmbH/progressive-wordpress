@@ -91,6 +91,10 @@ You can then use the JS functions `pwpRegisterPushDevice();` and `pwpDeregisterP
 ## Changelog
 
 ### 0.7.0
+* push button color input-type improvements
+* add JS vars as `wp_add_inline_script`
+
+### 0.7.0
 * extended developer functionalities
 * added a latest push log
 * added a debug log

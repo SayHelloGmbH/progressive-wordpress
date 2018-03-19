@@ -238,6 +238,9 @@ class Settings {
 				$return .= sprintf( '<input type="hidden" name="%1$s[%2$s]" id="%2$s" value="%3$s" />', $this->option_key, $key, $val );
 				$return .= '</div>';
 				break;
+			case 'spacer':
+				$return .= "<div class='{$this->option_key}--spacer'></div>";
+				break;
 			default:
 				$return .= sprintf( '<input type="text" name="%1$s[%2$s]" id="%2$s" value="%3$s" />', $this->option_key, $key, $val );
 		} // End switch().
@@ -465,6 +468,19 @@ class Settings {
 			'type'    => 'color',
 			'default' => $default,
 			'args'    => $args,
+		];
+
+		return $key;
+	}
+
+	public function add_spacer( $section, $key ) {
+		$this->settings[ $key ] = [
+			'page'    => $this->sections[ $section ]['page'],
+			'section' => $section,
+			'name'    => '',
+			'type'    => 'spacer',
+			'default' => '',
+			'args'    => [],
 		];
 
 		return $key;

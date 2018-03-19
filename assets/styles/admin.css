@@ -242,6 +242,13 @@
   font-size: 12px;
   white-space: nowrap;
 }
+.pwp-wrap .form-table tr {
+  position: relative;
+}
+.pwp-wrap .pwp-settings--spacer {
+  border-top: 1px solid #e5e5e5;
+  margin-left: -220px;
+}
 
 .pwp-wrap__section {
   background-color: #fff;

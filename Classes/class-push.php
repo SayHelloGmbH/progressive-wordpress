@@ -96,8 +96,8 @@ class Push {
 
 		pwp_settings()->add_checkbox( $section, 'notification-button', __( 'Add notification button', 'pwp' ) );
 		pwp_settings()->add_message( $section, 'notification-button-heading', '<h3>' . __( 'Button appearance', 'pwa' ) . '</h3>' );
-		pwp_settings()->add_input( $section, 'notification-button-icon-color', __( 'Icon color', 'pwa' ), '#fff' );
-		pwp_settings()->add_input( $section, 'notification-button-bkg-color', __( 'Background color', 'pwa' ), '#333' );
+		pwp_settings()->add_color( $section, 'notification-button-icon-color', __( 'Icon color', 'pwa' ), '#ffffff' );
+		pwp_settings()->add_color( $section, 'notification-button-bkg-color', __( 'Background color', 'pwa' ), '#333333' );
 	}
 
 	public function settings_devices() {

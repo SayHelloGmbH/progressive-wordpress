@@ -71,7 +71,8 @@ __webpack_require__(1);
 __webpack_require__(2);
 __webpack_require__(3);
 __webpack_require__(4);
-module.exports = __webpack_require__(5);
+__webpack_require__(5);
+module.exports = __webpack_require__(6);
 
 
 /***/ }),
@@ -284,6 +285,50 @@ module.exports = __webpack_require__(5);
 
 /***/ }),
 /* 5 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+(function ($, plugin) {
+
+	$(function () {
+		var postTypes = PwpJsVars['post_types'];
+		$.each(postTypes, function (key, val) {
+
+			var $checkbox = $('#pwp_pushpost_active_' + key);
+			var $title = $('#pwp_pushpost_title_' + key);
+			var $titleTr = $title.parents('tr').first();
+			var $body = $('#pwp_pushpost_body_' + key);
+			var $bodyTr = $body.parents('tr').first();
+
+			if (!$checkbox.length) {
+				return;
+			}
+
+			if ($checkbox.prop('checked')) {
+				$titleTr.css({ 'display': 'table-row' });
+				$bodyTr.css({ 'display': 'table-row' });
+			} else {
+				$titleTr.hide();
+				$bodyTr.hide();
+			}
+
+			$checkbox.on('change', function () {
+				if ($checkbox.prop('checked')) {
+					$titleTr.css({ 'display': 'table-row' });
+					$bodyTr.css({ 'display': 'table-row' });
+				} else {
+					$titleTr.hide();
+					$bodyTr.hide();
+				}
+			});
+		});
+	});
+})(jQuery, PwpJsVars);
+
+/***/ }),
+/* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
