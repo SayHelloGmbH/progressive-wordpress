@@ -10,6 +10,10 @@ class Serviceworker {
 
 	public function __construct() {
 		$this->capability = pwp_get_instance()->Init->capability;
+		if ( is_multisite() ) {
+			$this->sw_path = ABSPATH . 'pwp-serviceworker-' . get_current_blog_id() . '.js';
+			$this->sw_url  = '/pwp-serviceworker-' . get_current_blog_id() . '.js';
+		}
 	}
 
 	public function run() {

@@ -152,8 +152,8 @@ class Push {
 	}
 
 	public function footer_js( $args ) {
-		$args['message_pushremove_failed'] = __( 'Gerät konnte nicht entfernt werden.', 'pwp' );
-		$args['message_pushadd_failed']    = __( 'Gerät konnte nicht registriert werden.', 'pwp' );
+		$args['message_pushremove_failed'] = __( 'Device could not be removed.', 'pwp' );
+		$args['message_pushadd_failed']    = __( 'Device could not be registered.', 'pwp' );
 
 		return $args;
 	}

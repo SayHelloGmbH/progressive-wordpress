@@ -10,6 +10,10 @@ class Manifest {
 
 	public function __construct() {
 		$this->capability = pwp_get_instance()->Init->capability;
+		if ( is_multisite() ) {
+			$this->manifest_path = ABSPATH . 'pwp-manifest-' . get_current_blog_id() . '.js';
+			$this->manifest_url  = '/pwp-manifest-' . get_current_blog_id() . '.js';
+		}
 	}
 
 	public function run() {
