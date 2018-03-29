@@ -24,3 +24,13 @@ $default-transition-duration: $settings_easing_speed + 0ms;
 @import "admin/settings-wrap";
 @import "admin/pwp-wrap";
 @import "admin/devices-table";
+
+#TB_window {
+	width: inherit !important;
+	height: auto !important;
+	margin-left: 0 !important;
+	margin-top: 0 !important;
+	top: 50% !important;
+	left: 50% !important;
+	@include translate3d(-50%, -50%);
+}

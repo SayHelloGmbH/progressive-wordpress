@@ -396,7 +396,7 @@ class Push {
 		$GLOBALS['pwp_push_modal_count'] ++;
 
 		$r = '';
-		$r .= '<a id="pwp-pushmodal-trigger" href="#TB_inline&inlineId=pwp-pushmodal-container-' . $GLOBALS['pwp_push_modal_count'] . '&width=400&height=510" class="thickbox button">' . __( 'Create push notification', 'pwp' ) . '</a>';
+		$r .= '<a id="pwp-pushmodal-trigger" href="#TB_inline&inlineId=pwp-pushmodal-container-' . $GLOBALS['pwp_push_modal_count'] . '&width=400&height=510&class=test" class="thickbox button">' . __( 'Create push notification', 'pwp' ) . '</a>';
 		$r .= '<div id="pwp-pushmodal-container-' . $GLOBALS['pwp_push_modal_count'] . '" style="display: none;">';
 		$r .= '<div class="pwp-pushmodal">';
 		$r .= '<h3>' . __( 'New Push-Notification', 'pwp' ) . '</h3>';

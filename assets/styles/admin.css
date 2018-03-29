@@ -408,3 +408,15 @@
 .pwp-devicestable tr:hover .devices-actions--delete {
   opacity: 1;
 }
+
+#TB_window {
+  width: inherit !important;
+  height: auto !important;
+  margin-left: 0 !important;
+  margin-top: 0 !important;
+  top: 50% !important;
+  left: 50% !important;
+  -moz-transform: translate3d(-50%, -50%, 1em);
+  -webkit-transform: translate3d(-50%, -50%, 1em);
+  transform: translate3d(-50%, -50%, 1em);
+}
