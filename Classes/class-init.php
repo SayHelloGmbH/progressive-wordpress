@@ -43,7 +43,7 @@ class Init {
 		// translators: feature 1
 		$html .= __( 'You are able to create a web-app-manifest, which makes your website installable.', 'pwp' );
 		// translators: feature 2
-		$html     .= '<br>' . __( 'It also enables offline usage and in the future you will even be able to send push notifications!', 'pwp' );
+		$html     .= '<br>' . __( 'It also enables offline usage and you are able to send push notifications!', 'pwp' );
 		$html     .= '</p>';
 		$sw_link  = 'https://caniuse.com/#feat=serviceworkers';
 		$html     .= '<p><b>' . __( 'To deliver app-like features this plugin uses a serviceworker.js file. This technology is not yet supported in all browsers!', 'pwp' ) . '</b><br><a href="' . $sw_link . '" target="_blank">' . $sw_link . '</a></p>';

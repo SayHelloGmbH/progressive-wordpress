@@ -94,6 +94,8 @@ You can then use the JS functions `pwpRegisterPushDevice();` and `pwpDeregisterP
 * **Stable version 1.0.0**
 * added multisite support
 * Pushpost: send push notifications right from the post edit screen
+* Added translation: de_DE
+* Added translation: de_CH
 * push button color input-type improvements
 * add JS vars as `wp_add_inline_script`
 

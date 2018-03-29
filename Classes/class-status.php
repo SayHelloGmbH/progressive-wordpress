@@ -68,6 +68,7 @@ class Status {
 		$html = sprintf( __( 'Please make sure the status above is all green and your device supports %s.', 'pwp' ), '<a href="https://caniuse.com/#feat=serviceworkers" target="_blank">Progressive Web Apps</a>' ) . '<br>';
 		// translators: Still not working? Please visit the support forum.
 		$html .= sprintf( __( 'Still not working? Please visit the %s.', 'pwp' ), '<a href="https://wordpress.org/support/plugin/progressive-wp/" target="_blank">' . __( 'support forum', 'pwp' ) . '</a>' );
+		$html .= '<br><br><small><b>' . __( 'Attention!', 'pwp' ) . '</b> ' . __( 'The Debug Log contains information that should not be public.', 'pwp' ) . '</small>';
 
 		$section = pwp_settings()->add_section( pwp_settings_page_main(), 'pwp_intro_help', __( 'Need Help?', 'pwp' ), '<p>' . $html . '</p>' );
 
