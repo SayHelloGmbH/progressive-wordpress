@@ -4,7 +4,7 @@ Donate link: https://www.paypal.me/NicoMartin
 Tags: PWA, Progressive Web App, Progressive Web Application, progressive, installable, offline, offline usage, push notifications, manifest, web app manifest, serviceworker
 Requires at least: 4.7
 Tested up to: 4.9.2
-Stable tag: 0.7.0
+Stable tag: 1.0.0
 Requires PHP: 5.4
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -12,8 +12,6 @@ License URI: http://www.gnu.org/licenses/gpl-3.0.html
 == Description ==
 
 This plugin adds progressive web app features to your WordPress site.
-
-**This plugin is currently in an open beta phase. I'd love to get some feedback from the community! [nico@sayhello.ch](mailto:nico@sayhello.ch)**
 
 = Web App Manifest =
 
@@ -79,6 +77,15 @@ A development version of this plugin is hosted on GitHub. If you have any ideas 
 [https://github.com/nico-martin/progressive-wordpress](https://github.com/nico-martin/progressive-wordpress)
 
 == Changelog ==
+
+= 1.0.0 =
+* **Stable version 1.0.0**
+* added multisite support
+* Pushpost: send push notifications right from the post edit screen
+* Added translation: de_DE
+* Added translation: de_CH
+* push button color input-type improvements
+* add JS vars as `wp_add_inline_script`
 
 = 0.7.0 =
 * added a latest push log
