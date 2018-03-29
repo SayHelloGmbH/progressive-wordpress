@@ -2,11 +2,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Progressive WordPress (PWA)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-03-29 10:56+0000\n"
-"PO-Revision-Date: 2018-03-29 11:03+0000\n"
+"POT-Creation-Date: 2018-03-29 11:08+0000\n"
+"PO-Revision-Date: 2018-03-29 11:24+0000\n"
 "Last-Translator: Nico Martin <nico@vir2al.ch>\n"
-"Language-Team: German\n"
-"Language: de_DE\n"
+"Language-Team: German (Switzerland)\n"
+"Language: de_CH\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -360,7 +360,7 @@ msgstr "Das Gerät konnte nicht entfernt werden."
 msgid "Device could not be registered."
 msgstr "Das Gerät konnte nicht hinzugefügt werden."
 
-#: Classes/class-push.php:331 Classes/class-status.php:74
+#: Classes/class-push.php:331 Classes/class-status.php:75
 msgid "Download Logfile"
 msgstr "Logfile downloaden"
 
@@ -368,11 +368,11 @@ msgstr "Logfile downloaden"
 msgid "Latest Push Log"
 msgstr "Aktuellster Push Log"
 
-#: Classes/class-push.php:344 Classes/class-status.php:91
+#: Classes/class-push.php:344 Classes/class-status.php:92
 msgid "Logfile could not be created"
 msgstr "Logfile konnte nicht erstellt werden"
 
-#: Classes/class-push.php:347 Classes/class-status.php:94
+#: Classes/class-push.php:347 Classes/class-status.php:95
 msgid "Error"
 msgstr "Fehler"
 
@@ -597,59 +597,68 @@ msgstr "Funktioniert es noch immer nicht? Dann versuch es im %s."
 msgid "support forum"
 msgstr "Support Forum"
 
-#: Classes/class-status.php:72
+#: Classes/class-status.php:71
+msgid "Attention!"
+msgstr "Achtung!"
+
+#: Classes/class-status.php:71
+msgid "The Debug Log contains information that should not be public."
+msgstr ""
+"Das Debug Log enthält Informationen, die nicht veröffentlicht werden sollten."
+
+#: Classes/class-status.php:73
 msgid "Need Help?"
 msgstr "Brauchst du Hilfe?"
 
-#: Classes/class-status.php:75
+#: Classes/class-status.php:76
 msgid "Debug Log"
 msgstr "Debug Log"
 
-#: Classes/class-status.php:165
+#: Classes/class-status.php:166
 msgid "Manifest"
 msgstr "Manifest"
 
-#: Classes/class-status.php:167
+#: Classes/class-status.php:168
 msgid "Manifest generated successfully."
 msgstr "Manifest wurde erfolgreich erstellt."
 
-#: Classes/class-status.php:168
+#: Classes/class-status.php:169
 msgid "Manifest not generated."
 msgstr "Manifest konnte nicht erstellt werden."
 
-#: Classes/class-status.php:171
+#: Classes/class-status.php:172
 msgid "ServiceWorker"
 msgstr "ServiceWorker"
 
-#: Classes/class-status.php:173
+#: Classes/class-status.php:174
 msgid "ServiceWorker generated successfully."
 msgstr "ServiceWorker wurde erfolgreich erstellt."
 
-#: Classes/class-status.php:174
+#: Classes/class-status.php:175
 msgid "ServiceWorker not generated."
 msgstr "ServiceWorker konnte nicht erstellt werden."
 
-#: Classes/class-status.php:177
+#: Classes/class-status.php:178
 msgid "Root Folder"
 msgstr "Root Ordner"
 
-#: Classes/class-status.php:179
+#: Classes/class-status.php:180
 msgid "Root Folder is writable."
 msgstr "Root Ordner ist beschreibbar"
 
-#: Classes/class-status.php:180
+#: Classes/class-status.php:181
 msgid "Root Folder is not writable."
 msgstr "Root Ordner ist nicht beschreibbar"
 
-#: Classes/class-status.php:183
+#: Classes/class-status.php:184
 msgid "HTTPS"
 msgstr "HTTPS"
 
-#: Classes/class-status.php:185
+#: Classes/class-status.php:186
 msgid "Your site is serverd over HTTPS."
 msgstr "Deine Seite wird über HTTPS ausgegeben."
 
-#: Classes/class-status.php:186
+#: Classes/class-status.php:187
 msgid "Your site has to be served over HTTPS."
 msgstr "Deine Seite muss über HTTPS ausgegeben werden."
 

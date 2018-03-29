@@ -2,11 +2,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Progressive WordPress (PWA)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-03-29 11:08+0000\n"
-"PO-Revision-Date: 2018-03-29 11:09+0000\n"
+"POT-Creation-Date: 2018-03-29 11:39+0000\n"
+"PO-Revision-Date: 2018-03-29 11:41+0000\n"
 "Last-Translator: Nico Martin <nico@vir2al.ch>\n"
-"Language-Team: German\n"
-"Language: de_DE\n"
+"Language-Team: German (Switzerland)\n"
+"Language: de_CH\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -504,33 +504,47 @@ msgstr ""
 msgid "Send again"
 msgstr "Erneut senden"
 
+#: Classes/class-pushpost.php:78
+msgid ""
+"This will add a meta box to the post edit screen, where you can easily send "
+"a push notification for this post."
+msgstr ""
+"Diese Einstellung fügt eine Meta Box zur Post-Bearbeiten Seite hinzu, über "
+"die einfach und schnell eine push notification verschickt werden kann."
+
 #. `{post_title}` will be replaced with the post title.
-#: Classes/class-pushpost.php:79
+#: Classes/class-pushpost.php:80
 #, php-format
 msgid "%s will be replaced with the post title."
 msgstr "%s wird durch den Post Titel ersetzt."
 
-#: Classes/class-pushpost.php:80
+#: Classes/class-pushpost.php:81
 msgid "Push Post"
 msgstr "Push Post"
 
 #. "PushPost" for Post
-#: Classes/class-pushpost.php:86
+#: Classes/class-pushpost.php:87
 #, php-format
 msgid "Push Post for \"%s\""
 msgstr "Push Post für \"%s\""
 
 #. Post: Title
-#: Classes/class-pushpost.php:90
+#: Classes/class-pushpost.php:91
 #, php-format
 msgid "%s: Title"
 msgstr "%s: Titel"
 
 #. Post: Body
-#: Classes/class-pushpost.php:95
+#: Classes/class-pushpost.php:96
 #, php-format
 msgid "%s: Body"
 msgstr "%s: Inhalt"
+
+#. New Post-Type published
+#: Classes/class-pushpost.php:98
+#, php-format
+msgid "New %s published!"
+msgstr "Neue/r %s veröffentlicht!"
 
 #: Classes/class-serviceworker.php:42
 msgid ""
@@ -604,7 +618,7 @@ msgstr "Achtung!"
 #: Classes/class-status.php:71
 msgid "The Debug Log contains information that should not be public."
 msgstr ""
-"Das Debug Log enthält Informationen, die nicht veröffentlicht werden sollen."
+"Das Debug Log enthält Informationen, die nicht veröffentlicht werden sollten."
 
 #: Classes/class-status.php:73
 msgid "Need Help?"

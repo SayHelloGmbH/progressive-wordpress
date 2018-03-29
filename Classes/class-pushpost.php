@@ -75,8 +75,9 @@ class PushPost {
 
 		$post_types = get_option( 'pwp_post_types' );
 
+		$section_desc = __( 'This will add a meta box to the post edit screen, where you can easily send a push notification for this post.', 'pwp' ) . '<code>{post_title}</code>';
 		// translators: `{post_title}` will be replaced with the post title.
-		$section_desc = sprintf( __( '%s will be replaced with the post title.', 'pwp' ), '<code>{post_title}</code>' );
+		$section_desc .= sprintf( __( '%s will be replaced with the post title.', 'pwp' ), '<code>{post_title}</code>' );
 		$section      = pwp_settings()->add_section( pwp_settings_page_push(), 'pwp_pushpost', __( 'Push Post', 'pwp' ), $section_desc );
 
 		foreach ( $post_types as $pt => $name ) {
@@ -94,7 +95,7 @@ class PushPost {
 			// translators: Post: Body
 			$name = sprintf( __( '%s: Body', 'pwp' ), $post_type->label );
 			// translators: New Post-Type published
-			$default = sprintf( __( 'New %s published!' ), $post_type->labels->singular_name );
+			$default = sprintf( __( 'New %s published!', 'pwp' ), $post_type->labels->singular_name );
 			pwp_settings()->add_input( $section, "pwp_pushpost_body_{$pt}", $name, $default );
 
 			pwp_settings()->add_spacer( $section, "pwp_pushpost_spacer_{$pt}" );

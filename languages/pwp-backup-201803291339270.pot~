@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-03-29 10:56+0000\n"
+"POT-Creation-Date: 2018-03-29 11:08+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: \n"
@@ -327,7 +327,7 @@ msgstr ""
 msgid "Device could not be registered."
 msgstr ""
 
-#: Classes/class-push.php:331 Classes/class-status.php:74
+#: Classes/class-push.php:331 Classes/class-status.php:75
 msgid "Download Logfile"
 msgstr ""
 
@@ -335,11 +335,11 @@ msgstr ""
 msgid "Latest Push Log"
 msgstr ""
 
-#: Classes/class-push.php:344 Classes/class-status.php:91
+#: Classes/class-push.php:344 Classes/class-status.php:92
 msgid "Logfile could not be created"
 msgstr ""
 
-#: Classes/class-push.php:347 Classes/class-status.php:94
+#: Classes/class-push.php:347 Classes/class-status.php:95
 msgid "Error"
 msgstr ""
 
@@ -554,59 +554,67 @@ msgstr ""
 msgid "support forum"
 msgstr ""
 
-#: Classes/class-status.php:72
+#: Classes/class-status.php:71
+msgid "Attention!"
+msgstr ""
+
+#: Classes/class-status.php:71
+msgid "The Debug Log contains information that should not be public."
+msgstr ""
+
+#: Classes/class-status.php:73
 msgid "Need Help?"
 msgstr ""
 
-#: Classes/class-status.php:75
+#: Classes/class-status.php:76
 msgid "Debug Log"
 msgstr ""
 
-#: Classes/class-status.php:165
+#: Classes/class-status.php:166
 msgid "Manifest"
 msgstr ""
 
-#: Classes/class-status.php:167
+#: Classes/class-status.php:168
 msgid "Manifest generated successfully."
 msgstr ""
 
-#: Classes/class-status.php:168
+#: Classes/class-status.php:169
 msgid "Manifest not generated."
 msgstr ""
 
-#: Classes/class-status.php:171
+#: Classes/class-status.php:172
 msgid "ServiceWorker"
 msgstr ""
 
-#: Classes/class-status.php:173
+#: Classes/class-status.php:174
 msgid "ServiceWorker generated successfully."
 msgstr ""
 
-#: Classes/class-status.php:174
+#: Classes/class-status.php:175
 msgid "ServiceWorker not generated."
 msgstr ""
 
-#: Classes/class-status.php:177
+#: Classes/class-status.php:178
 msgid "Root Folder"
 msgstr ""
 
-#: Classes/class-status.php:179
+#: Classes/class-status.php:180
 msgid "Root Folder is writable."
 msgstr ""
 
-#: Classes/class-status.php:180
+#: Classes/class-status.php:181
 msgid "Root Folder is not writable."
 msgstr ""
 
-#: Classes/class-status.php:183
+#: Classes/class-status.php:184
 msgid "HTTPS"
 msgstr ""
 
-#: Classes/class-status.php:185
+#: Classes/class-status.php:186
 msgid "Your site is serverd over HTTPS."
 msgstr ""
 
-#: Classes/class-status.php:186
+#: Classes/class-status.php:187
 msgid "Your site has to be served over HTTPS."
 msgstr ""
 

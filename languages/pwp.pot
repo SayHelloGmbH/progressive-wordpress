@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-03-29 11:08+0000\n"
+"POT-Creation-Date: 2018-03-29 11:39+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: \n"
@@ -469,32 +469,44 @@ msgstr ""
 msgid "Send again"
 msgstr ""
 
+#: Classes/class-pushpost.php:78
+msgid ""
+"This will add a meta box to the post edit screen, where you can easily send "
+"a push notification for this post."
+msgstr ""
+
 #. `{post_title}` will be replaced with the post title.
-#: Classes/class-pushpost.php:79
+#: Classes/class-pushpost.php:80
 #, php-format
 msgid "%s will be replaced with the post title."
 msgstr ""
 
-#: Classes/class-pushpost.php:80
+#: Classes/class-pushpost.php:81
 msgid "Push Post"
 msgstr ""
 
 #. "PushPost" for Post
-#: Classes/class-pushpost.php:86
+#: Classes/class-pushpost.php:87
 #, php-format
 msgid "Push Post for \"%s\""
 msgstr ""
 
 #. Post: Title
-#: Classes/class-pushpost.php:90
+#: Classes/class-pushpost.php:91
 #, php-format
 msgid "%s: Title"
 msgstr ""
 
 #. Post: Body
-#: Classes/class-pushpost.php:95
+#: Classes/class-pushpost.php:96
 #, php-format
 msgid "%s: Body"
+msgstr ""
+
+#. New Post-Type published
+#: Classes/class-pushpost.php:98
+#, php-format
+msgid "New %s published!"
 msgstr ""
 
 #: Classes/class-serviceworker.php:42
