@@ -36,7 +36,7 @@ class Offlineusage {
 			$choices[ $post->ID ] = get_the_title( $post );
 		}
 		pwp_settings()->add_select( $section, 'offline-page', __( 'Offline Page', 'pwp' ), $choices, '', [
-			'after_field' => '<p class="pwp-smaller">' . __( 'This page should contain a message explaining why the requested content is not aviable.', 'pwp' ) . '</p>',
+			'after_field' => '<p class="pwp-smaller">' . __( 'This page should contain a message explaining why the requested content is not available.', 'pwp' ) . '</p>',
 		] );
 
 		$text = __( 'Pages and files that should be saved for offline usage on first interaction. One URL per line.', 'pwp' ) . '<br>';

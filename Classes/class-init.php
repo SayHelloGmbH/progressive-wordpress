@@ -38,7 +38,7 @@ class Init {
 		$html .= '<p><b>' . sprintf( __( 'Thank you for using %s!', 'pwp' ), pwp_get_instance()->name ) . '</b></p>';
 		$html .= '<p>';
 		// translators: Why it was developed.
-		$html .= sprintf( __( 'This plugin was developed by %s to use progressive web app features for your WordPress wesbsite.', 'pwp' ), '<a href="https://nicomartin.ch" target="_blank">Nico Martin</a>' );
+		$html .= sprintf( __( 'This plugin was developed by %s to use progressive web app features for your WordPress website.', 'pwp' ), '<a href="https://nicomartin.ch" target="_blank">Nico Martin</a>' );
 		$html .= '</p><p>';
 		// translators: feature 1
 		$html .= __( 'You are able to create a web-app-manifest, which makes your website installable.', 'pwp' );

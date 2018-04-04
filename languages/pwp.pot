@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-03-29 11:39+0000\n"
+"POT-Creation-Date: 2018-04-04 08:15+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: \n"
@@ -38,7 +38,7 @@ msgstr ""
 #, php-format
 msgid ""
 "This plugin was developed by %s to use progressive web app features for your "
-"WordPress wesbsite."
+"WordPress website."
 msgstr ""
 
 #. feature 1
@@ -203,7 +203,7 @@ msgstr ""
 #: Classes/class-offlineusage.php:39
 msgid ""
 "This page should contain a message explaining why the requested content is "
-"not aviable."
+"not available."
 msgstr ""
 
 #: Classes/class-offlineusage.php:42
@@ -469,42 +469,42 @@ msgstr ""
 msgid "Send again"
 msgstr ""
 
-#: Classes/class-pushpost.php:78
+#: Classes/class-pushpost.php:87
 msgid ""
 "This will add a meta box to the post edit screen, where you can easily send "
 "a push notification for this post."
 msgstr ""
 
 #. `{post_title}` will be replaced with the post title.
-#: Classes/class-pushpost.php:80
+#: Classes/class-pushpost.php:89
 #, php-format
 msgid "%s will be replaced with the post title."
 msgstr ""
 
-#: Classes/class-pushpost.php:81
+#: Classes/class-pushpost.php:90
 msgid "Push Post"
 msgstr ""
 
 #. "PushPost" for Post
-#: Classes/class-pushpost.php:87
+#: Classes/class-pushpost.php:102
 #, php-format
 msgid "Push Post for \"%s\""
 msgstr ""
 
 #. Post: Title
-#: Classes/class-pushpost.php:91
+#: Classes/class-pushpost.php:106
 #, php-format
 msgid "%s: Title"
 msgstr ""
 
 #. Post: Body
-#: Classes/class-pushpost.php:96
+#: Classes/class-pushpost.php:111
 #, php-format
 msgid "%s: Body"
 msgstr ""
 
 #. New Post-Type published
-#: Classes/class-pushpost.php:98
+#: Classes/class-pushpost.php:113
 #, php-format
 msgid "New %s published!"
 msgstr ""

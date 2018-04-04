@@ -3,7 +3,7 @@ Contributors: nico_martin
 Donate link: https://www.paypal.me/NicoMartin
 Tags: PWA, Progressive Web App, Progressive Web Application, progressive, installable, offline, offline usage, push notifications, manifest, web app manifest, serviceworker
 Requires at least: 4.7
-Tested up to: 4.9.2
+Tested up to: 4.9.5
 Stable tag: 1.0.0
 Requires PHP: 5.4
 License: GPLv3
@@ -77,6 +77,10 @@ A development version of this plugin is hosted on GitHub. If you have any ideas 
 [https://github.com/nico-martin/progressive-wordpress](https://github.com/nico-martin/progressive-wordpress)
 
 == Changelog ==
+
+= 1.0.1 =
+* Bugfix: Pushpost labels
+* fixed spelling mistakes
 
 = 1.0.0 =
 * **Stable version 1.0.0**

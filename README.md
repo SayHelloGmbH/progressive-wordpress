@@ -90,6 +90,10 @@ You can then use the JS functions `pwpRegisterPushDevice();` and `pwpDeregisterP
 
 ## Changelog
 
+### 1.0.1
+* Bugfix: Pushpost labels
+* fixed spelling mistakes
+
 ### 1.0.0
 * **Stable version 1.0.0**
 * added multisite support

@@ -68,7 +68,16 @@ class PushPost {
 		$post_types = array_merge( $post_types_builtin, $post_types );
 		unset( $post_types['attachment'] );
 
-		update_option( 'pwp_post_types', $post_types );
+		$save = [];
+		foreach ( $post_types as $pt ) {
+			$obj         = get_post_type_object( $pt );
+			$save[ $pt ] = [
+				'name'          => $obj->labels->name,
+				'singular_name' => $obj->labels->singular_name,
+			];
+		}
+
+		update_option( 'pwp_post_types', $save );
 	}
 
 	public function settings() {
@@ -80,22 +89,28 @@ class PushPost {
 		$section_desc .= sprintf( __( '%s will be replaced with the post title.', 'pwp' ), '<code>{post_title}</code>' );
 		$section      = pwp_settings()->add_section( pwp_settings_page_push(), 'pwp_pushpost', __( 'Push Post', 'pwp' ), $section_desc );
 
-		foreach ( $post_types as $pt => $name ) {
-			$post_type = get_post_type_object( $pt );
+		foreach ( $post_types as $pt => $labels ) {
+
+			if ( ! is_array( $labels ) ) {
+				continue;
+			}
+
+			$label          = $labels['name'];
+			$singular_label = $labels['singular_name'];
 
 			// translators: "PushPost" for Post
-			$name = sprintf( __( 'Push Post for "%s"', 'pwp' ), $post_type->label );
+			$name = sprintf( __( 'Push Post for "%s"', 'pwp' ), $label );
 			pwp_settings()->add_checkbox( $section, "pwp_pushpost_active_{$pt}", $name );
 
 			// translators: Post: Title
-			$name    = sprintf( __( '%s: Title', 'pwp' ), $post_type->label );
+			$name    = sprintf( __( '%s: Title', 'pwp' ), $label );
 			$default = '{post_title}';
 			pwp_settings()->add_input( $section, "pwp_pushpost_title_{$pt}", $name, $default );
 
 			// translators: Post: Body
-			$name = sprintf( __( '%s: Body', 'pwp' ), $post_type->label );
+			$name = sprintf( __( '%s: Body', 'pwp' ), $label );
 			// translators: New Post-Type published
-			$default = sprintf( __( 'New %s published!', 'pwp' ), $post_type->labels->singular_name );
+			$default = sprintf( __( 'New %s published!', 'pwp' ), $singular_label );
 			pwp_settings()->add_input( $section, "pwp_pushpost_body_{$pt}", $name, $default );
 
 			pwp_settings()->add_spacer( $section, "pwp_pushpost_spacer_{$pt}" );
