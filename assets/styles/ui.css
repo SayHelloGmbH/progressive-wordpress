@@ -170,6 +170,7 @@ body.pwp-notification.pwp-notification--loader .notification-button__icon--spinn
   width: 1.8em;
   height: 1.8em;
   font-size: 25px;
+  z-index: 99999;
   -moz-border-radius: 50%;
   -webkit-border-radius: 50%;
   border-radius: 50%;

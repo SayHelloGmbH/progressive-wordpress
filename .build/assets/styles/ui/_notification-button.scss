@@ -97,5 +97,6 @@ body.pwp-notification {
 	width: 1.8em;
 	height: 1.8em;
 	font-size: 25px;
+	z-index: 99999;
 	@include border-radius(50%);
 }

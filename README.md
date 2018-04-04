@@ -90,6 +90,9 @@ You can then use the JS functions `pwpRegisterPushDevice();` and `pwpDeregisterP
 
 ## Changelog
 
+### 1.0.2
+* Bugfix: CSS z-index for notification button
+
 ### 1.0.1
 * Bugfix: Pushpost labels
 * fixed spelling mistakes
