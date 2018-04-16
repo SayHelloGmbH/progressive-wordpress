@@ -111,7 +111,6 @@ __webpack_require__(3);
 (function ($, plugin) {
 
 	var active = false;
-	var $toggler = $('#pwp-notification-button');
 	var $body = $('body');
 
 	$(function () {
@@ -130,13 +129,16 @@ __webpack_require__(3);
      * add trigger
      */
 
-				$toggler.on('click', function () {
-					if (active) {
-						deregisterPushDevice();
-					} else {
-						registerPushDevice();
-					}
-				});
+				var $toggler = $('#pwp-notification-button');
+				if ($toggler.length()) {
+					$toggler.on('click', function () {
+						if (active) {
+							deregisterPushDevice();
+						} else {
+							registerPushDevice();
+						}
+					});
+				}
 
 				/**
      * check if is already registered

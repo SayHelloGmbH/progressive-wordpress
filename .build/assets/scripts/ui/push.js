@@ -3,7 +3,6 @@ import 'clientjs';
 (function ($, plugin) {
 
 	let active = false;
-	const $toggler = $('#pwp-notification-button');
 	const $body = $('body');
 
 	$(function () {
@@ -23,13 +22,16 @@ import 'clientjs';
 					 * add trigger
 					 */
 
-					$toggler.on('click', function () {
-						if (active) {
-							deregisterPushDevice();
-						} else {
-							registerPushDevice();
-						}
-					});
+					const $toggler = $('#pwp-notification-button');
+					if ($toggler.length()) {
+						$toggler.on('click', function () {
+							if (active) {
+								deregisterPushDevice();
+							} else {
+								registerPushDevice();
+							}
+						});
+					}
 
 					/**
 					 * check if is already registered
