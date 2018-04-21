@@ -21,7 +21,8 @@ class PushPost {
 	}
 
 	public function meta_box() {
-		foreach ( get_option( 'pwp_post_types' ) as $pt ) {
+
+		foreach ( get_option( 'pwp_post_types' ) as $pt => $values ) {
 			if ( ! pwp_get_setting( "pwp_pushpost_active_{$pt}" ) ) {
 				continue;
 			}

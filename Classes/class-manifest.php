@@ -93,13 +93,17 @@ class Manifest {
 		$manifest['lang']             = get_locale();
 		$manifest['orientation']      = pwp_get_setting( 'manifest-orientation' );
 
-		$sizes = [ 128, 512 ];
+		$sizes = [ 128, 192, 512, 524 ];
 		$icon  = pwp_get_setting( 'manifest-icon' );
 		if ( wp_attachment_is_image( intval( $icon ) ) ) {
 			$mime = get_post_mime_type( $icon );
 			foreach ( $sizes as $size ) {
+				$new_image = pwp_get_instance()->image_resize( $icon, $size, $size, true );
+				if ( ! $new_image[1] == $size ) {
+					continue;
+				}
 				$manifest['icons'][] = [
-					'src'   => pwp_register_url( pwp_get_instance()->image_resize( $icon, $size, $size, true )[0] ),
+					'src'   => pwp_register_url( $new_image[0] ),
 					'type'  => $mime,
 					'sizes' => "{$size}x{$size}",
 				];
