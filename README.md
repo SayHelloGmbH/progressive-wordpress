@@ -92,6 +92,7 @@ You can then use the JS functions `pwpRegisterPushDevice();` and `pwpDeregisterP
 
 ### 1.1.0
 * Bugfix: better way to check if files have to be regenerated
+* Bugfix: PushPost not always registered
 * Improvement: new manifest icon sizes
 
 ### 1.0.2

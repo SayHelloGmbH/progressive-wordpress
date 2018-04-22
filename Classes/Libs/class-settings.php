@@ -57,7 +57,8 @@ class Settings {
 	}
 
 	public function after_saved_hook() {
-		if ( get_option( "{$this->prefix}_sanitize_ongoing" ) == 'yes' ) {
+
+		if ( array_key_exists( "{$this->prefix}_sanitize_ongoing", $_COOKIE ) && 'yes' == $_COOKIE[ $this->prefix . '_sanitize_ongoing' ] ) {
 			add_action( 'admin_notices', function () {
 				echo '<div id="setting-error-pwp_settings_updated" class="notice notice-success is-dismissible">';
 				echo '<p><strong>' . __( 'Settings saved.', 'pwp' ) . '</strong></p>';
@@ -65,7 +66,8 @@ class Settings {
 			} );
 			do_action( $this->aftersave_action );
 		}
-		update_option( "{$this->prefix}_sanitize_ongoing", 'no' );
+
+		setcookie( "{$this->prefix}_sanitize_ongoing", 'no', time() + 60 * 60, '/' );
 	}
 
 	public function settings_init_hook() {
@@ -106,7 +108,7 @@ class Settings {
 		register_setting( "{$this->prefix}-group", $this->option_key, [ $this, 'sanitize' ] );
 		foreach ( $this->sections as $key => $values ) {
 			add_settings_section( $key, $values['title'], function () use ( $values ) {
-				echo apply_filters( 'the_content', $values['description'] );
+				echo wpautop( $values['description'] );
 			}, $values['page'] );
 		}
 
@@ -135,7 +137,7 @@ class Settings {
 
 	public function sanitize( $input ) {
 
-		update_option( "{$this->prefix}_sanitize_ongoing", 'yes' );
+		setcookie( "{$this->prefix}_sanitize_ongoing", 'yes', time() + 60 * 60, '/' );
 
 		do_action( "{$this->sanitize_action}", $input );
 		foreach ( $input as $key => $val ) {

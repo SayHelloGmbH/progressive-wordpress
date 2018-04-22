@@ -78,6 +78,11 @@ A development version of this plugin is hosted on GitHub. If you have any ideas 
 
 == Changelog ==
 
+= 1.1.0 =
+* Bugfix: better way to check if files have to be regenerated
+* Bugfix: PushPost not always registered
+* Improvement: new manifest icon sizes
+
 = 1.0.2 =
 * Bugfix: CSS z-index for notification button
 
