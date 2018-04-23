@@ -23,7 +23,7 @@ import 'clientjs';
 					 */
 
 					const $toggler = $('#pwp-notification-button');
-					if ($toggler.length()) {
+					if ($toggler.length) {
 						$toggler.on('click', function () {
 							if (active) {
 								deregisterPushDevice();

@@ -130,7 +130,7 @@ __webpack_require__(3);
      */
 
 				var $toggler = $('#pwp-notification-button');
-				if ($toggler.length()) {
+				if ($toggler.length) {
 					$toggler.on('click', function () {
 						if (active) {
 							deregisterPushDevice();

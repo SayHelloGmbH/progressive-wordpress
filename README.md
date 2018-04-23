@@ -90,6 +90,9 @@ You can then use the JS functions `pwpRegisterPushDevice();` and `pwpDeregisterP
 
 ## Changelog
 
+### 1.1.1
+* critical Bugfix: JavaScript error
+
 ### 1.1.0
 * Bugfix: better way to check if files have to be regenerated
 * Bugfix: PushPost not always registered
