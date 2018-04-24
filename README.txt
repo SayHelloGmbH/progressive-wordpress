@@ -5,7 +5,7 @@ Tags: PWA, Progressive Web App, Progressive Web Application, progressive, instal
 Requires at least: 4.7
 Tested up to: 4.9.5
 Stable tag: 1.1.1
-Requires PHP: 5.4
+Requires PHP: 5.6
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
