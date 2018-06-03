@@ -33,7 +33,6 @@ class Status {
 		 */
 
 		add_action( 'init', [ $this, 'delete_logfiles' ] );
-
 	}
 
 	/**

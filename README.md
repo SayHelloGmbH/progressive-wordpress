@@ -90,6 +90,9 @@ You can then use the JS functions `pwpRegisterPushDevice();` and `pwpDeregisterP
 
 ## Changelog
 
+### 1.1.3
+* added default settings on activate
+
 ### 1.1.2
 * required php Version is no 5.6
 

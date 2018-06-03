@@ -3,66 +3,65 @@ const assetsBuild = '.build/assets/';
 
 const config = {
 
-    styles: {
-        args: {
-            src: `${assetsBuild}styles/**/*.scss`,
-            compass: {
-                css: `${assetsDir}styles/`,
-                image: `${assetsDir}img/`,
-                sass: `${assetsBuild}styles/`,
-                style: 'expanded'
-            }
-        }
-    },
+	styles: {
+		args: {
+			src: `${assetsBuild}styles/**/*.scss`,
+			compass: {
+				css: `${assetsDir}styles/`,
+				image: `${assetsDir}img/`,
+				sass: `${assetsBuild}styles/`,
+				style: 'expanded'
+			}
+		}
+	},
 
-    scripts: {
-        subtasks: [
-            'ui',
-            'admin'
-        ],
-        args: {
-            base: `${assetsDir}scripts/`,
-            build: `${assetsBuild}scripts/`
-        }
-    },
+	scripts: {
+		subtasks: [
+			'ui',
+			'admin'
+		],
+		args: {
+			base: `${assetsDir}scripts/`,
+			build: `${assetsBuild}scripts/`
+		}
+	},
 
-    reload: {
-        args: {
-            files: [
-                '**/*.php',
-                '**/*.html'
-            ]
-        }
-    },
+	reload: {
+		args: {
+			files: [
+				'**/*.php',
+				'**/*.html',
+				'**/*.twig'
+			]
+		}
+	},
 
-    minify: {
-        subtasks: ['svg', 'scripts'],
-        args: {
-            svg: {
-                src: [
-                    '**/assets/img/icons/*.svg',
-                    '**/assets/img/icons/**/*.svg',
-                    '!**/*.min.svg',
-                    '!assets/img/icons/mdi/**/*.svg',
-                    '!assets/img/icons/mdi/*.svg'
-                ],
-                dest: './'
-            },
-            scripts: {
-                src: [
-                    `${assetsDir}scripts/*.js`,
-                    `!${assetsDir}scripts/*.min.js`
-                ],
-                dest: './',
-                base: `${assetsDir}scripts/`,
-                build: `${assetsBuild}scripts/`
-            }
-        }
-    },
+	minify: {
+		subtasks: ['svg', 'scripts'],
+		args: {
+			svg: {
+				src: [
+					'**/assets/img/icons/*.svg',
+					'**/assets/img/icons/**/*.svg',
+					'!**/*.min.svg',
+					'!assets/img/icons/mdi/**/*.svg',
+					'!assets/img/icons/mdi/*.svg'
+				],
+				dest: './'
+			},
+			scripts: {
+				src: [
+					`${assetsDir}scripts/*.js`,
+					`!${assetsDir}scripts/*.min.js`
+				],
+				dest: './',
+				base: `${assetsDir}scripts/`,
+				build: `${assetsBuild}scripts/`
+			}
+		}
+	},
 
-    watch: {
-
-    }
+	watch: {}
 };
 
 module.exports = config;

@@ -26,6 +26,12 @@ class Init {
 		if ( stripos( get_option( 'siteurl' ), 'https://' ) === 0 ) {
 			$_SERVER['HTTPS'] = 'on';
 		}
+
+		/**
+		 * Default Settings
+		 */
+		add_action( 'pwp_on_activate', [ $this, 'default_settings' ] );
+		//add_action( 'init', [ $this, 'default_settings' ] );
 	}
 
 	/**
@@ -114,5 +120,32 @@ class Init {
 		$vars = json_encode( apply_filters( 'pwp_admin_footer_js', $defaults ) );
 
 		wp_add_inline_script( pwp_get_instance()->prefix . '-admin-script', "var PwpJsVars = {$vars};", 'before' );
+	}
+
+	/**
+	 * Default Settings
+	 */
+	public function default_settings() {
+		$options = get_option( pwp_settings()->option_key, false );
+		if ( $options ) {
+			return;
+		}
+
+		update_option( pwp_settings()->option_key, [
+			'installable-enabled'       => '1',
+			'manifest-name'             => get_bloginfo( 'name' ),
+			'manifest-short-name'       => str_replace( ' ', '', get_bloginfo( 'name' ) ),
+			'manifest-starturl'         => './',
+			'manifest-description'      => get_bloginfo( 'description' ),
+			'manifest-display'          => 'standalone',
+			'manifest-orientation'      => 'portrait',
+			'manifest-theme-color'      => '#000000',
+			'manifest-background-color' => '#ffffff',
+			'offline-enabled'           => 1,
+			'offline-content'           => '',
+		] );
+
+		pwp_manifest_regenerate();
+		pwp_serviceworker_regenerate();
 	}
 }
