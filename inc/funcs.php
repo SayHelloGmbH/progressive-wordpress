@@ -70,6 +70,10 @@ function pwp_settings_page_push() {
 	return pwp_settings()->add_page( 'pwp-push', __( 'Push Notifications', 'pwp' ) );
 }
 
+function pwp_settings_page_tracking() {
+	return pwp_settings()->add_page( 'pwp-tracking', __( 'UTM Tracking', 'pwp' ) );
+}
+
 function pwp_register_url( $url ) {
 
 	$home_url  = untrailingslashit( get_home_url() );

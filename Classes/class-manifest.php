@@ -18,11 +18,8 @@ class Manifest {
 
 	public function run() {
 		add_action( 'pwp_settings', [ $this, 'register_settings' ] );
-		add_action( 'pwp_settings', [ $this, 'register_settings' ] );
 		add_action( 'pwp_after_save', [ $this, 'save_manifest' ] );
 		add_action( 'pwp_on_update', [ $this, 'save_manifest' ] );
-
-		add_filter( 'pwp_sanitize_manifest-starturl', [ $this, 'starturl_sanitize' ] );
 
 		add_action( 'pwp_on_deactivate', [ $this, 'delete_manifest' ] );
 
@@ -135,16 +132,6 @@ class Manifest {
 				echo '</div>';
 			} );
 		}
-	}
-
-	public function starturl_sanitize( $value ) {
-		$value = preg_replace( '~[^\\pL0-9_\/.]+~u', '-', $value );
-		$value = trim( $value, '-' );
-		$value = iconv( 'utf-8', 'us-ascii//TRANSLIT', $value );
-		$value = strtolower( $value );
-		$value = preg_replace( '~[^-a-z0-9_\/.]+~', '', $value );
-
-		return $value;
 	}
 
 	public function add_to_header() {

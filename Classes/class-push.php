@@ -503,6 +503,8 @@ class Push {
 			'redirect' => '', // url
 		], $data );
 
+		$data = apply_filters( 'pwp_push_data_values', $data );
+
 		$log['message'] = $data;
 
 		$fields = [
@@ -512,7 +514,13 @@ class Push {
 			],
 		];
 
-		pwp_put_contents( $this->latest_push_path, json_encode( $data ) );
+		$put_latest_post = pwp_put_contents( $this->latest_push_path, json_encode( $data ) );
+		if ( ! $put_latest_post ) {
+			return [
+				'type'    => 'error',
+				'message' => __( 'Could not write latest_push_json', 'pwp' ),
+			];
+		}
 
 		$headers = [
 			'Authorization: key=' . $server_key,

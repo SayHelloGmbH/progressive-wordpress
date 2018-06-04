@@ -43,11 +43,11 @@ You can regenerate it by using `pwp_serviceworker_regenerate();`.
 ### Manifest
 **Add content to the manifest:**  
 ```php
-function myplugin_manifest_content( $values ) {
+function myplugin_manifest_values( $values ) {
     $values['new'] = 'New';
     return $values; //needs to be valid an array (will be json_endoded)
 }
-add_filter( 'pwp_sw_content', 'myplugin_manifest_content' );
+add_filter( 'pwp_manifest_values', 'myplugin_manifest_values' );
 ```
 **Regenerate manifest:**  
 The Manifest (`pwp-manifest.json`) will be regenerated as soon some plugin settings are saved.
@@ -90,11 +90,11 @@ You can then use the JS functions `pwpRegisterPushDevice();` and `pwpDeregisterP
 
 ## Changelog
 
-### 1.1.3
+### 1.2.0
 * added default settings on activate
 
 ### 1.1.2
-* required php Version is no 5.6
+* required php Version is now 5.6
 
 ### 1.1.1
 * critical Bugfix: JavaScript error

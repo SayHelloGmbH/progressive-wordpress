@@ -72,7 +72,7 @@ class Init {
 	public function add_assets() {
 		$script_version = pwp_get_instance()->version;
 		$min            = true;
-		if ( pwp_get_instance()->debug && is_user_logged_in() ) {
+		if ( pwp_get_instance()->debug ) {
 			$min = false;
 		}
 		$dir_uri = trailingslashit( plugin_dir_url( pwp_get_instance()->file ) );
