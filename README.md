@@ -92,6 +92,7 @@ You can then use the JS functions `pwpRegisterPushDevice();` and `pwpDeregisterP
 
 ### 1.2.0
 * added default settings on activate
+* added UTM tracking for manifest starturl and push notification redirect url
 
 ### 1.1.2
 * required php Version is now 5.6

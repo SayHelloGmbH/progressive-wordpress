@@ -18,7 +18,7 @@ class Tracking {
 			'pushurl'  => [
 				'title' => __( 'Push URL tracking', 'pwp' ),
 				// translators: %s = tracking
-				'desc'  => __( '%s will be added to the URL the user opens when clicking on the push message', 'pwp' ),
+				'desc'  => __( '%s will be added to the push notification redirect URL', 'pwp' ),
 			],
 		];
 	}
@@ -31,11 +31,14 @@ class Tracking {
 
 	public function register_settings() {
 
+		$this->utm_parameters();
+
 		foreach ( $this->utm_types as $key => $vals ) {
 
-			$this->utm_parameters();
-
 			$parameters = get_option( "pwp-tracking-$key-parameters" );
+			if ( ! $parameters ) {
+				$parameters = 'nothing';
+			}
 
 			$section_desc = sprintf( $vals['desc'], '<code>' . $parameters . '</code>' );
 			$section      = pwp_settings()->add_section( pwp_settings_page_tracking(), "pwp-tracking-$key", $vals['title'], $section_desc );
