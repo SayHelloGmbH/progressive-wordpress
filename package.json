@@ -5,7 +5,7 @@
     "main": "gulpfile.babel.js",
     "repository": {
         "type": "git",
-        "url": "git+ssh://git@github.com/nico-martin/progressive-wordpress.git"
+        "url": "git@github.com:SayHelloGmbH/progressive-wordpress.git"
     },
     "dependencies": {
         "clientjs": "^0.1.11",
@@ -36,9 +36,9 @@
         "test": "gulp"
     },
     "bugs": {
-        "url": "https://github.com/nico-martin/progressive-wordpress/issues"
+        "url": "https://github.com/SayHelloGmbH/progressive-wordpress/issues"
     },
-    "homepage": "https://github.com/nico-martin/progressive-wordpress#README",
+    "homepage": "https://github.com/SayHelloGmbH/progressive-wordpress#README",
     "babel": {
         "presets": [
             "env"

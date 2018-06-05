@@ -3,8 +3,8 @@ Contributors: nico_martin
 Donate link: https://www.paypal.me/NicoMartin
 Tags: PWA, Progressive Web App, Progressive Web Application, progressive, installable, offline, offline usage, push notifications, manifest, web app manifest, serviceworker
 Requires at least: 4.7
-Tested up to: 4.9.5
-Stable tag: 1.1.1
+Tested up to: 4.9.6
+Stable tag: 1.2.0
 Requires PHP: 5.6
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -40,7 +40,7 @@ After those steps you will have an overview about all registered devices, you ca
 
 = Developers =
 Progressive WordPress offers a lot of possibilities for developers the extend it the way they need it.
-[https://github.com/nico-martin/progressive-wordpress#developers](https://github.com/nico-martin/progressive-wordpress#developers)
+[https://github.com/SayHelloGmbH/progressive-wordpress#developers](https://github.com/SayHelloGmbH/progressive-wordpress#developers)
 
 == Screenshots ==
 
@@ -65,7 +65,7 @@ Progressive WordPress offers a lot of possibilities for developers the extend it
 1. Please visit the "Status" section on the "About" page. Everything green?
 2. Are you using a device/browser that supports serviceworkers? [https://caniuse.com/#feat=serviceworkers](https://caniuse.com/#feat=serviceworkers)
 
-If they are both allright, please contact me at nico@sayhello.ch
+If they are both allright, please open an issue on [https://github.com/SayHelloGmbH/progressive-wordpress/issues](https://github.com/SayHelloGmbH/progressive-wordpress/issues)
 
 = Does it also work on iOS? =
 
@@ -74,9 +74,16 @@ No. At the moment, iOS does not support serviceworkers. Right now (February 2018
 == Contribute ==
 
 A development version of this plugin is hosted on GitHub. If you have any ideas for improvements, feel free to dive into the code:
-[https://github.com/nico-martin/progressive-wordpress](https://github.com/nico-martin/progressive-wordpress)
+[https://github.com/SayHelloGmbH/progressive-wordpress](https://github.com/SayHelloGmbH/progressive-wordpress)
 
 == Changelog ==
+= 1.2.0 =
+* added default settings on activate
+* added UTM tracking for manifest starturl and push notification redirect url
+
+= 1.1.2 =
+* required php Version is now 5.6
+
 = 1.1.1 =
 * critical Bugfix: JavaScript error
 
