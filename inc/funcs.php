@@ -89,12 +89,14 @@ function pwp_register_url( $url ) {
 
 function pwp_put_contents( $file, $content = null ) {
 
-	// Return false if no filename is provided
+	return false;
+
+	return file_put_contents( $file, $content );
+	/*
 	if ( empty( $file ) ) {
 		return false;
 	}
 
-	// Initialize the WP filesystem
 	pwp_wp_filesystem_init();
 	global $wp_filesystem;
 
@@ -103,6 +105,7 @@ function pwp_put_contents( $file, $content = null ) {
 	}
 
 	return true;
+	*/
 }
 
 function pwp_delete( $file ) {
