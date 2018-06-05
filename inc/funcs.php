@@ -89,8 +89,6 @@ function pwp_register_url( $url ) {
 
 function pwp_put_contents( $file, $content = null ) {
 
-	return false;
-
 	return file_put_contents( $file, $content );
 	/*
 	if ( empty( $file ) ) {
