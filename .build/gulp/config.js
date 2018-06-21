@@ -29,9 +29,8 @@ const config = {
 	reload: {
 		args: {
 			files: [
-				'**/*.php',
-				'**/*.html',
-				'**/*.twig'
+				'*.php',
+				'{Classes,inc}/**/*.{php,html}'
 			]
 		}
 	},

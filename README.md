@@ -90,6 +90,10 @@ You can then use the JS functions `pwpRegisterPushDevice();` and `pwpDeregisterP
 
 ## Changelog
 
+### 1.3.0
+* added default settings on activate
+* Bugfix: Minifying JS threw an Uncaught SyntaxError
+
 ### 1.2.0
 * added default settings on activate
 * added UTM tracking for manifest starturl and push notification redirect url

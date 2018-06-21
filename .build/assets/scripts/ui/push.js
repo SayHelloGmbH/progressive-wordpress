@@ -1,5 +1,3 @@
-import 'clientjs';
-
 (function ($, plugin) {
 
 	let active = false;
