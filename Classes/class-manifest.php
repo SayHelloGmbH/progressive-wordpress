@@ -25,6 +25,7 @@ class Manifest {
 
 		if ( file_exists( $this->manifest_path ) ) {
 			add_action( 'wp_head', [ $this, 'add_to_header' ], 1 );
+			add_action( 'wp_head', [ $this, 'meta_tags_to_header' ], 1 );
 		}
 	}
 
@@ -141,6 +142,12 @@ class Manifest {
 
 		$url = untrailingslashit( get_home_url() ) . $this->manifest_url;
 		echo '<link rel="manifest" href="' . pwp_register_url( $url ) . '">';
+	}
+
+	public function meta_tags_to_header() {
+		if ( pwp_get_setting( 'manifest-theme-color' ) ) {
+			echo '<meta name="theme-color" content="' . pwp_get_setting( 'manifest-theme-color' ) . '">';
+		}
 	}
 
 	public function delete_manifest() {

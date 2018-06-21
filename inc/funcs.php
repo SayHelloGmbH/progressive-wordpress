@@ -89,8 +89,10 @@ function pwp_register_url( $url ) {
 
 function pwp_put_contents( $file, $content = null ) {
 
-	return file_put_contents( $file, $content );
-	/*
+	if ( is_file( $file ) ) {
+		unlink( $file );
+	}
+
 	if ( empty( $file ) ) {
 		return false;
 	}
@@ -103,7 +105,6 @@ function pwp_put_contents( $file, $content = null ) {
 	}
 
 	return true;
-	*/
 }
 
 function pwp_delete( $file ) {
