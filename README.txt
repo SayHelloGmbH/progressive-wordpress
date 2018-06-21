@@ -1,10 +1,10 @@
 === Progressive WordPress (PWA) ===
-Contributors: nico_martin
+Contributors: nico_martin, sayhellogmbh
 Donate link: https://www.paypal.me/NicoMartin
 Tags: PWA, Progressive Web App, Progressive Web Application, progressive, installable, offline, offline usage, push notifications, manifest, web app manifest, serviceworker
 Requires at least: 4.7
 Tested up to: 4.9.6
-Stable tag: 1.2.0
+Stable tag: 1.3.0
 Requires PHP: 5.6
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -77,6 +77,10 @@ A development version of this plugin is hosted on GitHub. If you have any ideas 
 [https://github.com/SayHelloGmbH/progressive-wordpress](https://github.com/SayHelloGmbH/progressive-wordpress)
 
 == Changelog ==
+= 1.3.0 =
+* added default settings on activate
+* Bugfix: Minifying JS threw an Uncaught SyntaxError
+
 = 1.2.0 =
 * added default settings on activate
 * added UTM tracking for manifest starturl and push notification redirect url
