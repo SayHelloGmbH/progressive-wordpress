@@ -129,23 +129,21 @@ class Init {
 	 */
 	public function default_settings() {
 		$options = get_option( pwp_settings()->option_key, false );
-		if ( $options ) {
-			return;
+		if ( ! $options ) {
+			update_option( pwp_settings()->option_key, [
+				'installable-enabled'       => '1',
+				'manifest-name'             => get_bloginfo( 'name' ),
+				'manifest-short-name'       => str_replace( ' ', '', get_bloginfo( 'name' ) ),
+				'manifest-starturl'         => './',
+				'manifest-description'      => get_bloginfo( 'description' ),
+				'manifest-display'          => 'standalone',
+				'manifest-orientation'      => 'portrait',
+				'manifest-theme-color'      => '#000000',
+				'manifest-background-color' => '#ffffff',
+				'offline-enabled'           => 1,
+				'offline-content'           => '',
+			] );
 		}
-
-		update_option( pwp_settings()->option_key, [
-			'installable-enabled'       => '1',
-			'manifest-name'             => get_bloginfo( 'name' ),
-			'manifest-short-name'       => str_replace( ' ', '', get_bloginfo( 'name' ) ),
-			'manifest-starturl'         => './',
-			'manifest-description'      => get_bloginfo( 'description' ),
-			'manifest-display'          => 'standalone',
-			'manifest-orientation'      => 'portrait',
-			'manifest-theme-color'      => '#000000',
-			'manifest-background-color' => '#ffffff',
-			'offline-enabled'           => 1,
-			'offline-content'           => '',
-		] );
 
 		pwp_manifest_regenerate();
 		pwp_serviceworker_regenerate();

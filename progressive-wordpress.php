@@ -11,6 +11,9 @@ Text Domain: pwp
 Domain Path: /languages
  */
 
+define( 'PROGRESSIVE_WP_PLUGIN_PATH', plugin_dir_path( __FILE__ ) );
+define( 'PROGRESSIVE_WP_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
+
 global $wp_version;
 if ( version_compare( $wp_version, '4.7', '<' ) || version_compare( PHP_VERSION, '5.4', '<' ) ) {
 	function pwp_compatability_warning() {
