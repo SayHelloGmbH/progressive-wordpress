@@ -90,6 +90,13 @@ You can then use the JS functions `pwpRegisterPushDevice();` and `pwpDeregisterP
 
 ## Changelog
 
+## 1.3.2
+* Bugfix: Firebase Serverkey validation
+* Bugfix: upload images on settings page
+
+## 1.3.1
+* messed up some SVN-deployment
+
 ### 1.3.0
 * added default settings on activate
 * Bugfix: Minifying JS threw an Uncaught SyntaxError
