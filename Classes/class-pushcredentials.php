@@ -6,10 +6,6 @@ class PushCredentials {
 
 	public $cred_option = 'pwp_firebase_credentials_set';
 
-	public function __construct() {
-
-	}
-
 	public function run() {
 		add_action( 'pwp_settings', [ $this, 'settings' ] );
 		add_action( 'pwp_sanitize', [ $this, 'check_firebase_creds' ] );
@@ -148,11 +144,10 @@ class PushCredentials {
 	 */
 
 	public function validate_serverkey( $server_key ) {
-		$first_block = explode( ':', $server_key )[0];
-		if ( 152 != strlen( $server_key ) || 11 != strlen( $first_block ) ) {
-			return false;
+		if ( count( explode( ':', $server_key ) ) == 2 ) {
+			return true;
 		}
 
-		return true;
+		return false;
 	}
 }
