@@ -46,9 +46,10 @@ class Manifest {
 
 		pwp_settings()->add_textarea( $section, 'manifest-description', __( 'Description', 'pwp' ), '', [] );
 		pwp_settings()->add_file( $section, 'manifest-icon', __( 'Icon', 'pwp' ), 0, [
-			'mimes'      => 'png',
-			'min-width'  => 144,
-			'min-height' => 144,
+			'mimes'       => 'png',
+			'min-width'   => 128,
+			'min-height'  => 128,
+			'after_field' => '<p class="pwp-smaller">' . __( 'has to be at least 128x128px', 'pwp' ) . '</p>',
 		] );
 
 		$choices = [
@@ -97,7 +98,7 @@ class Manifest {
 			$mime = get_post_mime_type( $icon );
 			foreach ( $sizes as $size ) {
 				$new_image = pwp_get_instance()->image_resize( $icon, $size, $size, true );
-				if ( ! $new_image[1] == $size ) {
+				if ( $new_image[1] != $size ) {
 					continue;
 				}
 				$manifest['icons'][] = [

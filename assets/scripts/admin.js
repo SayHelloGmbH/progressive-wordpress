@@ -426,7 +426,11 @@ module.exports = __webpack_require__(6);
 					var preview = '';
 
 					if (attachment.type === 'image') {
-						preview = '<img src=\'' + attachment.sizes.thumbnail.url + '\' />';
+						var imageSrc = attachment.url;
+						if (typeof attachment.sizes.thumbnail !== 'undefined') {
+							imageSrc = attachment.sizes.thumbnail.url;
+						}
+						preview = '<img src=\'' + imageSrc + '\' />';
 					} else {
 						preview = '<a target="_blank" href="' + attachment.url + '">' + attachment.title + '</a> (' + attachment.mime + ')';
 					}

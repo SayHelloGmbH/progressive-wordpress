@@ -86,7 +86,7 @@ class Push {
 			'mimes'       => 'png',
 			'min-width'   => 96,
 			'min-height'  => 96,
-			'after_field' => '<p class="pwp-smaller">' . __( 'This image will represent the notification when there is not enough space to display the notification itself such as, for example, the Android Notification Bar. It will be automatically masked. For the best result use a single-color graphic with transparent background.', 'pwp' ) . '</p>',
+			'after_field' => '<p class="pwp-smaller">' . __( 'This image will represent the notification when there is not enough space to display the notification itself such as, for example, the Android Notification Bar. It will be automatically masked. For the best result use a single-color graphic with transparent background.', 'pwp' ) . '<br>' . __( 'Has to be at least 92x92px', 'pwp' ) . '</p>',
 		] );
 	}
 
