@@ -54,29 +54,14 @@ class Serviceworker {
 	}
 
 	public function add_to_header() {
+	    $scope = wp_json_encode( site_url( '/', 'relative' ) );
 		?>
 		<script type="text/javascript" id="serviceworker">
-			<?php
-			if ( pwp_get_setting( 'pwp-force-deregister-sw' ) ) {
-			?>
-			if ('serviceWorker' in navigator) {
-				navigator.serviceWorker.getRegistrations().then(function (registrations) {
-					registrations.forEach(function (registration) {
-						if (registration.active.scriptURL !== window.location.origin + '<?php echo pwp_register_url( $this->sw_url ); ?>') {
-							registration.unregister().then(function (boolean) {
-								if (boolean) {
-									console.log(registration.active.scriptURL + ' unregistered');
-								} else {
-									console.log(registration.active.scriptURL + ' unregistration failed');
-								}
-							});
-						}
-					});
-				});
-			}
-			<?php
-			}
-			?>
+            if ( $serviceWorkersRegister[ <?php echo $scope; ?> ] ) {
+	            $serviceWorkersRegister[ <?php echo $scope; ?> ]
+		            .then( registration => console.log( 'Success:', registration ) )
+		            .catch( error => console.error( 'Error:', error ) );
+            }
 		</script>
 		<?php
 	}
