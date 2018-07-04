@@ -54,14 +54,16 @@ class Serviceworker {
 	}
 
 	public function add_to_header() {
-	    $scope = wp_json_encode( site_url( '/', 'relative' ) );
+		$scope = wp_json_encode( site_url( '/', 'relative' ) );
 		?>
 		<script type="text/javascript" id="serviceworker">
-            if ( $serviceWorkersRegister[ <?php echo $scope; ?> ] ) {
-	            $serviceWorkersRegister[ <?php echo $scope; ?> ]
-		            .then( registration => console.log( 'Success:', registration ) )
-		            .catch( error => console.error( 'Error:', error ) );
-            }
+			window.addEventListener('load', function() {
+				if ( navigator.serviceWorker.getRegistration( <?php echo $scope; ?> ) ) {
+					navigator.serviceWorker.getRegistration( <?php echo $scope; ?> )
+						.then( registration => console.log( 'Success:', registration ) )
+						.catch( error => console.error( 'Error:', error ) );
+				}
+			} );
 		</script>
 		<?php
 	}
@@ -107,6 +109,10 @@ class Serviceworker {
 		 */
 		$time    = time();
 		$content = str_replace( '{{time}}', $time, $content );
+
+		// Wrap content into IIFE.
+		$content = "( function() {\n" . $content . "} )();\n";
+
 		pwp_delete( $this->sw_path );
 		$save = pwp_put_contents( $this->sw_path, $content );
 		if ( ! $save ) {
