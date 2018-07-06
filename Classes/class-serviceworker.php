@@ -5,14 +5,14 @@ namespace nicomartin\ProgressiveWordPress;
 class Serviceworker {
 
 	public $capability = '';
-	public $sw_path = ABSPATH . 'pwp-serviceworker.js';
-	public $sw_url = '/pwp-serviceworker.js';
+	public $sw_path = PROGRESSIVE_WP_PLUGIN_PATH . 'pwp-serviceworker.js';
+	public $sw_url = PROGRESSIVE_WP_PLUGIN_URL . 'pwp-serviceworker.js';
 
 	public function __construct() {
 		$this->capability = pwp_get_instance()->Init->capability;
 		if ( is_multisite() ) {
-			$this->sw_path = ABSPATH . 'pwp-serviceworker-' . get_current_blog_id() . '.js';
-			$this->sw_url  = '/pwp-serviceworker-' . get_current_blog_id() . '.js';
+			$this->sw_path = PROGRESSIVE_WP_PLUGIN_PATH . 'pwp-serviceworker-' . get_current_blog_id() . '.js';
+			$this->sw_url  = PROGRESSIVE_WP_PLUGIN_URL . 'pwp-serviceworker-' . get_current_blog_id() . '.js';
 		}
 	}
 
@@ -24,6 +24,16 @@ class Serviceworker {
 
 		if ( file_exists( $this->sw_path ) ) {
 			add_action( 'wp_head', [ $this, 'add_to_header' ], 500 );
+			add_action( 'plugins_loaded', [ $this, 'register_service_worker' ] );
+		}
+	}
+
+	/**
+	 * Register service worker by using wp_register_service_worker();
+	 */
+	public function register_service_worker() {
+		if ( function_exists( 'wp_register_service_worker' ) ) {
+			wp_register_service_worker( 'progressive-wp-sw', $this->sw_url );
 		}
 	}
 
@@ -44,48 +54,16 @@ class Serviceworker {
 	}
 
 	public function add_to_header() {
-
-		$url = untrailingslashit( get_home_url() ) . $this->sw_url;
+		$scope = wp_json_encode( site_url( '/', 'relative' ) );
 		?>
 		<script type="text/javascript" id="serviceworker">
-			if ('serviceWorker' in navigator) {
-				if (location.protocol !== 'https:') {
-					console.log('[Progressive WordPress] <?php echo addslashes( __( 'Your site needs to be served via HTTPS to use Progressive Web App functionality', 'pwp' ) ); ?>');
-				} else {
-					window.addEventListener('load', function () {
-						navigator.serviceWorker.register('<?php echo pwp_register_url( $url ); ?>')
-							.then(function (registration) {
-								registration.update();
-							})
-							.catch(function (error) {
-								console.log('[Progressive WordPress] <?php echo addslashes( __( 'Registration failed', 'pwp' ) ); ?>: ' + error);
-							});
-					});
+			window.addEventListener('load', function() {
+				if ( navigator.serviceWorker.getRegistration( <?php echo $scope; ?> ) ) {
+					navigator.serviceWorker.getRegistration( <?php echo $scope; ?> )
+						.then( registration => console.log( 'Success:', registration ) )
+						.catch( error => console.error( 'Error:', error ) );
 				}
-			} else {
-				console.log('[Progressive WordPress] <?php echo addslashes( __( 'Your browser does not support Progressive Web App functionality', 'pwp' ) ); ?>');
-			}
-			<?php
-			if ( pwp_get_setting( 'pwp-force-deregister-sw' ) ) {
-			?>
-			if ('serviceWorker' in navigator) {
-				navigator.serviceWorker.getRegistrations().then(function (registrations) {
-					registrations.forEach(function (registration) {
-						if (registration.active.scriptURL !== window.location.origin + '<?php echo pwp_register_url( $url ); ?>') {
-							registration.unregister().then(function (boolean) {
-								if (boolean) {
-									console.log(registration.active.scriptURL + ' unregistered');
-								} else {
-									console.log(registration.active.scriptURL + ' unregistration failed');
-								}
-							});
-						}
-					});
-				});
-			}
-			<?php
-			}
-			?>
+			} );
 		</script>
 		<?php
 	}
@@ -131,6 +109,10 @@ class Serviceworker {
 		 */
 		$time    = time();
 		$content = str_replace( '{{time}}', $time, $content );
+
+		// Wrap content into IIFE.
+		$content = "( function() {\n" . $content . "} )();\n";
+
 		pwp_delete( $this->sw_path );
 		$save = pwp_put_contents( $this->sw_path, $content );
 		if ( ! $save ) {
