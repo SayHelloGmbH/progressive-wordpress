@@ -5,28 +5,14 @@ namespace nicomartin\ProgressiveWordPress;
 class Manifest {
 
 	public $capability = '';
-	public $manifest_path = ABSPATH . 'pwp-manifest.json';
-	public $manifest_url = '/pwp-manifest.json';
 
 	public function __construct() {
 		$this->capability = pwp_get_instance()->Init->capability;
-		if ( is_multisite() ) {
-			$this->manifest_path = ABSPATH . 'pwp-manifest-' . get_current_blog_id() . '.js';
-			$this->manifest_url  = '/pwp-manifest-' . get_current_blog_id() . '.js';
-		}
 	}
 
 	public function run() {
 		add_action( 'pwp_settings', [ $this, 'register_settings' ] );
-		add_action( 'pwp_after_save', [ $this, 'save_manifest' ] );
-		add_action( 'pwp_on_update', [ $this, 'save_manifest' ] );
-
-		add_action( 'pwp_on_deactivate', [ $this, 'delete_manifest' ] );
-
-		if ( file_exists( $this->manifest_path ) ) {
-			add_action( 'wp_head', [ $this, 'add_to_header' ], 1 );
-			add_action( 'wp_head', [ $this, 'meta_tags_to_header' ], 1 );
-		}
+		add_filter( 'web_app_manifest', [ $this, 'manifest' ] );
 	}
 
 	public function register_settings() {
@@ -75,13 +61,12 @@ class Manifest {
 		pwp_settings()->add_color( $section, 'manifest-background-color', __( 'Background Color', 'pwp' ), '#ffffff', $args );
 	}
 
-	public function save_manifest() {
+	public function manifest( $manifest ) {
 
 		if ( '' == pwp_get_setting( 'manifest-name' ) ) {
-			return;
+			return $manifest;
 		}
 
-		$manifest                     = [];
 		$manifest['name']             = pwp_get_setting( 'manifest-name' );
 		$manifest['short_name']       = str_replace( ' ', '', pwp_get_setting( 'manifest-short-name' ) );
 		$manifest['start_url']        = './';
@@ -109,50 +94,7 @@ class Manifest {
 			}
 		}
 
-		$manifest = apply_filters( 'pwp_manifest_values', $manifest );
-		$content  = json_encode( $manifest, JSON_UNESCAPED_SLASHES );
-		if ( file_exists( $this->manifest_path ) ) {
-			if ( file_get_contents( $this->manifest_path ) == $content ) {
-				return;
-			}
-		}
-
-		pwp_delete( $this->manifest_path );
-		$save = pwp_put_contents( $this->manifest_path, $content );
-		if ( ! $save ) {
-			add_action( 'admin_notices', function () {
-				echo '<div class="notice notice-error">';
-				// translators: There was a problem generating your manifest file. Please check your permissions for ABSPATH
-				echo '<p>' . sprintf( __( 'There was a problem generating your manifest file. Please check your permissions for %s', 'pwp' ), '<code>' . ABSPATH . '</code>' ) . '</p>';
-				echo '</div>';
-			} );
-		} else {
-			add_action( 'admin_notices', function () {
-				echo '<div class="notice notice-success">';
-				// translators: There was a problem generating your serviceworker file. Please check your permissions for ABSPATH
-				echo '<p>' . __( 'Web App Manifest regenerated', 'pwp' ) . '</p>';
-				echo '</div>';
-			} );
-		}
-	}
-
-	public function add_to_header() {
-		if ( ! is_file( $this->manifest_path ) ) {
-			return;
-		}
-
-		$url = untrailingslashit( get_home_url() ) . $this->manifest_url;
-		echo '<link rel="manifest" href="' . pwp_register_url( $url ) . '">';
-	}
-
-	public function meta_tags_to_header() {
-		if ( pwp_get_setting( 'manifest-theme-color' ) ) {
-			echo '<meta name="theme-color" content="' . pwp_get_setting( 'manifest-theme-color' ) . '">';
-		}
-	}
-
-	public function delete_manifest() {
-		pwp_delete( $this->manifest_path );
+		return $manifest;
 	}
 
 	/**

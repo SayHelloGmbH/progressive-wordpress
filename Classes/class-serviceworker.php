@@ -5,25 +5,27 @@ namespace nicomartin\ProgressiveWordPress;
 class Serviceworker {
 
 	public $capability = '';
-	public $sw_path = PROGRESSIVE_WP_PLUGIN_PATH . 'pwp-serviceworker.js';
-	public $sw_url = PROGRESSIVE_WP_PLUGIN_URL . 'pwp-serviceworker.js';
+	public $sw_path = '';
+	public $sw_url = '';
 
 	public function __construct() {
 		$this->capability = pwp_get_instance()->Init->capability;
+		$this->sw_path    = pwp_get_instance()->upload_dir . 'pwp-serviceworker.js';
+		$this->sw_url     = pwp_get_instance()->upload_url . 'pwp-serviceworker.js';
 		if ( is_multisite() ) {
-			$this->sw_path = PROGRESSIVE_WP_PLUGIN_PATH . 'pwp-serviceworker-' . get_current_blog_id() . '.js';
-			$this->sw_url  = PROGRESSIVE_WP_PLUGIN_URL . 'pwp-serviceworker-' . get_current_blog_id() . '.js';
+			$this->sw_path = pwp_get_instance()->upload_dir . 'pwp-serviceworker-' . get_current_blog_id() . '.js';
+			$this->sw_url  = pwp_get_instance()->upload_url . 'pwp-serviceworker-' . get_current_blog_id() . '.js';
 		}
 	}
 
 	public function run() {
+
 		add_action( 'admin_notices', [ $this, 'ssl_error_notice' ] );
 		add_action( 'pwp_after_save', [ $this, 'regenerate' ] );
 		add_action( 'pwp_on_update', [ $this, 'regenerate' ] );
 		add_action( 'pwp_on_deactivate', [ $this, 'delete_serviceworker' ] );
 
 		if ( file_exists( $this->sw_path ) ) {
-			add_action( 'wp_head', [ $this, 'add_to_header' ], 500 );
 			add_action( 'plugins_loaded', [ $this, 'register_service_worker' ] );
 		}
 	}
@@ -51,21 +53,6 @@ class Serviceworker {
 		echo '<div class="notice notice-error">';
 		echo '<p>' . __( 'Your site has to be served over https to use progressive web app features.', 'pwp' ) . '</p>';
 		echo '</div>';
-	}
-
-	public function add_to_header() {
-		$scope = wp_json_encode( site_url( '/', 'relative' ) );
-		?>
-		<script type="text/javascript" id="serviceworker">
-			window.addEventListener('load', function() {
-				if ( navigator.serviceWorker.getRegistration( <?php echo $scope; ?> ) ) {
-					navigator.serviceWorker.getRegistration( <?php echo $scope; ?> )
-						.then( registration => console.log( 'Success:', registration ) )
-						.catch( error => console.error( 'Error:', error ) );
-				}
-			} );
-		</script>
-		<?php
 	}
 
 	/**
