@@ -35,6 +35,7 @@ class Serviceworker {
 	 */
 	public function register_service_worker() {
 		if ( function_exists( 'wp_register_service_worker' ) ) {
+			echo $this->sw_url;
 			wp_register_service_worker( 'progressive-wp-sw', $this->sw_url );
 		}
 	}
