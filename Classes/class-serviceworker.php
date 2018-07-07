@@ -35,6 +35,26 @@ class Serviceworker {
 	 */
 	public function register_service_worker() {
 		if ( function_exists( 'wp_register_service_worker' ) ) {
+
+			/**
+			 * Test: added a script where the dependency is registered afterwards
+			 * Worls! the conts comes after the dependency
+			 */
+			wp_register_service_worker( 'progressive-wp-sw-test-deps', function () {
+				return "const pwpshouldbe = 'after progressive-wp-sw';";
+			}, [ 'progressive-wp-sw' ] );
+
+			/**
+			 * Test: add a different scope
+			 * Works!
+			 */
+			wp_register_service_worker( 'progressive-wp-sw-test-scope', function () {
+				return "const pwpanother = 'scope';";
+			}, [], [ '/mysite/' ] );
+
+			/**
+			 * Progressive WP Serviceworker
+			 */
 			wp_register_service_worker( 'progressive-wp-sw', $this->sw_url );
 		}
 	}
