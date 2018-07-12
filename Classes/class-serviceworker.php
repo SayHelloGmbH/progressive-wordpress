@@ -54,7 +54,7 @@ class Serviceworker {
 		if ( ! pwp_use_pwawp() ) {
 			return;
 		}
-		wp_register_service_worker( 'progressive-wp-sw', $this->sw_url );
+		wp_register_service_worker( 'progressive-wp-sw', $this->sw_url, [], WP_Service_Workers::SCOPE_FRONT );
 	}
 
 	public function remove_pwp_sw() {
