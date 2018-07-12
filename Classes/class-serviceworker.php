@@ -5,24 +5,31 @@ namespace nicomartin\ProgressiveWordPress;
 class Serviceworker {
 
 	public $capability = '';
-	public $sw_path = ABSPATH . 'pwp-serviceworker.js';
-	public $sw_url = '/pwp-serviceworker.js';
+	public $sw_path = '';
+	public $sw_url = '';
 
 	public function __construct() {
 		$this->capability = pwp_get_instance()->Init->capability;
+		$this->sw_path    = pwp_get_instance()->upload_dir . 'pwp-serviceworker.js';
+		$this->sw_url     = pwp_get_instance()->upload_url . 'pwp-serviceworker.js';
 		if ( is_multisite() ) {
-			$this->sw_path = ABSPATH . 'pwp-serviceworker-' . get_current_blog_id() . '.js';
-			$this->sw_url  = '/pwp-serviceworker-' . get_current_blog_id() . '.js';
+			$this->sw_path = pwp_get_instance()->upload_dir . 'pwp-serviceworker-' . get_current_blog_id() . '.js';
+			$this->sw_url  = pwp_get_instance()->upload_url . 'pwp-serviceworker-' . get_current_blog_id() . '.js';
 		}
 	}
 
 	public function run() {
+
 		add_action( 'admin_notices', [ $this, 'ssl_error_notice' ] );
 		add_action( 'pwp_after_save', [ $this, 'regenerate' ] );
 		add_action( 'pwp_on_update', [ $this, 'regenerate' ] );
 		add_action( 'pwp_on_deactivate', [ $this, 'delete_serviceworker' ] );
 
 		if ( file_exists( $this->sw_path ) ) {
+			// if pwp_use_pwawp()
+			add_action( 'plugins_loaded', [ $this, 'register_service_worker' ] );
+			add_action( 'wp_head', [ $this, 'remove_pwp_sw' ] );
+			// fallback
 			add_action( 'wp_head', [ $this, 'add_to_header' ], 500 );
 		}
 	}
@@ -43,7 +50,43 @@ class Serviceworker {
 		echo '</div>';
 	}
 
+	public function register_service_worker() {
+		if ( ! pwp_use_pwawp() ) {
+			return;
+		}
+		wp_register_service_worker( 'progressive-wp-sw', $this->sw_url );
+	}
+
+	public function remove_pwp_sw() {
+		if ( ! pwp_use_pwawp() ) {
+			return;
+		}
+		$url = untrailingslashit( get_home_url() ) . $this->sw_url;
+		?>
+		<script type="text/javascript" id="serviceworker">
+			if ('serviceWorker' in navigator) {
+				navigator.serviceWorker.getRegistrations().then(function (registrations) {
+					registrations.forEach(function (registration) {
+						if (registration.active.scriptURL === window.location.origin + '<?php echo pwp_register_url( $url ); ?>') {
+							registration.unregister().then(function (boolean) {
+								if (boolean) {
+									console.log(registration.active.scriptURL + ' unregistered');
+								} else {
+									console.log(registration.active.scriptURL + ' unregistration failed');
+								}
+							});
+						}
+					});
+				});
+			}
+		</script>
+		<?php
+	}
+
 	public function add_to_header() {
+		if ( pwp_use_pwawp() ) {
+			return;
+		}
 
 		$url = untrailingslashit( get_home_url() ) . $this->sw_url;
 		?>

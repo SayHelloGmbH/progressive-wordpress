@@ -130,3 +130,7 @@ function pwp_wp_filesystem_init() {
 		WP_Filesystem();
 	}
 }
+
+function pwp_use_pwawp() {
+	return defined( 'PWAWP_VERSION' );
+}

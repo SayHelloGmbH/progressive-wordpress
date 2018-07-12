@@ -77,6 +77,9 @@ A development version of this plugin is hosted on GitHub. If you have any ideas 
 [https://github.com/SayHelloGmbH/progressive-wordpress](https://github.com/SayHelloGmbH/progressive-wordpress)
 
 == Changelog ==
+= 1.3.3 =
+* Added support for https://github.com/xwp/pwa-wp
+
 = 1.3.2 =
 * Bugfix: Firebase Serverkey validation
 * Bugfix: upload images on settings page

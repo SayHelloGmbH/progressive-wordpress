@@ -18,6 +18,12 @@ class Manifest {
 
 	public function run() {
 		add_action( 'pwp_settings', [ $this, 'register_settings' ] );
+
+		// Filter if pwp-wp
+		add_filter( 'web_app_manifest', [ $this, 'manifest_values' ] );
+		add_filter( 'web_app_manifest', [ $this, 'manifest_values_pwpfilter' ] );
+
+		add_filter( 'pwp_manifest_values', [ $this, 'manifest_values' ] );
 		add_action( 'pwp_after_save', [ $this, 'save_manifest' ] );
 		add_action( 'pwp_on_update', [ $this, 'save_manifest' ] );
 
@@ -27,6 +33,7 @@ class Manifest {
 			add_action( 'wp_head', [ $this, 'add_to_header' ], 1 );
 			add_action( 'wp_head', [ $this, 'meta_tags_to_header' ], 1 );
 		}
+
 	}
 
 	public function register_settings() {
@@ -75,10 +82,9 @@ class Manifest {
 		pwp_settings()->add_color( $section, 'manifest-background-color', __( 'Background Color', 'pwp' ), '#ffffff', $args );
 	}
 
-	public function save_manifest() {
-
+	public function manifest_values( $manifest ) {
 		if ( '' == pwp_get_setting( 'manifest-name' ) ) {
-			return;
+			return $manifest;
 		}
 
 		$manifest                     = [];
@@ -109,8 +115,22 @@ class Manifest {
 			}
 		}
 
-		$manifest = apply_filters( 'pwp_manifest_values', $manifest );
-		$content  = json_encode( $manifest, JSON_UNESCAPED_SLASHES );
+		return $manifest;
+	}
+
+	public function manifest_values_pwpfilter( $manifest ) {
+		return apply_filters( 'pwp_manifest_values', $manifest );
+	}
+
+	public function save_manifest() {
+
+		if ( pwp_use_pwawp() ) {
+			return;
+		}
+
+		$manifest = apply_filters( 'pwp_manifest_values', [] );
+
+		$content = json_encode( $manifest, JSON_UNESCAPED_SLASHES );
 		if ( file_exists( $this->manifest_path ) ) {
 			if ( file_get_contents( $this->manifest_path ) == $content ) {
 				return;
@@ -137,7 +157,7 @@ class Manifest {
 	}
 
 	public function add_to_header() {
-		if ( ! is_file( $this->manifest_path ) ) {
+		if ( ! is_file( $this->manifest_path ) || pwp_use_pwawp() ) {
 			return;
 		}
 
@@ -146,6 +166,9 @@ class Manifest {
 	}
 
 	public function meta_tags_to_header() {
+		if ( pwp_use_pwawp() ) {
+			return;
+		}
 		if ( pwp_get_setting( 'manifest-theme-color' ) ) {
 			echo '<meta name="theme-color" content="' . pwp_get_setting( 'manifest-theme-color' ) . '">';
 		}

@@ -26,6 +26,7 @@ class Tracking {
 	public function run() {
 		add_action( 'pwp_settings', [ $this, 'register_settings' ] );
 		add_filter( 'pwp_manifest_values', [ $this, 'tracking_to_starturl' ], 500 );
+		add_filter( 'web_app_manifest', [ $this, 'tracking_to_starturl' ], 500 );
 		add_filter( 'pwp_push_data_values', [ $this, 'tracking_to_pushurl' ], 500 );
 	}
 
@@ -75,7 +76,9 @@ class Tracking {
 				update_option( "pwp-tracking-$key-parameters", false );
 			} else {
 				update_option( "pwp-tracking-$key-parameters", implode( '&', $parameters ) );
-				pwp_manifest_regenerate();
+				if ( ! pwp_use_pwawp() ) {
+					pwp_manifest_regenerate();
+				}
 			}
 		}
 	}
