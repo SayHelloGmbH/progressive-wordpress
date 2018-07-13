@@ -76,16 +76,13 @@ class Tracking {
 				update_option( "pwp-tracking-$key-parameters", false );
 			} else {
 				update_option( "pwp-tracking-$key-parameters", implode( '&', $parameters ) );
-				if ( ! pwp_use_pwawp() ) {
-					pwp_manifest_regenerate();
-				}
 			}
 		}
 	}
 
 	public function tracking_to_starturl( $values ) {
 		$parameters = get_option( 'pwp-tracking-starturl-parameters' );
-		if ( $parameters ) {
+		if ( $parameters && array_key_exists( 'start_url', $values ) ) {
 			$values['start_url'] = $values['start_url'] . '?' . $parameters;
 		}
 

@@ -5,35 +5,29 @@ namespace nicomartin\ProgressiveWordPress;
 class Manifest {
 
 	public $capability = '';
-	public $manifest_path = ABSPATH . 'pwp-manifest.json';
-	public $manifest_url = '/pwp-manifest.json';
+	public $filter = 'web_app_manifest';
+
+	public $rest_namespace = 'app/v1';
+	public $rest_route = '/pwp-manifest';
 
 	public function __construct() {
 		$this->capability = pwp_get_instance()->Init->capability;
-		if ( is_multisite() ) {
-			$this->manifest_path = ABSPATH . 'pwp-manifest-' . get_current_blog_id() . '.js';
-			$this->manifest_url  = '/pwp-manifest-' . get_current_blog_id() . '.js';
-		}
 	}
 
 	public function run() {
 		add_action( 'pwp_settings', [ $this, 'register_settings' ] );
+		add_filter( $this->filter, [ $this, 'manifest_values' ] );
 
-		// Filter if pwp-wp
-		add_filter( 'web_app_manifest', [ $this, 'manifest_values' ] );
-		add_filter( 'web_app_manifest', [ $this, 'manifest_values_pwpfilter' ] );
+		/**
+		 * Todo: theme-color meta not correct if PWA Plugin activated
+		 */
 
-		add_filter( 'pwp_manifest_values', [ $this, 'manifest_values' ] );
-		add_action( 'pwp_after_save', [ $this, 'save_manifest' ] );
-		add_action( 'pwp_on_update', [ $this, 'save_manifest' ] );
+		/**
+		 * Register (if PWA Plugin not installed)
+		 */
 
-		add_action( 'pwp_on_deactivate', [ $this, 'delete_manifest' ] );
-
-		if ( file_exists( $this->manifest_path ) ) {
-			add_action( 'wp_head', [ $this, 'add_to_header' ], 1 );
-			add_action( 'wp_head', [ $this, 'meta_tags_to_header' ], 1 );
-		}
-
+		add_action( 'rest_api_init', [ $this, 'register_manifest_rest_route' ] );
+		add_action( 'wp_head', [ $this, 'manifest_link_and_meta' ] );
 	}
 
 	public function register_settings() {
@@ -83,19 +77,28 @@ class Manifest {
 	}
 
 	public function manifest_values( $manifest ) {
-		if ( '' == pwp_get_setting( 'manifest-name' ) ) {
-			return $manifest;
+
+		$manifest['name']      = get_bloginfo( 'name' );
+		$manifest['start_url'] = get_home_url();
+		$manifest['display']   = 'minimal-ui';
+		$manifest['dir']       = is_rtl() ? 'rtl' : 'ltr';
+
+		$language = get_bloginfo( 'language' );
+		if ( $language ) {
+			$manifest['lang'] = $language;
 		}
 
-		$manifest                     = [];
+		if ( '' == pwp_get_setting( 'manifest-name' ) ) {
+			return apply_filters( 'pwp_manifest_values', $manifest );
+		}
+
 		$manifest['name']             = pwp_get_setting( 'manifest-name' );
 		$manifest['short_name']       = str_replace( ' ', '', pwp_get_setting( 'manifest-short-name' ) );
-		$manifest['start_url']        = './';
+		$manifest['start_url']        = pwp_get_setting( 'manifest-starturl' );
 		$manifest['description']      = pwp_get_setting( 'manifest-description' );
 		$manifest['theme_color']      = $this->sanitize_hex( pwp_get_setting( 'manifest-theme-color' ), '#000000' );
 		$manifest['background_color'] = $this->sanitize_hex( pwp_get_setting( 'manifest-background-color' ), '#ffffff' );
 		$manifest['display']          = pwp_get_setting( 'manifest-display' );
-		$manifest['lang']             = get_locale();
 		$manifest['orientation']      = pwp_get_setting( 'manifest-orientation' );
 
 		$sizes = [ 128, 192, 512, 524 ];
@@ -115,67 +118,44 @@ class Manifest {
 			}
 		}
 
-		return $manifest;
-	}
-
-	public function manifest_values_pwpfilter( $manifest ) {
 		return apply_filters( 'pwp_manifest_values', $manifest );
 	}
 
-	public function save_manifest() {
-
-		if ( pwp_use_pwawp() ) {
+	public function register_manifest_rest_route() {
+		if ( class_exists( 'WP_Web_App_Manifest' ) ) {
 			return;
 		}
-
-		$manifest = apply_filters( 'pwp_manifest_values', [] );
-
-		$content = json_encode( $manifest, JSON_UNESCAPED_SLASHES );
-		if ( file_exists( $this->manifest_path ) ) {
-			if ( file_get_contents( $this->manifest_path ) == $content ) {
-				return;
-			}
-		}
-
-		pwp_delete( $this->manifest_path );
-		$save = pwp_put_contents( $this->manifest_path, $content );
-		if ( ! $save ) {
-			add_action( 'admin_notices', function () {
-				echo '<div class="notice notice-error">';
-				// translators: There was a problem generating your manifest file. Please check your permissions for ABSPATH
-				echo '<p>' . sprintf( __( 'There was a problem generating your manifest file. Please check your permissions for %s', 'pwp' ), '<code>' . ABSPATH . '</code>' ) . '</p>';
-				echo '</div>';
-			} );
-		} else {
-			add_action( 'admin_notices', function () {
-				echo '<div class="notice notice-success">';
-				// translators: There was a problem generating your serviceworker file. Please check your permissions for ABSPATH
-				echo '<p>' . __( 'Web App Manifest regenerated', 'pwp' ) . '</p>';
-				echo '</div>';
-			} );
-		}
+		register_rest_route( $this->rest_namespace, $this->rest_route, [
+			'methods'             => 'GET',
+			'callback'            => [ $this, 'get_manifest' ],
+			'permission_callback' => [ $this, 'rest_permission' ],
+		] );
 	}
 
-	public function add_to_header() {
-		if ( ! is_file( $this->manifest_path ) || pwp_use_pwawp() ) {
-			return;
-		}
-
-		$url = untrailingslashit( get_home_url() ) . $this->manifest_url;
-		echo '<link rel="manifest" href="' . pwp_register_url( $url ) . '">';
+	public function get_manifest() {
+		return apply_filters( 'web_app_manifest', [] );
 	}
 
-	public function meta_tags_to_header() {
-		if ( pwp_use_pwawp() ) {
+	public function rest_permission( $request ) {
+		if ( 'edit' === $request['context'] ) {
+			return new WP_Error( 'rest_forbidden_context', __( 'Sorry, you are not allowed to edit the manifest.', 'pwp' ), [
+				'status' => rest_authorization_required_code(),
+			] );
+		}
+
+		return true;
+	}
+
+	public function manifest_link_and_meta() {
+		if ( class_exists( 'WP_Web_App_Manifest' ) ) {
 			return;
 		}
+		?>
+		<link rel="manifest" href="<?php echo esc_url( rest_url( $this->rest_namespace . $this->rest_route ) ); ?>">
+		<?php
 		if ( pwp_get_setting( 'manifest-theme-color' ) ) {
 			echo '<meta name="theme-color" content="' . pwp_get_setting( 'manifest-theme-color' ) . '">';
 		}
-	}
-
-	public function delete_manifest() {
-		pwp_delete( $this->manifest_path );
 	}
 
 	/**

@@ -161,12 +161,6 @@ class Status {
 
 	public function get_stats() {
 		return [
-			'manifest'     => [
-				'title'      => __( 'Manifest', 'pwp' ),
-				'true'       => file_exists( pwp_get_instance()->Manifest->manifest_path ),
-				'text_true'  => __( 'Manifest generated successfully.', 'pwp' ),
-				'text_false' => __( 'Manifest not generated.', 'pwp' ),
-			],
 			'sw'           => [
 				'title'      => __( 'ServiceWorker', 'pwp' ),
 				'true'       => file_exists( pwp_get_instance()->Serviceworker->sw_path ),
