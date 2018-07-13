@@ -56,9 +56,6 @@ class Status {
 			}
 			pwp_settings()->add_message( $section, "pwp_intro_stats_$key", $vals['title'], $html );
 		}
-
-		pwp_settings()->add_checkbox( $section, 'pwp-force-deregister-sw', __( 'Unregister all other serviceworkers', 'pwp' ), false );
-
 	}
 
 	public function settings_logs() {
