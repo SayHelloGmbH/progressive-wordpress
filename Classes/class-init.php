@@ -145,7 +145,6 @@ class Init {
 			] );
 		}
 
-		pwp_manifest_regenerate();
 		pwp_serviceworker_regenerate();
 	}
 }
