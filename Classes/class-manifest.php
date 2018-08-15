@@ -43,7 +43,14 @@ class Manifest {
 			'after_field' => '<p class="pwp-smaller">' . __( 'max. 12 Chars', 'pwp' ) . '</p>',
 		] );
 
-		pwp_settings()->add_input( $section, 'manifest-starturl', __( 'Start URL', 'pwp' ), '/' );
+		$pages = [];
+		if ( get_option( 'page_on_front' ) ) {
+			$pages[ get_permalink( get_option( 'page_on_front' ) ) ] = get_the_title( get_option( 'page_on_front' ) );
+		}
+		foreach ( get_pages() as $page ) {
+			$pages[ get_permalink( $page ) ] = get_the_title( $page );
+		}
+		pwp_settings()->add_select( $section, 'manifest-starturl', __( 'Start Page', 'pwp' ), $pages );
 
 		pwp_settings()->add_textarea( $section, 'manifest-description', __( 'Description', 'pwp' ), '', [] );
 
@@ -63,9 +70,9 @@ class Manifest {
 		*/
 
 		$choices = [
-			'fullscreen' => 'Fullscreen',
-			'standalone' => 'Standalone',
-			'minimal-ui' => 'Minimal',
+			'fullscreen' => __( 'Fullscreen - App takes whole display', 'pwp' ),
+			'standalone' => __( 'Standalone - Native App feeling', 'pwp' ),
+			'minimal-ui' => __( 'Minimal browser controls', 'pwp' ),
 		];
 		$link    = 'https://developer.mozilla.org/de/docs/Web/Manifest#display';
 		pwp_settings()->add_select( $section, 'manifest-display', __( 'Display mode', 'pwp' ), $choices, 'standalone', [

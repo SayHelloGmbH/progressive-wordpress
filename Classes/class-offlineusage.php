@@ -28,11 +28,10 @@ class Offlineusage {
 
 		pwp_settings()->add_checkbox( $section, 'offline-enabled', __( 'Offline Usage enabled', 'pwp' ) );
 
-		$choices = [];
-		if ( 'page' != get_post_type( get_option( 'page_on_front' ) ) ) {
-			$choices[0] = __( 'Front Page', 'options' );
-		}
 		foreach ( get_pages() as $post ) {
+			if ( get_option( 'page_on_front' ) == $post->ID ) {
+				continue;
+			}
 			$choices[ $post->ID ] = get_the_title( $post );
 		}
 		pwp_settings()->add_select( $section, 'offline-page', __( 'Offline Page', 'pwp' ), $choices, '', [

@@ -5,10 +5,16 @@
 	h1 {
 		margin-bottom: 20px;
 	}
+	
+	a {
+		color: #d41910;
+		text-decoration: none;
+	}
+	
 	form {
 		margin-top: 20px;
 		select {
-			width: 150px;
+			//width: 150px;
 		}
 		textarea {
 			width: 100%;

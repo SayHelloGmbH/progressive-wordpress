@@ -130,10 +130,16 @@ class Init {
 	public function default_settings() {
 		$options = get_option( pwp_settings()->option_key, false );
 		if ( ! $options ) {
+
+			$short_name = get_bloginfo( 'name' );
+			if ( strlen( $short_name ) > 12 ) {
+				$short_name = substr( $short_name, 0, 9 ) . '...';
+			}
+
 			update_option( pwp_settings()->option_key, [
 				'installable-enabled'       => '1',
 				'manifest-name'             => get_bloginfo( 'name' ),
-				'manifest-short-name'       => str_replace( ' ', '', get_bloginfo( 'name' ) ),
+				'manifest-short-name'       => $short_name,
 				'manifest-starturl'         => './',
 				'manifest-description'      => get_bloginfo( 'description' ),
 				'manifest-display'          => 'standalone',

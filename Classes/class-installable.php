@@ -18,9 +18,9 @@ class Installable {
 	public function register_settings() {
 
 		$section_desc = '<b>' . __( 'Make your website installable!', 'pwp' ) . '</b><br>';
-		$section      = pwp_settings()->add_section( pwp_settings_page_manifest(), 'pwp_installable', __( 'Installable', 'pwp' ), $section_desc );
+		$section      = pwp_settings()->add_section( pwp_settings_page_manifest(), 'pwp_installable', __( 'Add to homescreen', 'pwp' ), $section_desc );
 
-		pwp_settings()->add_checkbox( $section, 'installable-enabled', __( 'Enable installation', 'pwp' ) );
+		pwp_settings()->add_checkbox( $section, 'installable-enabled', __( 'Enable add to homescreen', 'pwp' ) );
 	}
 
 	public function change_manifest_display( $values ) {

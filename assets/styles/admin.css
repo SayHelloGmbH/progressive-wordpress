@@ -7546,10 +7546,12 @@
 .pwp-wrap h1 {
   margin-bottom: 20px; }
 
+.pwp-wrap a {
+  color: #d41910;
+  text-decoration: none; }
+
 .pwp-wrap form {
   margin-top: 20px; }
-  .pwp-wrap form select {
-    width: 150px; }
   .pwp-wrap form textarea {
     width: 100%; }
 
@@ -7616,7 +7618,7 @@
   .pwp-wrap__section .form-table td {
     vertical-align: top; }
   .pwp-wrap__section .form-table select {
-    width: 150px; }
+    width: 250px; }
   .pwp-wrap__section .form-table textarea,
   .pwp-wrap__section .form-table input[type=text] {
     width: 100%; }
