@@ -11,7 +11,7 @@ class PushCredentials {
 		add_action( 'pwp_sanitize', [ $this, 'check_firebase_creds' ] );
 		add_action( 'admin_action_pwp_remove_firebase_creds', [ $this, 'remove_firebase_creds' ] );
 		add_action( 'admin_notices', [ $this, 'creds_error' ] );
-		add_filter( 'pwp_manifest_values', [ $this, 'add_sender_id_to_manifest' ] );
+		add_filter( 'web_app_manifest', [ $this, 'add_sender_id_to_manifest' ] );
 	}
 
 	public function settings() {

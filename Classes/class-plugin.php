@@ -131,7 +131,7 @@ class Plugin {
 	 * @return false|array Returns an array (url, width, height, is_intermediate), or false, if no image is available.
 	 */
 
-	public function image_resize( $attach_id, $width, $height, $crop = false ) {
+	public function image_resize( $attach_id, $width, $height, $crop = false, $ext = false ) {
 
 		/**
 		 * wrong attachment id
@@ -172,15 +172,25 @@ class Plugin {
 		$new_width  = round( $new_width );
 		$new_height = round( $new_height );
 
+		$change_filetype = false;
+		if ( $ext && strtolower( $src_img_info['extension'] ) != strtolower( $ext ) ) {
+			$change_filetype = true;
+		}
+
 		/**
 		 * return the source image if the requested is bigger than the original image
 		 */
 
-		if ( $new_width > $src_img[1] || $new_height > $src_img[2] ) {
+		if ( ( $new_width > $src_img[1] || $new_height > $src_img[2] ) && ! $change_filetype ) {
 			return $src_img;
 		}
 
-		$new_img_path = "{$src_img_info['dirname']}/{$src_img_info['filename']}-{$new_width}x{$new_height}.{$src_img_info['extension']}";
+		$extension = $src_img_info['extension'];
+		if ( $change_filetype ) {
+			$extension = $ext;
+		}
+
+		$new_img_path = "{$src_img_info['dirname']}/{$src_img_info['filename']}-{$new_width}x{$new_height}.{$extension}";
 		$new_img_url  = str_replace( trailingslashit( ABSPATH ), trailingslashit( get_home_url() ), $new_img_path );
 
 		/**

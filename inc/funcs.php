@@ -59,7 +59,7 @@ function pwp_settings_page_main() {
 }
 
 function pwp_settings_page_manifest() {
-	return pwp_settings()->add_page( 'pwp-manifest', __( 'Installable', 'pwp' ) );
+	return pwp_settings()->add_page( 'pwp-manifest', __( 'Add to Homescreen', 'pwp' ) );
 }
 
 function pwp_settings_page_offlineusage() {

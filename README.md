@@ -90,8 +90,9 @@ You can then use the JS functions `pwpRegisterPushDevice();` and `pwpDeregisterP
 
 ## Changelog
 
-## 1.3.3
+## 2.0.0
 * Added support for https://github.com/xwp/pwa-wp
+* Manifest Icon is now the same as Site Icon
 
 ## 1.3.2
 * Bugfix: Firebase Serverkey validation

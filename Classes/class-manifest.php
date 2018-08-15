@@ -46,12 +46,21 @@ class Manifest {
 		pwp_settings()->add_input( $section, 'manifest-starturl', __( 'Start URL', 'pwp' ), '/' );
 
 		pwp_settings()->add_textarea( $section, 'manifest-description', __( 'Description', 'pwp' ), '', [] );
+
+		$query['autofocus[control]'] = 'site_icon';
+		$url                         = add_query_arg( $query, admin_url( 'customize.php' ) );
+		$customizer_title            = __( 'Customizer -> Site Icon', 'pwp' );
+		// translators: $s = url
+		$content = '<p><small>' . sprintf( __( 'This Option has been removed. Please use the Site Icon from the customizer instead: %s.', 'awpp' ), "<br><a href='{$url}'>{$customizer_title}</a>" ) . '</small></p>';
+		pwp_settings()->add_message( $section, 'manifest-icon-message', __( 'Icon', 'pwp' ), $content );
+		/*
 		pwp_settings()->add_file( $section, 'manifest-icon', __( 'Icon', 'pwp' ), 0, [
 			'mimes'       => 'png',
 			'min-width'   => 128,
 			'min-height'  => 128,
 			'after_field' => '<p class="pwp-smaller">' . __( 'has to be at least 128x128px', 'pwp' ) . '</p>',
 		] );
+		*/
 
 		$choices = [
 			'fullscreen' => 'Fullscreen',
@@ -89,7 +98,7 @@ class Manifest {
 		}
 
 		if ( '' == pwp_get_setting( 'manifest-name' ) ) {
-			return apply_filters( 'pwp_manifest_values', $manifest );
+			return $manifest;
 		}
 
 		$manifest['name']             = pwp_get_setting( 'manifest-name' );
@@ -101,24 +110,25 @@ class Manifest {
 		$manifest['display']          = pwp_get_setting( 'manifest-display' );
 		$manifest['orientation']      = pwp_get_setting( 'manifest-orientation' );
 
-		$sizes = [ 128, 192, 512, 524 ];
-		$icon  = pwp_get_setting( 'manifest-icon' );
+		$sizes = [ 144, 192, 512, 524 ];
+
+		$icon = get_option( 'site_icon' );
 		if ( wp_attachment_is_image( intval( $icon ) ) ) {
 			$mime = get_post_mime_type( $icon );
 			foreach ( $sizes as $size ) {
-				$new_image = pwp_get_instance()->image_resize( $icon, $size, $size, true );
+				$new_image = pwp_get_instance()->image_resize( $icon, $size, $size, true, 'png' );
 				if ( $new_image[1] != $size ) {
 					continue;
 				}
 				$manifest['icons'][] = [
-					'src'   => pwp_register_url( $new_image[0] ),
-					'type'  => $mime,
+					'src'   => $new_image[0],
 					'sizes' => "{$size}x{$size}",
+					'type'  => $mime,
 				];
 			}
 		}
 
-		return apply_filters( 'pwp_manifest_values', $manifest );
+		return $manifest;
 	}
 
 	public function register_manifest_rest_route() {

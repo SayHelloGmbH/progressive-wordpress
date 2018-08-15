@@ -1,24 +1,19 @@
-const assetsDir = 'assets/';
-const assetsBuild = '.build/assets/';
+export const assetsDir = 'assets/';
+export const assetsBuild = '.build/assets/';
 
-const config = {
+export const config = {
 
 	styles: {
 		args: {
 			src: `${assetsBuild}styles/**/*.scss`,
-			compass: {
-				css: `${assetsDir}styles/`,
-				image: `${assetsDir}img/`,
-				sass: `${assetsBuild}styles/`,
-				style: 'expanded'
-			}
+			dest: `${assetsDir}styles/`
 		}
 	},
 
 	scripts: {
 		subtasks: [
 			'ui',
-			'admin'
+			'admin',
 		],
 		args: {
 			base: `${assetsDir}scripts/`,
@@ -30,37 +25,20 @@ const config = {
 		args: {
 			files: [
 				'*.php',
-				'{Classes,inc}/**/*.{php,html}'
+				'{classes,inc,partials,templates}/**/*.{php,html,twig}'
 			]
 		}
 	},
 
-	minify: {
-		subtasks: ['svg', 'scripts'],
+	svg: {
 		args: {
-			svg: {
-				src: [
-					'**/assets/img/icons/*.svg',
-					'**/assets/img/icons/**/*.svg',
-					'!**/*.min.svg',
-					'!assets/img/icons/mdi/**/*.svg',
-					'!assets/img/icons/mdi/*.svg'
-				],
-				dest: './'
-			},
-			scripts: {
-				src: [
-					`${assetsDir}scripts/*.js`,
-					`!${assetsDir}scripts/*.min.js`
-				],
-				dest: './',
-				base: `${assetsDir}scripts/`,
-				build: `${assetsBuild}scripts/`
-			}
+			src: [
+				'assets/**/*.svg',
+				'!assets/**/*.min.svg'
+			],
+			dest: 'assets/'
 		}
 	},
 
 	watch: {}
 };
-
-module.exports = config;

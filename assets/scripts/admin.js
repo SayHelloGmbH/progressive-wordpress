@@ -71,19 +71,11 @@ __webpack_require__(1);
 __webpack_require__(2);
 __webpack_require__(3);
 __webpack_require__(4);
-__webpack_require__(5);
-module.exports = __webpack_require__(6);
+module.exports = __webpack_require__(5);
 
 
 /***/ }),
 /* 1 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-/***/ }),
-/* 2 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -142,7 +134,7 @@ module.exports = __webpack_require__(6);
 })(jQuery, PwpJsVars);
 
 /***/ }),
-/* 3 */
+/* 2 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -183,7 +175,7 @@ module.exports = __webpack_require__(6);
 })(jQuery, PwpJsVars);
 
 /***/ }),
-/* 4 */
+/* 3 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -288,7 +280,7 @@ module.exports = __webpack_require__(6);
 })(jQuery, PwpJsVars, wp);
 
 /***/ }),
-/* 5 */
+/* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -342,7 +334,7 @@ module.exports = __webpack_require__(6);
 })(jQuery, PwpJsVars);
 
 /***/ }),
-/* 6 */
+/* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";

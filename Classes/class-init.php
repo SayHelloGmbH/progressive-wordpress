@@ -144,7 +144,5 @@ class Init {
 				'offline-content'           => '',
 			] );
 		}
-
-		pwp_serviceworker_regenerate();
 	}
 }

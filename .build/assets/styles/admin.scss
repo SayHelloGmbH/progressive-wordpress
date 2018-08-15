@@ -1,13 +1,13 @@
-@charset "UTF-8";
-@import "compass/css3";
 @import "../../../assets/settings.json";
+@import "includes/compass/compass";
+@import "includes/compass/animate";
 
 $default-box-shadow-color: rgba(#000, 0.05);
 $default-box-shadow-h-offset: 0px;
 $default-box-shadow-v-offset: 1px;
 $default-box-shadow-blur: 1px;
 
-$default-transition-duration: $settings_easing_speed + 0ms;
+$default-transition-duration: $easing_speed + 0ms;
 
 @include keyframes(spinner-animation) {
 	0% {

@@ -1,30 +1,17 @@
-import * as main from './config.js';
+import {config as main} from './config.js';
 
 module.exports = function (key, config, gulp, $, errorLog) {
-    return function () {
+	return function () {
 
-        const mainConfig = main;
+		const mainConfig = main;
 
-        $.livereload.listen();
+		$.livereload.listen();
 
-        console.log('starting styles..');
-        gulp.watch(mainConfig.styles.args.src, ['styles']);
-
-        for (let subtask of mainConfig.scripts.subtasks) {
-            console.log(`starting scripts:${subtask}..`);
-            gulp.watch(`${mainConfig.scripts.args.build}${subtask}/**/*.js`, [`scripts:${subtask}`]);
-        }
-
-        console.log('starting reload..');
-        gulp.watch(mainConfig.reload.args.files).on('change', $.livereload.changed);
-
-        for (let subtask of mainConfig.minify.subtasks) {
-            console.log(`starting minify:${subtask}..`);
-            if (subtask === 'scripts') {
-                gulp.watch(mainConfig.minify.args.scripts.src, [`minify:${subtask}`]);
-            } else if (subtask === 'svg') {
-                gulp.watch(mainConfig.minify.args.svg.src, [`minify:${subtask}`]);
-            }
-        }
-    };
+		gulp.watch(mainConfig.styles.args.src, {interval: 500}, ['styles']);
+		for (let subtask of mainConfig.scripts.subtasks) {
+			gulp.watch(`${mainConfig.scripts.args.build}${subtask}/**/*.js`, {interval: 500}, [`scripts:${subtask}`]);
+		}
+		gulp.watch(mainConfig.reload.args.files).on('change', $.livereload.changed);
+		gulp.watch(mainConfig.svg.args.src, {interval: 500}, ['svg']);
+	};
 };

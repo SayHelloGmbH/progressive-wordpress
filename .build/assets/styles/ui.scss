@@ -1,9 +1,9 @@
-@charset "UTF-8";
-@import "compass/css3";
 @import "../../../assets/settings.json";
+@import "includes/compass/compass";
+@import "includes/compass/animate";
 
 $default-transition-property: all;
-$default-transition-duration: $settings_easing_speed+ms;
+$default-transition-duration: $easing_speed+ms;
 $default-transition-function: ease-in-out;
 $default-transition-delay: false;
 
