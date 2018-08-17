@@ -148,7 +148,11 @@ class Init {
 				'manifest-background-color' => '#ffffff',
 				'offline-enabled'           => 1,
 				'offline-content'           => '',
+				'tracking-starturl-source'  => 'pwa-homescreen',
+				'tracking-pushurl-source'   => 'pwa-pushnotification',
 			] );
+
+			pwp_get_instance()->Tracking->utm_parameters();
 		}
 	}
 }

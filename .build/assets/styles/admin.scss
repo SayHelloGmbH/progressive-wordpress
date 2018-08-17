@@ -2,10 +2,12 @@
 @import "includes/compass/compass";
 @import "includes/compass/animate";
 
-$default-box-shadow-color: rgba(#000, 0.05);
+$color_main: #11A87D;
+
+$default-box-shadow-color: rgba(#000, 0.15);
 $default-box-shadow-h-offset: 0px;
-$default-box-shadow-v-offset: 1px;
-$default-box-shadow-blur: 1px;
+$default-box-shadow-v-offset: 3px;
+$default-box-shadow-blur: 6px;
 
 $default-transition-duration: $easing_speed + 0ms;
 
@@ -21,6 +23,7 @@ $default-transition-duration: $easing_speed + 0ms;
 @import "admin/pwp-text";
 @import "admin/pwp-pushmodal";
 @import "admin/pwp-pushpost";
+@import "admin/settings-page";
 @import "admin/settings-wrap";
 @import "admin/pwp-wrap";
 @import "admin/devices-table";

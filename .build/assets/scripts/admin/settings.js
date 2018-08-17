@@ -1,9 +1,36 @@
 (function ($, theme, wp) {
 	$(function () {
 
+		/**
+		 * Add to homescreen
+		 */
+		const $InstallableMode = $('select#installable-mode');
+		const $InstallablePageloads = $('input#installable-pageloads').parent().parent();
+		const $InstallableTrigger = $('input#installable-onclick').parent().parent();
+		$InstallableMode.on('change', function () {
+			showhide_add_to_homescreen();
+		});
+
+		showhide_add_to_homescreen();
+
+		function showhide_add_to_homescreen() {
+			const mode = $InstallableMode.val();
+			$InstallableTrigger.hide();
+			$InstallablePageloads.hide();
+
+			if (mode === 'pageload') {
+				$InstallablePageloads.show();
+			} else if (mode === 'trigger') {
+				$InstallableTrigger.show();
+			}
+		}
+
+		/**
+		 * Fileuploader
+		 */
+
 		const $container = $('.pwp-wrap');
 		const $fileuploader = $container.find('.settings--fileuploader');
-		const $colorpicker = $container.find('.settings--colorpicker');
 
 		$fileuploader.each(function () {
 
@@ -94,6 +121,11 @@
 			});
 		});
 
+		/**
+		 * Colopicker
+		 */
+
+		const $colorpicker = $container.find('.settings--colorpicker');
 		$colorpicker.wpColorPicker();
 	});
 })(jQuery, PwpJsVars, wp);

@@ -33,10 +33,10 @@ class Manifest {
 	public function register_settings() {
 
 		//$section_desc = '<b>' . __( 'Make your website installable!', 'pwp' ) . '</b><br>';
-		$section_desc = __( 'This values are used to create a manifest.json file, which provides the data to make your website installable.', 'pwp' );
+		$section_desc = __( 'This values are used to create a manifest.json file, which then controls the appearance of you progressive web app.', 'pwp' );
 		$url          = 'https://developer.mozilla.org/de/docs/Web/Manifest';
 		$section_desc .= '<br>' . __( 'Read all about the web app manifest:.', 'pwp' ) . ' <a target="_blank" href="' . $url . '">' . $url . '</a>';
-		$section      = pwp_settings()->add_section( pwp_settings_page_manifest(), 'pwp_manifest', __( 'Manifest.json values', 'pwp' ), $section_desc );
+		$section      = pwp_settings()->add_section( pwp_settings_page_manifest(), 'pwp_manifest', __( 'Homescreen values', 'pwp' ), $section_desc );
 
 		pwp_settings()->add_input( $section, 'manifest-name', __( 'Name', 'pwp' ) );
 		pwp_settings()->add_input( $section, 'manifest-short-name', __( 'Short Name', 'pwp' ), '', [
@@ -85,11 +85,8 @@ class Manifest {
 			'portrait'  => __( 'Portrait', 'pwp' ),
 		], 'any' );
 
-		$args = [
-			'after_field' => '<p class="pwp-smaller">' . __( 'hex value', 'pwp' ) . '</p>',
-		];
-		pwp_settings()->add_color( $section, 'manifest-theme-color', __( 'Theme Color', 'pwp' ), '#000000', $args );
-		pwp_settings()->add_color( $section, 'manifest-background-color', __( 'Background Color', 'pwp' ), '#ffffff', $args );
+		pwp_settings()->add_color( $section, 'manifest-theme-color', __( 'Theme Color', 'pwp' ), '#000000' );
+		pwp_settings()->add_color( $section, 'manifest-background-color', __( 'Background Color', 'pwp' ), '#ffffff' );
 	}
 
 	public function manifest_values( $manifest ) {

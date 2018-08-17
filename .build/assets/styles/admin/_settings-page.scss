@@ -1,0 +1,34 @@
+.toplevel_page_progressive-wordpress,
+.progressive-wp_page_pwp-manifest,
+.progressive-wp_page_pwp-offlineusage,
+.progressive-wp_page_pwp-push {
+
+	#wpwrap {
+		background-color: #eeeff1;
+		button:not(.wp-color-result), .button-primary {
+			border-radius: 0;
+			@include box-shadow();
+			background-color: #fff;
+			border: 1px solid #ececec;
+			padding: 5px 20px;
+			height: inherit;
+			@include transition();
+			&:hover {
+				background-color: darken(#fff, 4%);
+			}
+		}
+
+		.button-primary {
+			background-color: $color_main;
+			border: 1px solid $color_main;
+			text-shadow: none;
+			&:hover {
+				background-color: darken($color_main, 5%);
+			}
+		}
+	}
+
+	.notice {
+		@include box-shadow();
+	}
+}

@@ -343,9 +343,36 @@ module.exports = __webpack_require__(5);
 (function ($, theme, wp) {
 	$(function () {
 
+		/**
+   * Add to homescreen
+   */
+		var $InstallableMode = $('select#installable-mode');
+		var $InstallablePageloads = $('input#installable-pageloads').parent().parent();
+		var $InstallableTrigger = $('input#installable-onclick').parent().parent();
+		$InstallableMode.on('change', function () {
+			showhide_add_to_homescreen();
+		});
+
+		showhide_add_to_homescreen();
+
+		function showhide_add_to_homescreen() {
+			var mode = $InstallableMode.val();
+			$InstallableTrigger.hide();
+			$InstallablePageloads.hide();
+
+			if (mode === 'pageload') {
+				$InstallablePageloads.show();
+			} else if (mode === 'trigger') {
+				$InstallableTrigger.show();
+			}
+		}
+
+		/**
+   * Fileuploader
+   */
+
 		var $container = $('.pwp-wrap');
 		var $fileuploader = $container.find('.settings--fileuploader');
-		var $colorpicker = $container.find('.settings--colorpicker');
 
 		$fileuploader.each(function () {
 
@@ -436,6 +463,11 @@ module.exports = __webpack_require__(5);
 			});
 		});
 
+		/**
+   * Colopicker
+   */
+
+		var $colorpicker = $container.find('.settings--colorpicker');
 		$colorpicker.wpColorPicker();
 	});
 })(jQuery, PwpJsVars, wp);

@@ -41,8 +41,18 @@ class Tracking {
 				$parameters = 'nothing';
 			}
 
+			$section_page = '';
+			if ( 'starturl' == $key ) {
+				$section_page = pwp_settings_page_manifest();
+			} elseif ( 'pushurl' == $key ) {
+				if ( ! pwp_push_set() ) {
+					continue;
+				}
+				$section_page = pwp_settings_page_push();
+			}
+
 			$section_desc = sprintf( $vals['desc'], '<code>' . $parameters . '</code>' );
-			$section      = pwp_settings()->add_section( pwp_settings_page_tracking(), "pwp-tracking-$key", $vals['title'], $section_desc );
+			$section      = pwp_settings()->add_section( $section_page, "pwp-tracking-$key", $vals['title'], $section_desc );
 
 			pwp_settings()->add_input( $section, "pwp-tracking-$key-source", __( 'Campaign Source', 'pwp' ), '', [
 				'after_field' => '<p class="pwp-smaller">' . __( 'The referrer: (e.g. google, newsletter)', 'pwp' ) . '</p>',
