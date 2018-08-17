@@ -111,8 +111,12 @@ class Manifest {
 		$manifest['description']      = pwp_get_setting( 'manifest-description' );
 		$manifest['theme_color']      = $this->sanitize_hex( pwp_get_setting( 'manifest-theme-color' ), '#000000' );
 		$manifest['background_color'] = $this->sanitize_hex( pwp_get_setting( 'manifest-background-color' ), '#ffffff' );
-		$manifest['display']          = pwp_get_setting( 'manifest-display' );
-		$manifest['orientation']      = pwp_get_setting( 'manifest-orientation' );
+		if ( 'none' == pwp_get_setting( 'installable-mode' ) ) {
+			$manifest['display'] = 'browser';
+		} else {
+			$manifest['display'] = pwp_get_setting( 'manifest-display' );
+		}
+		$manifest['orientation'] = pwp_get_setting( 'manifest-orientation' );
 
 		$sizes = [ 144, 192, 512, 524 ];
 

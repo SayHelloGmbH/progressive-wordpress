@@ -38,7 +38,7 @@ class Installable {
 
 		pwp_settings()->add_input( $section, 'installable-pageloads', __( 'Number of pageloads', 'pwp' ), '2' );
 		pwp_settings()->add_input( $section, 'installable-onclick', __( 'Element', 'pwp' ), '', [
-			'after_field' => '<p class="pwp-smaller">' . __( 'should be a jQuery selector (.my-click-element)', 'pwp' ) . '<br>' . __( 'As soon as your web app can be installed, a class `installable-active` will be added to this element and the prompt will be shown on click.', 'pwp' ) . '</p>',
+			'after_field' => '<p class="pwp-smaller">' . __( 'should be a jQuery selector (.my-click-element)', 'pwp' ) . '</p><p class="pwp-smaller">' . __( 'As soon as your web app can be installed, a class `installable-active` will be added to this element and the prompt will be shown on click.', 'pwp' ) . '</p>',
 		] );
 	}
 

@@ -3,28 +3,14 @@
 	$(function () {
 
 		let installPromptEvent;
-		console.log('installprompt mode:' + plugin.installprompt.mode);
 
 		window.addEventListener('beforeinstallprompt', (event) => {
 
 			// Prevent Chrome <= 67 from automatically showing the prompt
 			event.preventDefault();
-
 			installPromptEvent = event;
-			console.log('beforeinstallprompt fired');
 
-			if (plugin.installprompt.mode === 'normal') {
-
-				/**
-				 * Show immediately
-				 */
-
-				window.addEventListener('scroll', function () {
-					console.log('prompt');
-					installPromptEvent.prompt();
-				}, 1000);
-
-			} else if (plugin.installprompt.mode === 'trigger') {
+			if (plugin.installprompt.mode === 'trigger') {
 
 				/**
 				 * Installable on click
@@ -35,18 +21,19 @@
 					if ($(this).hasClass('installable-active')) {
 						installPromptEvent.prompt();
 					}
-					installPromptEvent.userChoice.then((choice) => {
-						if (choice.outcome === 'accepted') {
-							// User accepted the A2HS prompt
-						} else {
-							// User dismissed the A2HS prompt
-						}
-
-						$(plugin.installprompt.onclick).removeClass('installable-active');
-						installPromptEvent = null;
-					});
 				});
 			}
+
+			installPromptEvent.userChoice.then((choice) => {
+				if (choice.outcome === 'accepted') {
+					// User accepted the A2HS prompt
+				} else {
+					// User dismissed the A2HS prompt
+				}
+
+				$(plugin.installprompt.onclick).removeClass('installable-active');
+				installPromptEvent = null;
+			});
 		});
 
 		/*

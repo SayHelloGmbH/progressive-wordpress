@@ -84,27 +84,14 @@ module.exports = __webpack_require__(3);
 	$(function () {
 
 		var installPromptEvent = void 0;
-		console.log('installprompt mode:' + plugin.installprompt.mode);
 
 		window.addEventListener('beforeinstallprompt', function (event) {
 
 			// Prevent Chrome <= 67 from automatically showing the prompt
 			event.preventDefault();
-
 			installPromptEvent = event;
-			console.log('beforeinstallprompt fired');
 
-			if (plugin.installprompt.mode === 'normal') {
-
-				/**
-     * Show immediately
-     */
-
-				window.addEventListener('scroll', function () {
-					console.log('prompt');
-					installPromptEvent.prompt();
-				}, 1000);
-			} else if (plugin.installprompt.mode === 'trigger') {
+			if (plugin.installprompt.mode === 'trigger') {
 
 				/**
      * Installable on click
@@ -115,18 +102,19 @@ module.exports = __webpack_require__(3);
 					if ($(this).hasClass('installable-active')) {
 						installPromptEvent.prompt();
 					}
-					installPromptEvent.userChoice.then(function (choice) {
-						if (choice.outcome === 'accepted') {
-							// User accepted the A2HS prompt
-						} else {
-								// User dismissed the A2HS prompt
-							}
-
-						$(plugin.installprompt.onclick).removeClass('installable-active');
-						installPromptEvent = null;
-					});
 				});
 			}
+
+			installPromptEvent.userChoice.then(function (choice) {
+				if (choice.outcome === 'accepted') {
+					// User accepted the A2HS prompt
+				} else {
+						// User dismissed the A2HS prompt
+					}
+
+				$(plugin.installprompt.onclick).removeClass('installable-active');
+				installPromptEvent = null;
+			});
 		});
 
 		/*
