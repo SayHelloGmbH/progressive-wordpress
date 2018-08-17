@@ -7540,6 +7540,47 @@
 .pushpost-meta-container .pushpost-meta__sendagain {
   cursor: pointer; }
 
+.pwp-features {
+  display: -webkit-flex;
+  display: flex;
+  margin: 50px -10px; }
+  .pwp-features__element {
+    background-color: #fff;
+    -webkit-flex: calc(33.33333% - 18px);
+    flex: calc(33.33333% - 18px);
+    margin: 0 9px;
+    -webkit-box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.15);
+    -moz-box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.15);
+    box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.15); }
+  .pwp-features__title {
+    margin: 0;
+    padding: 18px;
+    border-bottom: 1px solid #e5e5e5; }
+    .pwp-features__title .pwp-icon {
+      margin-right: 5px;
+      top: -2px;
+      position: relative;
+      -webkit-transform: scale(1.6, 1.6);
+      -moz-transform: scale(1.6, 1.6);
+      -ms-transform: scale(1.6, 1.6);
+      -o-transform: scale(1.6, 1.6);
+      transform: scale(1.6, 1.6); }
+  .pwp-features__content {
+    padding: 18px; }
+    .pwp-features__content p {
+      margin: 0; }
+    .pwp-features__content p + p {
+      margin-top: 9px; }
+
+.pwp-icon {
+  display: inline-block;
+  width: 1.28571em; }
+  .pwp-icon svg {
+    vertical-align: middle;
+    height: 1em;
+    width: auto;
+    fill: currentColor; }
+
 .toplevel_page_progressive-wordpress #wpwrap,
 .progressive-wp_page_pwp-manifest #wpwrap,
 .progressive-wp_page_pwp-offlineusage #wpwrap,

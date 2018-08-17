@@ -55,6 +55,8 @@ function pwp_get_setting( $key ) {
 }
 
 function pwp_settings_page_main() {
+	return '';
+
 	return pwp_settings()->add_page( PWP_SETTINGS_PARENT, __( 'About', 'pwp' ) );
 }
 
@@ -129,4 +131,17 @@ function pwp_wp_filesystem_init() {
 
 function pwp_use_pwawp() {
 	return defined( 'PWAWP_VERSION' );
+}
+
+function pwp_icon( $icon ) {
+	$path_min = plugin_dir_path( pwp_get_instance()->file ) . "/assets/img/icon/$icon.min.svg";
+	$path     = plugin_dir_path( pwp_get_instance()->file ) . "/assets/img/icon/$icon.svg";
+
+	if ( file_exists( $path_min ) ) {
+		return '<i class="pwp-icon">' . file_get_contents( $path_min ) . '</i>';
+	} elseif ( file_exists( $path ) ) {
+		return '<i class="pwp-icon">' . file_get_contents( $path ) . '</i>';
+	} else {
+		return 'icon not found ' . $path_min . ' / ' . $path;
+	}
 }

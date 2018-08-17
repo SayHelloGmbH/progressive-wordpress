@@ -1,0 +1,36 @@
+.pwp-features {
+
+	$padding: 18px;
+
+	@include display-flex();
+	margin: 50px -10px;
+
+	&__element {
+		background-color: #fff;
+		@include flex(calc(#{percentage(1/3)} - #{$padding}));
+		margin: 0 $padding/2;
+		@include box-shadow();
+	}
+
+	&__title {
+		margin: 0;
+		padding: $padding;
+		border-bottom: 1px solid #e5e5e5;
+		.pwp-icon {
+			margin-right: 5px;
+			top: -2px;
+			position: relative;
+			@include scale(1.6);
+		}
+	}
+
+	&__content {
+		padding: $padding;
+		p {
+			margin: 0;
+		}
+		p + p {
+			margin-top: $padding/2;
+		}
+	}
+}

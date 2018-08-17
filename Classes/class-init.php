@@ -64,6 +64,37 @@ class Init {
 	public function add_menu_page() {
 		$icon = plugin_dir_url( pwp_get_instance()->file ) . '/assets/img/pwa-menu-icon.png';
 		add_menu_page( pwp_get_instance()->name, $this->menu_title, $this->capability, PWP_SETTINGS_PARENT, '', $icon, 100 );
+		add_submenu_page( PWP_SETTINGS_PARENT, __( 'About', 'pwp' ), __( 'About', 'pwp' ), $this->capability, PWP_SETTINGS_PARENT, function () {
+			?>
+			<div class="wrap pwp-wrap mainpage-wrap">
+				<h1><?php echo pwp_get_instance()->name ?></h1>
+				<div class="pwp-features">
+					<div class="pwp-features__element">
+						<h2 class="pwp-features__title"><?php echo pwp_icon( 'pwp-installable' ) . ' ' . __( 'Add to homescreen', 'pwp' ) ?></h2>
+						<div class="pwp-features__content">
+							<p><?php _e( 'Provide an <b>integrated</b> user experience!', 'pwp' ); ?></p>
+						</div>
+					</div>
+					<div class="pwp-features__element">
+						<h2 class="pwp-features__title"><?php echo pwp_icon( 'pwp-offline' ) . ' ' . __( 'Offline usage', 'pwp' ) ?></h2>
+						<div class="pwp-features__content">
+							<p><?php _e( 'Make your website <b>reliable</b>. Even on flaky internet connections!', 'pwp' ); ?></p>
+						</div>
+					</div>
+					<div class="pwp-features__element">
+						<h2 class="pwp-features__title"><?php echo pwp_icon( 'pwp-push' ) . ' ' . __( 'Push notifications', 'pwp' ) ?></h2>
+						<div class="pwp-features__content">
+							<p><?php _e( 'Keep your users <b>engaged</b> by sending push notifications!', 'pwp' ); ?></p>
+						</div>
+					</div>
+				</div>
+			</div>
+			<?php
+		} );
+	}
+
+	public function main_page() {
+		echo 'test';
 	}
 
 	/**
