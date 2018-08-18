@@ -3,13 +3,16 @@
 	$padding: 18px;
 
 	@include display-flex();
-	margin: 50px -10px;
+	margin: 30px -10px;
 
 	&__element {
 		background-color: #fff;
 		@include flex(calc(#{percentage(1/3)} - #{$padding}));
 		margin: 0 $padding/2;
 		@include box-shadow();
+		@include display-flex();
+		@include flex-direction(column);
+		position: relative;
 	}
 
 	&__title {
@@ -31,6 +34,79 @@
 		}
 		p + p {
 			margin-top: $padding/2;
+		}
+	}
+
+	&__footer {
+		padding: 0 $padding $padding $padding;
+		@include display-flex();
+		@include justify-content(space-between);
+		@include align-items(flex-end);
+		margin-top: auto;
+	}
+
+	&__status,
+	&__configure {
+
+	}
+
+	&__tooltip {
+
+		.pwp-icon {
+			font-size: 20px;
+			&--check {
+				color: $color_green;
+			}
+			&--alert {
+				color: $color_orange;
+			}
+			&--close {
+				color: $color_red;
+			}
+		}
+
+		&:after {
+			content: attr(data-pwp-features-tooltip);
+			position: absolute;
+			left: 0;
+			bottom: -$padding;
+			@include transform(translateY(100%));
+			background-color: #fff;
+			padding: $padding/2;
+			border: 1px solid #ccc;
+			border-left: 4px solid $color_green;
+		}
+
+		&--error:after {
+			border-left: 4px solid $color_red;
+		}
+
+		&:before {
+			content: '';
+			position: absolute;
+			left: $padding;
+			bottom: -$padding*1.3;
+			width: $padding*.6;
+			height: $padding*.6;
+			background-color: #fff;
+			border: 1px solid transparent;
+			border-left-color: #ccc;
+			border-top-color: #ccc;
+			@include transform(rotate(45deg));
+			z-index: 50;
+		}
+
+		&:after,
+		&:before {
+			opacity: 0;
+			@include transition();
+		}
+
+		&:hover {
+			&:after,
+			&:before {
+				opacity: 1;
+			}
 		}
 	}
 }

@@ -73,24 +73,80 @@ class Init {
 						<h2 class="pwp-features__title"><?php echo pwp_icon( 'pwp-installable' ) . ' ' . __( 'Add to homescreen', 'pwp' ) ?></h2>
 						<div class="pwp-features__content">
 							<p><?php _e( 'Provide an <b>integrated</b> user experience!', 'pwp' ); ?></p>
+							<p><?php _e( 'Progressive WordPress makes it easy to encurage users to add your website to their homescreen. But thats not all. It also allows you to control the display behaviour of your website so it will be shown without any browser elements. Just like a native app.', 'pwp' ); ?></p>
+						</div>
+						<div class="pwp-features__footer">
+							<div class="pwp-features__status">
+								<?php
+								if ( 'none' == pwp_get_setting( 'installable-mode' ) ) {
+									echo '<span class="pwp-features__tooltip pwp-features__tooltip--error" data-pwp-features-tooltip="' . esc_attr( __( 'You manually set "Show add to homescreen banner" to "never".', 'pwp' ) ) . '">';
+									echo pwp_icon( 'close' );
+									echo '</span>';
+								} else {
+									echo '<span class="pwp-features__tooltip" data-pwp-features-tooltip="' . esc_attr( __( 'Your Website matches the Progressive Web App criteria.', 'pwp' ) ) . '">';
+									echo pwp_icon( 'check' );
+									echo '</span>';
+								}
+								?>
+							</div>
+							<a class="pwp-features__configure button button--small" href="<?php echo admin_url( 'admin.php?page=pwp-manifest' ); ?>"><?php _e( 'configure', 'pwp' ); ?></a>
 						</div>
 					</div>
 					<div class="pwp-features__element">
 						<h2 class="pwp-features__title"><?php echo pwp_icon( 'pwp-offline' ) . ' ' . __( 'Offline usage', 'pwp' ) ?></h2>
 						<div class="pwp-features__content">
 							<p><?php _e( 'Make your website <b>reliable</b>. Even on flaky internet connections!', 'pwp' ); ?></p>
+							<p><?php _e( 'No connection? No problem. Progressive WordPress pre-caches all critical assets of your website, as well as all visited resources. So if theres no internet connection it will serve the resources from the local storage. No more error pages!', 'pwp' ); ?></p>
+						</div>
+						<div class="pwp-features__footer">
+							<div class="pwp-features__status">
+								<?php
+								if ( 'page' != get_post_type( pwp_get_setting( 'offline-page' ) ) ) {
+									echo '<span class="pwp-features__tooltip pwp-features__tooltip--error" data-pwp-features-tooltip="' . esc_attr( __( 'Please create and select an offline fallback page', 'pwp' ) ) . '">';
+									echo pwp_icon( 'alert' );
+									echo '</span>';
+								} else {
+									// translators: %s = page title
+									echo '<span class="pwp-features__tooltip" data-pwp-features-tooltip="' . esc_attr( sprintf( __( '"%s" is selected as a page for offline fallback. Other reasources will be cached automatically.', 'pwp' ), get_the_title( pwp_get_setting( 'offline-page' ) ) ) ) . '">';
+									echo pwp_icon( 'check' );
+									echo '</span>';
+								}
+								?>
+							</div>
+							<a class="pwp-features__configure button button--small" href="<?php echo admin_url( 'admin.php?page=pwp-offlineusage' ); ?>"><?php _e( 'configure', 'pwp' ); ?></a>
 						</div>
 					</div>
 					<div class="pwp-features__element">
 						<h2 class="pwp-features__title"><?php echo pwp_icon( 'pwp-push' ) . ' ' . __( 'Push notifications', 'pwp' ) ?></h2>
 						<div class="pwp-features__content">
 							<p><?php _e( 'Keep your users <b>engaged</b> by sending push notifications!', 'pwp' ); ?></p>
+							<p><?php _e( 'You just published new content and you want to let everyone know? Why not send a push notifications? Progressive WordPress has an integrated connection to Firebase that lets you manage registered devices and send push notifications to all or selected devices!', 'pwp' ); ?></p>
+						</div>
+						<div class="pwp-features__footer">
+							<div class="pwp-features__status">
+								<?php
+								if ( ! pwp_push_set() ) {
+									echo '<span class="pwp-features__tooltip pwp-features__tooltip--error" data-pwp-features-tooltip="' . esc_attr( __( 'Please enter your Firebase cloud messaging credentials to enable push notifications.', 'pwp' ) ) . '">';
+									echo pwp_icon( 'alert' );
+									echo '</span>';
+								} elseif ( empty( get_option( pwp_get_instance()->Push->devices_option ) ) ) {
+									echo '<span class="pwp-features__tooltip pwp-features__tooltip--error" data-pwp-features-tooltip="' . esc_attr( __( 'There are no registered devices. You might consider using the built in "Push Button".', 'pwp' ) ) . '">';
+									echo pwp_icon( 'alert' );
+									echo '</span>';
+								} else {
+									// translators: %s = page title
+									echo '<span class="pwp-features__tooltip" data-pwp-features-tooltip="' . esc_attr( sprintf( __( '"%s" is selected as a page for offline fallback. Other reasources will be cached automatically.', 'pwp' ), get_the_title( pwp_get_setting( 'offline-page' ) ) ) ) . '">';
+									echo pwp_icon( 'check' );
+									echo '</span>';
+								}
+								?>
+							</div>
+							<a class="pwp-features__configure button button--small" href="<?php echo admin_url( 'admin.php?page=pwp-push' ); ?>"><?php _e( 'configure', 'pwp' ); ?></a>
 						</div>
 					</div>
 				</div>
 			</div>
-			<?php
-		} );
+		<?php } );
 	}
 
 	public function main_page() {

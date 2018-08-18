@@ -3,6 +3,9 @@
 @import "includes/compass/animate";
 
 $color_main: #11A87D;
+$color_red: #dc3232;
+$color_orange: #c7763c;
+$color_green: #46b450;
 
 $default-box-shadow-color: rgba(#000, 0.15);
 $default-box-shadow-h-offset: 0px;
@@ -19,6 +22,8 @@ $default-transition-duration: $easing_speed + 0ms;
 		@include transform(rotate(360deg));
 	}
 }
+
+@import "admin/simptip";
 
 @import "admin/pwp-text";
 @import "admin/pwp-pushmodal";

@@ -6,7 +6,7 @@
 	#wpwrap {
 		background: #eeeff1 url('../img/settings-bkg.svg') fixed no-repeat left bottom;
 		background-size: 100%;
-		button:not(.wp-color-result), .button-primary {
+		.button:not(.wp-color-result), .button-primary:not(.wp-color-result) {
 			border-radius: 4px;
 			box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
 			background-color: #f5f5f5;
@@ -18,8 +18,12 @@
 				background-color: #fff;
 			}
 		}
+		.button--small:not(.wp-color-result) {
+			padding: 0 14px;
+			font-size: 12px;
+		}
 
-		.button-primary {
+		.button-primary:not(.wp-color-result) {
 			background-color: $color_main;
 			border: 1px solid $color_main;
 			text-shadow: none;

@@ -138,9 +138,9 @@ function pwp_icon( $icon ) {
 	$path     = plugin_dir_path( pwp_get_instance()->file ) . "/assets/img/icon/$icon.svg";
 
 	if ( file_exists( $path_min ) ) {
-		return '<i class="pwp-icon">' . file_get_contents( $path_min ) . '</i>';
+		return '<i class="pwp-icon pwp-icon--' . $icon . '">' . file_get_contents( $path_min ) . '</i>';
 	} elseif ( file_exists( $path ) ) {
-		return '<i class="pwp-icon">' . file_get_contents( $path ) . '</i>';
+		return '<i class="pwp-icon pwp-icon--' . $icon . '">' . file_get_contents( $path ) . '</i>';
 	} else {
 		return 'icon not found ' . $path_min . ' / ' . $path;
 	}
