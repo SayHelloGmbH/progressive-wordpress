@@ -3,12 +3,16 @@
 	$padding: 18px;
 
 	@include display-flex();
+	@include flex-wrap(wrap);
 	margin: 30px -10px;
 
 	&__element {
 		background-color: #fff;
 		@include flex(calc(#{percentage(1/3)} - #{$padding}));
-		margin: 0 $padding/2;
+		@media screen and (max-width: 800px) {
+			@include flex(100%);
+		}
+		margin: 0 $padding/2 $padding $padding/2;
 		@include box-shadow();
 		@include display-flex();
 		@include flex-direction(column);
@@ -69,12 +73,13 @@
 			content: attr(data-pwp-features-tooltip);
 			position: absolute;
 			left: 0;
-			bottom: -$padding;
+			bottom: -$padding*.6;
 			@include transform(translateY(100%));
 			background-color: #fff;
 			padding: $padding/2;
 			border: 1px solid #ccc;
 			border-left: 4px solid $color_green;
+			z-index: 40;
 		}
 
 		&--error:after {
@@ -85,7 +90,7 @@
 			content: '';
 			position: absolute;
 			left: $padding;
-			bottom: -$padding*1.3;
+			bottom: -$padding;
 			width: $padding*.6;
 			height: $padding*.6;
 			background-color: #fff;

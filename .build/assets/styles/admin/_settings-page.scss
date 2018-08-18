@@ -20,6 +20,9 @@
 		}
 		.button--small:not(.wp-color-result) {
 			padding: 0 14px;
+			@media screen and (max-width: 782px) {
+				padding: 6px 14px;
+			}
 			font-size: 12px;
 		}
 

@@ -134,8 +134,7 @@ class Init {
 									echo pwp_icon( 'alert' );
 									echo '</span>';
 								} else {
-									// translators: %s = page title
-									echo '<span class="pwp-features__tooltip" data-pwp-features-tooltip="' . esc_attr( sprintf( __( '"%s" is selected as a page for offline fallback. Other reasources will be cached automatically.', 'pwp' ), get_the_title( pwp_get_setting( 'offline-page' ) ) ) ) . '">';
+									echo '<span class="pwp-features__tooltip" data-pwp-features-tooltip="' . esc_attr( __( 'All set up. Go ahead and inform your readers.', 'pwp' ) ) . '">';
 									echo pwp_icon( 'check' );
 									echo '</span>';
 								}

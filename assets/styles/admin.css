@@ -7984,12 +7984,14 @@
 .pwp-features {
   display: -webkit-flex;
   display: flex;
+  -webkit-flex-wrap: wrap;
+  flex-wrap: wrap;
   margin: 30px -10px; }
   .pwp-features__element {
     background-color: #fff;
     -webkit-flex: calc(33.33333% - 18px);
     flex: calc(33.33333% - 18px);
-    margin: 0 9px;
+    margin: 0 9px 18px 9px;
     -webkit-box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.15);
     -moz-box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.15);
     box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.15);
@@ -7998,6 +8000,10 @@
     -webkit-flex-direction: column;
     flex-direction: column;
     position: relative; }
+    @media screen and (max-width: 800px) {
+      .pwp-features__element {
+        -webkit-flex: 100%;
+        flex: 100%; } }
   .pwp-features__title {
     margin: 0;
     padding: 18px;
@@ -8038,7 +8044,7 @@
     content: attr(data-pwp-features-tooltip);
     position: absolute;
     left: 0;
-    bottom: -18px;
+    bottom: -10.8px;
     -webkit-transform: translateY(100%);
     -moz-transform: translateY(100%);
     -ms-transform: translateY(100%);
@@ -8047,14 +8053,15 @@
     background-color: #fff;
     padding: 9px;
     border: 1px solid #ccc;
-    border-left: 4px solid #46b450; }
+    border-left: 4px solid #46b450;
+    z-index: 40; }
   .pwp-features__tooltip--error:after {
     border-left: 4px solid #dc3232; }
   .pwp-features__tooltip:before {
     content: '';
     position: absolute;
     left: 18px;
-    bottom: -23.4px;
+    bottom: -18px;
     width: 10.8px;
     height: 10.8px;
     background-color: #fff;
@@ -8124,6 +8131,12 @@
   .progressive-wp_page_pwp-push #wpwrap .button--small:not(.wp-color-result) {
     padding: 0 14px;
     font-size: 12px; }
+    @media screen and (max-width: 782px) {
+      .toplevel_page_progressive-wordpress #wpwrap .button--small:not(.wp-color-result),
+      .progressive-wp_page_pwp-manifest #wpwrap .button--small:not(.wp-color-result),
+      .progressive-wp_page_pwp-offlineusage #wpwrap .button--small:not(.wp-color-result),
+      .progressive-wp_page_pwp-push #wpwrap .button--small:not(.wp-color-result) {
+        padding: 6px 14px; } }
   .toplevel_page_progressive-wordpress #wpwrap .button-primary:not(.wp-color-result),
   .progressive-wp_page_pwp-manifest #wpwrap .button-primary:not(.wp-color-result),
   .progressive-wp_page_pwp-offlineusage #wpwrap .button-primary:not(.wp-color-result),
