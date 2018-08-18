@@ -6,16 +6,28 @@ class Offlineusage {
 
 	public $capability = '';
 	public $indicator_text = '';
+	public $routes = [];
+	public $strategies = [];
 
 	public function __construct() {
 		$this->capability     = pwp_get_instance()->Init->capability;
 		$this->indicator_text = 'you\'re currently offline';
+		$this->routes         = [
+			'default'              => __( 'Default caching strategy', 'pwp' ),
+			'css|js'               => __( 'Caching strategy for CSS and JS Files', 'pwp' ),
+			'png|jpg|jpeg|svg|gif' => __( 'Caching strategy for images', 'pwp' ),
+		];
+		$this->strategies     = [
+			'staleWhileRevalidate' => __( 'Stale While Revalidate', 'pwp' ),
+			'networkFirst'         => __( 'Network First', 'pwp' ),
+			'cacheFirst'           => __( 'Cache First', 'pwp' ),
+		];
 	}
 
 	public function run() {
 		add_action( 'pwp_settings', [ $this, 'settings' ] );
 		add_filter( pwp_settings()->sanitize_filter . '_offline-content', [ $this, 'sanitize_offline_content' ] );
-		add_filter( 'pwp_sw_content', [ $this, 'sw_content' ] );
+		//add_filter( 'pwp_sw_content', [ $this, 'sw_content' ] );
 		add_action( 'pwp_settings', [ $this, 'offline_indicator_settings' ] );
 		add_action( 'wp_footer', [ $this, 'offline_indicator_template' ] );
 	}
@@ -26,15 +38,14 @@ class Offlineusage {
 		$section_desc .= __( 'A copy of each page is stored in the browser cache as the visitor views it. This allows a visitor to load any previously viewed page while they are offline. The plugin also defines a special “offline page”, which allows you to customize a message and the experience if the app is offline and the page is not in the cache.', 'pwp' );
 		$section      = pwp_settings()->add_section( pwp_settings_page_offlineusage(), 'pwp_offlineusage', __( 'Offline Usage', 'pwp' ), $section_desc );
 
-		pwp_settings()->add_checkbox( $section, 'offline-enabled', __( 'Offline Usage enabled', 'pwp' ) );
-
+		$choices = [];
 		foreach ( get_pages() as $post ) {
 			if ( get_option( 'page_on_front' ) == $post->ID ) {
 				continue;
 			}
 			$choices[ $post->ID ] = get_the_title( $post );
 		}
-		pwp_settings()->add_select( $section, 'offline-page', __( 'Offline Page', 'pwp' ), $choices, '', [
+		pwp_settings()->add_select( $section, 'offline-page', __( 'Offline fallback Page', 'pwp' ), $choices, '', [
 			'after_field' => '<p class="pwp-smaller">' . __( 'This page should contain a message explaining why the requested content is not available.', 'pwp' ) . '</p>',
 		] );
 
@@ -45,6 +56,10 @@ class Offlineusage {
 		pwp_settings()->add_textarea( $section, 'offline-content', __( 'Offline Content', 'pwp' ), '', [
 			'after_field' => '<p class="pwp-smaller">' . $text . '</p>',
 		] );
+
+		foreach ( $this->routes as $key => $title ) {
+			pwp_settings()->add_select( $section, 'offline-strategy-' . str_replace( '|', '', $key ), $title, $this->strategies );
+		}
 	}
 
 	public function sanitize_offline_content( $content ) {
@@ -153,5 +168,33 @@ class Offlineusage {
 		echo "<p style='color:$textcolor'>$text</p>";
 		echo '</div>';
 
+	}
+
+	/**
+	 * Get ServiceWorker
+	 */
+
+	public function get_sw_content() {
+		$c = 'importScripts(\'https://storage.googleapis.com/workbox-cdn/releases/3.4.1/workbox-sw.js\');';
+		$c .= "\nif (workbox) {\n";
+		foreach ( $this->routes as $key => $name ) {
+			$strategy = pwp_get_setting( 'offline-strategy-' . str_replace( '|', '', $key ) );
+			if ( 'default' == $key ) {
+				$c .= "workbox.router.setDefaultHandler({ handler: workbox.strategies.{$strategy}({ cacheName: PwpSwVersion})});\n";
+			} else {
+				$c .= "workbox.routing.registerRoute( /.*\.(?:{$key})/g, workbox.strategies.{$strategy}({ cacheName: PwpSwVersion}) );\n";
+			}
+		}
+		$c .= '}';
+
+		if ( md5( $c ) == get_option( 'pwp_sw_offline_content' ) ) {
+			$cache_version = get_option( 'pwp_sw_offline_time' );
+		} else {
+			$cache_version = time();
+			update_option( 'pwp_sw_offline_content', md5( $c ) );
+			update_option( 'pwp_sw_offline_time', $cache_version );
+		}
+
+		return "const PwpSwVersion = '{$cache_version}';\n" . $c;
 	}
 }

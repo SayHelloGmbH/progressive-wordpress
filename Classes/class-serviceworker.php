@@ -66,8 +66,8 @@ class Serviceworker {
 		require_once $path . '/path-converter/autoload.php';
 		$minifier = new \MatthiasMullie\Minify\JS( $content );
 		$content  = $minifier->minify();
-		$content = $content_header . $content;
-		$content = "( function() {\n" . $content . "} )();\n";
+		$content  = $content_header . $content;
+		$content  = "( function() {\n" . $content . "} )();\n";
 
 		/**
 		 * check if not the same:
@@ -139,6 +139,9 @@ class Serviceworker {
 
 	public function register_service_worker() {
 		if ( function_exists( 'wp_register_service_worker' ) && file_exists( $this->sw_path ) ) {
+			wp_register_service_worker( 'progressive-wp-offline-sw', function () {
+				echo pwp_get_instance()->Offlineusage->get_sw_content();
+			}, [], \WP_Service_Workers::SCOPE_FRONT );
 			wp_register_service_worker( 'progressive-wp-sw', $this->sw_url, [], \WP_Service_Workers::SCOPE_FRONT );
 		}
 	}
@@ -156,6 +159,7 @@ class Serviceworker {
 				if ( file_exists( $this->sw_path ) ) {
 					header( 'Content-Type: text/javascript; charset=utf-8' );
 					echo "/* PWP register */\n";
+					echo pwp_get_instance()->Offlineusage->get_sw_content();
 					echo file_get_contents( $this->sw_path );
 					exit;
 				}
