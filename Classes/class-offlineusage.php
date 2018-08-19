@@ -208,7 +208,7 @@ class Offlineusage {
 			}
 		}
 		*/
-		foreach ( $this->routes as $key => $values ) {
+		foreach ( array_reverse( $this->routes, true ) as $key => $values ) {
 			$strategy = pwp_get_setting( 'offline-strategy-' . $key );
 			$c        .= "workbox.routing.registerRoute( new RegExp('{$values['regex']}'), workbox.strategies.{$strategy}({ cacheName: PwpSwVersion + '-{$key}'}) );\n";
 		}
