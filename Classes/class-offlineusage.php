@@ -13,11 +13,29 @@ class Offlineusage {
 		$this->capability     = pwp_get_instance()->Init->capability;
 		$this->indicator_text = 'you\'re currently offline';
 		$this->routes         = [
-			'default'              => __( 'Default caching strategy', 'pwp' ),
-			'css|js'               => __( 'Caching strategy for CSS and JS Files', 'pwp' ),
-			'png|jpg|jpeg|svg|gif' => __( 'Caching strategy for images', 'pwp' ),
+			'default' => [
+				'name'    => __( 'Default caching strategy', 'pwp' ),
+				'regex'   => '.*',
+				'default' => 'networkFirst',
+			],
+			'static'  => [
+				'name'    => __( 'Caching strategy for CSS and JS Files', 'pwp' ),
+				'regex'   => '.*\.(css|js)',
+				'default' => 'staleWhileRevalidate',
+			],
+			'images'  => [
+				'name'    => __( 'Caching strategy for images', 'pwp' ),
+				'regex'   => '.*\.(png|jpg|jpeg|gif)',
+				'default' => 'cacheFirst',
+			],
+			'fonts'   => [
+				'name'    => __( 'Caching strategy for fonts', 'pwp' ),
+				'regex'   => '.*\.(woff|eot|woff2|ttf|svg)',
+				'default' => 'cacheFirst',
+			],
 		];
-		$this->strategies     = [
+
+		$this->strategies = [
 			'staleWhileRevalidate' => __( 'Stale While Revalidate', 'pwp' ),
 			'networkFirst'         => __( 'Network First', 'pwp' ),
 			'cacheFirst'           => __( 'Cache First', 'pwp' ),
@@ -57,8 +75,8 @@ class Offlineusage {
 			'after_field' => '<p class="pwp-smaller">' . $text . '</p>',
 		] );
 
-		foreach ( $this->routes as $key => $title ) {
-			pwp_settings()->add_select( $section, 'offline-strategy-' . str_replace( '|', '', $key ), $title, $this->strategies );
+		foreach ( $this->routes as $key => $values ) {
+			pwp_settings()->add_select( $section, 'offline-strategy-' . $key, $values['name'], $this->strategies, $values['default'] );
 		}
 	}
 
@@ -175,15 +193,24 @@ class Offlineusage {
 	 */
 
 	public function get_sw_content() {
-		$c = 'importScripts(\'https://storage.googleapis.com/workbox-cdn/releases/3.4.1/workbox-sw.js\');';
-		$c .= "\nif (workbox) {\n";
+		$plugin_uri = trailingslashit( plugin_dir_url( pwp_get_instance()->file ) );
+		$c          = '';
+		$c          .= 'importScripts(\'' . $plugin_uri . 'assets/workbox-v3.4.1/workbox-sw.js\');';
+		$c          .= "\nif (workbox) {\n";
+		$c          .= "\nworkbox.setConfig({debug: true});\n";
+		/*
 		foreach ( $this->routes as $key => $name ) {
-			$strategy = pwp_get_setting( 'offline-strategy-' . str_replace( '|', '', $key ) );
+			$strategy = pwp_get_setting( 'offline-strategy-for-' . str_replace( '|', '', $key ) );
 			if ( 'default' == $key ) {
-				$c .= "workbox.router.setDefaultHandler({ handler: workbox.strategies.{$strategy}({ cacheName: PwpSwVersion})});\n";
+				$c .= "workbox.routing.setDefaultHandler({ handle: workbox.strategies.{$strategy}({ cacheName: PwpSwVersion})});\n";
 			} else {
 				$c .= "workbox.routing.registerRoute( /.*\.(?:{$key})/g, workbox.strategies.{$strategy}({ cacheName: PwpSwVersion}) );\n";
 			}
+		}
+		*/
+		foreach ( $this->routes as $key => $values ) {
+			$strategy = pwp_get_setting( 'offline-strategy-' . $key );
+			$c        .= "workbox.routing.registerRoute( new RegExp('{$values['regex']}'), workbox.strategies.{$strategy}({ cacheName: PwpSwVersion + '-{$key}'}) );\n";
 		}
 		$c .= '}';
 
@@ -195,6 +222,6 @@ class Offlineusage {
 			update_option( 'pwp_sw_offline_time', $cache_version );
 		}
 
-		return "const PwpSwVersion = '{$cache_version}';\n" . $c;
+		return "( function() {\nconst PwpSwVersion = 'pwp-{$cache_version}';\n" . $c . "\n} )();";
 	}
 }

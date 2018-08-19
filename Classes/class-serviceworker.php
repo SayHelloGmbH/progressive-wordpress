@@ -140,7 +140,7 @@ class Serviceworker {
 	public function register_service_worker() {
 		if ( function_exists( 'wp_register_service_worker' ) && file_exists( $this->sw_path ) ) {
 			wp_register_service_worker( 'progressive-wp-offline-sw', function () {
-				echo pwp_get_instance()->Offlineusage->get_sw_content();
+				return pwp_get_instance()->Offlineusage->get_sw_content();
 			}, [], \WP_Service_Workers::SCOPE_FRONT );
 			wp_register_service_worker( 'progressive-wp-sw', $this->sw_url, [], \WP_Service_Workers::SCOPE_FRONT );
 		}
