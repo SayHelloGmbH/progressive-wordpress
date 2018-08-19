@@ -214,13 +214,7 @@ class Offlineusage {
 		}
 		$c .= '}';
 
-		if ( md5( $c ) == get_option( 'pwp_sw_offline_content' ) ) {
-			$cache_version = get_option( 'pwp_sw_offline_time' );
-		} else {
-			$cache_version = time();
-			update_option( 'pwp_sw_offline_content', md5( $c ) );
-			update_option( 'pwp_sw_offline_time', $cache_version );
-		}
+		$cache_version = hash( 'crc32', $c, false );
 
 		return "( function() {\nconst PwpSwVersion = 'pwp-{$cache_version}';\n" . $c . "\n} )();";
 	}
