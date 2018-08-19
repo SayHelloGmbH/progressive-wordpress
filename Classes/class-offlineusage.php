@@ -197,17 +197,7 @@ class Offlineusage {
 		$c          = '';
 		$c          .= 'importScripts(\'' . $plugin_uri . 'assets/workbox-v3.4.1/workbox-sw.js\');';
 		$c          .= "\nif (workbox) {\n";
-		$c          .= "\nworkbox.setConfig({debug: true});\n";
-		/*
-		foreach ( $this->routes as $key => $name ) {
-			$strategy = pwp_get_setting( 'offline-strategy-for-' . str_replace( '|', '', $key ) );
-			if ( 'default' == $key ) {
-				$c .= "workbox.routing.setDefaultHandler({ handle: workbox.strategies.{$strategy}({ cacheName: PwpSwVersion})});\n";
-			} else {
-				$c .= "workbox.routing.registerRoute( /.*\.(?:{$key})/g, workbox.strategies.{$strategy}({ cacheName: PwpSwVersion}) );\n";
-			}
-		}
-		*/
+		//$c          .= "\nworkbox.setConfig({debug: true});\n";
 		foreach ( array_reverse( $this->routes, true ) as $key => $values ) {
 			$strategy = pwp_get_setting( 'offline-strategy-' . $key );
 			$c        .= "workbox.routing.registerRoute( new RegExp('{$values['regex']}'), workbox.strategies.{$strategy}({ cacheName: PwpSwVersion + '-{$key}'}) );\n";
