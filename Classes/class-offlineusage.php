@@ -15,22 +15,22 @@ class Offlineusage {
 		$this->routes         = [
 			'default' => [
 				'name'    => __( 'Default caching strategy', 'pwp' ),
-				'regex'   => '.*',
+				'regex'   => get_site_url() . '.*',
 				'default' => 'networkFirst',
 			],
 			'static'  => [
 				'name'    => __( 'Caching strategy for CSS and JS Files', 'pwp' ),
-				'regex'   => '.*\.(css|js)',
+				'regex'   => get_site_url() . '.*\.(css|js)',
 				'default' => 'staleWhileRevalidate',
 			],
 			'images'  => [
 				'name'    => __( 'Caching strategy for images', 'pwp' ),
-				'regex'   => '.*\.(png|jpg|jpeg|gif)',
+				'regex'   => get_site_url() . '.*\.(png|jpg|jpeg|gif)',
 				'default' => 'cacheFirst',
 			],
 			'fonts'   => [
 				'name'    => __( 'Caching strategy for fonts', 'pwp' ),
-				'regex'   => '.*\.(woff|eot|woff2|ttf|svg)',
+				'regex'   => get_site_url() . '.*\.(woff|eot|woff2|ttf|svg)',
 				'default' => 'cacheFirst',
 			],
 		];
@@ -206,20 +206,33 @@ class Offlineusage {
 
 	public function get_sw_content() {
 
-		// Todo: Add an offline fallback
+		// Todo: Add defaults
 
 		$plugin_uri = trailingslashit( plugin_dir_url( pwp_get_instance()->file ) );
-		$c          = '';
-		$c          .= 'importScripts(\'' . $plugin_uri . 'assets/workbox-v3.4.1/workbox-sw.js\');';
-		$c          .= "\nif (workbox) {\n";
-		//$c          .= "\nworkbox.setConfig({debug: true});\n";
+
+		$offline_url = false;
+		if ( 'page' == get_post_type( pwp_get_setting( 'offline-page' ) ) ) {
+			$offline_url = get_permalink( pwp_get_setting( 'offline-page' ) );
+		}
+		$home_url = get_site_url();
+
+		$c = '';
+		$c .= 'importScripts(\'' . $plugin_uri . 'assets/workbox-v3.4.1/workbox-sw.js\');';
+		$c .= "\nif (workbox) {\n";
+		$c .= "\nworkbox.setConfig({debug: true});\n";
+		$c .= "workbox.precaching.precacheAndRoute([ '{$offline_url}', '{$home_url}' ]);\n";
 		foreach ( array_reverse( $this->routes, true ) as $key => $values ) {
 			$strategy = pwp_get_setting( 'offline-strategy-' . $key );
-			$c        .= "workbox.routing.registerRoute( new RegExp('{$values['regex']}'), workbox.strategies.{$strategy}({ cacheName: PwpSwVersion + '-{$key}'}) );\n";
+			if ( 'default' == $key && $offline_url ) {
+				$c .= "const handler = (args) => workbox.strategies.{$strategy}({ cacheName: PwpSwVersion + '-{$key}'}).handle(args).then((response) => (!response) ? caches.match('{$offline_url}') : response);\n";
+				$c .= "workbox.routing.registerRoute(new RegExp('{$values['regex']}'), handler);\n";
+			} else {
+				$c .= "workbox.routing.registerRoute( new RegExp('{$values['regex']}'), workbox.strategies.{$strategy}({ cacheName: PwpSwVersion + '-{$key}'}) );\n";
+			}
 		}
 
 		if ( pwp_get_setting( 'offline-analytics' ) ) {
-			$c .= 'workbox.googleAnalytics.initialize();';
+			$c .= "workbox.googleAnalytics.initialize();\n";
 		}
 		$c .= '}';
 
