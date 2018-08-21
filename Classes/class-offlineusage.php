@@ -75,6 +75,18 @@ class Offlineusage {
 			'after_field' => '<p class="pwp-smaller">' . $text . '</p>',
 		] );
 
+		pwp_settings()->add_checkbox( $section, 'offline-analytics', __( 'Offline Google Analytics', 'pwp' ), false, [
+			'after_field' => '<p class="pwp-smaller">' . __( 'If the user is offline, analytics data can\'t be sent to google analytcs. This option will store the data and sync them as soon as the user is online again.', 'pwp' ) . '</p>',
+		] );
+
+		$section_desc = __( 'All network requests are cached by progressive WordPress. Here you are able to manually change the caching strategy for some request types.', 'pwp' ) . '<br>';
+		$section_desc .= '<ul>';
+		$section_desc .= '<li><b>' . __( 'Stale While Revalidate', 'pwp' ) . ':</b> ' . __( 'This strategy will use a cached response for a request if it is available and update the cache in the background with a response form the network. (If it’s not cached it will wait for the network response and use that). This is a fairly safe strategy as it means users are regularly updating their cache. The downside of this strategy is that it’s always requesting an asset from the network, using up the user’s bandwidth.', 'pwp' ) . '</li>';
+		$section_desc .= '<li><b>' . __( 'Network First', 'pwp' ) . ':</b> ' . __( 'This will try and get a request from the network first. If it receives a response, it’ll pass that to the browser and also save it to a cache. If the network request fails, the last cached response will be used.', 'pwp' ) . '</li>';
+		$section_desc .= '<li><b>' . __( 'Cache First', 'pwp' ) . ':</b> ' . __( 'This strategy will check the cache for a response first and use that if one is available. If the request isn’t in the cache, the network will be used and any valid response will be added to the cache before being passed to the browser.', 'pwp' ) . '</li>';
+		$section_desc .= '</ul>';
+		$section      = pwp_settings()->add_section( pwp_settings_page_offlineusage(), 'pwp_offlinestrategies', __( 'Caching strategies', 'pwp' ), $section_desc );
+
 		foreach ( $this->routes as $key => $values ) {
 			pwp_settings()->add_select( $section, 'offline-strategy-' . $key, $values['name'], $this->strategies, $values['default'] );
 		}
@@ -193,6 +205,9 @@ class Offlineusage {
 	 */
 
 	public function get_sw_content() {
+
+		// Todo: Add an offline fallback
+
 		$plugin_uri = trailingslashit( plugin_dir_url( pwp_get_instance()->file ) );
 		$c          = '';
 		$c          .= 'importScripts(\'' . $plugin_uri . 'assets/workbox-v3.4.1/workbox-sw.js\');';
@@ -201,6 +216,10 @@ class Offlineusage {
 		foreach ( array_reverse( $this->routes, true ) as $key => $values ) {
 			$strategy = pwp_get_setting( 'offline-strategy-' . $key );
 			$c        .= "workbox.routing.registerRoute( new RegExp('{$values['regex']}'), workbox.strategies.{$strategy}({ cacheName: PwpSwVersion + '-{$key}'}) );\n";
+		}
+
+		if ( pwp_get_setting( 'offline-analytics' ) ) {
+			$c .= 'workbox.googleAnalytics.initialize();';
 		}
 		$c .= '}';
 
