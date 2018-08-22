@@ -53,7 +53,7 @@ class Offlineusage {
 	public function settings() {
 
 		$section_desc = __( 'This feature allows you to provide offline usage for your website.', 'pwp' ) . '<br>';
-		$section_desc .= __( 'A copy of each page is stored in the browser cache as the visitor views it. This allows a visitor to load any previously viewed page while they are offline. The plugin also defines a special “offline page”, which allows you to customize a message and the experience if the app is offline and the page is not in the cache.', 'pwp' );
+		$section_desc .= __( 'By default, a copy of each page is stored in the browser cache as the visitor views it. This allows a visitor to load any previously viewed page while they are offline. The plugin also defines a special “offline page”, which allows you to customize a message and the experience if the app is offline and the page is not in the cache. Additionally, you can define other pre-cached resources using the "offline content" textarea.', 'pwp' );
 		$section      = pwp_settings()->add_section( pwp_settings_page_offlineusage(), 'pwp_offlineusage', __( 'Offline Usage', 'pwp' ), $section_desc );
 
 		$choices = [];
