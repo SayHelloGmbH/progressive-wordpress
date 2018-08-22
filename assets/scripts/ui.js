@@ -81,15 +81,6 @@ module.exports = __webpack_require__(3);
 
 (function ($, plugin) {
 
-	var FALLBACK_URL = 'https://basic.sayhello.works/offline/';
-
-	workbox.routing.registerRoute(new RegExp('.*'), function (_ref) {
-		var event = _ref.event;
-		return workbox.strategies.networkFirst({ cacheName: PwpSwVersion + '-default' }).handle({ event: event }).catch(function () {
-			return caches.match(FALLBACK_URL);
-		});
-	});
-
 	$(function () {
 
 		var installPromptEvent = void 0;

@@ -1,10 +1,5 @@
 (function ($, plugin) {
 
-	const FALLBACK_URL = 'https://basic.sayhello.works/offline/';
-
-	workbox.routing.registerRoute(new RegExp('.*'), ({event}) => { return workbox.strategies.networkFirst({ cacheName: PwpSwVersion + '-default' }).handle({event}).catch(() => caches.match(FALLBACK_URL))});
-
-
 	$(function () {
 
 		let installPromptEvent;

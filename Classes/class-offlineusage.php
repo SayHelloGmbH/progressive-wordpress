@@ -206,21 +206,22 @@ class Offlineusage {
 
 	public function get_sw_content() {
 
-		// Todo: Add defaults
-
-		$plugin_uri = trailingslashit( plugin_dir_url( pwp_get_instance()->file ) );
-
+		$plugin_uri  = trailingslashit( plugin_dir_url( pwp_get_instance()->file ) );
 		$offline_url = false;
+
+		$pre_cache = explode( "\n", pwp_get_setting( 'offline-content' ) );
 		if ( 'page' == get_post_type( pwp_get_setting( 'offline-page' ) ) ) {
 			$offline_url = get_permalink( pwp_get_setting( 'offline-page' ) );
+			$pre_cache[] = $offline_url;
 		}
-		$home_url = get_site_url();
+		$pre_cache[] = get_site_url();
+		$pre_cache   = json_encode( $pre_cache );
 
 		$c = '';
 		$c .= 'importScripts(\'' . $plugin_uri . 'assets/workbox-v3.4.1/workbox-sw.js\');';
 		$c .= "\nif (workbox) {\n";
-		$c .= "\nworkbox.setConfig({debug: true});\n";
-		$c .= "workbox.precaching.precacheAndRoute([ '{$offline_url}', '{$home_url}' ]);\n";
+		//$c .= "\nworkbox.setConfig({debug: true});\n";
+		$c .= "workbox.precaching.precacheAndRoute({$pre_cache});\n";
 		foreach ( array_reverse( $this->routes, true ) as $key => $values ) {
 			$strategy = pwp_get_setting( 'offline-strategy-' . $key );
 			if ( 'default' == $key && $offline_url ) {
