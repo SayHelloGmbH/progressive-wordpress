@@ -29,16 +29,14 @@ After those steps you will have an overview about all registered devices, you ca
 Progressive WordPress offers a lot of possibilities for developers the extend it the way they need it.
 
 ### ServiceWorker
-**Add content to the serviceworker:**  
+**Add pre-cache resource:**  
 ```php
-function myplugin_sw_content( $content ) {
-    return $content; //needs to be valid serviceworker JavaScript
+function myplugin_offline_precache( $caches ) {
+    $caches[] = 'https://myurl.com';
+    return $caches;
 }
-add_filter( 'pwp_sw_content', 'myplugin_sw_content' );
+add_filter( 'pwp_offline_precache', 'myplugin_offline_precache' );
 ```
-**Regenerate serviceworker:**  
-The Serviceworker (`pwp-serviceworker.js`) will be regenerated as soon as new settings are saved (but only if the settings actually changed).
-You can regenerate it by using `pwp_serviceworker_regenerate();`.
 
 ### Manifest
 **Add content to the manifest:**  

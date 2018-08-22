@@ -48,6 +48,10 @@ class Offlineusage {
 		//add_filter( 'pwp_sw_content', [ $this, 'sw_content' ] );
 		add_action( 'pwp_settings', [ $this, 'offline_indicator_settings' ] );
 		add_action( 'wp_footer', [ $this, 'offline_indicator_template' ] );
+
+		add_filter( 'pwp_offline_precache', [ $this, 'pre_cache_frontpage' ], 2 );
+		add_filter( 'pwp_offline_precache', [ $this, 'pre_cache_offlinepage' ], 4 );
+		add_filter( 'pwp_offline_precache', [ $this, 'pre_cache_settingspage' ], 6 );
 	}
 
 	public function settings() {
@@ -200,22 +204,37 @@ class Offlineusage {
 
 	}
 
+	public function pre_cache_frontpage( $caches ) {
+		$caches[] = get_site_url();
+
+		return $caches;
+	}
+
+	public function pre_cache_offlinepage( $caches ) {
+		foreach ( explode( "\n", pwp_get_setting( 'offline-content' ) ) as $url ) {
+			$caches[] = $url;
+		}
+
+		return $caches;
+	}
+
+	public function pre_cache_settingspage( $caches ) {
+		if ( 'page' == get_post_type( pwp_get_setting( 'offline-page' ) ) ) {
+			$offline_url = get_permalink( pwp_get_setting( 'offline-page' ) );
+			$caches[]    = $offline_url;
+		}
+
+		return $caches;
+	}
+
 	/**
 	 * Get ServiceWorker
 	 */
 
 	public function get_sw_content() {
 
-		$plugin_uri  = trailingslashit( plugin_dir_url( pwp_get_instance()->file ) );
-		$offline_url = false;
-
-		$pre_cache = explode( "\n", pwp_get_setting( 'offline-content' ) );
-		if ( 'page' == get_post_type( pwp_get_setting( 'offline-page' ) ) ) {
-			$offline_url = get_permalink( pwp_get_setting( 'offline-page' ) );
-			$pre_cache[] = $offline_url;
-		}
-		$pre_cache[] = get_site_url();
-		$pre_cache   = json_encode( $pre_cache );
+		$plugin_uri = trailingslashit( plugin_dir_url( pwp_get_instance()->file ) );
+		$pre_cache  = json_encode( apply_filters( 'pwp_offline_precache', [] ) );
 
 		$c = '';
 		$c .= 'importScripts(\'' . $plugin_uri . 'assets/workbox-v3.4.1/workbox-sw.js\');';
@@ -224,7 +243,9 @@ class Offlineusage {
 		$c .= "workbox.precaching.precacheAndRoute({$pre_cache});\n";
 		foreach ( array_reverse( $this->routes, true ) as $key => $values ) {
 			$strategy = pwp_get_setting( 'offline-strategy-' . $key );
-			if ( 'default' == $key && $offline_url ) {
+			if ( 'default' == $key && 'page' == get_post_type( pwp_get_setting( 'offline-page' ) ) ) {
+				$offline_url = get_permalink( pwp_get_setting( 'offline-page' ) );
+
 				$c .= "const handler = (args) => workbox.strategies.{$strategy}({ cacheName: PwpSwVersion + '-{$key}'}).handle(args).then((response) => (!response) ? caches.match('{$offline_url}') : response);\n";
 				$c .= "workbox.routing.registerRoute(new RegExp('{$values['regex']}'), handler);\n";
 			} else {
