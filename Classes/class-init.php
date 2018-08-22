@@ -18,6 +18,9 @@ class Init {
 		add_action( 'pwp_settings', [ $this, 'settings_intro' ] );
 		add_action( 'admin_menu', [ $this, 'add_menu_page' ] );
 
+		// Plugin Overview
+		add_filter( 'plugin_action_links_progressive-wordpress/progressive-wordpress.php', [ $this, 'settings_action_link' ] );
+
 		// Assets
 		add_action( 'wp_enqueue_scripts', [ $this, 'add_assets' ] );
 		add_action( 'admin_enqueue_scripts', [ $this, 'add_admin_assets' ] );
@@ -148,8 +151,10 @@ class Init {
 		<?php } );
 	}
 
-	public function main_page() {
-		echo 'test';
+	public function settings_action_link( $links ) {
+		return array_merge( [
+			'settings' => '<a href="' . admin_url( 'admin.php?page=' . PWP_SETTINGS_PARENT ) . '">' . __( 'Configure', 'pwp' ) . '</a>',
+		], $links );
 	}
 
 	/**
