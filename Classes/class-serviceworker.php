@@ -142,7 +142,9 @@ class Serviceworker {
 			wp_register_service_worker( 'progressive-wp-offline-sw', function () {
 				return pwp_get_instance()->Offlineusage->get_sw_content();
 			}, [], \WP_Service_Workers::SCOPE_FRONT );
-			wp_register_service_worker( 'progressive-wp-sw', $this->sw_url, [], \WP_Service_Workers::SCOPE_FRONT );
+			wp_register_service_worker( 'progressive-wp-push-sw', function () {
+				return pwp_get_instance()->Push->get_sw_content();
+			}, [], \WP_Service_Workers::SCOPE_FRONT );
 		}
 	}
 
@@ -160,7 +162,7 @@ class Serviceworker {
 					header( 'Content-Type: text/javascript; charset=utf-8' );
 					echo "/* PWP register */\n";
 					echo pwp_get_instance()->Offlineusage->get_sw_content();
-					echo file_get_contents( $this->sw_path );
+					echo pwp_get_instance()->Push->get_sw_content();
 					exit;
 				}
 			}

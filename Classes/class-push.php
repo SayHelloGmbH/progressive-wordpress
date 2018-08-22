@@ -29,8 +29,6 @@ class Push {
 			mkdir( $this->upload_dir );
 		}
 
-		add_filter( 'pwp_sw_content', [ $this, 'sw_content' ], 1 );
-
 		add_action( 'pwp_settings', [ $this, 'settings_push' ] );
 		add_action( 'pwp_settings', [ $this, 'settings_button' ] );
 		add_action( 'pwp_settings', [ $this, 'settings_devices' ] );
@@ -62,18 +60,15 @@ class Push {
 
 	}
 
-	public function sw_content( $content ) {
+	public function get_sw_content() {
 
 		$push_content = '';
 		$push_file    = plugin_dir_path( pwp_get_instance()->file ) . '/assets/serviceworker/push.js';
 		if ( file_exists( $push_file ) ) {
-
 			$push_content .= file_get_contents( $push_file );
-		} else {
-			return $content;
 		}
 
-		return $content . $push_content;
+		return $push_content;
 
 	}
 
