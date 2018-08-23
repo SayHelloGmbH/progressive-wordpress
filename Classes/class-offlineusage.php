@@ -258,6 +258,11 @@ class Offlineusage {
 		}
 		$c .= '}';
 
+		$delete_file = plugin_dir_path( pwp_get_instance()->file ) . '/assets/serviceworker/delete-cache.js';
+		if ( file_exists( $delete_file ) ) {
+			$c .= file_get_contents( $delete_file );
+		}
+
 		$cache_version = hash( 'crc32', $c, false );
 
 		return "( function() {\nconst PwpSwVersion = 'pwp-{$cache_version}';\n" . $c . "\n} )();";
