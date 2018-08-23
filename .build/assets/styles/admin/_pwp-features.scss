@@ -8,15 +8,39 @@
 
 	&__element {
 		background-color: #fff;
-		@include flex(calc(#{percentage(1/3)} - #{$padding}));
+		@include flex(calc(#{percentage(1/3)} - #{$padding}) 0 0);
 		@media screen and (max-width: 800px) {
-			@include flex(100%);
+			@include flex-basis(calc(100% - #{$padding}));
 		}
 		margin: 0 $padding/2 $padding $padding/2;
 		@include box-shadow();
 		@include display-flex();
 		@include flex-direction(column);
 		position: relative;
+
+		&--large {
+			@include flex-basis(calc(#{percentage(2/3)} - #{$padding}));
+			@media screen and (max-width: 800px) {
+				@include flex-basis(calc(100% - #{$padding}));
+			}
+		}
+
+		&--transparent {
+			background-color: transparent;
+			@include box-shadow(none);
+			.pwp-features__content {
+				padding: $padding 0 0 0;
+				p {
+					color: #7f7f7f;
+					b {
+						color: #000;
+					}
+					a {
+						opacity: 1;
+					}
+				}
+			}
+		}
 	}
 
 	&__title {
@@ -103,6 +127,7 @@
 
 		&:after,
 		&:before {
+			display: none;
 			opacity: 0;
 			@include transition();
 		}
@@ -110,6 +135,7 @@
 		&:hover {
 			&:after,
 			&:before {
+				display: block;
 				opacity: 1;
 			}
 		}

@@ -7989,8 +7989,8 @@
   margin: 30px -10px; }
   .pwp-features__element {
     background-color: #fff;
-    -webkit-flex: calc(33.33333% - 18px);
-    flex: calc(33.33333% - 18px);
+    -webkit-flex: calc(33.33333% - 18px) 0 0;
+    flex: calc(33.33333% - 18px) 0 0;
     margin: 0 9px 18px 9px;
     -webkit-box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.15);
     -moz-box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.15);
@@ -8002,8 +8002,28 @@
     position: relative; }
     @media screen and (max-width: 800px) {
       .pwp-features__element {
-        -webkit-flex: 100%;
-        flex: 100%; } }
+        -webkit-flex-basis: calc(100% - 18px);
+        flex-basis: calc(100% - 18px); } }
+    .pwp-features__element--large {
+      -webkit-flex-basis: calc(66.66667% - 18px);
+      flex-basis: calc(66.66667% - 18px); }
+      @media screen and (max-width: 800px) {
+        .pwp-features__element--large {
+          -webkit-flex-basis: calc(100% - 18px);
+          flex-basis: calc(100% - 18px); } }
+    .pwp-features__element--transparent {
+      background-color: transparent;
+      -webkit-box-shadow: none;
+      -moz-box-shadow: none;
+      box-shadow: none; }
+      .pwp-features__element--transparent .pwp-features__content {
+        padding: 18px 0 0 0; }
+        .pwp-features__element--transparent .pwp-features__content p {
+          color: #7f7f7f; }
+          .pwp-features__element--transparent .pwp-features__content p b {
+            color: #000; }
+          .pwp-features__element--transparent .pwp-features__content p a {
+            opacity: 1; }
   .pwp-features__title {
     margin: 0;
     padding: 18px;
@@ -8075,6 +8095,7 @@
     transform: rotate(45deg);
     z-index: 50; }
   .pwp-features__tooltip:after, .pwp-features__tooltip:before {
+    display: none;
     opacity: 0;
     -webkit-transition: all 200ms;
     -webkit-transition-delay: 0s;
@@ -8082,6 +8103,7 @@
     -o-transition: all 200ms;
     transition: all 200ms false false; }
   .pwp-features__tooltip:hover:after, .pwp-features__tooltip:hover:before {
+    display: block;
     opacity: 1; }
 
 .pwp-icon {

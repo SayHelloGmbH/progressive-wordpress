@@ -146,6 +146,54 @@ class Init {
 							<a class="pwp-features__configure button button--small" href="<?php echo admin_url( 'admin.php?page=pwp-push' ); ?>"><?php _e( 'configure', 'pwp' ); ?></a>
 						</div>
 					</div>
+					<div class="pwp-features__element pwp-features__element--large pwp-features__element--transparent">
+						<div class="pwp-features__content">
+							<p>
+								<b>
+									<?php
+									// translators: Thank you for using plugin_name
+									printf( __( 'Thank you for using %s!', 'pwp' ), pwp_get_instance()->name );
+									?>
+								</b><br>
+								<?php
+								// translators: Why it was developed.
+								printf( __( 'This plugin was developed by %s to use progressive web app features for your WordPress website.', 'pwp' ), '<a href="https://nicomartin.ch" target="_blank">Nico Martin</a>' );
+								?>
+							</p>
+							<p>
+								<?php
+								$sw_link = 'https://caniuse.com/#feat=serviceworkers';
+								echo __( 'To deliver app-like features this plugin uses a serviceworker.js file. This technology is not yet supported in all browsers!', 'pwp' ) . '</b><br><a href="' . $sw_link . '" target="_blank">' . $sw_link . '</a>';
+								?>
+							</p>
+							<p>
+								<?php
+								$github = '<a href="https://github.com/nico-martin/progressive-wordpress" target="_blank">GitHub</a>';
+								// translators: If you like this plugin feel free to buy me a beer or get involved in the development on GitHub
+								printf( __( 'If you like this plugin feel free to get involved with the development on %1$s', 'pwp' ), $github );
+								?>
+							</p>
+						</div>
+					</div>
+					<div class="pwp-features__element pwp-features__element--transparent">
+						<div class="pwp-features__content">
+							<p>
+								<b style="display: block;">
+									<?php _e( 'Need Help?', 'pwp' ); ?>
+								</b>
+								<?php
+								// translators: Please make sure your device supports progressive web apps and the status above is green.
+								echo sprintf( __( 'Please make sure your device supports %s.', 'pwp' ), '<a href="https://caniuse.com/#feat=serviceworkers" target="_blank">Progressive Web Apps</a>' ) . ' ';
+								// translators: Still not working? Please visit the support forum or contact us.
+								printf( __( 'Still not working? Please visit the %1$1s or %2$2s.', 'pwp' ), '<a href="https://wordpress.org/support/plugin/progressive-wp/" target="_blank">' . __( 'support forum', 'pwp' ) . '</a>', '<a href="mailto:hello@sayhello.ch">' . __( 'contact us', 'pwp' ) . '</a>' );
+								//echo '<small><b>' . __( 'Attention!', 'pwp' ) . '</b> ' . __( 'The Debug Log contains information that should not be public.', 'pwp' ) . '</small>';
+								?>
+							</p>
+							<p style="text-align: right">
+								<button class="button button--small pwp-download-log" data-log="debug-log"><?php _e( 'Download Logfile', 'pwp' ); ?></button>
+							</p>
+						</div>
+					</div>
 				</div>
 			</div>
 		<?php } );
