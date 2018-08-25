@@ -85,6 +85,10 @@ class Init {
 									echo '<span class="pwp-features__tooltip pwp-features__tooltip--error" data-pwp-features-tooltip="' . esc_attr( __( 'You manually set "Show add to homescreen banner" to "never".', 'pwp' ) ) . '">';
 									echo pwp_icon( 'close' );
 									echo '</span>';
+								} elseif ( ! wp_attachment_is_image( intval( get_option( 'site_icon' ) ) ) ) {
+									echo '<span class="pwp-features__tooltip pwp-features__tooltip--error" data-pwp-features-tooltip="' . esc_attr( __( 'Please select a Site Icon.', 'pwp' ) ) . '">';
+									echo pwp_icon( 'alert' );
+									echo '</span>';
 								} else {
 									echo '<span class="pwp-features__tooltip" data-pwp-features-tooltip="' . esc_attr( __( 'Your Website matches the Progressive Web App criteria.', 'pwp' ) ) . '">';
 									echo pwp_icon( 'check' );
@@ -190,7 +194,10 @@ class Init {
 								?>
 							</p>
 							<p style="text-align: right">
-								<button class="button button--small pwp-download-log" data-log="debug-log"><?php _e( 'Download Logfile', 'pwp' ); ?></button>
+								<?php if ( pwp_get_instance()->Push->latest_push_log() ) { ?>
+									<button class="button button--small pwp-download-log" data-log="push-log"><?php _e( 'Download Push-Log', 'pwp' ); ?></button>
+								<?php } ?>
+								<button class="button button--small pwp-download-log" data-log="debug-log"><?php _e( 'Download Debug-Log', 'pwp' ); ?></button>
 							</p>
 						</div>
 					</div>
@@ -267,6 +274,9 @@ class Init {
 	 * Default Settings
 	 */
 	public function default_settings() {
+
+		// todo: default values
+
 		$options = get_option( pwp_settings()->option_key, false );
 		if ( ! $options ) {
 

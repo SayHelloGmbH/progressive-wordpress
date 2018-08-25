@@ -55,9 +55,7 @@ class Push {
 		 * Log
 		 */
 
-		add_action( 'pwp_settings', [ $this, 'settings_log' ], 50 );
 		add_action( 'wp_ajax_pwp_ajax_download_log-push-log', [ $this, 'download_log' ] );
-
 	}
 
 	public function get_sw_content() {
@@ -316,16 +314,6 @@ class Push {
 	/**
 	 * Log
 	 */
-
-	public function settings_log() {
-
-		if ( ! $this->latest_push_log() ) {
-			return;
-		}
-
-		$html = '<button class="button pwp-download-log" data-log="push-log">' . __( 'Download Logfile', 'pwp' ) . '</button>';
-		pwp_settings()->add_message( 'pwp-section-pwp_intro_help', 'pwp_intro_logs_push', __( 'Latest Push Log', 'pwp' ), $html );
-	}
 
 	public function download_log() {
 
@@ -587,7 +575,12 @@ class Push {
 		return preg_match( '/#([a-f]|[A-F]|[0-9]){3}(([a-f]|[A-F]|[0-9]){3})?\b/', $value );
 	}
 
-	private function latest_push_log() {
+	public function latest_push_log() {
+
+		if ( ! pwp_push_set() ) {
+			return false;
+		}
+
 		$files = scandir( $this->upload_dir, SCANDIR_SORT_DESCENDING );
 		if ( ! $files || empty( $files ) ) {
 			return false;

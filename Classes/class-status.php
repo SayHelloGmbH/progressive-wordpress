@@ -9,18 +9,11 @@ class Status {
 
 	public function __construct() {
 
-		$this->upload_dir = pwp_get_instance()->upload_dir . '/debug/';
-		$this->upload_url = pwp_get_instance()->upload_url . '/debug/';
+		$this->upload_dir = trailingslashit( pwp_get_instance()->upload_dir ) . 'debug/';
+		$this->upload_url = trailingslashit( pwp_get_instance()->upload_url ) . 'debug/';
 	}
 
 	public function run() {
-
-		/**
-		 * Page
-		 */
-
-		add_action( 'pwp_settings', [ $this, 'settings_stats' ] );
-		add_action( 'pwp_settings', [ $this, 'settings_logs' ] );
 
 		/**
 		 * Ajax
@@ -33,43 +26,6 @@ class Status {
 		 */
 
 		add_action( 'init', [ $this, 'delete_logfiles' ] );
-	}
-
-	/**
-	 * Page
-	 */
-
-	public function settings_stats() {
-		$section = pwp_settings()->add_section( pwp_settings_page_main(), 'pwp_intro_stats', __( 'Status', 'pwp' ) );
-
-		$check = $this->get_stats();
-
-		foreach ( $check as $key => $vals ) {
-			$html       = '';
-			$icon_check = $this->get_icon( 'check' );
-			$icon_close = $this->get_icon( 'close' );
-
-			if ( $vals['true'] ) {
-				$html .= "<span class='pwp-status pwp-status--success'><span class='pwp-status__icon'>$icon_check</span>{$vals['text_true']}</span>";
-			} else {
-				$html .= "<span class='pwp-status pwp-status--error'><span class='pwp-status__icon'>$icon_close</span>{$vals['text_false']}</span>";
-			}
-			pwp_settings()->add_message( $section, "pwp_intro_stats_$key", $vals['title'], $html );
-		}
-	}
-
-	public function settings_logs() {
-
-		// translators: Please make sure your device supports progressive web apps and the status above is green.
-		$html = sprintf( __( 'Please make sure the status above is all green and your device supports %s.', 'pwp' ), '<a href="https://caniuse.com/#feat=serviceworkers" target="_blank">Progressive Web Apps</a>' ) . '<br>';
-		// translators: Still not working? Please visit the support forum.
-		$html .= sprintf( __( 'Still not working? Please visit the %s.', 'pwp' ), '<a href="https://wordpress.org/support/plugin/progressive-wp/" target="_blank">' . __( 'support forum', 'pwp' ) . '</a>' );
-		$html .= '<br><br><small><b>' . __( 'Attention!', 'pwp' ) . '</b> ' . __( 'The Debug Log contains information that should not be public.', 'pwp' ) . '</small>';
-
-		$section = pwp_settings()->add_section( pwp_settings_page_main(), 'pwp_intro_help', __( 'Need Help?', 'pwp' ), '<p>' . $html . '</p>' );
-
-		$html = '<button class="button pwp-download-log" data-log="debug-log">' . __( 'Download Logfile', 'pwp' ) . '</button>';
-		pwp_settings()->add_message( $section, 'pwp_intro_logs_debug', __( 'Debug Log', 'pwp' ), $html );
 	}
 
 	/**
@@ -115,12 +71,7 @@ class Status {
 		$log['wpversion']  = $wp_version;
 		$log['multisite']  = is_multisite();
 		$log['phpversion'] = phpversion();
-
-		$log['stats'] = [];
-		$stats        = $this->get_stats();
-		foreach ( $stats as $key => $vals ) {
-			$log['stats'][ $key ] = $vals['true'];
-		}
+		$log['https']      = is_ssl();
 
 		$log['settings']       = get_option( pwp_settings()->option_key );
 		$log['active_plugins'] = [];
@@ -154,29 +105,6 @@ class Status {
 		}
 
 		return false;
-	}
-
-	public function get_stats() {
-		return [
-			'sw'           => [
-				'title'      => __( 'ServiceWorker', 'pwp' ),
-				'true'       => file_exists( pwp_get_instance()->Serviceworker->sw_path ),
-				'text_true'  => __( 'ServiceWorker generated successfully.', 'pwp' ),
-				'text_false' => __( 'ServiceWorker not generated.', 'pwp' ),
-			],
-			'rootwritable' => [
-				'title'      => __( 'Root Folder', 'pwp' ),
-				'true'       => is_writable( trailingslashit( ABSPATH ) ),
-				'text_true'  => __( 'Root Folder is writable.', 'pwp' ),
-				'text_false' => __( 'Root Folder is not writable.', 'pwp' ),
-			],
-			'https'        => [
-				'title'      => __( 'HTTPS', 'pwp' ),
-				'true'       => is_ssl(),
-				'text_true'  => __( 'Your site is serverd over HTTPS.', 'pwp' ),
-				'text_false' => __( 'Your site has to be served over HTTPS.', 'pwp' ),
-			],
-		];
 	}
 
 	public static function empty_dir( $dir ) {

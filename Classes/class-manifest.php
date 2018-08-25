@@ -60,14 +60,6 @@ class Manifest {
 		// translators: $s = url
 		$content = '<p><small>' . sprintf( __( 'This Option has been removed. Please use the Site Icon from the customizer instead: %s.', 'awpp' ), "<br><a href='{$url}'>{$customizer_title}</a>" ) . '</small></p>';
 		pwp_settings()->add_message( $section, 'manifest-icon-message', __( 'Icon', 'pwp' ), $content );
-		/*
-		pwp_settings()->add_file( $section, 'manifest-icon', __( 'Icon', 'pwp' ), 0, [
-			'mimes'       => 'png',
-			'min-width'   => 128,
-			'min-height'  => 128,
-			'after_field' => '<p class="pwp-smaller">' . __( 'has to be at least 128x128px', 'pwp' ) . '</p>',
-		] );
-		*/
 
 		$choices = [
 			'fullscreen' => __( 'Fullscreen - App takes whole display', 'pwp' ),
