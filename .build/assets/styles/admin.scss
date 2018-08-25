@@ -34,6 +34,7 @@ $default-transition-duration: $easing_speed + 0ms;
 @import "admin/settings-wrap";
 @import "admin/pwp-wrap";
 @import "admin/devices-table";
+@import "admin/pwp-activate-notice";
 
 #TB_window {
 	width: inherit !important;

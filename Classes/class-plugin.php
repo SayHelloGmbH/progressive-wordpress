@@ -74,9 +74,10 @@ class Plugin {
 	 * This contains hook and filter assignments, etc.
 	 */
 	private function run() {
-		add_action( 'plugins_loaded', array( $this, 'load_plugin_textdomain' ) );
-		add_action( 'admin_init', array( $this, 'update_plugin_data' ) );
-		register_deactivation_hook( pwp_get_instance()->file, array( $this, 'deactivate' ) );
+		add_action( 'plugins_loaded', [ $this, 'load_plugin_textdomain' ] );
+		add_action( 'admin_init', [ $this, 'update_plugin_data' ] );
+		register_deactivation_hook( pwp_get_instance()->file, [ $this, 'deactivate' ] );
+		register_activation_hook( pwp_get_instance()->file, [ $this, 'activate' ] );
 
 		if ( ! is_dir( pwp_get_instance()->upload_dir ) ) {
 			mkdir( pwp_get_instance()->upload_dir );
@@ -106,11 +107,15 @@ class Plugin {
 			update_option( pwp_get_instance()->option_key, $file_data );
 
 			if ( ! $db_data ) {
-				do_action( 'pwp_on_activate' );
+				do_action( 'pwp_on_first_activate' );
 			} else {
 				do_action( 'pwp_on_update', $db_data['Version'], $file_data['Version'] );
 			}
 		}
+	}
+
+	public function activate() {
+		do_action( 'pwp_on_activate' );
 	}
 
 	public function deactivate() {

@@ -17,6 +17,16 @@ class Init {
 		// Basics Page
 		add_action( 'pwp_settings', [ $this, 'settings_intro' ] );
 		add_action( 'admin_menu', [ $this, 'add_menu_page' ] );
+		add_action( 'pwp_on_activate', function () {
+			set_transient( 'pwp-activation-message', true, 5 );
+		} );
+		add_action( 'pwp_on_update', function ( $old_version, $new_version ) {
+			$v = '1.15.5';
+			if ( version_compare( $v, $new_version, '<=' ) && version_compare( $v, $old_version, '>' ) ) {
+				set_transient( 'pwp-v2-message', true, 5 );
+			}
+		}, 20, 2 );
+		add_action( 'admin_notices', [ $this, 'pwp_message' ] );
 
 		// Plugin Overview
 		add_filter( 'plugin_action_links_progressive-wordpress/progressive-wordpress.php', [ $this, 'settings_action_link' ] );
@@ -33,8 +43,7 @@ class Init {
 		/**
 		 * Default Settings
 		 */
-		add_action( 'pwp_on_activate', [ $this, 'default_settings' ] );
-		//add_action( 'init', [ $this, 'default_settings' ] );
+		add_action( 'pwp_on_first_activate', [ $this, 'default_settings' ] );
 	}
 
 	/**
@@ -206,6 +215,28 @@ class Init {
 		<?php } );
 	}
 
+	public function pwp_message() {
+		if ( get_transient( 'pwp-activation-message' ) ) {
+			echo '<div class="notice notice-success pwp-activate-notice">';
+			echo '<div class="pwp-activate-notice__about">';
+			echo '<h3 class="pwp-activate-notice__title">' . pwp_get_instance()->name . '</h3>';
+			echo '<p>' . __( 'Welcome to the future! Progressive WordPress makes your website installable, offline ready and lets you send push notifications!', 'pwp' ) . '</p>';
+			echo '</div>';
+			echo '<a class="pwp-activate-notice__configure button" href="' . admin_url( 'admin.php?page=' . PWP_SETTINGS_PARENT ) . '">' . __( 'Configure', 'pwp' ) . '</a>';
+			echo '</div>';
+			delete_transient( 'pwp-activation-message' );
+		} elseif ( get_transient( 'pwp-v2-message' ) ) {
+			echo '<div class="notice notice-success pwp-activate-notice">';
+			echo '<div class="pwp-activate-notice__about">';
+			// translators: %s = Plugin Name
+			echo '<h3 class="pwp-activate-notice__title">' . sprintf( __( '%s Version 2.0 is here!', 'pwp' ), pwp_get_instance()->name ) . '</h3>';
+			echo '<p>' . __( 'We are more than happy to announce the biggest update so far! To make it short, we had one big goal: to rewrite the plugin so it fits the needs of non-Developers while it stays very flexble and easy to extend!', 'pwp' ) . '</p>';
+			echo '</div>';
+			echo '<a class="pwp-activate-notice__configure button" href="https://github.com/SayHelloGmbH/progressive-wordpress#changelog" target="_blank">' . __( 'explore changes', 'pwp' ) . '</a>';
+			echo '</div>';
+		}
+	}
+
 	public function settings_action_link( $links ) {
 		return array_merge( [
 			'settings' => '<a href="' . admin_url( 'admin.php?page=' . PWP_SETTINGS_PARENT ) . '">' . __( 'Configure', 'pwp' ) . '</a>',
@@ -275,8 +306,6 @@ class Init {
 	 */
 	public function default_settings() {
 
-		// todo: default values
-
 		$options = get_option( pwp_settings()->option_key, false );
 		if ( ! $options ) {
 
@@ -286,17 +315,14 @@ class Init {
 			}
 
 			update_option( pwp_settings()->option_key, [
-				'installable-enabled'       => '1',
 				'manifest-name'             => get_bloginfo( 'name' ),
 				'manifest-short-name'       => $short_name,
-				'manifest-starturl'         => './',
+				'manifest-starturl'         => get_site_url(),
 				'manifest-description'      => get_bloginfo( 'description' ),
 				'manifest-display'          => 'standalone',
 				'manifest-orientation'      => 'portrait',
 				'manifest-theme-color'      => '#000000',
 				'manifest-background-color' => '#ffffff',
-				'offline-enabled'           => 1,
-				'offline-content'           => '',
 				'tracking-starturl-source'  => 'pwa-homescreen',
 				'tracking-pushurl-source'   => 'pwa-pushnotification',
 			] );

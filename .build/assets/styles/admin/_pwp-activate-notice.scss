@@ -1,0 +1,19 @@
+.pwp-activate-notice {
+	@include display-flex();
+	@include justify-content(space-between);
+	@include align-items(center);
+
+	&__configure {
+		margin-right: 20px !important;
+		margin-left: 20px !important;
+	}
+
+	&__about {
+		padding: .7rem 0;
+	}
+
+	&__title {
+		font-size: 1.1rem;
+		margin: .5rem 0 .7rem 0;
+	}
+}

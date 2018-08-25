@@ -32,7 +32,6 @@ class Manifest {
 
 	public function register_settings() {
 
-		//$section_desc = '<b>' . __( 'Make your website installable!', 'pwp' ) . '</b><br>';
 		$section_desc = __( 'This values are used to create a manifest.json file, which then controls the appearance of you progressive web app.', 'pwp' );
 		$url          = 'https://developer.mozilla.org/de/docs/Web/Manifest';
 		$section_desc .= '<br>' . __( 'Read all about the web app manifest:.', 'pwp' ) . ' <a target="_blank" href="' . $url . '">' . $url . '</a>';

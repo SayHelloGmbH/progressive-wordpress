@@ -8377,6 +8377,22 @@
   .pwp-devicestable tr:hover .devices-actions--delete {
     opacity: 1; }
 
+.pwp-activate-notice {
+  display: -webkit-flex;
+  display: flex;
+  -webkit-justify-content: space-between;
+  justify-content: space-between;
+  -webkit-align-items: center;
+  align-items: center; }
+  .pwp-activate-notice__configure {
+    margin-right: 20px !important;
+    margin-left: 20px !important; }
+  .pwp-activate-notice__about {
+    padding: .7rem 0; }
+  .pwp-activate-notice__title {
+    font-size: 1.1rem;
+    margin: .5rem 0 .7rem 0; }
+
 #TB_window {
   width: inherit !important;
   height: auto !important;
