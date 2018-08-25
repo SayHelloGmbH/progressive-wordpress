@@ -21,7 +21,7 @@ class Init {
 			set_transient( 'pwp-activation-message', true, 5 );
 		} );
 		add_action( 'pwp_on_update', function ( $old_version, $new_version ) {
-			$v = '1.15.5';
+			$v = '2.0.0';
 			if ( version_compare( $v, $new_version, '<=' ) && version_compare( $v, $old_version, '>' ) ) {
 				set_transient( 'pwp-v2-message', true, 5 );
 			}
