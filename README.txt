@@ -38,12 +38,12 @@ Progressive WordPress offers a lot of possibilities for developers the extend it
 
 == Screenshots ==
 
-1. Make your website installable
-2. Create a Web App Manifest..
-3. ..no coding skills required
-4. Make your app ready for offline use
+1. Discover what's possible
+2. Make your website installable
+3. Create a Web App Manifest..
+4. ..no coding skills required
 5. Manage the registered devices
-6. create a push notification from the admin intefrace
+6. create a push notification right from the admin intefrace
 7. let the magic happen
 
 == Installation ==
