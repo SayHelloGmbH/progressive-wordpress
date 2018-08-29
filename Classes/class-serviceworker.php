@@ -87,13 +87,11 @@ class Serviceworker {
 		}
 		if ( isset( $GLOBALS['wp']->query_vars['wp_service_worker'] ) ) {
 			if ( 1 == $GLOBALS['wp']->query_vars['wp_service_worker'] ) {
-				if ( file_exists( $this->sw_path ) ) {
-					header( 'Content-Type: text/javascript; charset=utf-8' );
-					echo "/* PWP register */\n";
-					echo pwp_get_instance()->Offlineusage->get_sw_content();
-					echo pwp_get_instance()->Push->get_sw_content();
-					exit;
-				}
+				header( 'Content-Type: text/javascript; charset=utf-8' );
+				echo "/* PWP register */\n";
+				echo pwp_get_instance()->Offlineusage->get_sw_content();
+				echo pwp_get_instance()->Push->get_sw_content();
+				exit;
 			}
 		}
 	}

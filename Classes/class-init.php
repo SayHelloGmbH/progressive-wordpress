@@ -30,6 +30,7 @@ class Init {
 
 		// Plugin Overview
 		add_filter( 'plugin_action_links_progressive-wordpress/progressive-wordpress.php', [ $this, 'settings_action_link' ] );
+		add_filter( 'plugin_action_links_progressive-wp/progressive-wordpress.php', [ $this, 'settings_action_link' ] );
 
 		// Assets
 		add_action( 'wp_enqueue_scripts', [ $this, 'add_assets' ] );
