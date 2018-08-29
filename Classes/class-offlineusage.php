@@ -249,7 +249,7 @@ class Offlineusage {
 				//$c .= "const handler = (args) => workbox.strategies.{$strategy}({ cacheName: PwpSwVersion + '-{$key}'}).handle(args).then((response) => (!response) ? caches.match('{$offline_url}') : response);\n";
 				//$c .= "workbox.routing.registerRoute(new RegExp('{$values['regex']}'), handler);\n";
 			} else {
-				//$c .= "workbox.routing.registerRoute( new RegExp('{$values['regex']}'), workbox.strategies.{$strategy}({ cacheName: PwpSwVersion + '-{$key}'}) );\n";
+				$c .= "workbox.routing.registerRoute( new RegExp('{$values['regex']}'), workbox.strategies.{$strategy}({ cacheName: PwpSwVersion + '-{$key}'}) );\n";
 			}
 		}
 
