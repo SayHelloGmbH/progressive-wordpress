@@ -240,7 +240,7 @@ class Offlineusage {
 		$c .= 'importScripts(\'' . $plugin_uri . 'assets/workbox-v3.4.1/workbox-sw.js\');';
 		$c .= "\nif (workbox) {\n";
 		$c .= "\nworkbox.setConfig({debug: true});\n";
-		$c .= "workbox.precaching.precache({$pre_cache});\n";
+		//$c .= "workbox.precaching.precache({$pre_cache});\n";
 		foreach ( array_reverse( $this->routes, true ) as $key => $values ) {
 			$strategy = pwp_get_setting( 'offline-strategy-' . $key );
 			if ( 'default' == $key && 'page' == get_post_type( pwp_get_setting( 'offline-page' ) ) ) {
