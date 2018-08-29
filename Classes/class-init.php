@@ -85,7 +85,7 @@ class Init {
 						<h2 class="pwp-features__title"><?php echo pwp_icon( 'pwp-installable' ) . ' ' . __( 'Add to homescreen', 'pwp' ) ?></h2>
 						<div class="pwp-features__content">
 							<p><?php _e( 'Provide an <b>integrated</b> user experience!', 'pwp' ); ?></p>
-							<p><?php _e( 'Progressive WordPress makes it easy to encurage users to add your website to their homescreen. But thats not all. It also allows you to control the display behaviour of your website so it will be shown without any browser elements. Just like a native app.', 'pwp' ); ?></p>
+							<p><?php _e( 'Progressive WordPress makes it easy to encourage users to add your website to their homescreen. But that\'s not all. It also allows you to control the display behaviour of your website so it will be shown without any browser elements. Just like a native app.', 'pwp' ); ?></p>
 						</div>
 						<div class="pwp-features__footer">
 							<div class="pwp-features__status">
@@ -112,7 +112,7 @@ class Init {
 						<h2 class="pwp-features__title"><?php echo pwp_icon( 'pwp-offline' ) . ' ' . __( 'Offline usage', 'pwp' ) ?></h2>
 						<div class="pwp-features__content">
 							<p><?php _e( 'Make your website <b>reliable</b>. Even on flaky internet connections!', 'pwp' ); ?></p>
-							<p><?php _e( 'No connection? No problem. Progressive WordPress pre-caches all critical assets of your website, as well as all visited resources. So if theres no internet connection it will serve the resources from the local storage. No more error pages!', 'pwp' ); ?></p>
+							<p><?php _e( 'No connection? No problem. Progressive WordPress pre-caches all critical assets of your website, as well as all visited resources. So if there\'s no internet connection it will serve the resources from the local storage. No more error downasaur!', 'pwp' ); ?></p>
 						</div>
 						<div class="pwp-features__footer">
 							<div class="pwp-features__status">
@@ -123,7 +123,7 @@ class Init {
 									echo '</span>';
 								} else {
 									// translators: %s = page title
-									echo '<span class="pwp-features__tooltip" data-pwp-features-tooltip="' . esc_attr( sprintf( __( '"%s" is selected as a page for offline fallback. Other reasources will be cached automatically.', 'pwp' ), get_the_title( pwp_get_setting( 'offline-page' ) ) ) ) . '">';
+									echo '<span class="pwp-features__tooltip" data-pwp-features-tooltip="' . esc_attr( sprintf( __( '"%s" has been selected as a page for offline fallback. Other resources will be cached automatically.', 'pwp' ), get_the_title( pwp_get_setting( 'offline-page' ) ) ) ) . '">';
 									echo pwp_icon( 'check' );
 									echo '</span>';
 								}
@@ -136,7 +136,7 @@ class Init {
 						<h2 class="pwp-features__title"><?php echo pwp_icon( 'pwp-push' ) . ' ' . __( 'Push notifications', 'pwp' ) ?></h2>
 						<div class="pwp-features__content">
 							<p><?php _e( 'Keep your users <b>engaged</b> by sending push notifications!', 'pwp' ); ?></p>
-							<p><?php _e( 'You just published new content and you want to let everyone know? Why not send a push notifications? Progressive WordPress has an integrated connection to Firebase that lets you manage registered devices and send push notifications to all or selected devices!', 'pwp' ); ?></p>
+							<p><?php _e( 'You just published new content and you want to let everyone know? Why not send a push notification? Progressive WordPress has an integrated connection to Firebase that lets you manage registered devices and send push notifications to all or selected devices!', 'pwp' ); ?></p>
 						</div>
 						<div class="pwp-features__footer">
 							<div class="pwp-features__status">
@@ -176,7 +176,7 @@ class Init {
 							<p>
 								<?php
 								$sw_link = 'https://caniuse.com/#feat=serviceworkers';
-								echo __( 'To deliver app-like features this plugin uses a serviceworker.js file. This technology is not yet supported in all browsers!', 'pwp' ) . '</b><br><a href="' . $sw_link . '" target="_blank">' . $sw_link . '</a>';
+								echo __( 'To deliver app-like features this plugin uses a Service Worker. This technology is not yet supported in all browsers!', 'pwp' ) . '</b><br><a href="' . $sw_link . '" target="_blank">' . $sw_link . '</a>';
 								?>
 							</p>
 							<p>

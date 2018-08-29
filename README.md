@@ -3,27 +3,24 @@
 ## Description
 This plugin adds progressive web app features to your WordPress site.
 
-### Web App Manifest
-Create a web app manifest using the WordPress backend. **No coding skills required!**
+###Add to homescreen
+Provide an **integrated** user experience!
 
-### Installable
-Provide an awesome app-like experience while making your website installable. It uses the data defined in manifest.json.
+Progressive WordPress makes it easy to encourage users to add your website to their homescreen. But that's not all. It also allows you to control the display behaviour of your website so it will be shown without any browser elements. Just like a native app.
 
-### Offline usage
-No connection? No problem!  
-This feature allows you to provide offline usage for your website.
-A copy of each page is stored in the browser cache as the visitor views it. This allows a visitor to load any previously viewed page while they are offline.  The plugin also defines a special “offline page”, which allows you to customize a message and the experience if the app is offline and the page is not in the cache.
+###Offline usage
 
-### Push notifications
+Make your website **reliable**. Even on flaky internet connections!
+
+No connection? No problem. Progressive WordPress pre-caches all critical assets of your website, as well as all visited resources. So if there's no internet connection it will serve the resources from the local storage. No more error downasaur!
+
+###Push notifications
 
 **Send push notifications from the WP Admin interface!**
 
-This plugin uses Firebase Cloud Messaging as a messaging service: [https://firebase.google.com/](https://firebase.google.com/)  
-Please register your application there. You will need the `Server Key` and the `Sender ID`.
+Keep your users **engaged** by sending push notifications!
 
-Progressive WordPress comes with an integrated notification button where the user can register an unregister for push notification. You can either use the built in fixed button from the admin panel or you could have a look at the **Developers** section.
-
-After those steps you will have an overview about all registered devices, you can manage them and you can send push notifications to all of them or selected devices. Awesome, right!?
+You just published new content and you want to let everyone know? Why not send a push notification? Progressive WordPress has an integrated connection to Firebase that lets you manage registered devices and send push notifications to all or selected devices!
 
 ## Developers
 Progressive WordPress offers a lot of possibilities for developers the extend it the way they need it.
@@ -45,11 +42,8 @@ function myplugin_manifest_values( $values ) {
     $values['new'] = 'New';
     return $values; //needs to be valid an array (will be json_endoded)
 }
-add_filter( 'pwp_manifest_values', 'myplugin_manifest_values' );
+add_filter( 'web_app_manifest', 'myplugin_manifest_values' );
 ```
-**Regenerate manifest:**  
-The Manifest (`pwp-manifest.json`) will be regenerated as soon some plugin settings are saved.
-You can regenerate it by using `pwp_manifest_regenerate();`.
 
 ### Push notifications
 **customoize Button**  
@@ -88,20 +82,20 @@ You can then use the JS functions `pwpRegisterPushDevice();` and `pwpDeregisterP
 
 ## Changelog
 
-## 2.0.0
+### 2.0.0
 * Complete UI over-worked
+* Offline support for Google Analytics
 * Settings renamed and rearranged
 * Manifest Icon is now the same as Site Icon
 * Added [Workbox v3.4.1](https://developers.google.com/web/tools/workbox/)
 * Choose caching strategies for different request types
-* Offline support for Google Analytics
 * Future proof: Added support for the [PWA feature plugin](https://github.com/xwp/pwa-wp)
 
-## 1.3.2
+### 1.3.2
 * Bugfix: Firebase Serverkey validation
 * Bugfix: upload images on settings page
 
-## 1.3.1
+### 1.3.1
 * messed up some SVN-deployment
 
 ### 1.3.0
