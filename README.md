@@ -84,7 +84,7 @@ You can then use the JS functions `pwpRegisterPushDevice();` and `pwpDeregisterP
 
 ### 2.0.0
 * Complete UI over-worked
-* Offline support for Google Analytics
+* Offline support for Google Analytics!
 * Settings renamed and rearranged
 * Manifest Icon is now the same as Site Icon
 * Added [Workbox v3.4.1](https://developers.google.com/web/tools/workbox/)
