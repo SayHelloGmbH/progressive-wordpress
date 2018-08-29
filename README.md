@@ -3,18 +3,18 @@
 ## Description
 This plugin adds progressive web app features to your WordPress site.
 
-###Add to homescreen
+### Add to homescreen
 Provide an **integrated** user experience!
 
 Progressive WordPress makes it easy to encourage users to add your website to their homescreen. But that's not all. It also allows you to control the display behaviour of your website so it will be shown without any browser elements. Just like a native app.
 
-###Offline usage
+### Offline usage
 
 Make your website **reliable**. Even on flaky internet connections!
 
 No connection? No problem. Progressive WordPress pre-caches all critical assets of your website, as well as all visited resources. So if there's no internet connection it will serve the resources from the local storage. No more error downasaur!
 
-###Push notifications
+### Push notifications
 
 **Send push notifications from the WP Admin interface!**
 
