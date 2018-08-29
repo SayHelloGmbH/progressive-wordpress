@@ -23,7 +23,7 @@ Keep your users **engaged** by sending push notifications!
 You just published new content and you want to let everyone know? Why not send a push notification? Progressive WordPress has an integrated connection to Firebase that lets you manage registered devices and send push notifications to all or selected devices!
 
 ## Developers
-Progressive WordPress offers a lot of possibilities for developers the extend it the way they need it.
+Progressive WordPress offers a lot of possibilities for developers the extend it the way you need it.
 
 ### ServiceWorker
 **Add pre-cache resource:**  
