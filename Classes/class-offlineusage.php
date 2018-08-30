@@ -239,15 +239,28 @@ class Offlineusage {
 		$c = '';
 		$c .= 'importScripts(\'' . $plugin_uri . 'assets/workbox-v3.4.1/workbox-sw.js\');';
 		$c .= "\nif (workbox) {\n";
-		$c .= "\nworkbox.setConfig({debug: true});\n";
+		//$c .= "\nworkbox.setConfig({debug: true});\n";
 		$c .= "workbox.precaching.precache({$pre_cache});\n";
+		$c .= "workbox.routing.registerRoute(/wp-admin(.*)|(.*)preview=true(.*)/, workbox.strategies.networkOnly());\n";
 		foreach ( array_reverse( $this->routes, true ) as $key => $values ) {
 			$strategy = pwp_get_setting( 'offline-strategy-' . $key );
 			if ( 'default' == $key && 'page' == get_post_type( pwp_get_setting( 'offline-page' ) ) ) {
 				$offline_url = get_permalink( pwp_get_setting( 'offline-page' ) );
 
-				//$c .= "const handler = (args) => workbox.strategies.{$strategy}({ cacheName: PwpSwVersion + '-{$key}'}).handle(args).then((response) => (!response) ? caches.match('{$offline_url}') : response);\n";
+				//$c .= "const handler = (args) => workbox.strategies.{$strategy}({ cacheName: PwpSwVersion + '-{$key}'}).handle(args).then((response) => {console.log(response);if(!response) { caches.match('{$offline_url}'); }else{ response;}});\n";
 				//$c .= "workbox.routing.registerRoute(new RegExp('{$values['regex']}'), handler);\n";
+				$c .= "workbox.routing.registerRoute(
+					new RegExp('{$values['regex']}'),
+					async (args) => {
+						try {
+							const response = await workbox.strategies.{$strategy}({ cacheName: PwpSwVersion + '-{$key}'}).handle(args);
+							return response || await caches.match('{$offline_url}');
+						} catch (error) {
+							console.log('catch:',error);
+							return await caches.match('{$offline_url}');
+						}
+					}
+				);";
 			} else {
 				$c .= "workbox.routing.registerRoute( new RegExp('{$values['regex']}'), workbox.strategies.{$strategy}({ cacheName: PwpSwVersion + '-{$key}'}) );\n";
 			}
