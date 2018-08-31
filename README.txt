@@ -66,6 +66,11 @@ A development version of this plugin is hosted on GitHub. If you have any ideas 
 [https://github.com/SayHelloGmbH/progressive-wordpress](https://github.com/SayHelloGmbH/progressive-wordpress)
 
 == Changelog ==
+= 2.0.1 =
+* New caching strategy "Network Only"
+* ServiceWorker minify
+* Precache fixes
+
 = 2.0.0 =
 * Complete UI over-worked
 * Settings renamed and rearranged

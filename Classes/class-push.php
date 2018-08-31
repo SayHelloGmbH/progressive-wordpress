@@ -66,6 +66,12 @@ class Push {
 			$push_content .= file_get_contents( $push_file );
 		}
 
+		$path = plugin_dir_path( pwp_get_instance()->file ) . 'Classes/Libs';
+		require_once $path . '/minify/autoload.php';
+		require_once $path . '/path-converter/autoload.php';
+		$minifier     = new \MatthiasMullie\Minify\JS( $push_content );
+		$push_content = $minifier->minify();
+
 		return $push_content;
 
 	}

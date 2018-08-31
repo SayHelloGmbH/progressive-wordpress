@@ -82,6 +82,11 @@ You can then use the JS functions `pwpRegisterPushDevice();` and `pwpDeregisterP
 
 ## Changelog
 
+### 2.0.1
+* New caching strategy "Network Only"
+* ServiceWorker minify
+* Precache fixes
+
 ### 2.0.0
 * Complete UI over-worked
 * Offline support for Google Analytics!
