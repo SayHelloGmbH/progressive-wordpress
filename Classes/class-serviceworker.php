@@ -28,6 +28,9 @@ class Serviceworker {
 		foreach ( [ 'wp_print_scripts', 'admin_print_scripts', 'customize_controls_print_scripts', 'login_footer', 'after_signup_form', 'activate_wp_head' ] as $filter ) {
 			add_filter( $filter, [ $this, 'register_sw' ], 9 );
 		}
+
+		add_filter( 'wp_print_scripts', [ $this, 'amp_enqueue_sw_module' ] );
+		add_action( 'wp_footer', [ $this, 'amp_register_sw' ] );
 	}
 
 	public function ssl_error_notice() {
@@ -109,6 +112,9 @@ class Serviceworker {
 	}
 
 	public function register_sw() {
+		if ( function_exists( 'is_amp_endpoint' ) && is_amp_endpoint() ) {
+			return;
+		}
 		if ( function_exists( 'wp_register_service_worker' ) || ! isset( $_SERVER['HTTPS'] ) ) {
 			return;
 		}
@@ -117,15 +123,43 @@ class Serviceworker {
 			if (navigator.serviceWorker) {
 				window.addEventListener('load', function () {
 					navigator.serviceWorker.register(
-						<?php
-						echo wp_json_encode( add_query_arg( [
-							'wp_service_worker' => 1,
-						], home_url( '/', 'https' ) ) );
-						?>, {"scope": "\/"}
+						<?php echo $this->get_sw_url(); ?>, {"scope": "\/"}
 					);
 				});
 			}
 		</script>
 		<?php
+	}
+
+	public function amp_enqueue_sw_module() {
+		if ( ! function_exists( 'is_amp_endpoint' ) || ! is_amp_endpoint() ) {
+			return;
+		}
+		?>
+		<script async custom-element="amp-install-serviceworker" src="https://cdn.ampproject.org/v0/amp-install-serviceworker-0.1.js"></script>
+		<?php
+	}
+
+	public function amp_register_sw() {
+		if ( ! function_exists( 'is_amp_endpoint' ) || ! is_amp_endpoint() ) {
+			return;
+		}
+		?>
+		<amp-install-serviceworker
+			src="<?php echo $this->get_sw_url(); ?>"
+			data-iframe-src="<%host%>/sw.html"
+			layout="nodisplay">
+		</amp-install-serviceworker>
+		<?php
+	}
+
+	/**
+	 * Helpers
+	 */
+
+	private function get_sw_url() {
+		return wp_json_encode( add_query_arg( [
+			'wp_service_worker' => 1,
+		], home_url( '/', 'https' ) ) );
 	}
 }
