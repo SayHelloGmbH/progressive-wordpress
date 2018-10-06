@@ -255,13 +255,16 @@ class Offlineusage {
 		//$c .= "\nworkbox.setConfig({debug: true});\n";
 		$c .= "workbox.precaching.precache({$pre_cache});\n";
 		$c .= "workbox.routing.registerRoute(/wp-admin(.*)|(.*)preview=true(.*)/, workbox.strategies.networkOnly());\n";
+
+		// AMP
 		if ( pwp_supports_amp() ) {
 			$c .= "workbox.routing.registerRoute(/(.*)cdn\.ampproject\.org(.*)/, workbox.strategies.staleWhileRevalidate({cacheName: PwpSwVersion + '-amp'}));\n";
 		}
-
 		// Google Fonts
 		$c .= "workbox.routing.registerRoute(/(.*)fonts\.googleapis\.com(.*)/, workbox.strategies.staleWhileRevalidate({cacheName: PwpSwVersion + '-google-fonts'}));\n";
 		$c .= "workbox.routing.registerRoute(/(.*)fonts\.gstatic\.com(.*)/, workbox.strategies.cacheFirst({cacheName: PwpSwVersion + '-google-fonts'}));\n";
+		// Gravatar
+		$c .= "workbox.routing.registerRoute(/(.*)secure\.gravatar\.com(.*)/, workbox.strategies.staleWhileRevalidate({cacheName: PwpSwVersion + '-gravatar'}));\n";
 		foreach ( array_reverse( $this->routes, true ) as $key => $values ) {
 			$strategy = pwp_get_setting( 'offline-strategy-' . $key );
 			if ( 'default' == $key && 'page' == get_post_type( pwp_get_setting( 'offline-page' ) ) ) {
