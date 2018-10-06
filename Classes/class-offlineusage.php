@@ -25,7 +25,7 @@ class Offlineusage {
 			],
 			'images'  => [
 				'name'    => __( 'Caching strategy for images', 'pwp' ),
-				'regex'   => get_site_url() . '.*\.(png|jpg|jpeg|gif)',
+				'regex'   => get_site_url() . '.*\.(png|jpg|jpeg|gif|ico)',
 				'default' => 'cacheFirst',
 			],
 			'fonts'   => [
