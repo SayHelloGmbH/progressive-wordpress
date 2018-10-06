@@ -157,3 +157,15 @@ function pwp_supports_amp() {
 
 	return false;
 }
+
+function pwp_is_amp() {
+
+	/**
+	 * Support for https://wordpress.org/plugins/amp/
+	 */
+	if ( function_exists( 'amp_get_slug' ) ) {
+		return ( 'amp' == amp_get_slug() );
+	}
+
+	return false;
+}
