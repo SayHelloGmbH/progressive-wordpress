@@ -296,10 +296,10 @@ class Offlineusage {
 			$c .= file_get_contents( $delete_file );
 		}
 
-		$cache_version = hash( 'crc32', $c, false );
-		$cache_version = "pwp-{$cache_version}";
+		$cache_hash    = hash( 'crc32', $c, false );
+		$cache_version = "pwp-{$cache_hash}";
 		if ( pwp_is_amp() ) {
-			$cache_version = "pwp-amp-{$cache_version}";
+			$cache_version = "pwp-amp-{$cache_hash}";
 		}
 
 		$path = plugin_dir_path( pwp_get_instance()->file ) . 'Classes/Libs';

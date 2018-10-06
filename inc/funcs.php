@@ -147,8 +147,9 @@ function pwp_icon( $icon ) {
 }
 
 function pwp_is_amp() {
-	if ( function_exists( 'is_amp_endpoint' ) && is_amp_endpoint() ) {
-		return true;
+	if ( function_exists( 'amp_get_slug' ) ) {
+		return ( 'amp' == amp_get_slug() );
 	}
+
 	return false;
 }
