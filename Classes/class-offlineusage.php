@@ -255,7 +255,7 @@ class Offlineusage {
 		//$c .= "\nworkbox.setConfig({debug: true});\n";
 		$c .= "workbox.precaching.precache({$pre_cache});\n";
 		$c .= "workbox.routing.registerRoute(/wp-admin(.*)|(.*)preview=true(.*)/, workbox.strategies.networkOnly());\n";
-		if(pwp_is_amp()){
+		if ( pwp_is_amp() ) {
 			$c .= "workbox.routing.registerRoute(/(.*)cdn\.ampproject\.org(.*)/, workbox.strategies.staleWhileRevalidate());\n";
 		}
 		foreach ( array_reverse( $this->routes, true ) as $key => $values ) {
