@@ -27,7 +27,7 @@ class Manifest {
 		 */
 
 		add_action( 'rest_api_init', [ $this, 'register_manifest_rest_route' ] );
-		add_action( 'wp_head', [ $this, 'manifest_link_and_meta' ] );
+		add_action( ( pwp_is_amp() ? 'wp' : 'wp_head' ), [ $this, 'manifest_link_and_meta' ] );
 	}
 
 	public function register_settings() {
