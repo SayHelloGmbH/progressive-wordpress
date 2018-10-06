@@ -231,7 +231,7 @@ class Offlineusage {
 	}
 
 	public function pre_cache_amp( $caches ) {
-		if ( pwp_supports_amp()() ) {
+		if ( pwp_supports_amp() ) {
 			$caches[] = 'https://cdn.ampproject.org/v0.js';
 			$caches[] = 'https://cdn.ampproject.org/v0/amp-install-serviceworker-0.1.js';
 			$caches[] = 'https://cdn.ampproject.org/shadow-v0.js';
@@ -255,7 +255,7 @@ class Offlineusage {
 		//$c .= "\nworkbox.setConfig({debug: true});\n";
 		$c .= "workbox.precaching.precache({$pre_cache});\n";
 		$c .= "workbox.routing.registerRoute(/wp-admin(.*)|(.*)preview=true(.*)/, workbox.strategies.networkOnly());\n";
-		if ( pwp_supports_amp()() ) {
+		if ( pwp_supports_amp() ) {
 			$c .= "workbox.routing.registerRoute(/(.*)cdn\.ampproject\.org(.*)/, workbox.strategies.staleWhileRevalidate());\n";
 		}
 		foreach ( array_reverse( $this->routes, true ) as $key => $values ) {
