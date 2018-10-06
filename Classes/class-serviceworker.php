@@ -35,7 +35,7 @@ class Serviceworker {
 
 		add_filter( 'wp_print_scripts', [ $this, 'amp_enqueue_sw_module' ] );
 		add_filter( 'amp_post_template_head', [ $this, 'amp_enqueue_sw_module' ] ); // https://wordpress.org/plugins/accelerated-mobile-pages/
-		add_action( 'wp_footer', [ $this, 'amp_register_sw' ] ); // todo: Not yet working
+		add_action( 'wp_footer', [ $this, 'amp_register_sw' ] );
 		add_action( 'amp_post_template_footer', [ $this, 'amp_register_sw' ] ); // https://wordpress.org/plugins/accelerated-mobile-pages/
 		add_action( 'parse_request', [ $this, 'wp_swamp_register' ] );
 		add_filter( 'query_vars', [ $this, 'wp_add_swamp_query_var' ] );
