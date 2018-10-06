@@ -231,7 +231,7 @@ class Offlineusage {
 	}
 
 	public function pre_cache_amp( $caches ) {
-		if ( pwp_is_amp() ) {
+		if ( pwp_supports_amp()() ) {
 			$caches[] = 'https://cdn.ampproject.org/v0.js';
 			$caches[] = 'https://cdn.ampproject.org/v0/amp-install-serviceworker-0.1.js';
 			$caches[] = 'https://cdn.ampproject.org/shadow-v0.js';
@@ -255,7 +255,7 @@ class Offlineusage {
 		//$c .= "\nworkbox.setConfig({debug: true});\n";
 		$c .= "workbox.precaching.precache({$pre_cache});\n";
 		$c .= "workbox.routing.registerRoute(/wp-admin(.*)|(.*)preview=true(.*)/, workbox.strategies.networkOnly());\n";
-		if ( pwp_is_amp() ) {
+		if ( pwp_supports_amp()() ) {
 			$c .= "workbox.routing.registerRoute(/(.*)cdn\.ampproject\.org(.*)/, workbox.strategies.staleWhileRevalidate());\n";
 		}
 		foreach ( array_reverse( $this->routes, true ) as $key => $values ) {
@@ -287,20 +287,13 @@ class Offlineusage {
 		}
 		$c .= "}\n\n";
 
-		if ( pwp_is_amp() ) {
-			$delete_file = plugin_dir_path( pwp_get_instance()->file ) . '/assets/serviceworker/delete-cache-amp.js';
-		} else {
-			$delete_file = plugin_dir_path( pwp_get_instance()->file ) . '/assets/serviceworker/delete-cache.js';
-		}
+		$delete_file = plugin_dir_path( pwp_get_instance()->file ) . '/assets/serviceworker/delete-cache.js';
 		if ( file_exists( $delete_file ) ) {
 			$c .= file_get_contents( $delete_file );
 		}
 
 		$cache_hash    = hash( 'crc32', $c, false );
 		$cache_version = "pwp-{$cache_hash}";
-		if ( pwp_is_amp() ) {
-			$cache_version = "pwp-amp-{$cache_hash}";
-		}
 
 		$path = plugin_dir_path( pwp_get_instance()->file ) . 'Classes/Libs';
 		require_once $path . '/minify/autoload.php';

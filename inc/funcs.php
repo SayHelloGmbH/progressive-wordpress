@@ -146,9 +146,13 @@ function pwp_icon( $icon ) {
 	}
 }
 
-function pwp_is_amp() {
+function pwp_supports_amp() {
+
+	/**
+	 * Support for https://wordpress.org/plugins/amp/
+	 */
 	if ( function_exists( 'amp_get_slug' ) ) {
-		return ( 'amp' == amp_get_slug() );
+		return true;
 	}
 
 	return false;
