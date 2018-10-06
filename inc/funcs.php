@@ -164,7 +164,10 @@ function pwp_is_amp() {
 	 * Support for https://wordpress.org/plugins/amp/
 	 */
 	if ( function_exists( 'amp_get_slug' ) ) {
-		return ( 'amp' == amp_get_slug() );
+		$url     = ( isset( $_SERVER['HTTPS'] ) && $_SERVER['HTTPS'] === 'on' ? "https" : "http" ) . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+		$amp_end = '/' . amp_get_slug() . '/';
+
+		return ( substr( $url, - strlen( $amp_end ) ) === $amp_end );
 	}
 
 	return false;
