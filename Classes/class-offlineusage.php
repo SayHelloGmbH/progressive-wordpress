@@ -255,6 +255,9 @@ class Offlineusage {
 		//$c .= "\nworkbox.setConfig({debug: true});\n";
 		$c .= "workbox.precaching.precache({$pre_cache});\n";
 		$c .= "workbox.routing.registerRoute(/wp-admin(.*)|(.*)preview=true(.*)/, workbox.strategies.networkOnly());\n";
+		if(pwp_is_amp()){
+			$c .= "workbox.routing.registerRoute(/(.*)cdn\.ampproject\.org(.*)/, workbox.strategies.staleWhileRevalidate());\n";
+		}
 		foreach ( array_reverse( $this->routes, true ) as $key => $values ) {
 			$strategy = pwp_get_setting( 'offline-strategy-' . $key );
 			if ( 'default' == $key && 'page' == get_post_type( pwp_get_setting( 'offline-page' ) ) ) {
