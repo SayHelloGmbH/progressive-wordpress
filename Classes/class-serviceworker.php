@@ -112,7 +112,7 @@ class Serviceworker {
 	}
 
 	public function register_sw() {
-		if ( function_exists( 'is_amp_endpoint' ) && is_amp_endpoint() ) {
+		if ( pwp_is_amp() ) {
 			return;
 		}
 		if ( function_exists( 'wp_register_service_worker' ) || ! isset( $_SERVER['HTTPS'] ) ) {
@@ -132,7 +132,7 @@ class Serviceworker {
 	}
 
 	public function amp_enqueue_sw_module() {
-		if ( ! function_exists( 'is_amp_endpoint' ) || ! is_amp_endpoint() ) {
+		if ( ! pwp_is_amp() ) {
 			return;
 		}
 		?>
@@ -141,7 +141,7 @@ class Serviceworker {
 	}
 
 	public function amp_register_sw() {
-		if ( ! function_exists( 'is_amp_endpoint' ) || ! is_amp_endpoint() ) {
+		if ( ! pwp_is_amp() ) {
 			return;
 		}
 		?>

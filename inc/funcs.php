@@ -145,3 +145,10 @@ function pwp_icon( $icon ) {
 		return 'icon not found ' . $path_min . ' / ' . $path;
 	}
 }
+
+function pwp_is_amp() {
+	if ( function_exists( 'is_amp_endpoint' ) && is_amp_endpoint() ) {
+		return true;
+	}
+	return false;
+}

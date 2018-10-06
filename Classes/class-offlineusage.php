@@ -53,6 +53,7 @@ class Offlineusage {
 		add_filter( 'pwp_offline_precache', [ $this, 'pre_cache_frontpage' ], 2 );
 		add_filter( 'pwp_offline_precache', [ $this, 'pre_cache_offlinepage' ], 4 );
 		add_filter( 'pwp_offline_precache', [ $this, 'pre_cache_settingspage' ], 6 );
+		add_filter( 'pwp_offline_precache', [ $this, 'pre_cache_amp' ], 6 );
 	}
 
 	public function settings() {
@@ -229,6 +230,16 @@ class Offlineusage {
 		return $caches;
 	}
 
+	public function pre_cache_amp( $caches ) {
+		if ( pwp_is_amp() ) {
+			$caches[] = 'https://cdn.ampproject.org/v0.js';
+			$caches[] = 'https://cdn.ampproject.org/v0/amp-install-serviceworker-0.1.js';
+			$caches[] = 'https://cdn.ampproject.org/shadow-v0.js';
+		}
+
+		return $caches;
+	}
+
 	/**
 	 * Get ServiceWorker
 	 */
@@ -273,12 +284,20 @@ class Offlineusage {
 		}
 		$c .= "}\n\n";
 
-		$delete_file = plugin_dir_path( pwp_get_instance()->file ) . '/assets/serviceworker/delete-cache.js';
+		if ( pwp_is_amp() ) {
+			$delete_file = plugin_dir_path( pwp_get_instance()->file ) . '/assets/serviceworker/delete-cache-amp.js';
+		} else {
+			$delete_file = plugin_dir_path( pwp_get_instance()->file ) . '/assets/serviceworker/delete-cache.js';
+		}
 		if ( file_exists( $delete_file ) ) {
 			$c .= file_get_contents( $delete_file );
 		}
 
 		$cache_version = hash( 'crc32', $c, false );
+		$cache_version = "pwp-{$cache_version}";
+		if ( pwp_is_amp() ) {
+			$cache_version = "pwp-amp-{$cache_version}";
+		}
 
 		$path = plugin_dir_path( pwp_get_instance()->file ) . 'Classes/Libs';
 		require_once $path . '/minify/autoload.php';
@@ -286,6 +305,6 @@ class Offlineusage {
 		$minifier = new \MatthiasMullie\Minify\JS( $c );
 		$c        = $minifier->minify();
 
-		return "( function() {\nconst PwpSwVersion = 'pwp-{$cache_version}';\n" . $c . "\n} )();";
+		return "( function() {\nconst PwpSwVersion = '{$cache_version}';\n" . $c . "\n} )();";
 	}
 }
