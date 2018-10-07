@@ -161,51 +161,9 @@ function pwp_get_pages() {
 }
 
 function pwp_supports_amp() {
-
-	/**
-	 * Support for https://wordpress.org/plugins/amp/
-	 */
-	if ( function_exists( 'amp_get_slug' ) ) {
-		return 'amp';
-	}
-
-	/**
-	 * Support for https://wordpress.org/plugins/accelerated-mobile-pages/
-	 */
-	if ( function_exists( 'ampforwp_generate_endpoint' ) ) {
-		return 'ampforwp';
-	}
-
-	return false;
+	return apply_filters( 'pwp_site_supports_amp', false );
 }
 
 function pwp_is_amp() {
-
-	$amp_slug = pwp_get_amp_slug();
-	if ( ! $amp_slug ) {
-		return false;
-	}
-
-	$amp_slug = "/{$amp_slug}/";
-	$url      = ( isset( $_SERVER['HTTPS'] ) && $_SERVER['HTTPS'] === 'on' ? "https" : "http" ) . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
-
-	return ( substr( $url, - strlen( $amp_slug ) ) === $amp_slug );
-}
-
-function pwp_get_amp_slug() {
-	/**
-	 * Support for https://wordpress.org/plugins/amp/
-	 */
-	if ( function_exists( 'amp_get_slug' ) ) {
-		return amp_get_slug();
-	}
-
-	/**
-	 * Support for https://wordpress.org/plugins/accelerated-mobile-pages/
-	 */
-	if ( function_exists( 'ampforwp_generate_endpoint' ) ) {
-		return ampforwp_generate_endpoint();
-	}
-
-	return false;
+	return apply_filters( 'pwp_current_page_is_amp', false );
 }

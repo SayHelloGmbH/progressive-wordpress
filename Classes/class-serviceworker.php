@@ -132,7 +132,7 @@ class Serviceworker {
 	 * Helpers
 	 */
 
-	private function get_sw_url( $encoded = true ) {
+	public function get_sw_url( $encoded = true ) {
 		$url = add_query_arg( [
 			'wp_service_worker' => 1,
 		], home_url( '/', 'https' ) );
