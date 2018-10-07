@@ -6,7 +6,7 @@ Plugin URI: https://github.com/SayHelloGmbH/progressive-wordpress
 Description: Turn your website into a Progressive Web App and make it installable, offline ready and send push notifications.
 Author: Nico Martin
 Author URI: https://nicomartin.ch
-Version: 2.0.1.16
+Version: 2.0.1.17
 Text Domain: pwp
 Domain Path: /languages
  */
@@ -114,6 +114,14 @@ if ( version_compare( $wp_version, '4.7', '<' ) || version_compare( PHP_VERSION,
 	require_once 'Classes/class-pushpost.php';
 	pwp_get_instance()->PushPost = new nicomartin\ProgressiveWordPress\PushPost();
 	pwp_get_instance()->PushPost->run();
+
+	/**
+	 * AMP
+	 */
+
+	require_once 'Classes/class-amp.php';
+	pwp_get_instance()->AMP = new nicomartin\ProgressiveWordPress\AMP();
+	pwp_get_instance()->AMP->run();
 
 	/**
 	 * Status

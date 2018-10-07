@@ -17,7 +17,6 @@ class Manifest {
 	public function run() {
 		add_action( 'pwp_settings', [ $this, 'register_settings' ] );
 		add_filter( $this->filter, [ $this, 'manifest_values' ] );
-		add_filter( $this->filter, [ $this, 'amp_start_url' ] );
 
 		/**
 		 * Todo: theme-color meta not correct if PWA Plugin activated
@@ -126,33 +125,6 @@ class Manifest {
 		}
 
 		return $manifest;
-	}
-
-	public function amp_start_url( $values ) {
-		if ( pwp_get_setting( 'manifest-starturl-amp' ) ) {
-
-			$url = pwp_get_setting( 'manifest-starturl' );
-
-			if ( pwp_supports_amp() == 'amp' && get_home_url() != $url ) {
-				$options = get_option( 'amp-options' );
-				if ( is_array( $options ) && array_key_exists( 'supported_post_types', $options ) && in_array( 'page', $options['supported_post_types'] ) ) {
-					$values['start_url'] = trailingslashit( $url ) . pwp_get_amp_slug() . '/';
-				}
-			} elseif ( pwp_supports_amp() == 'ampforwp' ) {
-				$options = get_option( 'redux_builder_amp' );
-				if ( get_home_url() == $url ) {
-					if ( array_key_exists( 'ampforwp-homepage-on-off-support', $options ) && $options['ampforwp-homepage-on-off-support'] ) {
-						$values['start_url'] = trailingslashit( $url ) . pwp_get_amp_slug() . '/';
-					}
-				} else {
-					if ( array_key_exists( 'amp-on-off-for-all-pages', $options ) && $options['amp-on-off-for-all-pages'] ) {
-						$values['start_url'] = trailingslashit( $url ) . pwp_get_amp_slug() . '/';
-					}
-				}
-			}
-		}
-
-		return $values;
 	}
 
 	public function register_manifest_rest_route() {
