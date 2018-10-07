@@ -146,17 +146,34 @@ function pwp_icon( $icon ) {
 	}
 }
 
+function pwp_get_pages() {
+	$pages = [];
+
+	foreach ( get_pages() as $page ) {
+		$pages[ get_permalink( $page ) ] = get_the_title( $page );
+	}
+
+	if ( ! array_key_exists( get_home_url(), $pages ) ) {
+		$pages = array_merge( [ get_home_url() => 'Front Page' ], $pages );
+	}
+
+	return $pages;
+}
+
 function pwp_supports_amp() {
 
 	/**
 	 * Support for https://wordpress.org/plugins/amp/
 	 */
 	if ( function_exists( 'amp_get_slug' ) ) {
-		return true;
+		return 'amp';
 	}
 
+	/**
+	 * Support for https://wordpress.org/plugins/accelerated-mobile-pages/
+	 */
 	if ( function_exists( 'ampforwp_generate_endpoint' ) ) {
-		return true;
+		return 'ampforwp';
 	}
 
 	return false;
@@ -164,27 +181,31 @@ function pwp_supports_amp() {
 
 function pwp_is_amp() {
 
-	$amp_slug = false;
+	$amp_slug = pwp_get_amp_slug();
+	if ( ! $amp_slug ) {
+		return false;
+	}
 
+	$amp_slug = "/{$amp_slug}/";
+	$url      = ( isset( $_SERVER['HTTPS'] ) && $_SERVER['HTTPS'] === 'on' ? "https" : "http" ) . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+
+	return ( substr( $url, - strlen( $amp_slug ) ) === $amp_slug );
+}
+
+function pwp_get_amp_slug() {
 	/**
 	 * Support for https://wordpress.org/plugins/amp/
 	 */
 	if ( function_exists( 'amp_get_slug' ) ) {
-		$amp_slug = '/' . amp_get_slug() . '/';
+		return amp_get_slug();
 	}
 
 	/**
 	 * Support for https://wordpress.org/plugins/accelerated-mobile-pages/
 	 */
 	if ( function_exists( 'ampforwp_generate_endpoint' ) ) {
-		$amp_slug = '/' . ampforwp_generate_endpoint() . '/';
+		return ampforwp_generate_endpoint();
 	}
 
-	if ( ! $amp_slug ) {
-		return false;
-	}
-
-	$url = ( isset( $_SERVER['HTTPS'] ) && $_SERVER['HTTPS'] === 'on' ? "https" : "http" ) . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
-
-	return ( substr( $url, - strlen( $amp_slug ) ) === $amp_slug );
+	return false;
 }

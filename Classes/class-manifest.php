@@ -17,6 +17,7 @@ class Manifest {
 	public function run() {
 		add_action( 'pwp_settings', [ $this, 'register_settings' ] );
 		add_filter( $this->filter, [ $this, 'manifest_values' ] );
+		add_filter( $this->filter, [ $this, 'amp_start_url' ] );
 
 		/**
 		 * Todo: theme-color meta not correct if PWA Plugin activated
@@ -42,15 +43,12 @@ class Manifest {
 			'after_field' => '<p class="pwp-smaller">' . __( 'max. 12 Chars', 'pwp' ) . '</p>',
 		] );
 
-		$pages = [];
-		if ( get_option( 'page_on_front' ) ) {
-			$pages[ get_permalink( get_option( 'page_on_front' ) ) ] = get_the_title( get_option( 'page_on_front' ) );
+		pwp_settings()->add_select( $section, 'manifest-starturl', __( 'Start Page', 'pwp' ), pwp_get_pages() );
+		if ( pwp_supports_amp() ) {
+			pwp_settings()->add_checkbox( $section, 'manifest-starturl-amp', __( 'AMP Start Page', 'pwp' ), false, [
+				'after_field' => '<p class="pwp-smaller">' . __( 'Use the AMP Version of the Start Page if available.', 'pwp' ) . '</p>',
+			] );
 		}
-		foreach ( get_pages() as $page ) {
-			$pages[ get_permalink( $page ) ] = get_the_title( $page );
-		}
-		pwp_settings()->add_select( $section, 'manifest-starturl', __( 'Start Page', 'pwp' ), $pages );
-
 		pwp_settings()->add_textarea( $section, 'manifest-description', __( 'Description', 'pwp' ), '', [] );
 
 		$query['autofocus[control]'] = 'site_icon';
@@ -128,6 +126,33 @@ class Manifest {
 		}
 
 		return $manifest;
+	}
+
+	public function amp_start_url( $values ) {
+		if ( pwp_get_setting( 'manifest-starturl-amp' ) ) {
+
+			$url = pwp_get_setting( 'manifest-starturl' );
+
+			if ( pwp_supports_amp() == 'amp' && get_home_url() != $url ) {
+				$options = get_option( 'amp-options' );
+				if ( is_array( $options ) && array_key_exists( 'supported_post_types', $options ) && in_array( 'page', $options['supported_post_types'] ) ) {
+					$values['start_url'] = trailingslashit( $url ) . pwp_get_amp_slug() . '/';
+				}
+			} elseif ( pwp_supports_amp() == 'ampforwp' ) {
+				$options = get_option( 'redux_builder_amp' );
+				if ( get_home_url() == $url ) {
+					if ( array_key_exists( 'ampforwp-homepage-on-off-support', $options ) && $options['ampforwp-homepage-on-off-support'] ) {
+						$values['start_url'] = trailingslashit( $url ) . pwp_get_amp_slug() . '/';
+					}
+				} else {
+					if ( array_key_exists( 'amp-on-off-for-all-pages', $options ) && $options['amp-on-off-for-all-pages'] ) {
+						$values['start_url'] = trailingslashit( $url ) . pwp_get_amp_slug() . '/';
+					}
+				}
+			}
+		}
+
+		return $values;
 	}
 
 	public function register_manifest_rest_route() {
