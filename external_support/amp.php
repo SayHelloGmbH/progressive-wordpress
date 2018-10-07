@@ -1,4 +1,9 @@
 <?php
+
+/**
+ * Plugin support for https://wordpress.org/plugins/amp/
+ */
+
 add_action( 'plugins_loaded', function () {
 
 	add_filter( 'pwp_site_supports_amp', '__return_true' );
