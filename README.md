@@ -25,7 +25,7 @@ You just published new content and you want to let everyone know? Why not send a
 #### Support for OneSignal
 Since Version 2.1.0 Progressive WordPress fully supports [OneSignal](https://onesignal.com/). It detects if the [OneSignal WordPress Plugin](https://wordpress.org/support/plugin/onesignal-free-web-push-notifications/) is active and uses their push messaging functionalities instead.
 
-## AMP ready
+## ⚡ AMP ready
 Progressive WordPress is the first PWA-Plugin for WordPress that also supports Accelerated Mobile Pages!  
 It precaches required resources, it adds special AMP caching strategies and it registers the ServiceWorker and the Web App Manifest also on AMP Pages.  
 Progressive WordPress currently supports [AMP for WordPress](https://wordpress.org/plugins/amp/) and [AMP for WP – Accelerated Mobile Pages](https://wordpress.org/plugins/accelerated-mobile-pages/).
@@ -90,10 +90,51 @@ You are also free to create your own button. The states are indicated as body cl
 
 You can then use the JS functions `pwpRegisterPushDevice();` and `pwpDeregisterPushDevice();`.
 
+### ⚡ AMP support
+Progressive WordPress currently supports [AMP for WordPress](https://wordpress.org/plugins/amp/) and [AMP for WP – Accelerated Mobile Pages](https://wordpress.org/plugins/accelerated-mobile-pages/).  
+You can easily make your AMP Theme or Plugin comatible with the following hooks:
+
+**Filter: `pwp_site_supports_amp`**
+
+Should be set to true is the website supports AMP
+```php
+add_filter( 'pwp_site_supports_amp', '__return_true' );
+```
+
+**Filter: `pwp_current_page_is_amp`**
+
+Should be set to true is the website supports AMP
+```php
+function myplugin_current_page_is_amp( $boolean ) {
+	if ( this_site_is_an_amp_site() ) {
+		$boolean = true;
+	}
+	return $boolean;
+}
+add_filter( 'pwp_current_page_is_amp', 'myplugin_current_page_is_amp' );
+```
+
+**Filter: `pwp_get_ampurl_from_url`**
+
+Should return the input-URL or the AMP-Version of this URL if exists.
+```php
+function myplugin_get_ampurl_from_url( $url ) {
+	if ( this_url_amp_url() ) {
+		$url = $url . 'amp/';
+	}
+	return $url;
+}
+add_filter( 'pwp_get_ampurl_from_url', 'myplugin_get_ampurl_from_url' );
+```
+
+You can find a working example here: [https://github.com/SayHelloGmbH/progressive-wordpress/blob/master/3rdparty-support/amp.php](https://github.com/SayHelloGmbH/progressive-wordpress/blob/master/3rdparty-support/amp.php)
+
+Your Theme or plugin should also support the `amp_post_template_head` and `amp_post_template_footer` actions.
+
 ## Changelog
 
 ### 2.1.0
-* AMP support!
+* AMP support ⚡
 	* Detect if AMP is supported
 	* Detect if current site is AMP
 	* register ServiceWorker for AMP

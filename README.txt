@@ -35,7 +35,7 @@ You just published new content and you want to let everyone know? Why not send a
 ** Support for OneSignal**
 Since Version 2.1.0 Progressive WordPress fully supports [OneSignal](https://onesignal.com/). It detects if the [OneSignal WordPress Plugin](https://wordpress.org/support/plugin/onesignal-free-web-push-notifications/) is active and uses their push messaging functionalities instead.
 
-= AMP ready =
+= ⚡ AMP ready =
 
 Progressive WordPress is the first PWA-Plugin for WordPress that also supports Accelerated Mobile Pages!
 It precaches required resources, it adds special AMP caching strategies and it registers the ServiceWorker and the Web App Manifest also on AMP Pages.
@@ -76,7 +76,7 @@ A development version of this plugin is hosted on GitHub. If you have any ideas 
 
 == Changelog ==
 = 2.1.0 =
-* AMP support!
+* AMP support ⚡
 	* Detect if AMP is supported
 	* Detect if current site is AMP
 	* register ServiceWorker for AMP
