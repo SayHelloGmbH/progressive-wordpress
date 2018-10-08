@@ -84,6 +84,9 @@ class PushPost {
 	public function settings() {
 
 		$post_types = get_option( 'pwp_post_types' );
+		if ( ! is_array( $post_types ) ) {
+			return;
+		}
 
 		$section_desc = __( 'This will add a meta box to the post edit screen, where you can easily send a push notification for this post.', 'pwp' );
 		// translators: `{post_title}` will be replaced with the post title.
