@@ -15,7 +15,6 @@ class Init {
 
 	public function run() {
 		// Basics Page
-		add_action( 'pwp_settings', [ $this, 'settings_intro' ] );
 		add_action( 'admin_menu', [ $this, 'add_menu_page' ] );
 		add_action( 'pwp_on_activate', function () {
 			set_transient( 'pwp-activation-message', true, 5 );
@@ -50,29 +49,6 @@ class Init {
 	/**
 	 * Basics Page
 	 */
-
-	public function settings_intro() {
-		$html = '';
-		// translators: Thank you for using plugin_name
-		$html .= '<p><b>' . sprintf( __( 'Thank you for using %s!', 'pwp' ), pwp_get_instance()->name ) . '</b></p>';
-		$html .= '<p>';
-		// translators: Why it was developed.
-		$html .= sprintf( __( 'This plugin was developed by %s to use progressive web app features for your WordPress website.', 'pwp' ), '<a href="https://nicomartin.ch" target="_blank">Nico Martin</a>' );
-		$html .= '</p><p>';
-		// translators: feature 1
-		$html .= __( 'You are able to create a web-app-manifest, which makes your website installable.', 'pwp' );
-		// translators: feature 2
-		$html     .= '<br>' . __( 'It also enables offline usage and you are able to send push notifications!', 'pwp' );
-		$html     .= '</p>';
-		$sw_link  = 'https://caniuse.com/#feat=serviceworkers';
-		$html     .= '<p><b>' . __( 'To deliver app-like features this plugin uses a serviceworker.js file. This technology is not yet supported in all browsers!', 'pwp' ) . '</b><br><a href="' . $sw_link . '" target="_blank">' . $sw_link . '</a></p>';
-		$buyabeer = '<a href="https://www.paypal.me/NicoMartin" target="_blank">' . __( 'buy me a beer', 'pwp' ) . '</a>';
-		$github   = '<a href="https://github.com/nico-martin/progressive-wordpress" target="_blank">GitHub</a>';
-		// translators: If you like this plugin feel free to buy me a beer or get involved in the development on GitHub
-		$html .= '<p>' . sprintf( __( 'If you like this plugin feel free to %1$s or get involved with the development on %2$s', 'pwp' ), $buyabeer, $github ) . '</p>';
-
-		$section = pwp_settings()->add_section( pwp_settings_page_main(), 'pwp_intro_text', '', $html );
-	}
 
 	public function add_menu_page() {
 		$icon = plugin_dir_url( pwp_get_instance()->file ) . '/assets/img/pwa-menu-icon.png';
@@ -137,27 +113,39 @@ class Init {
 						<h2 class="pwp-features__title"><?php echo pwp_icon( 'pwp-push' ) . ' ' . __( 'Push notifications', 'pwp' ) ?></h2>
 						<div class="pwp-features__content">
 							<p><?php _e( 'Keep your users <b>engaged</b> by sending push notifications!', 'pwp' ); ?></p>
-							<p><?php _e( 'You just published new content and you want to let everyone know? Why not send a push notification? Progressive WordPress has an integrated connection to Firebase that lets you manage registered devices and send push notifications to all or selected devices!', 'pwp' ); ?></p>
+							<?php if ( pwp_onesignal() ) { ?>
+								<p><?php printf( __( 'It looks you are using %s to send push notifications.', 'pwp' ), '<a href="https://onesignal.com" target="_blank">OneSignal</a>' ); ?></p>
+								<p><b><?php _e( 'Progressive WordPress is fully compatible with OneSignal!', 'pwp' ) ?></b></p>
+							<?php } else { ?>
+								<p><?php _e( 'You just published new content and you want to let everyone know? Why not send a push notification? Progressive WordPress has an integrated connection to Firebase that lets you manage registered devices and send push notifications to all or selected devices!', 'pwp' ); ?></p>
+							<?php } ?>
 						</div>
 						<div class="pwp-features__footer">
-							<div class="pwp-features__status">
-								<?php
-								if ( ! pwp_push_set() ) {
-									echo '<span class="pwp-features__tooltip pwp-features__tooltip--error" data-pwp-features-tooltip="' . esc_attr( __( 'Please enter your Firebase cloud messaging credentials to enable push notifications.', 'pwp' ) ) . '">';
-									echo pwp_icon( 'alert' );
-									echo '</span>';
-								} elseif ( empty( get_option( pwp_get_instance()->Push->devices_option ) ) ) {
-									echo '<span class="pwp-features__tooltip pwp-features__tooltip--error" data-pwp-features-tooltip="' . esc_attr( __( 'There are no registered devices. You might consider using the built in "Push Button".', 'pwp' ) ) . '">';
-									echo pwp_icon( 'alert' );
-									echo '</span>';
-								} else {
-									echo '<span class="pwp-features__tooltip" data-pwp-features-tooltip="' . esc_attr( __( 'All set up. Go ahead and inform your readers.', 'pwp' ) ) . '">';
-									echo pwp_icon( 'check' );
-									echo '</span>';
-								}
-								?>
-							</div>
-							<a class="pwp-features__configure button button--small" href="<?php echo admin_url( 'admin.php?page=pwp-push' ); ?>"><?php _e( 'configure', 'pwp' ); ?></a>
+							<?php if ( pwp_onesignal() ) { ?>
+								<div class="pwp-features__status">
+									<img style="width: 100px;" src="<?php echo trailingslashit( plugin_dir_url( pwp_get_instance()->file ) ) ?>assets/img/onesignal-logo.svg"/>
+								</div>
+								<a class="pwp-features__configure button button--small" href="<?php echo admin_url( 'admin.php?page=onesignal-push' ); ?>"><?php _e( 'OneSignal Settings', 'pwp' ); ?></a>
+							<?php } else { ?>
+								<div class="pwp-features__status">
+									<?php
+									if ( ! pwp_push_set() ) {
+										echo '<span class="pwp-features__tooltip pwp-features__tooltip--error" data-pwp-features-tooltip="' . esc_attr( __( 'Please enter your Firebase cloud messaging credentials to enable push notifications.', 'pwp' ) ) . '">';
+										echo pwp_icon( 'alert' );
+										echo '</span>';
+									} elseif ( empty( get_option( pwp_get_instance()->Push->devices_option ) ) ) {
+										echo '<span class="pwp-features__tooltip pwp-features__tooltip--error" data-pwp-features-tooltip="' . esc_attr( __( 'There are no registered devices. You might consider using the built in "Push Button".', 'pwp' ) ) . '">';
+										echo pwp_icon( 'alert' );
+										echo '</span>';
+									} else {
+										echo '<span class="pwp-features__tooltip" data-pwp-features-tooltip="' . esc_attr( __( 'All set up. Go ahead and inform your readers.', 'pwp' ) ) . '">';
+										echo pwp_icon( 'check' );
+										echo '</span>';
+									}
+									?>
+								</div>
+								<a class="pwp-features__configure button button--small" href="<?php echo admin_url( 'admin.php?page=pwp-push' ); ?>"><?php _e( 'configure', 'pwp' ); ?></a>
+							<?php } ?>
 						</div>
 					</div>
 					<div class="pwp-features__element pwp-features__element--large pwp-features__element--transparent">

@@ -32,6 +32,9 @@ Keep your users **engaged** by sending push notifications!
 
 You just published new content and you want to let everyone know? Why not send a push notification? Progressive WordPress has an integrated connection to Firebase that lets you manage registered devices and send push notifications to all or selected devices!
 
+** Support for OneSignal**
+Since Version 2.1.0 Progressive WordPress fully supports [OneSignal](https://onesignal.com/). It detects if the [OneSignal WordPress Plugin](https://wordpress.org/support/plugin/onesignal-free-web-push-notifications/) is active and uses their push messaging functionalities instead.
+
 == Developers ==
 Progressive WordPress offers a lot of possibilities for developers the extend it the way you need it.
 [https://github.com/SayHelloGmbH/progressive-wordpress#developers](https://github.com/SayHelloGmbH/progressive-wordpress#developers)
@@ -66,6 +69,9 @@ A development version of this plugin is hosted on GitHub. If you have any ideas 
 [https://github.com/SayHelloGmbH/progressive-wordpress](https://github.com/SayHelloGmbH/progressive-wordpress)
 
 == Changelog ==
+= 2.1.0 =
+* Support for [OneSignal](https://wordpress.org/support/plugin/onesignal-free-web-push-notifications/)
+
 = 2.0.1 =
 * New caching strategy "Network Only"
 * ServiceWorker minify
