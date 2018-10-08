@@ -1,7 +1,7 @@
 === Progressive WordPress (PWA) ===
 Contributors: nico_martin, sayhellogmbh
 Donate link: https://www.paypal.me/NicoMartin
-Tags: PWA, Progressive Web App, Progressive Web Application, progressive, installable, add to homescreen, offline, offline usage, push notifications, manifest, web app manifest, serviceworker
+Tags: PWA, Progressive Web App, Progressive Web Application, AMP, progressive, installable, add to homescreen, offline, offline usage, push notifications, OneSignal, manifest, web app manifest, serviceworker
 Requires at least: 4.7
 Tested up to: 4.9.8
 Stable tag: 2.1.0
@@ -62,6 +62,17 @@ Progressive WordPress offers a lot of possibilities for developers the extend it
 3. Done
 
 == Frequently Asked Questions ==
+
+= Does this work on AMP sites? =
+
+Yes! Progressive WordPress is the first PWA-Plugin that fully supports AMP! Register ServiceWorker on AMP, Precache AMP resources, use AMP as your web app start URL.
+It's currently compatible with [AMP for WordPress](https://wordpress.org/plugins/amp/), [AMP for WP – Accelerated Mobile Pages](https://wordpress.org/plugins/accelerated-mobile-pages/) and can [easily be configured](https://github.com/SayHelloGmbH/progressive-wordpress#-amp-support) for any AMP plugin or theme.
+
+= How can I use OneSignal? =
+
+By default, progressive WordPress uses google Firebase to send push notifications. Since version 2.1.0 it also supports [OneSignal](https://onesignal.com)!
+
+Progressive WordPress automatically detects if the official [OneSignal plugin](https://wordpress.org/support/plugin/onesignal-free-web-push-notifications/) is active and let's you use OneSignal instead of firebase.
 
 = Nothing happens after installation =
 
