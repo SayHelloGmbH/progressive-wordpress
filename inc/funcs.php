@@ -167,3 +167,21 @@ function pwp_supports_amp() {
 function pwp_is_amp() {
 	return apply_filters( 'pwp_current_page_is_amp', false );
 }
+
+function pwp_plugin_active( $plugin ) {
+	$all_plugins = get_option( 'active_plugins' );
+
+	if ( ! is_array( $all_plugins ) ) {
+		return false;
+	}
+
+	if ( in_array( $plugin, $all_plugins ) ) {
+		return true;
+	}
+
+	return false;
+}
+
+function pwp_onesignal() {
+	return pwp_plugin_active( 'onesignal-free-web-push-notifications/onesignal.php' );
+}

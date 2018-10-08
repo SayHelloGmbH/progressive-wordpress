@@ -5,6 +5,10 @@ namespace nicomartin\ProgressiveWordPress;
 class AMP {
 	public function run() {
 
+		if ( ! pwp_is_amp() ) {
+			return;
+		}
+
 		/**
 		 * Manifest
 		 */

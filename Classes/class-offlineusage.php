@@ -54,6 +54,7 @@ class Offlineusage {
 		add_filter( 'pwp_offline_precache', [ $this, 'pre_cache_offlinepage' ], 4 );
 		add_filter( 'pwp_offline_precache', [ $this, 'pre_cache_settingspage' ], 6 );
 		add_filter( 'pwp_offline_precache', [ $this, 'pre_cache_amp' ], 6 );
+		add_action( 'pwp_serviceworker', [ $this, 'get_sw_content' ] );
 	}
 
 	public function settings() {
@@ -117,60 +118,6 @@ class Offlineusage {
 		}
 
 		return implode( "\n", $new_files );
-	}
-
-	public function sw_content( $content ) {
-
-		$offline_enabled = pwp_get_setting( 'offline-enabled' );
-		if ( ! $offline_enabled ) {
-			return $content;
-		}
-
-		$offline_content = '';
-		$cache_pages     = [];
-		$home_url        = pwp_register_url( trailingslashit( get_home_url() ) );
-		$cache_pages[]   = $home_url;
-
-		$offline_page_id = intval( pwp_get_setting( 'offline-page' ) );
-		if ( 'page' == get_post_type( $offline_page_id ) ) {
-			$offline_url   = pwp_register_url( get_permalink( $offline_page_id ) );
-			$cache_pages[] = $offline_url;
-		}
-
-		$additional_urls = pwp_get_setting( 'offline-content' );
-		$additional_urls = explode( "\n", $additional_urls );
-		if ( is_array( $additional_urls ) ) {
-			foreach ( $additional_urls as $url ) {
-				$cache_pages[] = pwp_register_url( $url );
-			}
-		}
-
-		$cache_pages        = apply_filters( 'pwp_cache_pages', $cache_pages );
-		$cache_pages_quoted = [];
-		foreach ( $cache_pages as $url ) {
-			$cache_pages_quoted[] = "'$url'";
-		}
-
-		$sw_data = [
-			'offline'      => $offline_enabled,
-			'offline_page' => str_replace( trailingslashit( get_home_url() ), '', get_permalink( $offline_page_id ) ),
-			'cached_pages' => '[' . implode( ',', $cache_pages_quoted ) . ']',
-		];
-
-		$offline_file = plugin_dir_path( pwp_get_instance()->file ) . '/assets/serviceworker/offline.js';
-		if ( file_exists( $offline_file ) && $offline_enabled ) {
-
-			$offline_content .= file_get_contents( $offline_file );
-		} else {
-			return $content;
-		}
-
-		foreach ( $sw_data as $key => $val ) {
-			$offline_content = str_replace( "{{{$key}}}", $val, $offline_content );
-		}
-
-		return $content . $offline_content;
-
 	}
 
 	public function offline_indicator_settings() {
@@ -240,10 +187,6 @@ class Offlineusage {
 		return $caches;
 	}
 
-	/**
-	 * Get ServiceWorker
-	 */
-
 	public function get_sw_content() {
 
 		$plugin_uri = trailingslashit( plugin_dir_url( pwp_get_instance()->file ) );
@@ -308,6 +251,6 @@ class Offlineusage {
 		$minifier = new \MatthiasMullie\Minify\JS( $c );
 		$c        = $minifier->minify();
 
-		return "( function() {\nconst PwpSwVersion = '{$cache_version}';\n" . $c . "\n} )();";
+		echo "( function() {\nconst PwpSwVersion = '{$cache_version}';\n" . $c . "\n} )();";
 	}
 }

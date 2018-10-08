@@ -14,13 +14,16 @@ class Tracking {
 				'title' => __( 'Start URL tracking', 'pwp' ),
 				// translators: %s = tracking
 				'desc'  => __( '%s will be added to the start URL', 'pwp' ),
-			],
-			'pushurl'  => [
+			]
+		];
+
+		if ( ! pwp_onesignal() ) {
+			$this->utm_types['pushurl'] = [
 				'title' => __( 'Push URL tracking', 'pwp' ),
 				// translators: %s = tracking
 				'desc'  => __( '%s will be added to the push notification redirect URL', 'pwp' ),
-			],
-		];
+			];
+		}
 	}
 
 	public function run() {

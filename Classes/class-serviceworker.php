@@ -92,8 +92,7 @@ class Serviceworker {
 			if ( 1 == $GLOBALS['wp']->query_vars['wp_service_worker'] ) {
 				header( 'Content-Type: text/javascript; charset=utf-8' );
 				echo "/* PWP register */\n";
-				echo pwp_get_instance()->Offlineusage->get_sw_content();
-				echo pwp_get_instance()->Push->get_sw_content();
+				do_action( 'pwp_serviceworker' );
 				exit;
 			}
 		}

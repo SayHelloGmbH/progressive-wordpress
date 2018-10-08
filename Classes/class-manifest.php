@@ -156,9 +156,7 @@ class Manifest {
 		if ( class_exists( 'WP_Web_App_Manifest' ) ) {
 			return;
 		}
-		?>
-		<link rel="manifest" href="<?php echo esc_url( rest_url( $this->rest_namespace . $this->rest_route ) ); ?>">
-		<?php
+		echo '<link rel="manifest" href="' . esc_url( rest_url( $this->rest_namespace . $this->rest_route ) ) . '">';
 		if ( pwp_get_setting( 'manifest-theme-color' ) ) {
 			echo '<meta name="theme-color" content="' . pwp_get_setting( 'manifest-theme-color' ) . '">';
 		}

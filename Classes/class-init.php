@@ -204,7 +204,7 @@ class Init {
 								?>
 							</p>
 							<p style="text-align: right">
-								<?php if ( pwp_get_instance()->Push->latest_push_log() ) { ?>
+								<?php if ( isset( pwp_get_instance()->Push ) && pwp_get_instance()->Push->latest_push_log() ) { ?>
 									<button class="button button--small pwp-download-log" data-log="push-log"><?php _e( 'Download Push-Log', 'pwp' ); ?></button>
 								<?php } ?>
 								<button class="button button--small pwp-download-log" data-log="debug-log"><?php _e( 'Download Debug-Log', 'pwp' ); ?></button>

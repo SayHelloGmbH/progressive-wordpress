@@ -29,6 +29,8 @@ class Push {
 			mkdir( $this->upload_dir );
 		}
 
+		add_action( 'pwp_serviceworker', [ $this, 'get_sw_content' ] );
+
 		add_action( 'pwp_settings', [ $this, 'settings_push' ] );
 		add_action( 'pwp_settings', [ $this, 'settings_button' ] );
 		add_action( 'pwp_settings', [ $this, 'settings_devices' ] );
@@ -72,11 +74,15 @@ class Push {
 		$minifier     = new \MatthiasMullie\Minify\JS( $push_content );
 		$push_content = $minifier->minify();
 
-		return $push_content;
+		echo $push_content;
 
 	}
 
 	public function settings_push() {
+
+		if ( pwp_onesignal() ) {
+			return;
+		}
 
 		$section = pwp_settings()->add_section( pwp_settings_page_push(), 'pwp_push_push', __( 'Push Notification settings', 'pwp' ) );
 
