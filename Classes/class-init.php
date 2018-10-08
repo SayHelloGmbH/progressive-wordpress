@@ -114,7 +114,7 @@ class Init {
 						<div class="pwp-features__content">
 							<p><?php _e( 'Keep your users <b>engaged</b> by sending push notifications!', 'pwp' ); ?></p>
 							<?php if ( pwp_onesignal() ) { ?>
-								<p><?php printf( __( 'It looks you are using %s to send push notifications.', 'pwp' ), '<a href="https://onesignal.com" target="_blank">OneSignal</a>' ); ?></p>
+								<p><?php printf( __( 'It looks like you are using %s to send push notifications.', 'pwp' ), '<a href="https://onesignal.com" target="_blank">OneSignal</a>' ); ?></p>
 								<p><b><?php _e( 'Progressive WordPress is fully compatible with OneSignal!', 'pwp' ) ?></b></p>
 							<?php } else { ?>
 								<p><?php _e( 'You just published new content and you want to let everyone know? Why not send a push notification? Progressive WordPress has an integrated connection to Firebase that lets you manage registered devices and send push notifications to all or selected devices!', 'pwp' ); ?></p>

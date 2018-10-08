@@ -4,14 +4,14 @@ Donate link: https://www.paypal.me/NicoMartin
 Tags: PWA, Progressive Web App, Progressive Web Application, progressive, installable, add to homescreen, offline, offline usage, push notifications, manifest, web app manifest, serviceworker
 Requires at least: 4.7
 Tested up to: 4.9.8
-Stable tag: 2.0.1
+Stable tag: 2.1.0
 Requires PHP: 5.6
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
 == Description ==
 
-This plugin adds progressive web app features to your WordPress site:
+It has never been easier to add progressive web app features (PWA) to your WordPress website. It even supports [Accelerate Mobile Pages (AMP)](https://www.ampproject.org/) and is compatible with [OneSignal](https://onesignal.com/)!
 
 = Add to homescreen =
 

@@ -1,7 +1,7 @@
 # Progressive WordPress
 
 ## Description
-This plugin adds progressive web app features to your WordPress site.
+It has never been easier to add progressive web app features (PWA) to your WordPress website. It even supports [Accelerate Mobile Pages (AMP)](https://www.ampproject.org/) and is compatible with [OneSignal](https://onesignal.com/)!
 
 ### Add to homescreen
 Provide an **integrated** user experience!

@@ -10,7 +10,7 @@ class AMP {
 		 */
 
 		add_filter( pwp_get_instance()->Manifest->filter, [ $this, 'amp_start_url' ] );
-		add_action( 'wp', [ pwp_get_instance()->Manifest, 'manifest_link_and_meta' ] );
+		add_action( 'amp_post_template_head', [ pwp_get_instance()->Manifest, 'manifest_link_and_meta' ] );
 
 		/**
 		 * Register SW
