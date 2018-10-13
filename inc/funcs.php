@@ -172,7 +172,14 @@ function pwp_plugin_active( $plugin ) {
 	$all_plugins = get_option( 'active_plugins' );
 
 	if ( is_multisite() ) {
-		$all_plugins = array_merge( $all_plugins, get_site_option( 'active_sitewide_plugins' ) );
+		$network_plugins = get_site_option( 'active_sitewide_plugins' );
+		if ( is_array( $network_plugins ) ) {
+			foreach ( $network_plugins as $key => $network_plugin ) {
+				if ( ! in_array( $key, $all_plugins ) ) {
+					$all_plugins[] = $key;
+				}
+			}
+		}
 	}
 
 	if ( ! is_array( $all_plugins ) ) {

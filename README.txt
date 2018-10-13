@@ -4,7 +4,7 @@ Donate link: https://www.paypal.me/NicoMartin
 Tags: PWA, Progressive Web App, Progressive Web Application, AMP, progressive, installable, add to homescreen, offline, offline usage, push notifications, OneSignal, manifest, web app manifest, serviceworker
 Requires at least: 4.7
 Tested up to: 4.9.8
-Stable tag: 2.1.1
+Stable tag: 2.1.2
 Requires PHP: 5.6
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -87,7 +87,7 @@ A development version of this plugin is hosted on GitHub. If you have any ideas 
 
 == Changelog ==
 
-= 2.1.1 =
+= 2.1.2 =
 * Multisite fixes for OneSignal compatibility
 
 = 2.1.0 =
