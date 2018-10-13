@@ -171,6 +171,10 @@ function pwp_is_amp() {
 function pwp_plugin_active( $plugin ) {
 	$all_plugins = get_option( 'active_plugins' );
 
+	if ( is_multisite() ) {
+		$all_plugins = array_merge( $all_plugins, get_site_option( 'active_sitewide_plugins' ) );
+	}
+
 	if ( ! is_array( $all_plugins ) ) {
 		return false;
 	}

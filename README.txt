@@ -86,6 +86,10 @@ A development version of this plugin is hosted on GitHub. If you have any ideas 
 [https://github.com/SayHelloGmbH/progressive-wordpress](https://github.com/SayHelloGmbH/progressive-wordpress)
 
 == Changelog ==
+
+= 2.1.1 =
+* Multisite fixes for OneSignal compatibility
+
 = 2.1.0 =
 * AMP support ⚡
 	* Detect if AMP is supported

@@ -7,6 +7,7 @@ class OneSignal {
 	public $os_settings = [];
 
 	public function run() {
+
 		$this->os_settings = \OneSignal::get_onesignal_settings();
 		add_action( 'admin_init', [ $this, 'set_os_settings' ] );
 		add_filter( pwp_get_instance()->Manifest->filter, [ $this, 'manifest_values' ] );
