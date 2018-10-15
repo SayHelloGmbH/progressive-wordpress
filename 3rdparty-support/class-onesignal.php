@@ -8,7 +8,7 @@ class OneSignal {
 
 	public function run() {
 
-		$this->os_settings = \OneSignal::get_onesignal_settings();
+		add_action( 'plugins_loaded', [ $this, 'get_os_settings' ] );
 		add_action( 'admin_init', [ $this, 'set_os_settings' ] );
 		add_filter( pwp_get_instance()->Manifest->filter, [ $this, 'manifest_values' ] );
 		add_action( 'pwp_serviceworker', [ $this, 'get_sw_content' ] );
@@ -22,6 +22,10 @@ class OneSignal {
 			$os_settings['use_custom_manifest'] = false;
 			\OneSignal::save_onesignal_settings( $os_settings );
 		} );
+	}
+
+	public function get_os_settings() {
+		$this->os_settings = \OneSignal::get_onesignal_settings();
 	}
 
 	public function set_os_settings() {

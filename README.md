@@ -133,6 +133,9 @@ Your Theme or plugin should also support the `amp_post_template_head` and `amp_p
 
 ## Changelog
 
+### 2.1.3
+* Multisite fixes for OneSignal compatibility
+
 ### 2.1.2
 * Multisite fixes for OneSignal compatibility
 
