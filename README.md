@@ -144,6 +144,7 @@ Your Theme or plugin should also support the `amp_post_template_head` and `amp_p
 
 ### 2.1.3
 * New Filter to adjust the Site Icon: `pwp_manifest_icon`
+* Fix for ServiceWorker registration inside subfolder
 * Multisite fixes for OneSignal compatibility
 
 ### 2.1.2

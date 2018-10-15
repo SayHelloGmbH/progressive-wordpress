@@ -111,15 +111,21 @@ class Serviceworker {
 		if ( pwp_is_amp() ) {
 			return;
 		}
-		if ( function_exists( 'wp_register_service_worker' ) || ! isset( $_SERVER['HTTPS'] ) ) {
+		if ( function_exists( 'wp_register_service_worker' ) ) {
 			return;
+		}
+		$home_url       = trailingslashit( get_home_url() );
+		$home_url_parts = parse_url( $home_url );
+		$path           = '/';
+		if ( array_key_exists( 'path', $home_url_parts ) ) {
+			$path = $home_url_parts['path'];
 		}
 		?>
 		<script type="text/javascript" id="serviceworker">
 			if (navigator.serviceWorker) {
 				window.addEventListener('load', function () {
 					navigator.serviceWorker.register(
-						<?php echo $this->get_sw_url(); ?>, {"scope": "\/"}
+						<?php echo $this->get_sw_url(); ?>, {"scope": "<?php echo str_replace( '/', '\/', $path ); ?>"}
 					);
 				});
 			}
