@@ -108,7 +108,7 @@ class Manifest {
 
 		$sizes = [ 144, 192, 512, 524 ];
 
-		$icon = get_option( 'site_icon' );
+		$icon = apply_filters( 'pwp_manifest_icon', get_option( 'site_icon' ) );
 		if ( wp_attachment_is_image( intval( $icon ) ) ) {
 			$mime = get_post_mime_type( $icon );
 			foreach ( $sizes as $size ) {

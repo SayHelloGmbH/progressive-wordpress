@@ -44,6 +44,14 @@ add_filter( 'pwp_offline_precache', 'myplugin_offline_precache' );
 ```
 
 ### Manifest
+**Change the site Icon**
+```php
+function myplugin_manifest_icon( $attachment_is ) {
+    return 10; //should be the Post ID of an attachment.
+}
+add_filter( 'pwp_manifest_icon', 'myplugin_manifest_icon' );
+```
+
 **Add content to the manifest:**  
 ```php
 function myplugin_manifest_values( $values ) {
@@ -134,6 +142,7 @@ Your Theme or plugin should also support the `amp_post_template_head` and `amp_p
 ## Changelog
 
 ### 2.1.3
+* New Filter to adjust the Site Icon: `pwp_manifest_icon`
 * Multisite fixes for OneSignal compatibility
 
 ### 2.1.2
