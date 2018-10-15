@@ -44,7 +44,8 @@ add_filter( 'pwp_offline_precache', 'myplugin_offline_precache' );
 ```
 
 ### Manifest
-**Change the site Icon**
+**Change the site Icon**  
+By default Progressive WordPress takes the WordPress Favicon as the Site Icon. But you can change that by using this filter:  
 ```php
 function myplugin_manifest_icon( $attachment_is ) {
     return 10; //should be the Post ID of an attachment.
