@@ -23,11 +23,13 @@ class Serviceworker {
 		// if not https://github.com/xwp/pwa-wp
 		add_action( 'parse_request', [ $this, 'wp_return_sw' ] );
 		add_filter( 'query_vars', [ $this, 'wp_add_service_worker_query_var' ] );
-		//add_action( 'wp_head', [ $this, 'register_sw' ] );
 
+		add_action( 'wp_head', [ $this, 'register_sw' ] );
+		/*
 		foreach ( [ 'wp_print_scripts', 'admin_print_scripts', 'customize_controls_print_scripts', 'login_footer', 'after_signup_form', 'activate_wp_head' ] as $filter ) {
 			add_filter( $filter, [ $this, 'register_sw' ], 9 );
 		}
+		*/
 	}
 
 	public function ssl_error_notice() {

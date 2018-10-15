@@ -142,7 +142,8 @@ Your Theme or plugin should also support the `amp_post_template_head` and `amp_p
 
 ## Changelog
 
-### 2.1.4
+### 2.1.5
+* Improvements for service worker registration
 * Add to homescreen prompt fix
 
 ### 2.1.3
