@@ -142,6 +142,9 @@ Your Theme or plugin should also support the `amp_post_template_head` and `amp_p
 
 ## Changelog
 
+### 2.1.4
+* Add to homescreen prompt fix
+
 ### 2.1.3
 * New Filter to adjust the Site Icon: `pwp_manifest_icon`
 * Fix for ServiceWorker registration inside subfolder
