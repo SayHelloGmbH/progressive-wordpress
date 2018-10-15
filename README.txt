@@ -4,7 +4,7 @@ Donate link: https://www.paypal.me/NicoMartin
 Tags: PWA, Progressive Web App, Progressive Web Application, AMP, progressive, installable, add to homescreen, offline, offline usage, push notifications, OneSignal, manifest, web app manifest, serviceworker
 Requires at least: 4.7
 Tested up to: 4.9.8
-Stable tag: 2.1.2
+Stable tag: 2.1.3
 Requires PHP: 5.6
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -86,6 +86,11 @@ A development version of this plugin is hosted on GitHub. If you have any ideas 
 [https://github.com/SayHelloGmbH/progressive-wordpress](https://github.com/SayHelloGmbH/progressive-wordpress)
 
 == Changelog ==
+
+= 2.1.3 =
+* New Filter to adjust the Site Icon: `pwp_manifest_icon`
+* Fix for ServiceWorker registration inside subfolder
+* Multisite fixes for OneSignal compatibility
 
 = 2.1.2 =
 * Multisite fixes for OneSignal compatibility
