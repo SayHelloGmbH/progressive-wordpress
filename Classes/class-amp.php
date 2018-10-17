@@ -59,7 +59,7 @@ class AMP {
 				<html>
 				<head>
 					<title>Installing service worker</title>
-					<?php pwp_get_instance()->ServiceWorker->register_sw(); ?>
+					<?php pwp_get_instance()->Serviceworker->register_sw(); ?>
 				</head>
 				<body>
 				</body>
