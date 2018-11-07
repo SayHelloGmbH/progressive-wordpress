@@ -54,7 +54,7 @@ class Manifest {
 		$url                         = add_query_arg( $query, admin_url( 'customize.php' ) );
 		$customizer_title            = __( 'Customizer -> Site Icon', 'pwp' );
 		// translators: $s = url
-		$content = '<p><small>' . sprintf( __( 'This Option has been removed. Please use the Site Icon from the customizer instead: %s.', 'awpp' ), "<br><a href='{$url}'>{$customizer_title}</a>" ) . '</small></p>';
+		$content = '<p><small>' . sprintf( __( 'This Option has been removed. Please use the Site Icon from the customizer instead: %s.', 'awpp' ), "<br><a href='{$url}'>{$customizer_title} (Favicon)</a>" ) . '</small></p>';
 		pwp_settings()->add_message( $section, 'manifest-icon-message', __( 'Icon', 'pwp' ), $content );
 
 		$choices = [
