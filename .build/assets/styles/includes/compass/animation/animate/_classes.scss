@@ -11,7 +11,7 @@ $animations: flash, shake, bounce, tada, swing, wobble, wiggle, pulse, flip, fli
 // Animations that require backface-visibility
 $backface: flip, flipInX, flipOutX, flipInY, flipOutY;
 
-// Creation of the different classes
+// Creation of the different includes
 @each $anim in $animations {
   .#{$anim} {
     @if index($backface, $anim) {

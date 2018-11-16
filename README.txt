@@ -87,6 +87,9 @@ A development version of this plugin is hosted on GitHub. If you have any ideas 
 
 == Changelog ==
 
+= 2.1.7 =
+* httpsify start url
+
 = 2.1.6 =
 * AMP register ServiceWorker Bugfix
 

@@ -25,7 +25,7 @@ export const config = {
 		args: {
 			files: [
 				'*.php',
-				'{classes,inc,partials,templates}/**/*.{php,html,twig}'
+				'{includes,inc,partials,templates}/**/*.{php,html,twig}'
 			]
 		}
 	},

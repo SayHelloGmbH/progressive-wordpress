@@ -17,6 +17,7 @@ class Manifest {
 	public function run() {
 		add_action( 'pwp_settings', [ $this, 'register_settings' ] );
 		add_filter( $this->filter, [ $this, 'manifest_values' ] );
+		add_filter( $this->filter, [ $this, 'httpsify_start_url' ] );
 
 		/**
 		 * Todo: theme-color meta not correct if PWA Plugin activated
@@ -122,6 +123,14 @@ class Manifest {
 					'type'  => $mime,
 				];
 			}
+		}
+
+		return $manifest;
+	}
+
+	public function httpsify_start_url( $manifest ) {
+		if ( array_key_exists( 'start_url', $manifest ) ) {
+			$manifest['start_url'] = str_replace( 'http://', 'https://', $manifest['start_url'] );
 		}
 
 		return $manifest;
