@@ -12,8 +12,10 @@ export const config = {
 
 	scripts: {
 		subtasks: [
-			'ui',
-			'admin',
+			'ui-offline',
+			'ui-pushbutton',
+			'ui-installprompt',
+			'admin'
 		],
 		args: {
 			base: `${assetsDir}scripts/`,

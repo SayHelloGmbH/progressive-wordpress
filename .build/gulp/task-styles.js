@@ -7,6 +7,12 @@ module.exports = function (key, config, gulp, $, errorLog) {
 		gulp.src(config.src)
 			.pipe(sassImportJson({isScss: true}))
 			.pipe(sass().on('error', sass.logError))
+			.pipe($.autoprefixer({
+				browsers: [
+					'> 1%',
+					'IE 11'
+				]
+			}))
 			.pipe(gulp.dest(config.dest))
 			.on('error', errorLog)
 			// minify

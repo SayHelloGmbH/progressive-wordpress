@@ -34,6 +34,7 @@ class Init {
 		// Assets
 		add_action( 'wp_enqueue_scripts', [ $this, 'add_assets' ] );
 		add_action( 'admin_enqueue_scripts', [ $this, 'add_admin_assets' ] );
+		add_action( 'wp_head', [ $this, 'add_footer_js_assets' ] );
 
 		// is_ssl() fix for cloudflare: https://snippets.webaware.com.au/snippets/wordpress-is_ssl-doesnt-work-behind-some-load-balancers/
 		if ( stripos( get_option( 'siteurl' ), 'https://' ) === 0 ) {
@@ -246,23 +247,19 @@ class Init {
 			$min = false;
 		}
 		$dir_uri = trailingslashit( plugin_dir_url( pwp_get_instance()->file ) );
-		wp_enqueue_script( 'clientjs', $dir_uri . 'assets/scripts/clientjs.min.js', [], '1.0.0', true );
 
-		wp_enqueue_style( pwp_get_instance()->prefix . '-style', $dir_uri . 'assets/styles/ui' . ( $min ? '.min' : '' ) . '.css', [], $script_version );
-		wp_enqueue_script( pwp_get_instance()->prefix . '-script', $dir_uri . 'assets/scripts/ui' . ( $min ? '.min' : '' ) . '.js', [ 'jquery', 'clientjs' ], $script_version, true );
+		if ( pwp_get_setting( 'offline-indicator' ) ) {
+			wp_enqueue_style( pwp_get_instance()->prefix . '-offline-style', $dir_uri . 'assets/styles/ui-offline' . ( $min ? '.min' : '' ) . '.css', [], $script_version );
+			wp_enqueue_script( pwp_get_instance()->prefix . '-offline-script', $dir_uri . 'assets/scripts/ui-offline' . ( $min ? '.min' : '' ) . '.js', [ 'jquery' ], $script_version, true );
+		}
 
-		/**
-		 * Footer JS
-		 */
+		if ( pwp_get_setting( 'notification-button' ) ) {
+			wp_enqueue_style( pwp_get_instance()->prefix . '-pushbutton-style', $dir_uri . 'assets/styles/ui-pushbutton' . ( $min ? '.min' : '' ) . '.css', [], $script_version );
+			wp_enqueue_script( 'clientjs', $dir_uri . 'assets/scripts/clientjs.min.js', [], '1.0.0', true );        //wp_enqueue_script( pwp_get_instance()->prefix . '-script', $dir_uri . 'assets/scripts/ui' . ( $min ? '.min' : '' ) . '.js', [ 'jquery', 'clientjs' ], $script_version, true );
+			wp_enqueue_script( pwp_get_instance()->prefix . '-pushbutton-script', $dir_uri . 'assets/scripts/ui-pushbutton' . ( $min ? '.min' : '' ) . '.js', [ 'jquery', 'clientjs' ], $script_version, true );
+		}
 
-		$defaults = [
-			'AjaxURL' => admin_url( 'admin-ajax.php' ),
-			'homeurl' => trailingslashit( get_home_url() ),
-		];
-
-		$vars = json_encode( apply_filters( 'pwp_footer_js', $defaults ) );
-
-		wp_add_inline_script( pwp_get_instance()->prefix . '-script', "var PwpJsVars = {$vars};", 'before' );
+		wp_enqueue_script( pwp_get_instance()->prefix . '-installprompt-script', $dir_uri . 'assets/scripts/ui-installprompt' . ( $min ? '.min' : '' ) . '.js', [], $script_version, true );
 	}
 
 	public function add_admin_assets() {
@@ -292,6 +289,16 @@ class Init {
 		$vars = json_encode( apply_filters( 'pwp_admin_footer_js', $defaults ) );
 
 		wp_add_inline_script( pwp_get_instance()->prefix . '-admin-script', "var PwpJsVars = {$vars};", 'before' );
+	}
+
+	public function add_footer_js_assets() {
+		$defaults = [
+			'AjaxURL' => admin_url( 'admin-ajax.php' ),
+			'homeurl' => trailingslashit( get_home_url() ),
+		];
+
+		$vars = json_encode( apply_filters( 'pwp_footer_js', $defaults ) );
+		echo "<script type='text/javascript'>var PwpJsVars = {$vars};</script>";
 	}
 
 	/**

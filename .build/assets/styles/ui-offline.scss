@@ -1,3 +1,5 @@
+@import "../../../assets/settings.json";
+
 .offline-indicator {
 	background-color: #000;
 	color: #fff;
@@ -7,9 +9,9 @@
 	left: 0;
 	bottom: 0;
 	width: 100%;
-	@include translateY(100%);
+	transform: translateY(100%);
 	will-change: transform;
-	@include single-transition(transform);
+	transition: transform 200ms;
 	p {
 		margin: 0 0 0 0;
 		color: #fff;
@@ -21,12 +23,12 @@
 .offline-indicator--top {
 	bottom: inherit;
 	top: 0;
-	@include translateY(-100%);
+	transform: translateY(-100%);
 }
 
 body.pwp-offline {
 	.offline-indicator,
 	.offline-indicator--top {
-		@include translateY(0);
+		transform: translateY(0);
 	}
 }
