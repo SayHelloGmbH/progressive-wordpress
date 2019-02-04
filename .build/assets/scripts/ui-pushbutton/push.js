@@ -5,7 +5,6 @@
 
 	function changePushStatus(status) {
 		active = status;
-		$body.classList.add('pwp-notification--loader');
 		if (status) {
 			$body.classList.add('pwp-notification--on');
 		} else {
@@ -86,8 +85,10 @@
 		const request = new XMLHttpRequest();
 		request.open('POST', plugin['AjaxURL'], true);
 		request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
+		request.onload = function () {
+			$body.classList.remove('pwp-notification--loader');
+		};
 		request.send(`action=${action}&user_id=${subscription_id}&handle=${handle}&${clientDatas.join('&')}`);
-
 	}
 
 	if ('serviceWorker' in navigator && 'PushManager' in window) {
@@ -105,15 +106,15 @@
 				 * add trigger
 				 */
 
-				const $toggler = document.getElementById('#pwp-notification-button');
-				if ($toggler.length) {
-					$toggler.on('click', function () {
+				const $toggler = document.getElementById('pwp-notification-button');
+				if ($toggler) {
+					$toggler.onclick = function () {
 						if (active) {
 							deregisterPushDevice();
 						} else {
 							registerPushDevice();
 						}
-					});
+					};
 				}
 
 				/**
