@@ -132,6 +132,7 @@ class Plugin {
 	 * @param $width
 	 * @param $height
 	 * @param bool $crop
+	 * @param bool|string $ext
 	 *
 	 * @return false|array Returns an array (url, width, height, is_intermediate), or false, if no image is available.
 	 */

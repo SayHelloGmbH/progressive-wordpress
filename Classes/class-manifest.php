@@ -109,10 +109,13 @@ class Manifest {
 
 		$sizes = [ 144, 192, 512, 524 ];
 
-		$icon = apply_filters( 'pwp_manifest_icon', get_option( 'site_icon' ) );
+		$icon       = apply_filters( 'pwp_manifest_icon', get_option( 'site_icon' ) );
+		$icon_width = wp_get_attachment_image_src( $icon, 'full' )[1];
 		if ( wp_attachment_is_image( intval( $icon ) ) ) {
-			$mime = get_post_mime_type( $icon );
 			foreach ( $sizes as $size ) {
+				if ( $icon_width < $size ) {
+					continue;
+				}
 				$new_image = pwp_get_instance()->image_resize( $icon, $size, $size, true, 'png' );
 				if ( $new_image[1] != $size ) {
 					continue;
@@ -120,7 +123,7 @@ class Manifest {
 				$manifest['icons'][] = [
 					'src'   => $new_image[0],
 					'sizes' => "{$size}x{$size}",
-					'type'  => $mime,
+					'type'  => 'image/png',
 				];
 			}
 		}

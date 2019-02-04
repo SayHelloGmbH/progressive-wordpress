@@ -72,7 +72,11 @@ class Init {
 									echo pwp_icon( 'close' );
 									echo '</span>';
 								} elseif ( ! wp_attachment_is_image( intval( get_option( 'site_icon' ) ) ) ) {
-									echo '<span class="pwp-features__tooltip pwp-features__tooltip--error" data-pwp-features-tooltip="' . esc_attr( __( 'Please select a Site Icon.', 'pwp' ) ) . '">';
+									echo '<span class="pwp-features__tooltip pwp-features__tooltip--error" data-pwp-features-tooltip="' . esc_attr( __( 'Please select a Site Icon (Favicon).', 'pwp' ) ) . '">';
+									echo pwp_icon( 'alert' );
+									echo '</span>';
+								} elseif ( wp_get_attachment_image_src( get_option( 'site_icon' ), 'full' )[1] < 192 ) {
+									echo '<span class="pwp-features__tooltip pwp-features__tooltip--error" data-pwp-features-tooltip="' . esc_attr( __( 'Your Site Icon should be at least 192px.', 'pwp' ) ) . '">';
 									echo pwp_icon( 'alert' );
 									echo '</span>';
 								} else {
