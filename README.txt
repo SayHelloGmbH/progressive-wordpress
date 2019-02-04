@@ -3,8 +3,8 @@ Contributors: nico_martin, sayhellogmbh
 Donate link: https://www.paypal.me/NicoMartin
 Tags: PWA, Progressive Web App, Progressive Web Application, AMP, progressive, installable, add to homescreen, offline, offline usage, push notifications, OneSignal, manifest, web app manifest, serviceworker
 Requires at least: 4.7
-Tested up to: 4.9.8
-Stable tag: 2.1.6
+Tested up to: 5.0.3
+Stable tag: 2.1.7
 Requires PHP: 5.6
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -88,6 +88,9 @@ A development version of this plugin is hosted on GitHub. If you have any ideas 
 == Changelog ==
 
 = 2.1.7 =
+* removed jQuery! It's now only pure JavaScript
+* conditional JS / CSS loading
+* small stability improvements for the Site Icon
 * httpsify start url
 
 = 2.1.6 =
