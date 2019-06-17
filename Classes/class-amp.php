@@ -10,16 +10,20 @@ class AMP {
 		 */
 
 		add_filter( pwp_get_instance()->Manifest->filter, [ $this, 'amp_start_url' ] );
-		add_action( 'amp_post_template_head', [ pwp_get_instance()->Manifest, 'manifest_link_and_meta' ] );
 
-		/**
-		 * Register SW
-		 */
+		// Skip integrating with AMP plugin's Reader mode templates if on a recent version that directly supports integration with the PWA plugin.
+		if ( class_exists( 'AMP_Service_Worker' ) ) {
+			add_action( 'amp_post_template_head', [ pwp_get_instance()->Manifest, 'manifest_link_and_meta' ] );
 
-		add_filter( 'amp_post_template_head', [ $this, 'amp_enqueue_sw_module' ] );
-		add_action( 'amp_post_template_footer', [ $this, 'amp_register_sw' ] );
-		add_action( 'parse_request', [ $this, 'wp_swamp_register' ] );
-		add_filter( 'query_vars', [ $this, 'wp_add_swamp_query_var' ] );
+			/**
+			 * Register SW
+			 */
+
+			add_filter( 'amp_post_template_head', [ $this, 'amp_enqueue_sw_module' ] );
+			add_action( 'amp_post_template_footer', [ $this, 'amp_register_sw' ] );
+			add_action( 'parse_request', [ $this, 'wp_swamp_register' ] );
+			add_filter( 'query_vars', [ $this, 'wp_add_swamp_query_var' ] );
+		}
 	}
 
 	public function amp_start_url( $values ) {
