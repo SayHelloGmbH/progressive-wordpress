@@ -122,14 +122,14 @@ class Push {
 				//$table .= '<pre>' . print_r( get_option( $this->devices_option ), true ) . '</pre>';
 				$table .= '<tr>';
 				$table .= '<td>';
-				if ( isset( $device[ 'data' ][ 'device' ][ 'vendor' ] ) && isset( $device[ 'data' ][ 'device' ][ 'device' ] ) ) {
+				if ( $device[ 'data' ][ 'device' ][ 'vendor' ] !== 'undefined' && $device[ 'data' ][ 'device' ][ 'device' ] !== 'undefined' ) {
 					$table .= "<span class='devices-item devices-item--device'>{$device['data']['device']['vendor']} {$device['data']['device']['device']}</span>";
 				}
-				if ( isset( $device[ 'data' ][ 'browser' ][ 'browser' ] ) && isset( $device[ 'data' ][ 'browser' ][ 'major' ] ) ) {
+				if ( $device[ 'data' ][ 'browser' ][ 'browser' ] !== 'undefined' && $device[ 'data' ][ 'browser' ][ 'major' ] !== 'undefined' ) {
 					$title = __( 'Browser', 'pwp' );
 					$table .= "<span class='devices-item devices-item--browser'>$title: {$device['data']['browser']['browser']} {$device['data']['browser']['major']}</span>";
 				}
-				if ( isset( $device[ 'data' ][ 'os' ][ 'os' ] ) && isset( $device[ 'data' ][ 'os' ][ 'version' ] ) ) {
+				if ( $device[ 'data' ][ 'os' ][ 'os' ] !== 'undefined' && $device[ 'data' ][ 'os' ][ 'version' ] !== 'undefined' ) {
 					//$title = __( 'Operating system', 'pwp' );
 					$table .= "<span class='devices-item devices-item--os'>{$device['data']['os']['os']} {$device['data']['os']['version']}</span>";
 				}
