@@ -253,7 +253,7 @@ class Init {
 			wp_enqueue_script( pwp_get_instance()->prefix . '-offline-script', $dir_uri . 'assets/scripts/ui-offline' . ( $min ? '.min' : '' ) . '.js', [], $script_version, true );
 		}
 
-		if ( pwp_get_setting( 'notification-button' ) ) {
+		if ( pwp_get_setting( 'firebase-serverkey' ) ) {
 			wp_enqueue_style( pwp_get_instance()->prefix . '-pushbutton-style', $dir_uri . 'assets/styles/ui-pushbutton' . ( $min ? '.min' : '' ) . '.css', [], $script_version );
 			wp_enqueue_script( 'clientjs', $dir_uri . 'assets/scripts/clientjs.min.js', [], '1.0.0', true );        //wp_enqueue_script( pwp_get_instance()->prefix . '-script', $dir_uri . 'assets/scripts/ui' . ( $min ? '.min' : '' ) . '.js', [ 'jquery', 'clientjs' ], $script_version, true );
 			wp_enqueue_script( pwp_get_instance()->prefix . '-pushbutton-script', $dir_uri . 'assets/scripts/ui-pushbutton' . ( $min ? '.min' : '' ) . '.js', [ 'clientjs' ], $script_version, true );
@@ -282,7 +282,7 @@ class Init {
 
 		$defaults = [
 			'AjaxURL'      => admin_url( 'admin-ajax.php' ),
-			'homeurl'      => trailingslashit( get_home_url() ),
+			'homeurl'      => trailingslashit( get_site_url() ),
 			'GeneralError' => __( 'An unexpected error occured', 'pwp' ),
 		];
 
@@ -294,7 +294,7 @@ class Init {
 	public function add_footer_js_assets() {
 		$defaults = [
 			'AjaxURL' => admin_url( 'admin-ajax.php' ),
-			'homeurl' => trailingslashit( get_home_url() ),
+			'homeurl' => trailingslashit( get_site_url() ),
 		];
 
 		$vars = json_encode( apply_filters( 'pwp_footer_js', $defaults ) );

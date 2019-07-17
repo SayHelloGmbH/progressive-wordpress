@@ -92,7 +92,6 @@
                 userVisibleOnly: true
             }).then(function (subscription) {
                 var subscription_id = subscription.endpoint.split('fcm/send/')[1];
-                console.log(subscription);
                 handleSubscriptionID(subscription_id, 'add');
                 changePushStatus(true);
             }).catch(function () {

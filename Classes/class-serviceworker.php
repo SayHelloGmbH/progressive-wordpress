@@ -116,7 +116,7 @@ class Serviceworker {
 		if ( function_exists( 'wp_register_service_worker' ) ) {
 			return;
 		}
-		$home_url       = trailingslashit( get_home_url() );
+		$home_url       = trailingslashit( get_site_url() );
 		$home_url_parts = parse_url( $home_url );
 		$path           = '/';
 		if ( array_key_exists( 'path', $home_url_parts ) ) {

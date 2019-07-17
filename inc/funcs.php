@@ -74,7 +74,7 @@ function pwp_settings_page_push() {
 
 function pwp_register_url( $url ) {
 
-	$home_url  = untrailingslashit( get_home_url() );
+	$home_url  = untrailingslashit( get_site_url() );
 	$url_parts = parse_url( $home_url );
 
 	$base_url = $url_parts['scheme'] . '://' . $url_parts['host'];
@@ -153,8 +153,8 @@ function pwp_get_pages() {
 		$pages[ get_permalink( $page ) ] = get_the_title( $page );
 	}
 
-	if ( ! array_key_exists( get_home_url(), $pages ) ) {
-		$pages = array_merge( [ get_home_url() => 'Front Page' ], $pages );
+	if ( ! array_key_exists( get_site_url(), $pages ) ) {
+		$pages = array_merge( [ get_site_url() => 'Front Page' ], $pages );
 	}
 
 	return $pages;

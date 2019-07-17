@@ -22,7 +22,7 @@ add_action( 'plugins_loaded', function () {
 
 	add_filter( 'pwp_get_ampurl_from_url', function ( $url ) {
 
-		if ( pwp_supports_amp() == 'amp' && get_home_url() != $url ) {
+		if ( pwp_supports_amp() == 'amp' && get_site_url() != $url ) {
 			$options = get_option( 'amp-options' );
 			if ( is_array( $options ) && array_key_exists( 'supported_post_types', $options ) && in_array( 'page', $options['supported_post_types'] ) ) {
 				$url = trailingslashit( $url ) . pwp_get_amp_slug() . '/';

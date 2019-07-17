@@ -26,7 +26,7 @@ add_action( 'plugins_loaded', function () {
 		if ( function_exists( 'ampforwp_generate_endpoint' ) ) {
 
 			$amp_slug = ampforwp_generate_endpoint();
-			if ( get_home_url() == $url ) {
+			if ( get_site_url() == $url ) {
 				if ( array_key_exists( 'ampforwp-homepage-on-off-support', $options ) && $options['ampforwp-homepage-on-off-support'] ) {
 					$url = trailingslashit( $url ) . $amp_slug . '/';
 				}

@@ -81,7 +81,7 @@ class Manifest {
 	public function manifest_values( $manifest ) {
 
 		$manifest['name']      = get_bloginfo( 'name' );
-		$manifest['start_url'] = get_home_url();
+		$manifest['start_url'] = get_site_url();
 		$manifest['display']   = 'minimal-ui';
 		$manifest['dir']       = is_rtl() ? 'rtl' : 'ltr';
 

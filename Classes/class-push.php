@@ -367,7 +367,7 @@ class Push {
 		}
 
 		if ( '' == $url ) {
-			$url = trailingslashit( get_home_url() );
+			$url = trailingslashit( get_site_url() );
 		}
 
 		$fields = [

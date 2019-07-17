@@ -76,7 +76,7 @@ class Offlineusage {
 
 		$text = __( 'Pages and files that should be saved for offline usage on first interaction. One URL per line.', 'pwp' ) . '<br>';
 		// translators: Every URL has to start with: [home_url]
-		$text .= sprintf( __( 'Every URL has to start with: %1$s', 'pwp' ), '<code>' . untrailingslashit( get_home_url() ) . '</code>' );
+		$text .= sprintf( __( 'Every URL has to start with: %1$s', 'pwp' ), '<code>' . untrailingslashit( get_site_url() ) . '</code>' );
 
 		pwp_settings()->add_textarea( $section, 'offline-content', __( 'Offline Content', 'pwp' ), '', [
 			'after_field' => '<p class="pwp-smaller">' . $text . '</p>',
@@ -110,7 +110,7 @@ class Offlineusage {
 		foreach ( $files as $key => $file ) {
 
 			$file     = esc_url( $file );
-			$home_url = untrailingslashit( get_home_url() );
+			$home_url = untrailingslashit( get_site_url() );
 
 			if ( strpos( $file, $home_url ) === 0 ) {
 				$new_files[] = $file;

@@ -66,7 +66,7 @@ class Status {
 		$log              = [];
 		$log['generated'] = date( 'Y-m-d H:i (T)' );
 		$log['site_url']  = get_option( 'siteurl' );
-		$log['home_url']  = get_home_url();
+		$log['home_url']  = get_site_url();
 		global $wp_version;
 		$log['wpversion']  = $wp_version;
 		$log['multisite']  = is_multisite();
