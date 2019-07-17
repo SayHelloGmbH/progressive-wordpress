@@ -142,6 +142,9 @@ Your Theme or plugin should also support the `amp_post_template_head` and `amp_p
 
 ## Changelog
 
+### 2.1.8
+* Fixed Push notifications
+
 ### 2.1.7
 * removed jQuery! It's now only pure JavaScript
 * conditional JS / CSS loading
