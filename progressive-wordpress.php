@@ -6,7 +6,7 @@ Plugin URI: https://github.com/SayHelloGmbH/progressive-wordpress
 Description: Turn your website into a Progressive Web App and make it installable, offline ready and send push notifications.
 Author: Nico Martin
 Author URI: https://nicomartin.ch
-Version: 2.1.8.0
+Version: 2.1.9.0
 Text Domain: pwp
 Domain Path: /languages
  */
@@ -16,10 +16,10 @@ if ( version_compare( $wp_version, '4.7', '<' ) || version_compare( PHP_VERSION,
 	function pwp_compatability_warning() {
 		echo '<div class="error"><p>';
 		// translators: Dependency warning
-		echo sprintf( __( '“%1$s” requires PHP %2$s (or newer) and WordPress %3$s (or newer) to function properly. Your site is using PHP %4$s and WordPress %5$s. Please upgrade. The plugin has been automatically deactivated.', 'pwp' ), 'Advanced WPPerformance', '5.3', '4.7', PHP_VERSION, $GLOBALS[ 'wp_version' ] );
+		echo sprintf( __( '“%1$s” requires PHP %2$s (or newer) and WordPress %3$s (or newer) to function properly. Your site is using PHP %4$s and WordPress %5$s. Please upgrade. The plugin has been automatically deactivated.', 'pwp' ), 'Advanced WPPerformance', '5.3', '4.7', PHP_VERSION, $GLOBALS['wp_version'] );
 		echo '</p></div>';
-		if ( isset( $_GET[ 'activate' ] ) ) {
-			unset( $_GET[ 'activate' ] );
+		if ( isset( $_GET['activate'] ) ) {
+			unset( $_GET['activate'] );
 		}
 	}
 
