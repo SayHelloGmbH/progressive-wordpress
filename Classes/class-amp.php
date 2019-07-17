@@ -24,9 +24,8 @@ class AMP {
 
 	public function amp_start_url( $values ) {
 		if ( pwp_get_setting( 'manifest-starturl-amp' ) ) {
-
-			$url                 = pwp_get_setting( 'manifest-starturl' );
-			$values['start_url'] = apply_filters( 'pwp_get_ampurl_from_url', $url );
+			$url                   = pwp_get_setting( 'manifest-starturl' );
+			$values[ 'start_url' ] = apply_filters( 'pwp_get_ampurl_from_url', $url );
 		}
 
 		return $values;
@@ -51,8 +50,8 @@ class AMP {
 	}
 
 	public function wp_swamp_register() {
-		if ( isset( $GLOBALS['wp']->query_vars['wp_service_worker_amp_register'] ) ) {
-			if ( 1 == $GLOBALS['wp']->query_vars['wp_service_worker_amp_register'] ) {
+		if ( isset( $GLOBALS[ 'wp' ]->query_vars[ 'wp_service_worker_amp_register' ] ) ) {
+			if ( 1 == $GLOBALS[ 'wp' ]->query_vars[ 'wp_service_worker_amp_register' ] ) {
 				header( 'Content-Type: text/html; charset=utf-8' );
 				?>
 				<!doctype html>

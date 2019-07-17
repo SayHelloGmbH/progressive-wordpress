@@ -12,11 +12,11 @@ class Push {
 	public $upload_url = '';
 
 	public function __construct() {
-		$this->latest_push_path          = WP_CONTENT_DIR . '/pwp-latest-push.json';
-		$this->latest_push_url           = content_url() . '/pwp-latest-push.json';
-		$this->upload_dir                = pwp_get_instance()->upload_dir . '/push-log/';
-		$this->upload_url                = pwp_get_instance()->upload_url . '/push-log/';
-		$GLOBALS['pwp_push_modal_count'] = 0;
+		$this->latest_push_path            = WP_CONTENT_DIR . '/pwp-latest-push.json';
+		$this->latest_push_url             = content_url() . '/pwp-latest-push.json';
+		$this->upload_dir                  = pwp_get_instance()->upload_dir . '/push-log/';
+		$this->upload_url                  = pwp_get_instance()->upload_url . '/push-log/';
+		$GLOBALS[ 'pwp_push_modal_count' ] = 0;
 	}
 
 	public function run() {
@@ -122,30 +122,30 @@ class Push {
 				//$table .= '<pre>' . print_r( get_option( $this->devices_option ), true ) . '</pre>';
 				$table .= '<tr>';
 				$table .= '<td>';
-				if ( isset( $device['data']['device']['vendor'] ) && isset( $device['data']['device']['device'] ) ) {
+				if ( isset( $device[ 'data' ][ 'device' ][ 'vendor' ] ) && isset( $device[ 'data' ][ 'device' ][ 'device' ] ) ) {
 					$table .= "<span class='devices-item devices-item--device'>{$device['data']['device']['vendor']} {$device['data']['device']['device']}</span>";
 				}
-				if ( isset( $device['data']['browser']['browser'] ) && isset( $device['data']['browser']['major'] ) ) {
+				if ( isset( $device[ 'data' ][ 'browser' ][ 'browser' ] ) && isset( $device[ 'data' ][ 'browser' ][ 'major' ] ) ) {
 					$title = __( 'Browser', 'pwp' );
 					$table .= "<span class='devices-item devices-item--browser'>$title: {$device['data']['browser']['browser']} {$device['data']['browser']['major']}</span>";
 				}
-				if ( isset( $device['data']['os']['os'] ) && isset( $device['data']['os']['version'] ) ) {
+				if ( isset( $device[ 'data' ][ 'os' ][ 'os' ] ) && isset( $device[ 'data' ][ 'os' ][ 'version' ] ) ) {
 					//$title = __( 'Operating system', 'pwp' );
 					$table .= "<span class='devices-item devices-item--os'>{$device['data']['os']['os']} {$device['data']['os']['version']}</span>";
 				}
 				$table .= '</td>';
 				$table .= '<td>';
-				$date  = date( get_option( 'date_format' ) . ' ' . get_option( 'time_format' ), $device['time'] );
+				$date  = date( get_option( 'date_format' ) . ' ' . get_option( 'time_format' ), $device[ 'time' ] );
 				$table .= "<span class='devices-item devices-item--date'>{$date}</span>";
-				if ( 0 != $device['wp_user'] ) {
-					$display_name = get_userdata( $device['wp_user'] )->display_name;
+				if ( 0 != $device[ 'wp_user' ] ) {
+					$display_name = get_userdata( $device[ 'wp_user' ] )->display_name;
 					$table        .= "<span class='devices-item devices-item--user'>{$display_name}</span>";
 				}
 				$table .= '</td>';
 				$table .= '<td>';
 				//$table .= '<span class="devices-actions devices-actions--send"><a class="button" onclick="alert(\'Sorry not yet ready\');">send push</a></span>';
-				$table .= $this->render_push_modal( '', '', '', 0, $device['id'] );
-				$table .= '<span class="devices-actions devices-actions--delete"><a id="pwpDeleteDevice" data-deviceid="' . $device['id'] . '" class="button button-pwpdelete">' . __( 'Remove device', 'pwp' ) . '</a></span>';
+				$table .= $this->render_push_modal( '', '', '', 0, $device[ 'id' ] );
+				$table .= '<span class="devices-actions devices-actions--delete"><a id="pwpDeleteDevice" data-deviceid="' . $device[ 'id' ] . '" class="button button-pwpdelete">' . __( 'Remove device', 'pwp' ) . '</a></span>';
 				$table .= '</td>';
 				$table .= '</tr>';
 			}
@@ -157,8 +157,8 @@ class Push {
 	}
 
 	public function footer_js( $args ) {
-		$args['message_pushremove_failed'] = __( 'Device could not be removed.', 'pwp' );
-		$args['message_pushadd_failed']    = __( 'Device could not be registered.', 'pwp' );
+		$args[ 'message_pushremove_failed' ] = __( 'Device could not be removed.', 'pwp' );
+		$args[ 'message_pushadd_failed' ]    = __( 'Device could not be registered.', 'pwp' );
 
 		return $args;
 	}
@@ -198,7 +198,7 @@ class Push {
 		], $atts );
 
 		$attributes = [
-			'class' => $atts['class'],
+			'class' => $atts[ 'class' ],
 			'style' => "font-size: {$atts['size']};",
 		];
 
@@ -211,17 +211,17 @@ class Push {
 
 	public function handle_device_id() {
 
-		if ( ! isset( $_POST['user_id'] ) || '' == $_POST['user_id'] ) {
+		if ( ! isset( $_POST[ 'user_id' ] ) || '' == $_POST[ 'user_id' ] ) {
 			pwp_exit_ajax( 'error', 'user ID error' );
 		}
 
-		if ( ! isset( $_POST['handle'] ) || ! in_array( $_POST['handle'], [ 'add', 'remove' ] ) ) {
+		if ( ! isset( $_POST[ 'handle' ] ) || ! in_array( $_POST[ 'handle' ], [ 'add', 'remove' ] ) ) {
 			pwp_exit_ajax( 'error', 'handle error' );
 		}
 
-		$device_id  = $_POST['user_id'];
+		$device_id  = $_POST[ 'user_id' ];
 		$device_key = sanitize_title( $device_id );
-		$handle     = $_POST['handle'];
+		$handle     = $_POST[ 'handle' ];
 		$devices    = get_option( $this->devices_option );
 		if ( ! is_array( $devices ) ) {
 			$devices = [];
@@ -248,14 +248,14 @@ class Push {
 				'id'      => $device_id,
 				'wp_user' => get_current_user_id(),
 				'time'    => time(),
-				'data'    => $_POST['clientData'],
+				'data'    => $_POST[ 'clientData' ],
 				'groups'  => [],
 			];
 
 			$userdata = get_userdata( get_current_user_id() );
 
 			if ( is_object( $userdata ) && is_array( $userdata->roles ) ) {
-				$devices[ $device_key ]['groups'] = array_merge( $devices[ $device_key ]['groups'], $userdata->roles );
+				$devices[ $device_key ][ 'groups' ] = array_merge( $devices[ $device_key ][ 'groups' ], $userdata->roles );
 			}
 		} elseif ( 'remove' == $handle ) {
 
@@ -287,40 +287,40 @@ class Push {
 
 	public function do_modal_push() {
 
-		if ( ! wp_verify_nonce( $_POST['pwp-push-nonce'], 'pwp-push-action' ) ) {
+		if ( ! wp_verify_nonce( $_POST[ 'pwp-push-nonce' ], 'pwp-push-action' ) ) {
 			pwp_exit_ajax( 'success', 'Error' );
 		}
 
-		$image_id  = $_POST['pwp-push-image'];
+		$image_id  = $_POST[ 'pwp-push-image' ];
 		$image_url = '';
 		if ( 'attachment' == get_post_type( $image_id ) ) {
 			$image = pwp_get_instance()->image_resize( $image_id, 500, 500, true );
 			if ( $image ) {
-				$image_url = $image[0];
+				$image_url = $image[ 0 ];
 			}
 		}
 
 		$data = [
-			'title'     => sanitize_text_field( $_POST['pwp-push-title'] ),
-			'body'      => sanitize_text_field( $_POST['pwp-push-body'] ),
-			'redirect'  => esc_url_raw( $_POST['pwp-push-url'] ),
+			'title'     => sanitize_text_field( $_POST[ 'pwp-push-title' ] ),
+			'body'      => sanitize_text_field( $_POST[ 'pwp-push-body' ] ),
+			'redirect'  => esc_url_raw( $_POST[ 'pwp-push-url' ] ),
 			'image_url' => esc_url_raw( $image_url ),
 			'groups'    => [],
 		];
 
-		if ( '' != $_POST['pwp-push-limit'] ) {
-			$post_groups = explode( ', ', $_POST['pwp-push-limit'] );
+		if ( '' != $_POST[ 'pwp-push-limit' ] ) {
+			$post_groups = explode( ', ', $_POST[ 'pwp-push-limit' ] );
 			foreach ( $post_groups as $group ) {
-				$data['groups'][] = $group;
+				$data[ 'groups' ][] = $group;
 			}
 		}
 
 		$return = $this->do_push( $data );
-		if ( 'success' == $return['type'] && $_POST['pwp-push-pushpost'] ) {
-			update_post_meta( $_POST['pwp-push-pushpost'], 'pwp_pushpost', 'done' );
+		if ( 'success' == $return[ 'type' ] && $_POST[ 'pwp-push-pushpost' ] ) {
+			update_post_meta( $_POST[ 'pwp-push-pushpost' ], 'pwp_pushpost', 'done' );
 		}
 
-		pwp_exit_ajax( $return['type'], $return['message'], $return );
+		pwp_exit_ajax( $return[ 'type' ], $return[ 'message' ], $return );
 	}
 
 	/**
@@ -388,11 +388,11 @@ class Push {
 			$icon = file_get_contents( $icon_path );
 		}
 
-		$GLOBALS['pwp_push_modal_count'] ++;
+		$GLOBALS[ 'pwp_push_modal_count' ] ++;
 
 		$r = '';
-		$r .= '<a id="pwp-pushmodal-trigger" href="#TB_inline&inlineId=pwp-pushmodal-container-' . $GLOBALS['pwp_push_modal_count'] . '&width=400&height=510&class=test" class="thickbox button">' . __( 'Create push notification', 'pwp' ) . '</a>';
-		$r .= '<div id="pwp-pushmodal-container-' . $GLOBALS['pwp_push_modal_count'] . '" style="display: none;">';
+		$r .= '<a id="pwp-pushmodal-trigger" href="#TB_inline&inlineId=pwp-pushmodal-container-' . $GLOBALS[ 'pwp_push_modal_count' ] . '&width=400&height=510&class=test" class="thickbox button">' . __( 'Create push notification', 'pwp' ) . '</a>';
+		$r .= '<div id="pwp-pushmodal-container-' . $GLOBALS[ 'pwp_push_modal_count' ] . '" style="display: none;">';
 		$r .= '<div class="pwp-pushmodal">';
 		$r .= '<h3>' . __( 'New Push-Notification', 'pwp' ) . '</h3>';
 		if ( '' != $limit ) {
@@ -435,8 +435,8 @@ class Push {
 			];
 		}
 
-		$send_tos = $data['groups'];
-		unset( $data['groups'] );
+		$send_tos = $data[ 'groups' ];
+		unset( $data[ 'groups' ] );
 
 		$devices = [];
 		foreach ( get_option( $this->devices_option ) as $device_data ) {
@@ -446,14 +446,14 @@ class Push {
 				$add_device = true;
 			} else {
 				foreach ( $send_tos as $send_to ) {
-					if ( $device_data['id'] == $send_to ) {
+					if ( $device_data[ 'id' ] == $send_to ) {
 						$add_device = true;
 					}
 				}
 			}
 			if ( $add_device ) {
-				$devices[]        = $device_data['id'];
-				$log['devices'][] = $device_data;
+				$devices[]          = $device_data[ 'id' ];
+				$log[ 'devices' ][] = $device_data;
 			}
 		}
 
@@ -473,7 +473,7 @@ class Push {
 		if ( 'attachment' == get_post_type( $badge ) ) {
 			$badge_image = pwp_get_instance()->image_resize( $badge, 96, 96, true );
 			if ( $badge_image ) {
-				$badge_url = $badge_image[0];
+				$badge_url = $badge_image[ 0 ];
 			}
 		} else {
 			$badge_url = '';
@@ -483,7 +483,7 @@ class Push {
 		 * Icon
 		 */
 
-		$data['icon'] = $data['image_url'];
+		$data[ 'icon' ] = $data[ 'image_url' ];
 
 		/**
 		 * Full data
@@ -500,7 +500,7 @@ class Push {
 
 		$data = apply_filters( 'pwp_push_data_values', $data );
 
-		$log['message'] = $data;
+		$log[ 'message' ] = $data;
 
 		$fields = [
 			'registration_ids' => $devices,
@@ -524,7 +524,8 @@ class Push {
 
 		$ch = curl_init();
 
-		curl_setopt( $ch, CURLOPT_URL, 'https://android.googleapis.com/gcm/send' );
+		//curl_setopt( $ch, CURLOPT_URL, 'https://android.googleapis.com/gcm/send' );
+		curl_setopt( $ch, CURLOPT_URL, 'https://fcm.googleapis.com/fcm/send' );
 		curl_setopt( $ch, CURLOPT_POST, true );
 		curl_setopt( $ch, CURLOPT_HTTPHEADER, $headers );
 		curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
@@ -544,7 +545,7 @@ class Push {
 		$failed  = [];
 
 		if ( pwp_get_setting( 'push-failed-remove' ) ) {
-			foreach ( $result['results'] as $key => $answer ) {
+			foreach ( $result[ 'results' ] as $key => $answer ) {
 				if ( array_key_exists( 'error', $answer ) ) {
 					$failed[] = $devices[ $key ];
 				} else {
@@ -566,7 +567,7 @@ class Push {
 		 * Save Push
 		 */
 
-		$log['resp'] = $result;
+		$log[ 'resp' ] = $result;
 
 		$file = 'push_log_' . time() . wp_generate_password( 30, false ) . '.json';
 		$put  = pwp_put_contents( $this->upload_dir . $file, json_encode( $log ) );
@@ -598,7 +599,7 @@ class Push {
 			return false;
 		}
 
-		$newest_file = $files[0];
+		$newest_file = $files[ 0 ];
 		if ( '..' == $newest_file || '.' == $newest_file ) {
 			return false;
 		}
