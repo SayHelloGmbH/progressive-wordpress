@@ -10,7 +10,7 @@ class Init {
 	public function __construct() {
 		$this->capability   = 'administrator';
 		$this->admin_bar_id = pwp_get_instance()->prefix . '-admin-bar';
-		$this->menu_title   = __( 'Progressive WP', 'pwp' );
+		$this->menu_title   = __( 'Progressive WP', 'progressive-wp' );
 	}
 
 	public function run() {
@@ -54,46 +54,46 @@ class Init {
 	public function add_menu_page() {
 		$icon = plugin_dir_url( pwp_get_instance()->file ) . '/assets/img/pwa-menu-icon.png';
 		add_menu_page( pwp_get_instance()->name, $this->menu_title, $this->capability, PWP_SETTINGS_PARENT, '', $icon, 100 );
-		add_submenu_page( PWP_SETTINGS_PARENT, __( 'About', 'pwp' ), __( 'About', 'pwp' ), $this->capability, PWP_SETTINGS_PARENT, function () {
+		add_submenu_page( PWP_SETTINGS_PARENT, __( 'About', 'progressive-wp' ), __( 'About', 'progressive-wp' ), $this->capability, PWP_SETTINGS_PARENT, function () {
 			?>
 			<div class="wrap pwp-wrap mainpage-wrap">
 				<h1><?php echo pwp_get_instance()->name ?></h1>
 				<div class="pwp-features">
 					<div class="pwp-features__element">
-						<h2 class="pwp-features__title"><?php echo pwp_icon( 'pwp-installable' ) . ' ' . __( 'Add to homescreen', 'pwp' ) ?></h2>
+						<h2 class="pwp-features__title"><?php echo pwp_icon( 'pwp-installable' ) . ' ' . __( 'Add to homescreen', 'progressive-wp' ) ?></h2>
 						<div class="pwp-features__content">
-							<p><?php _e( 'Provide an <b>integrated</b> user experience!', 'pwp' ); ?></p>
-							<p><?php _e( 'Progressive WordPress makes it easy to encourage users to add your website to their homescreen. But that\'s not all. It also allows you to control the display behaviour of your website so it will be shown without any browser elements. Just like a native app.', 'pwp' ); ?></p>
+							<p><?php _e( 'Provide an <b>integrated</b> user experience!', 'progressive-wp' ); ?></p>
+							<p><?php _e( 'Progressive WordPress makes it easy to encourage users to add your website to their homescreen. But that\'s not all. It also allows you to control the display behaviour of your website so it will be shown without any browser elements. Just like a native app.', 'progressive-wp' ); ?></p>
 						</div>
 						<div class="pwp-features__footer">
 							<div class="pwp-features__status">
 								<?php
 								if ( 'none' == pwp_get_setting( 'installable-mode' ) ) {
-									echo '<span class="pwp-features__tooltip pwp-features__tooltip--error" data-pwp-features-tooltip="' . esc_attr( __( 'You manually set "Show add to homescreen banner" to "never".', 'pwp' ) ) . '">';
+									echo '<span class="pwp-features__tooltip pwp-features__tooltip--error" data-pwp-features-tooltip="' . esc_attr( __( 'You manually set "Show add to homescreen banner" to "never".', 'progressive-wp' ) ) . '">';
 									echo pwp_icon( 'close' );
 									echo '</span>';
 								} elseif ( ! wp_attachment_is_image( intval( get_option( 'site_icon' ) ) ) ) {
-									echo '<span class="pwp-features__tooltip pwp-features__tooltip--error" data-pwp-features-tooltip="' . esc_attr( __( 'Please select a Site Icon (Favicon).', 'pwp' ) ) . '">';
+									echo '<span class="pwp-features__tooltip pwp-features__tooltip--error" data-pwp-features-tooltip="' . esc_attr( __( 'Please select a Site Icon (Favicon).', 'progressive-wp' ) ) . '">';
 									echo pwp_icon( 'alert' );
 									echo '</span>';
 								} elseif ( wp_get_attachment_image_src( get_option( 'site_icon' ), 'full' )[1] < 192 ) {
-									echo '<span class="pwp-features__tooltip pwp-features__tooltip--error" data-pwp-features-tooltip="' . esc_attr( __( 'Your Site Icon should be at least 192px.', 'pwp' ) ) . '">';
+									echo '<span class="pwp-features__tooltip pwp-features__tooltip--error" data-pwp-features-tooltip="' . esc_attr( __( 'Your Site Icon should be at least 192px.', 'progressive-wp' ) ) . '">';
 									echo pwp_icon( 'alert' );
 									echo '</span>';
 								} else {
-									echo '<span class="pwp-features__tooltip" data-pwp-features-tooltip="' . esc_attr( __( 'Your Website matches the Progressive Web App criteria.', 'pwp' ) ) . '">';
+									echo '<span class="pwp-features__tooltip" data-pwp-features-tooltip="' . esc_attr( __( 'Your Website matches the Progressive Web App criteria.', 'progressive-wp' ) ) . '">';
 									echo pwp_icon( 'check' );
 									echo '</span>';
 								}
 								?>
 							</div>
-							<a class="pwp-features__configure button button--small" href="<?php echo admin_url( 'admin.php?page=pwp-manifest' ); ?>"><?php _e( 'configure', 'pwp' ); ?></a>
+							<a class="pwp-features__configure button button--small" href="<?php echo admin_url( 'admin.php?page=pwp-manifest' ); ?>"><?php _e( 'configure', 'progressive-wp' ); ?></a>
 						</div>
 					</div>
 					<div class="pwp-features__element">
-						<h2 class="pwp-features__title"><?php echo pwp_icon( 'pwp-offline' ) . ' ' . __( 'Offline usage', 'pwp' ) ?></h2>
+						<h2 class="pwp-features__title"><?php echo pwp_icon( 'pwp-offline' ) . ' ' . __( 'Offline usage', 'progressive-wp' ) ?></h2>
 						<div class="pwp-features__content">
-							<p><?php _e( 'Make your website <b>reliable</b>. Even on flaky internet connections!', 'pwp' ); ?></p>
+							<p><?php _e( 'Make your website <b>reliable</b>. Even on flaky internet connections!', 'progressive-wp' ); ?></p>
 							<p><?php _e( 'No connection? No problem. Progressive WordPress pre-caches all critical assets of your website, as well as all visited resources. So if there\'s no internet connection it will serve the resources from the local storage. No more error downasaur!', 'pwp' ); ?></p>
 						</div>
 						<div class="pwp-features__footer">

@@ -61,7 +61,7 @@ class Settings {
 		if ( array_key_exists( "{$this->prefix}_sanitize_ongoing", $_COOKIE ) && 'yes' == $_COOKIE[ $this->prefix . '_sanitize_ongoing' ] ) {
 			add_action( 'admin_notices', function () {
 				echo '<div id="setting-error-pwp_settings_updated" class="notice notice-success is-dismissible">';
-				echo '<p><strong>' . __( 'Settings saved.', 'pwp' ) . '</strong></p>';
+				echo '<p><strong>' . __( 'Settings saved.', 'progressive-wp' ) . '</strong></p>';
 				echo '</div>';
 			} );
 			do_action( $this->aftersave_action );

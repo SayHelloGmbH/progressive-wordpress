@@ -44,7 +44,7 @@ class Serviceworker {
 		}
 
 		echo '<div class="notice notice-error">';
-		echo '<p>' . __( 'Your site has to be served over https to use progressive web app features.', 'pwp' ) . '</p>';
+		echo '<p>' . __( 'Your site has to be served over https to use progressive web app features.', 'progressive-wp' ) . '</p>';
 		echo '</div>';
 	}
 

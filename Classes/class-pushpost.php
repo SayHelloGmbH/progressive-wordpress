@@ -26,7 +26,7 @@ class PushPost {
 			if ( ! pwp_get_setting( "pwp_pushpost_active_{$pt}" ) ) {
 				continue;
 			}
-			add_meta_box( 'pushpost-meta-box', __( 'PWA Push', 'pwp' ), function ( $post ) use ( $pt ) {
+			add_meta_box( 'pushpost-meta-box', __( 'PWA Push', 'progressive-wp' ), function ( $post ) use ( $pt ) {
 
 				$title = pwp_get_setting( "pwp_pushpost_title_{$pt}" );
 				$title = str_replace( '{post_title}', get_the_title( $post ), $title );
@@ -39,13 +39,13 @@ class PushPost {
 				}
 				echo '<div class="pushpost-meta-container ' . $class . '">';
 				echo '<div class="pushpost-meta pushpost-meta--send">';
-				echo '<p>' . __( 'This function opens the push notification modal for this post.', 'pwp' ) . '</p>';
+				echo '<p>' . __( 'This function opens the push notification modal for this post.', 'progressive-wp' ) . '</p>';
 				echo pwp_get_instance()->Push->render_push_modal( $title, $body, get_permalink( $post ), get_post_thumbnail_id( $post ), '', $post->ID );
 				echo '</div>';
 
 				echo '<div class="pushpost-meta pushpost-meta--done">';
-				echo '<p>' . __( 'Push notification has already been sent. Do you want to send it again?', 'pwp' ) . '</p>';
-				echo '<p><a class="pushpost-meta__sendagain" data-confirmation="' . esc_attr( __( 'Are you sure you want to send a new push notification?', 'pwp' ) ) . '">' . __( 'Send again', 'pwp' ) . '</a></p>';
+				echo '<p>' . __( 'Push notification has already been sent. Do you want to send it again?', 'progressive-wp' ) . '</p>';
+				echo '<p><a class="pushpost-meta__sendagain" data-confirmation="' . esc_attr( __( 'Are you sure you want to send a new push notification?', 'progressive-wp' ) ) . '">' . __( 'Send again', 'progressive-wp' ) . '</a></p>';
 				echo '</div>';
 				echo '</div>';
 			}, $pt, 'side' );
@@ -88,10 +88,10 @@ class PushPost {
 			return;
 		}
 
-		$section_desc = __( 'This will add a meta box to the post edit screen, where you can easily send a push notification for this post.', 'pwp' );
+		$section_desc = __( 'This will add a meta box to the post edit screen, where you can easily send a push notification for this post.', 'progressive-wp' );
 		// translators: `{post_title}` will be replaced with the post title.
-		$section_desc .= sprintf( __( '%s will be replaced with the post title.', 'pwp' ), '<code>{post_title}</code>' );
-		$section      = pwp_settings()->add_section( pwp_settings_page_push(), 'pwp_pushpost', __( 'Push Post', 'pwp' ), $section_desc );
+		$section_desc .= sprintf( __( '%s will be replaced with the post title.', 'progressive-wp' ), '<code>{post_title}</code>' );
+		$section      = pwp_settings()->add_section( pwp_settings_page_push(), 'pwp_pushpost', __( 'Push Post', 'progressive-wp' ), $section_desc );
 
 		foreach ( $post_types as $pt => $labels ) {
 
@@ -103,18 +103,18 @@ class PushPost {
 			$singular_label = $labels['singular_name'];
 
 			// translators: "PushPost" for Post
-			$name = sprintf( __( 'Push Post for "%s"', 'pwp' ), $label );
+			$name = sprintf( __( 'Push Post for "%s"', 'progressive-wp' ), $label );
 			pwp_settings()->add_checkbox( $section, "pwp_pushpost_active_{$pt}", $name );
 
 			// translators: Post: Title
-			$name    = sprintf( __( '%s: Title', 'pwp' ), $label );
+			$name    = sprintf( __( '%s: Title', 'progressive-wp' ), $label );
 			$default = '{post_title}';
 			pwp_settings()->add_input( $section, "pwp_pushpost_title_{$pt}", $name, $default );
 
 			// translators: Post: Body
-			$name = sprintf( __( '%s: Body', 'pwp' ), $label );
+			$name = sprintf( __( '%s: Body', 'progressive-wp' ), $label );
 			// translators: New Post-Type published
-			$default = sprintf( __( 'New %s published!', 'pwp' ), $singular_label );
+			$default = sprintf( __( 'New %s published!', 'progressive-wp' ), $singular_label );
 			pwp_settings()->add_input( $section, "pwp_pushpost_body_{$pt}", $name, $default );
 
 			pwp_settings()->add_spacer( $section, "pwp_pushpost_spacer_{$pt}" );

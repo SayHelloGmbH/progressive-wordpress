@@ -33,49 +33,49 @@ class Manifest {
 
 	public function register_settings() {
 
-		$section_desc = __( 'This values are used to create a manifest.json file, which then controls the appearance of you progressive web app.', 'pwp' );
+		$section_desc = __( 'This values are used to create a manifest.json file, which then controls the appearance of you progressive web app.', 'progressive-wp' );
 		$url          = 'https://developer.mozilla.org/de/docs/Web/Manifest';
-		$section_desc .= '<br>' . __( 'Read all about the web app manifest:.', 'pwp' ) . ' <a target="_blank" href="' . $url . '">' . $url . '</a>';
-		$section      = pwp_settings()->add_section( pwp_settings_page_manifest(), 'pwp_manifest', __( 'Homescreen values', 'pwp' ), $section_desc );
+		$section_desc .= '<br>' . __( 'Read all about the web app manifest:.', 'progressive-wp' ) . ' <a target="_blank" href="' . $url . '">' . $url . '</a>';
+		$section      = pwp_settings()->add_section( pwp_settings_page_manifest(), 'pwp_manifest', __( 'Homescreen values', 'progressive-wp' ), $section_desc );
 
-		pwp_settings()->add_input( $section, 'manifest-name', __( 'Name', 'pwp' ) );
-		pwp_settings()->add_input( $section, 'manifest-short-name', __( 'Short Name', 'pwp' ), '', [
-			'after_field' => '<p class="pwp-smaller">' . __( 'max. 12 Chars', 'pwp' ) . '</p>',
+		pwp_settings()->add_input( $section, 'manifest-name', __( 'Name', 'progressive-wp' ) );
+		pwp_settings()->add_input( $section, 'manifest-short-name', __( 'Short Name', 'progressive-wp' ), '', [
+			'after_field' => '<p class="pwp-smaller">' . __( 'max. 12 Chars', 'progressive-wp' ) . '</p>',
 		] );
 
-		pwp_settings()->add_select( $section, 'manifest-starturl', __( 'Start Page', 'pwp' ), pwp_get_pages() );
+		pwp_settings()->add_select( $section, 'manifest-starturl', __( 'Start Page', 'progressive-wp' ), pwp_get_pages() );
 		if ( pwp_supports_amp() ) {
-			pwp_settings()->add_checkbox( $section, 'manifest-starturl-amp', __( 'AMP Start Page', 'pwp' ), false, [
-				'after_field' => '<p class="pwp-smaller">' . __( 'Use the AMP Version of the Start Page if available.', 'pwp' ) . '</p>',
+			pwp_settings()->add_checkbox( $section, 'manifest-starturl-amp', __( 'AMP Start Page', 'progressive-wp' ), false, [
+				'after_field' => '<p class="pwp-smaller">' . __( 'Use the AMP Version of the Start Page if available.', 'progressive-wp' ) . '</p>',
 			] );
 		}
-		pwp_settings()->add_textarea( $section, 'manifest-description', __( 'Description', 'pwp' ), '', [] );
+		pwp_settings()->add_textarea( $section, 'manifest-description', __( 'Description', 'progressive-wp' ), '', [] );
 
 		$query['autofocus[control]'] = 'site_icon';
 		$url                         = add_query_arg( $query, admin_url( 'customize.php' ) );
-		$customizer_title            = __( 'Customizer -> Site Icon', 'pwp' );
+		$customizer_title            = __( 'Customizer -> Site Icon', 'progressive-wp' );
 		// translators: $s = url
 		$content = '<p><small>' . sprintf( __( 'This Option has been removed. Please use the Site Icon from the customizer instead: %s.', 'awpp' ), "<br><a href='{$url}'>{$customizer_title} (Favicon)</a>" ) . '</small></p>';
-		pwp_settings()->add_message( $section, 'manifest-icon-message', __( 'Icon', 'pwp' ), $content );
+		pwp_settings()->add_message( $section, 'manifest-icon-message', __( 'Icon', 'progressive-wp' ), $content );
 
 		$choices = [
-			'fullscreen' => __( 'Fullscreen - App takes whole display', 'pwp' ),
-			'standalone' => __( 'Standalone - Native App feeling', 'pwp' ),
-			'minimal-ui' => __( 'Minimal browser controls', 'pwp' ),
+			'fullscreen' => __( 'Fullscreen - App takes whole display', 'progressive-wp' ),
+			'standalone' => __( 'Standalone - Native App feeling', 'progressive-wp' ),
+			'minimal-ui' => __( 'Minimal browser controls', 'progressive-wp' ),
 		];
 		$link    = 'https://developer.mozilla.org/de/docs/Web/Manifest#display';
-		pwp_settings()->add_select( $section, 'manifest-display', __( 'Display mode', 'pwp' ), $choices, 'standalone', [
-			'after_field' => '<p class="pwp-smaller">' . __( 'possible display modes', 'pwp' ) . ": <a href='$link' target='_blank'>$link</a></p>",
+		pwp_settings()->add_select( $section, 'manifest-display', __( 'Display mode', 'progressive-wp' ), $choices, 'standalone', [
+			'after_field' => '<p class="pwp-smaller">' . __( 'possible display modes', 'progressive-wp' ) . ": <a href='$link' target='_blank'>$link</a></p>",
 		] );
 
-		pwp_settings()->add_select( $section, 'manifest-orientation', __( 'Orientation', 'pwp' ), [
-			'any'       => __( 'Both', 'pwp' ),
-			'landscape' => __( 'Landscape', 'pwp' ),
-			'portrait'  => __( 'Portrait', 'pwp' ),
+		pwp_settings()->add_select( $section, 'manifest-orientation', __( 'Orientation', 'progressive-wp' ), [
+			'any'       => __( 'Both', 'progressive-wp' ),
+			'landscape' => __( 'Landscape', 'progressive-wp' ),
+			'portrait'  => __( 'Portrait', 'progressive-wp' ),
 		], 'any' );
 
-		pwp_settings()->add_color( $section, 'manifest-theme-color', __( 'Theme Color', 'pwp' ), '#000000' );
-		pwp_settings()->add_color( $section, 'manifest-background-color', __( 'Background Color', 'pwp' ), '#ffffff' );
+		pwp_settings()->add_color( $section, 'manifest-theme-color', __( 'Theme Color', 'progressive-wp' ), '#000000' );
+		pwp_settings()->add_color( $section, 'manifest-background-color', __( 'Background Color', 'progressive-wp' ), '#ffffff' );
 	}
 
 	public function manifest_values( $manifest ) {
@@ -156,7 +156,7 @@ class Manifest {
 
 	public function rest_permission( $request ) {
 		if ( 'edit' === $request['context'] ) {
-			return new WP_Error( 'rest_forbidden_context', __( 'Sorry, you are not allowed to edit the manifest.', 'pwp' ), [
+			return new WP_Error( 'rest_forbidden_context', __( 'Sorry, you are not allowed to edit the manifest.', 'progressive-wp' ), [
 				'status' => rest_authorization_required_code(),
 			] );
 		}

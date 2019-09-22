@@ -11,17 +11,17 @@ class Tracking {
 		$this->capability = pwp_get_instance()->Init->capability;
 		$this->utm_types  = [
 			'starturl' => [
-				'title' => __( 'Start URL tracking', 'pwp' ),
+				'title' => __( 'Start URL tracking', 'progressive-wp' ),
 				// translators: %s = tracking
-				'desc'  => __( '%s will be added to the start URL', 'pwp' ),
+				'desc'  => __( '%s will be added to the start URL', 'progressive-wp' ),
 			]
 		];
 
 		if ( ! pwp_onesignal() ) {
 			$this->utm_types['pushurl'] = [
-				'title' => __( 'Push URL tracking', 'pwp' ),
+				'title' => __( 'Push URL tracking', 'progressive-wp' ),
 				// translators: %s = tracking
-				'desc'  => __( '%s will be added to the push notification redirect URL', 'pwp' ),
+				'desc'  => __( '%s will be added to the push notification redirect URL', 'progressive-wp' ),
 			];
 		}
 	}
@@ -57,18 +57,18 @@ class Tracking {
 			$section_desc = sprintf( $vals['desc'], '<code>' . $parameters . '</code>' );
 			$section      = pwp_settings()->add_section( $section_page, "pwp-tracking-$key", $vals['title'], $section_desc );
 
-			pwp_settings()->add_input( $section, "pwp-tracking-$key-source", __( 'Campaign Source', 'pwp' ), '', [
-				'after_field' => '<p class="pwp-smaller">' . __( 'The referrer: (e.g. google, newsletter)', 'pwp' ) . '</p>',
+			pwp_settings()->add_input( $section, "pwp-tracking-$key-source", __( 'Campaign Source', 'progressive-wp' ), '', [
+				'after_field' => '<p class="pwp-smaller">' . __( 'The referrer: (e.g. google, newsletter)', 'progressive-wp' ) . '</p>',
 			] );
-			pwp_settings()->add_input( $section, "pwp-tracking-$key-medium", __( 'Campaign Medium', 'pwp' ), '', [
-				'after_field' => '<p class="pwp-smaller">' . __( 'Marketing medium: (e.g. cpc, banner, email)', 'pwp' ) . '</p>',
+			pwp_settings()->add_input( $section, "pwp-tracking-$key-medium", __( 'Campaign Medium', 'progressive-wp' ), '', [
+				'after_field' => '<p class="pwp-smaller">' . __( 'Marketing medium: (e.g. cpc, banner, email)', 'progressive-wp' ) . '</p>',
 			] );
-			pwp_settings()->add_input( $section, "pwp-tracking-$key-campaign", __( 'Campaign Name', 'pwp' ), '', [
-				'after_field' => '<p class="pwp-smaller">' . __( 'Product, promo code, or slogan (e.g. spring_sale)', 'pwp' ) . '</p>',
+			pwp_settings()->add_input( $section, "pwp-tracking-$key-campaign", __( 'Campaign Name', 'progressive-wp' ), '', [
+				'after_field' => '<p class="pwp-smaller">' . __( 'Product, promo code, or slogan (e.g. spring_sale)', 'progressive-wp' ) . '</p>',
 			] );
-			pwp_settings()->add_input( $section, "pwp-tracking-$key-term", __( 'Campaign Term', 'pwp' ) );
-			pwp_settings()->add_input( $section, "pwp-tracking-$key-content", __( 'Campaign Content', 'pwp' ), '', [
-				'after_field' => '<p class="pwp-smaller">' . __( 'Use to differentiate ads', 'pwp' ) . '</p>',
+			pwp_settings()->add_input( $section, "pwp-tracking-$key-term", __( 'Campaign Term', 'progressive-wp' ) );
+			pwp_settings()->add_input( $section, "pwp-tracking-$key-content", __( 'Campaign Content', 'progressive-wp' ), '', [
+				'after_field' => '<p class="pwp-smaller">' . __( 'Use to differentiate ads', 'progressive-wp' ) . '</p>',
 			] );
 		}
 	}

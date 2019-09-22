@@ -41,10 +41,10 @@ class Status {
 				'file' => 'progressive-wp-debug-log.json',
 			] );
 		} else {
-			pwp_exit_ajax( 'error', __( 'Logfile could not be created', 'pwp' ) );
+			pwp_exit_ajax( 'error', __( 'Logfile could not be created', 'progressive-wp' ) );
 		}
 
-		pwp_exit_ajax( 'error', __( 'Error', 'pwp' ) );
+		pwp_exit_ajax( 'error', __( 'Error', 'progressive-wp' ) );
 	}
 
 	public function delete_logfiles() {
