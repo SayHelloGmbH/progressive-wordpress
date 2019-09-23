@@ -197,7 +197,7 @@ class Offlineusage {
 		$c .= "\nif (workbox) {\n";
 		//$c .= "\nworkbox.setConfig({debug: true});\n";
 		$c .= "workbox.precaching.precache({$pre_cache});\n";
-		$c .= "workbox.routing.registerRoute(/wp-admin(.*)|(.*)preview=true(.*)/, workbox.strategies.networkOnly());\n";
+		$c .= "workbox.routing.registerRoute(/wp-admin(.*)|wp-json(.*)|(.*)preview=true(.*)/, workbox.strategies.networkOnly());\n";
 
 		// AMP
 		if ( pwp_supports_amp() ) {

@@ -507,6 +507,9 @@ class Push {
 
 		$data = apply_filters( 'pwp_push_data_values', $data );
 
+		$data['title'] = esc_html( $data['title'] );
+		$data['body']  = esc_html( $data['body'] );
+
 		$log['message'] = $data;
 
 		$fields = [
@@ -516,7 +519,7 @@ class Push {
 			],
 		];
 
-		$put_latest_post = pwp_put_contents( $this->latest_push_path, json_encode( $data ) );
+		$put_latest_post = pwp_put_contents( $this->latest_push_path, json_encode( $data, JSON_UNESCAPED_SLASHES ) );
 		if ( ! $put_latest_post ) {
 			return [
 				'type'    => 'error',
