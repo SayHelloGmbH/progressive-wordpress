@@ -95,7 +95,7 @@ class Manifest {
 		}
 
 		$manifest['name']             = pwp_get_setting( 'manifest-name' );
-		$manifest['short_name']       = str_replace( ' ', '', pwp_get_setting( 'manifest-short-name' ) );
+		$manifest['short_name']       = pwp_get_setting( 'manifest-short-name' );
 		$manifest['start_url']        = pwp_get_setting( 'manifest-starturl' );
 		$manifest['description']      = pwp_get_setting( 'manifest-description' );
 		$manifest['theme_color']      = $this->sanitize_hex( pwp_get_setting( 'manifest-theme-color' ), '#000000' );
