@@ -99,6 +99,10 @@ A development version of this plugin is hosted on GitHub. If you have any ideas 
 
 == Changelog ==
 
+= 2.1.10 =
+* Changed Text Domain from pwp to progressive-wp
+* added privacy information to the readme
+
 = 2.1.9 =
 * Minor Bugfix (PHP Warning)
 

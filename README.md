@@ -140,10 +140,10 @@ You can find a working example here: [https://github.com/SayHelloGmbH/progressiv
 
 Your Theme or plugin should also support the `amp_post_template_head` and `amp_post_template_footer` actions.
 
-## Privacy ==
+## Privacy
 This plugin does not use any Cookies. Also it does not collect any personal information without the following
 
-### Push notification =
+### Push notification
 If the user subscribes to push notifications, the following informations will be saved inside the WP database:
 * Browser and Version
 * Operating System (and Version)
@@ -153,6 +153,10 @@ If the user subscribes to push notifications, the following informations will be
 Also if you send push notifications, those will be passed to [firebase cloud messaging](https://firebase.google.com/docs/cloud-messaging/) and they will send it to the client.
 
 ## Changelog
+
+### 2.1.10
+* Changed Text Domain from pwp to progressive-wp
+* added privacy information to the readme
 
 ### 2.1.9
 * Minor Bugfix (PHP Warning)
