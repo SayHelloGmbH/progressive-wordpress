@@ -3,8 +3,8 @@ Contributors: nico_martin, sayhellogmbh
 Donate link: https://www.paypal.me/NicoMartin
 Tags: PWA, Progressive Web App, Progressive Web Application, AMP, progressive, installable, add to homescreen, offline, offline usage, push notifications, OneSignal, manifest, web app manifest, serviceworker
 Requires at least: 4.7
-Tested up to: 5.2.2
-Stable tag: 2.1.9
+Tested up to: 5.3.2
+Stable tag: 2.1.10
 Requires PHP: 5.6
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -102,6 +102,8 @@ A development version of this plugin is hosted on GitHub. If you have any ideas 
 = 2.1.10 =
 * Changed Text Domain from pwp to progressive-wp
 * added privacy information to the readme
+* short_name can now contain spaces
+* added WP Rest to caching strategies
 
 = 2.1.9 =
 * Minor Bugfix (PHP Warning)

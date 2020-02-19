@@ -507,8 +507,8 @@ class Push {
 
 		$data = apply_filters( 'pwp_push_data_values', $data );
 
-		$data['title'] = esc_html( $data['title'] );
-		$data['body']  = esc_html( $data['body'] );
+		$data['title'] = addslashes( $data['title'] );
+		$data['body']  = addslashes( $data['body'] );
 
 		$log['message'] = $data;
 

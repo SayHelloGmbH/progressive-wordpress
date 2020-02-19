@@ -57,19 +57,19 @@ function pwp_get_setting( $key ) {
 function pwp_settings_page_main() {
 	return '';
 
-	return pwp_settings()->add_page( PWP_SETTINGS_PARENT, __( 'About', 'pwp' ) );
+	return pwp_settings()->add_page( PWP_SETTINGS_PARENT, __( 'About', 'progressive-wp' ) );
 }
 
 function pwp_settings_page_manifest() {
-	return pwp_settings()->add_page( 'pwp-manifest', __( 'Add to Homescreen', 'pwp' ) );
+	return pwp_settings()->add_page( 'pwp-manifest', __( 'Add to Homescreen', 'progressive-wp' ) );
 }
 
 function pwp_settings_page_offlineusage() {
-	return pwp_settings()->add_page( 'pwp-offlineusage', __( 'Offline usage', 'pwp' ) );
+	return pwp_settings()->add_page( 'pwp-offlineusage', __( 'Offline usage', 'progressive-wp' ) );
 }
 
 function pwp_settings_page_push() {
-	return pwp_settings()->add_page( 'pwp-push', __( 'Push Notifications', 'pwp' ) );
+	return pwp_settings()->add_page( 'pwp-push', __( 'Push Notifications', 'progressive-wp' ) );
 }
 
 function pwp_register_url( $url ) {

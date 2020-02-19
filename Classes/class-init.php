@@ -94,35 +94,35 @@ class Init {
 						<h2 class="pwp-features__title"><?php echo pwp_icon( 'pwp-offline' ) . ' ' . __( 'Offline usage', 'progressive-wp' ) ?></h2>
 						<div class="pwp-features__content">
 							<p><?php _e( 'Make your website <b>reliable</b>. Even on flaky internet connections!', 'progressive-wp' ); ?></p>
-							<p><?php _e( 'No connection? No problem. Progressive WordPress pre-caches all critical assets of your website, as well as all visited resources. So if there\'s no internet connection it will serve the resources from the local storage. No more error downasaur!', 'pwp' ); ?></p>
+							<p><?php _e( 'No connection? No problem. Progressive WordPress pre-caches all critical assets of your website, as well as all visited resources. So if there\'s no internet connection it will serve the resources from the local storage. No more error downasaur!', 'progressive-wp' ); ?></p>
 						</div>
 						<div class="pwp-features__footer">
 							<div class="pwp-features__status">
 								<?php
 								if ( 'page' != get_post_type( pwp_get_setting( 'offline-page' ) ) ) {
-									echo '<span class="pwp-features__tooltip pwp-features__tooltip--error" data-pwp-features-tooltip="' . esc_attr( __( 'Please create and select an offline fallback page', 'pwp' ) ) . '">';
+									echo '<span class="pwp-features__tooltip pwp-features__tooltip--error" data-pwp-features-tooltip="' . esc_attr( __( 'Please create and select an offline fallback page', 'progressive-wp' ) ) . '">';
 									echo pwp_icon( 'alert' );
 									echo '</span>';
 								} else {
 									// translators: %s = page title
-									echo '<span class="pwp-features__tooltip" data-pwp-features-tooltip="' . esc_attr( sprintf( __( '"%s" has been selected as a page for offline fallback. Other resources will be cached automatically.', 'pwp' ), get_the_title( pwp_get_setting( 'offline-page' ) ) ) ) . '">';
+									echo '<span class="pwp-features__tooltip" data-pwp-features-tooltip="' . esc_attr( sprintf( __( '"%s" has been selected as a page for offline fallback. Other resources will be cached automatically.', 'progressive-wp' ), get_the_title( pwp_get_setting( 'offline-page' ) ) ) ) . '">';
 									echo pwp_icon( 'check' );
 									echo '</span>';
 								}
 								?>
 							</div>
-							<a class="pwp-features__configure button button--small" href="<?php echo admin_url( 'admin.php?page=pwp-offlineusage' ); ?>"><?php _e( 'configure', 'pwp' ); ?></a>
+							<a class="pwp-features__configure button button--small" href="<?php echo admin_url( 'admin.php?page=pwp-offlineusage' ); ?>"><?php _e( 'configure', 'progressive-wp' ); ?></a>
 						</div>
 					</div>
 					<div class="pwp-features__element">
-						<h2 class="pwp-features__title"><?php echo pwp_icon( 'pwp-push' ) . ' ' . __( 'Push notifications', 'pwp' ) ?></h2>
+						<h2 class="pwp-features__title"><?php echo pwp_icon( 'pwp-push' ) . ' ' . __( 'Push notifications', 'progressive-wp' ) ?></h2>
 						<div class="pwp-features__content">
-							<p><?php _e( 'Keep your users <b>engaged</b> by sending push notifications!', 'pwp' ); ?></p>
+							<p><?php _e( 'Keep your users <b>engaged</b> by sending push notifications!', 'progressive-wp' ); ?></p>
 							<?php if ( pwp_onesignal() ) { ?>
-								<p><?php printf( __( 'It looks like you are using %s to send push notifications.', 'pwp' ), '<a href="https://onesignal.com" target="_blank">OneSignal</a>' ); ?></p>
-								<p><b><?php _e( 'Progressive WordPress is fully compatible with OneSignal!', 'pwp' ) ?></b></p>
+								<p><?php printf( __( 'It looks like you are using %s to send push notifications.', 'progressive-wp' ), '<a href="https://onesignal.com" target="_blank">OneSignal</a>' ); ?></p>
+								<p><b><?php _e( 'Progressive WordPress is fully compatible with OneSignal!', 'progressive-wp' ) ?></b></p>
 							<?php } else { ?>
-								<p><?php _e( 'You just published new content and you want to let everyone know? Why not send a push notification? Progressive WordPress has an integrated connection to Firebase that lets you manage registered devices and send push notifications to all or selected devices!', 'pwp' ); ?></p>
+								<p><?php _e( 'You just published new content and you want to let everyone know? Why not send a push notification? Progressive WordPress has an integrated connection to Firebase that lets you manage registered devices and send push notifications to all or selected devices!', 'progressive-wp' ); ?></p>
 							<?php } ?>
 						</div>
 						<div class="pwp-features__footer">
@@ -130,26 +130,26 @@ class Init {
 								<div class="pwp-features__status">
 									<img style="width: 100px;" src="<?php echo trailingslashit( plugin_dir_url( pwp_get_instance()->file ) ) ?>assets/img/onesignal-logo.svg"/>
 								</div>
-								<a class="pwp-features__configure button button--small" href="<?php echo admin_url( 'admin.php?page=onesignal-push' ); ?>"><?php _e( 'OneSignal Settings', 'pwp' ); ?></a>
+								<a class="pwp-features__configure button button--small" href="<?php echo admin_url( 'admin.php?page=onesignal-push' ); ?>"><?php _e( 'OneSignal Settings', 'progressive-wp' ); ?></a>
 							<?php } else { ?>
 								<div class="pwp-features__status">
 									<?php
 									if ( ! pwp_push_set() ) {
-										echo '<span class="pwp-features__tooltip pwp-features__tooltip--error" data-pwp-features-tooltip="' . esc_attr( __( 'Please enter your Firebase cloud messaging credentials to enable push notifications.', 'pwp' ) ) . '">';
+										echo '<span class="pwp-features__tooltip pwp-features__tooltip--error" data-pwp-features-tooltip="' . esc_attr( __( 'Please enter your Firebase cloud messaging credentials to enable push notifications.', 'progressive-wp' ) ) . '">';
 										echo pwp_icon( 'alert' );
 										echo '</span>';
 									} elseif ( empty( get_option( pwp_get_instance()->Push->devices_option ) ) ) {
-										echo '<span class="pwp-features__tooltip pwp-features__tooltip--error" data-pwp-features-tooltip="' . esc_attr( __( 'There are no registered devices. You might consider using the built in "Push Button".', 'pwp' ) ) . '">';
+										echo '<span class="pwp-features__tooltip pwp-features__tooltip--error" data-pwp-features-tooltip="' . esc_attr( __( 'There are no registered devices. You might consider using the built in "Push Button".', 'progressive-wp' ) ) . '">';
 										echo pwp_icon( 'alert' );
 										echo '</span>';
 									} else {
-										echo '<span class="pwp-features__tooltip" data-pwp-features-tooltip="' . esc_attr( __( 'All set up. Go ahead and inform your readers.', 'pwp' ) ) . '">';
+										echo '<span class="pwp-features__tooltip" data-pwp-features-tooltip="' . esc_attr( __( 'All set up. Go ahead and inform your readers.', 'progressive-wp' ) ) . '">';
 										echo pwp_icon( 'check' );
 										echo '</span>';
 									}
 									?>
 								</div>
-								<a class="pwp-features__configure button button--small" href="<?php echo admin_url( 'admin.php?page=pwp-push' ); ?>"><?php _e( 'configure', 'pwp' ); ?></a>
+								<a class="pwp-features__configure button button--small" href="<?php echo admin_url( 'admin.php?page=pwp-push' ); ?>"><?php _e( 'configure', 'progressive-wp' ); ?></a>
 							<?php } ?>
 						</div>
 					</div>
@@ -159,25 +159,25 @@ class Init {
 								<b>
 									<?php
 									// translators: Thank you for using plugin_name
-									printf( __( 'Thank you for using %s!', 'pwp' ), pwp_get_instance()->name );
+									printf( __( 'Thank you for using %s!', 'progressive-wp' ), pwp_get_instance()->name );
 									?>
 								</b><br>
 								<?php
 								// translators: Why it was developed.
-								printf( __( 'This plugin was developed by %s to use progressive web app features for your WordPress website.', 'pwp' ), '<a href="https://nicomartin.ch" target="_blank">Nico Martin</a>' );
+								printf( __( 'This plugin was developed by %s to use progressive web app features for your WordPress website.', 'progressive-wp' ), '<a href="https://nicomartin.ch" target="_blank">Nico Martin</a>' );
 								?>
 							</p>
 							<p>
 								<?php
 								$sw_link = 'https://caniuse.com/#feat=serviceworkers';
-								echo __( 'To deliver app-like features this plugin uses a Service Worker. This technology is not yet supported in all browsers!', 'pwp' ) . '</b><br><a href="' . $sw_link . '" target="_blank">' . $sw_link . '</a>';
+								echo __( 'To deliver app-like features this plugin uses a Service Worker. This technology is not yet supported in all browsers!', 'progressive-wp' ) . '</b><br><a href="' . $sw_link . '" target="_blank">' . $sw_link . '</a>';
 								?>
 							</p>
 							<p>
 								<?php
 								$github = '<a href="https://github.com/nico-martin/progressive-wordpress" target="_blank">GitHub</a>';
 								// translators: If you like this plugin feel free to buy me a beer or get involved in the development on GitHub
-								printf( __( 'If you like this plugin feel free to get involved with the development on %1$s', 'pwp' ), $github );
+								printf( __( 'If you like this plugin feel free to get involved with the development on %1$s', 'progressive-wp' ), $github );
 								?>
 							</p>
 						</div>
@@ -186,21 +186,21 @@ class Init {
 						<div class="pwp-features__content">
 							<p>
 								<b style="display: block;">
-									<?php _e( 'Need Help?', 'pwp' ); ?>
+									<?php _e( 'Need Help?', 'progressive-wp' ); ?>
 								</b>
 								<?php
 								// translators: Please make sure your device supports progressive web apps and the status above is green.
-								echo sprintf( __( 'Please make sure your device supports %s.', 'pwp' ), '<a href="https://caniuse.com/#feat=serviceworkers" target="_blank">Progressive Web Apps</a>' ) . ' ';
+								echo sprintf( __( 'Please make sure your device supports %s.', 'progressive-wp' ), '<a href="https://caniuse.com/#feat=serviceworkers" target="_blank">Progressive Web Apps</a>' ) . ' ';
 								// translators: Still not working? Please visit the support forum or contact us.
-								printf( __( 'Still not working? Please visit the %1$1s or %2$2s.', 'pwp' ), '<a href="https://wordpress.org/support/plugin/progressive-wp/" target="_blank">' . __( 'support forum', 'pwp' ) . '</a>', '<a href="mailto:hello@sayhello.ch">' . __( 'contact us', 'pwp' ) . '</a>' );
-								//echo '<small><b>' . __( 'Attention!', 'pwp' ) . '</b> ' . __( 'The Debug Log contains information that should not be public.', 'pwp' ) . '</small>';
+								printf( __( 'Still not working? Please visit the %1$1s or %2$2s.', 'progressive-wp' ), '<a href="https://wordpress.org/support/plugin/progressive-wp/" target="_blank">' . __( 'support forum', 'progressive-wp' ) . '</a>', '<a href="mailto:hello@sayhello.ch">' . __( 'contact us', 'progressive-wp' ) . '</a>' );
+								//echo '<small><b>' . __( 'Attention!', 'progressive-wp' ) . '</b> ' . __( 'The Debug Log contains information that should not be public.', 'progressive-wp' ) . '</small>';
 								?>
 							</p>
 							<p style="text-align: right">
 								<?php if ( isset( pwp_get_instance()->Push ) && pwp_get_instance()->Push->latest_push_log() ) { ?>
-									<button class="button button--small pwp-download-log" data-log="push-log"><?php _e( 'Download Push-Log', 'pwp' ); ?></button>
+									<button class="button button--small pwp-download-log" data-log="push-log"><?php _e( 'Download Push-Log', 'progressive-wp' ); ?></button>
 								<?php } ?>
-								<button class="button button--small pwp-download-log" data-log="debug-log"><?php _e( 'Download Debug-Log', 'pwp' ); ?></button>
+								<button class="button button--small pwp-download-log" data-log="debug-log"><?php _e( 'Download Debug-Log', 'progressive-wp' ); ?></button>
 							</p>
 						</div>
 					</div>
@@ -214,26 +214,26 @@ class Init {
 			echo '<div class="notice notice-success pwp-activate-notice">';
 			echo '<div class="pwp-activate-notice__about">';
 			echo '<h3 class="pwp-activate-notice__title">' . pwp_get_instance()->name . '</h3>';
-			echo '<p>' . __( 'Welcome to the future! Progressive WordPress makes your website installable, offline ready and lets you send push notifications!', 'pwp' ) . '</p>';
+			echo '<p>' . __( 'Welcome to the future! Progressive WordPress makes your website installable, offline ready and lets you send push notifications!', 'progressive-wp' ) . '</p>';
 			echo '</div>';
-			echo '<a class="pwp-activate-notice__configure button" href="' . admin_url( 'admin.php?page=' . PWP_SETTINGS_PARENT ) . '">' . __( 'Configure', 'pwp' ) . '</a>';
+			echo '<a class="pwp-activate-notice__configure button" href="' . admin_url( 'admin.php?page=' . PWP_SETTINGS_PARENT ) . '">' . __( 'Configure', 'progressive-wp' ) . '</a>';
 			echo '</div>';
 			delete_transient( 'pwp-activation-message' );
 		} elseif ( get_transient( 'pwp-v2-message' ) ) {
 			echo '<div class="notice notice-success pwp-activate-notice">';
 			echo '<div class="pwp-activate-notice__about">';
 			// translators: %s = Plugin Name
-			echo '<h3 class="pwp-activate-notice__title">' . sprintf( __( '%s Version 2.0 is here!', 'pwp' ), pwp_get_instance()->name ) . '</h3>';
-			echo '<p>' . __( 'We are more than happy to announce the biggest update so far! To make it short, we had one big goal: to rewrite the plugin so it fits the needs of non-Developers while it stays very flexble and easy to extend!', 'pwp' ) . '</p>';
+			echo '<h3 class="pwp-activate-notice__title">' . sprintf( __( '%s Version 2.0 is here!', 'progressive-wp' ), pwp_get_instance()->name ) . '</h3>';
+			echo '<p>' . __( 'We are more than happy to announce the biggest update so far! To make it short, we had one big goal: to rewrite the plugin so it fits the needs of non-Developers while it stays very flexble and easy to extend!', 'progressive-wp' ) . '</p>';
 			echo '</div>';
-			echo '<a class="pwp-activate-notice__configure button" href="https://github.com/SayHelloGmbH/progressive-wordpress#changelog" target="_blank">' . __( 'explore changes', 'pwp' ) . '</a>';
+			echo '<a class="pwp-activate-notice__configure button" href="https://github.com/SayHelloGmbH/progressive-wordpress#changelog" target="_blank">' . __( 'explore changes', 'progressive-wp' ) . '</a>';
 			echo '</div>';
 		}
 	}
 
 	public function settings_action_link( $links ) {
 		return array_merge( [
-			'settings' => '<a href="' . admin_url( 'admin.php?page=' . PWP_SETTINGS_PARENT ) . '">' . __( 'Configure', 'pwp' ) . '</a>',
+			'settings' => '<a href="' . admin_url( 'admin.php?page=' . PWP_SETTINGS_PARENT ) . '">' . __( 'Configure', 'progressive-wp' ) . '</a>',
 		], $links );
 	}
 
@@ -283,7 +283,7 @@ class Init {
 		$defaults = [
 			'AjaxURL'      => admin_url( 'admin-ajax.php' ),
 			'homeurl'      => trailingslashit( get_site_url() ),
-			'GeneralError' => __( 'An unexpected error occured', 'pwp' ),
+			'GeneralError' => __( 'An unexpected error occured', 'progressive-wp' ),
 		];
 
 		$vars = json_encode( apply_filters( 'pwp_admin_footer_js', $defaults ) );

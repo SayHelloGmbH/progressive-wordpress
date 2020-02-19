@@ -157,6 +157,8 @@ Also if you send push notifications, those will be passed to [firebase cloud mes
 ### 2.1.10
 * Changed Text Domain from pwp to progressive-wp
 * added privacy information to the readme
+* short_name can now contain spaces
+* added WP Rest to caching strategies
 
 ### 2.1.9
 * Minor Bugfix (PHP Warning)
