@@ -37,6 +37,10 @@ function pwp_push_set() {
 	return ( get_option( 'pwp_firebase_credentials_set' ) == 'yes' );
 }
 
+function pwp_push_v2() {
+	return empty( get_option( nicomartin\ProgressiveWordPress\Push::$devices_option ) ) || get_option( 'pwp-web-push' );
+}
+
 function pwp_exit_ajax( $type, $msg = '', $add = [] ) {
 
 	$return = [

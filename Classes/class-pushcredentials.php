@@ -10,6 +10,7 @@ class PushCredentials {
 		add_action( 'pwp_settings', [ $this, 'settings' ] );
 		add_action( 'pwp_sanitize', [ $this, 'check_firebase_creds' ] );
 		add_action( 'admin_action_pwp_remove_firebase_creds', [ $this, 'remove_firebase_creds' ] );
+		add_action( 'admin_action_pwp_activate_web_push', [ $this, 'activate_web_push' ] );
 		add_action( 'admin_notices', [ $this, 'creds_error' ] );
 		add_filter( 'web_app_manifest', [ $this, 'add_sender_id_to_manifest' ] );
 	}
@@ -58,6 +59,11 @@ class PushCredentials {
 		if ( $cred_set ) {
 			pwp_settings()->add_message( $section, 'remove-firebase-creds', '', '<p style="text-align: right;"><a href="admin.php?action=pwp_remove_firebase_creds&site=' . get_current_blog_id() . '" class="button button-pwpdelete" style="top: -24px; font-size: 12px; position:relative; padding-right: 0;">' . __( 'remove credentials', 'progressive-wp' ) . '</a></p>' );
 		}
+
+		// translators: Since version 2.2 progressive WordPress also supports the HTTP Web Push protocol...
+		$section_v2_desc = '<p>' . sprintf( __( 'Since version %s progressive WordPress also supports the HTTP Web Push protocol. Please note that if you switch to the Web Push Protocol you will loose your currently registered devices.', 'progressive-wp' ), '2.2' ) . '</p>';
+		$section_v2_desc .= '<p><a class="button button-primary" onclick="return confirm(\'' . __( 'Are you sure you want to remove all current registrations?', 'progressive-wp' ) . '\')" href="admin.php?action=pwp_activate_web_push&site=' . get_current_blog_id() . '">' . __( 'Activate Web Push', 'progressive-wp' ) . '</a></p>';
+		$section_v2      = pwp_settings()->add_section( pwp_settings_page_push(), 'pwp_webpush', __( 'HTTP Web Push', 'progressive-wp' ), $section_v2_desc );
 	}
 
 	public function check_firebase_creds( $data ) {
@@ -109,6 +115,19 @@ class PushCredentials {
 		$options['firebase-senderid']  = '';
 
 		update_option( 'pwp-settings', $options );
+		$sendback = wp_get_referer();
+		wp_redirect( esc_url_raw( $sendback ) );
+		exit;
+	}
+
+	public function activate_web_push() {
+		if ( false === current_user_can( pwp_settings()->capability ) ) {
+			wp_die( esc_html__( 'Access denied.', 'progressive-wp' ) );
+		}
+
+		update_option( 'pwp-web-push', true );
+		update_option( Push::$devices_option, [] );
+
 		$sendback = wp_get_referer();
 		wp_redirect( esc_url_raw( $sendback ) );
 		exit;

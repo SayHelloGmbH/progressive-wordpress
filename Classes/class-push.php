@@ -4,7 +4,7 @@ namespace nicomartin\ProgressiveWordPress;
 
 class Push {
 
-	public $devices_option = 'pwp-push-devices';
+	public static $devices_option = 'pwp-push-devices';
 	public $latestpushes_option = 'pwp-latest-pushes';
 	public $latest_push_path = '';
 	public $latest_push_url = '';
@@ -109,7 +109,7 @@ class Push {
 
 		$send = '<p style="margin-bottom: 30px;line-height: 250%"><b>' . __( 'Send to all devices', 'progressive-wp' ) . ':</b><br>' . $this->render_push_modal() . '</p>';
 
-		$devices = get_option( $this->devices_option );
+		$devices = get_option( self::$devices_option );
 		$table   = '';
 		//$table   .= '<pre>' . print_r( $devices, true ) . '</pre>';
 		$table .= '<table class="pwp-devicestable">';
@@ -119,7 +119,7 @@ class Push {
 			$table .= '<tr><td colspan="3" class="empty">' . __( 'No devices registered', 'progressive-wp' ) . '</td></tr>';
 		} else {
 			foreach ( $devices as $device ) {
-				//$table .= '<pre>' . print_r( get_option( $this->devices_option ), true ) . '</pre>';
+				//$table .= '<pre>' . print_r( get_option( self::$devices_option ), true ) . '</pre>';
 				$table .= '<tr>';
 				$table .= '<td>';
 				foreach ( $device['data'] as $row => $values ) {
@@ -229,7 +229,7 @@ class Push {
 		$device_id  = $_POST['user_id'];
 		$device_key = sanitize_title( $device_id );
 		$handle     = $_POST['handle'];
-		$devices    = get_option( $this->devices_option );
+		$devices    = get_option( self::$devices_option );
 		if ( ! is_array( $devices ) ) {
 			$devices = [];
 		}
@@ -274,7 +274,7 @@ class Push {
 			unset( $devices[ $device_key ] );
 		} // End if().
 
-		update_option( $this->devices_option, $devices );
+		update_option( self::$devices_option, $devices );
 
 		/*
 		if ( $do_first_push ) {
@@ -446,7 +446,7 @@ class Push {
 		unset( $data['groups'] );
 
 		$devices = [];
-		foreach ( get_option( $this->devices_option ) as $device_data ) {
+		foreach ( get_option( self::$devices_option ) as $device_data ) {
 			$add_device = false;
 			if ( empty( $send_tos ) ) {
 				// send if no limitation set
@@ -564,12 +564,12 @@ class Push {
 			}
 
 			if ( ! empty( $failed ) ) {
-				$old_devices = get_option( $this->devices_option );
+				$old_devices = get_option( self::$devices_option );
 				foreach ( $failed as $f ) {
 					$f_key = sanitize_key( $f );
 					unset( $old_devices[ $f_key ] );
 				}
-				update_option( $this->devices_option, $old_devices );
+				update_option( self::$devices_option, $old_devices );
 			}
 		}
 

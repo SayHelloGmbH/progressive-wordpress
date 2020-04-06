@@ -38,18 +38,28 @@ if ( version_compare( $wp_version, '4.7', '<' ) || version_compare( PHP_VERSION,
 
 	require_once 'inc/funcs.php';
 	require_once 'inc/funcs-global.php';
+	require_once 'Classes/class-plugin.php';
+	require_once 'Classes/class-init.php';
+	require_once 'Classes/Libs/class-settings.php';
+	require_once 'Classes/class-installable.php';
+	require_once 'Classes/class-serviceworker.php';
+	require_once 'Classes/class-manifest.php';
+	require_once 'Classes/class-offlineusage.php';
+	require_once 'Classes/class-pushcredentials.php';
+	require_once 'Classes/class-webpushcredentials.php';
+	require_once 'Classes/class-push.php';
+	require_once 'Classes/class-pushpost.php';
+	require_once 'Classes/class-amp.php';
 
 	/**
 	 * Init Plugin
 	 */
-	require_once 'Classes/class-plugin.php';
 	function pwp_get_instance() {
 		return nicomartin\ProgressiveWordPress\Plugin::get_instance( __FILE__ );
 	}
 
 	pwp_get_instance();
 
-	require_once 'Classes/class-init.php';
 	pwp_get_instance()->Init = new nicomartin\ProgressiveWordPress\Init();
 	pwp_get_instance()->Init->run();
 
@@ -57,7 +67,6 @@ if ( version_compare( $wp_version, '4.7', '<' ) || version_compare( PHP_VERSION,
 	 * Init Settings
 	 */
 
-	require_once 'Classes/Libs/class-settings.php';
 	function pwp_settings() {
 		return nicomartin\ProgressiveWordPress\Settings::get_instance( 'pwp' );
 	}
@@ -69,7 +78,6 @@ if ( version_compare( $wp_version, '4.7', '<' ) || version_compare( PHP_VERSION,
 	 * Installable
 	 */
 
-	require_once 'Classes/class-installable.php';
 	pwp_get_instance()->Installable = new nicomartin\ProgressiveWordPress\Installable();
 	pwp_get_instance()->Installable->run();
 
@@ -77,7 +85,6 @@ if ( version_compare( $wp_version, '4.7', '<' ) || version_compare( PHP_VERSION,
 	 * Serviceworker
 	 */
 
-	require_once 'Classes/class-serviceworker.php';
 	pwp_get_instance()->Serviceworker = new nicomartin\ProgressiveWordPress\Serviceworker();
 	pwp_get_instance()->Serviceworker->run();
 
@@ -85,7 +92,6 @@ if ( version_compare( $wp_version, '4.7', '<' ) || version_compare( PHP_VERSION,
 	 * Manifest
 	 */
 
-	require_once 'Classes/class-manifest.php';
 	pwp_get_instance()->Manifest = new nicomartin\ProgressiveWordPress\Manifest();
 	pwp_get_instance()->Manifest->run();
 
@@ -93,7 +99,6 @@ if ( version_compare( $wp_version, '4.7', '<' ) || version_compare( PHP_VERSION,
 	 * Offline usage
 	 */
 
-	require_once 'Classes/class-offlineusage.php';
 	pwp_get_instance()->Offlineusage = new nicomartin\ProgressiveWordPress\Offlineusage();
 	pwp_get_instance()->Offlineusage->run();
 
@@ -102,15 +107,18 @@ if ( version_compare( $wp_version, '4.7', '<' ) || version_compare( PHP_VERSION,
 	 */
 
 	if ( ! pwp_onesignal() ) {
-		require_once 'Classes/class-pushcredentials.php';
-		pwp_get_instance()->PushCredentials = new nicomartin\ProgressiveWordPress\PushCredentials();
-		pwp_get_instance()->PushCredentials->run();
 
-		require_once 'Classes/class-push.php';
+		if ( pwp_push_v2() ) {
+			pwp_get_instance()->WebPushCredentials = new nicomartin\ProgressiveWordPress\WebPushCredentials();
+			pwp_get_instance()->WebPushCredentials->run();
+		} else {
+			pwp_get_instance()->PushCredentials = new nicomartin\ProgressiveWordPress\PushCredentials();
+			pwp_get_instance()->PushCredentials->run();
+		}
+
 		pwp_get_instance()->Push = new nicomartin\ProgressiveWordPress\Push();
 		pwp_get_instance()->Push->run();
 
-		require_once 'Classes/class-pushpost.php';
 		pwp_get_instance()->PushPost = new nicomartin\ProgressiveWordPress\PushPost();
 		pwp_get_instance()->PushPost->run();
 	}
@@ -119,7 +127,6 @@ if ( version_compare( $wp_version, '4.7', '<' ) || version_compare( PHP_VERSION,
 	 * AMP
 	 */
 
-	require_once 'Classes/class-amp.php';
 	pwp_get_instance()->AMP = new nicomartin\ProgressiveWordPress\AMP();
 	pwp_get_instance()->AMP->run();
 

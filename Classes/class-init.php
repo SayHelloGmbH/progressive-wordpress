@@ -138,7 +138,7 @@ class Init {
 										echo '<span class="pwp-features__tooltip pwp-features__tooltip--error" data-pwp-features-tooltip="' . esc_attr( __( 'Please enter your Firebase cloud messaging credentials to enable push notifications.', 'progressive-wp' ) ) . '">';
 										echo pwp_icon( 'alert' );
 										echo '</span>';
-									} elseif ( empty( get_option( pwp_get_instance()->Push->devices_option ) ) ) {
+									} elseif ( empty( get_option( Push::$devices_option ) ) ) {
 										echo '<span class="pwp-features__tooltip pwp-features__tooltip--error" data-pwp-features-tooltip="' . esc_attr( __( 'There are no registered devices. You might consider using the built in "Push Button".', 'progressive-wp' ) ) . '">';
 										echo pwp_icon( 'alert' );
 										echo '</span>';

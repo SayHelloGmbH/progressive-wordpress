@@ -1,6 +1,6 @@
 {
     "name": "progressive-wordpress",
-    "version": "2.1.10.3",
+    "version": "http-web-push2.1.10.4",
     "description": "This WordPress plugin adds progressive web app features to your WordPress site",
     "main": "gulpfile.babel.js",
     "repository": {
