@@ -197,6 +197,3 @@ function pwp_plugin_active( $plugin ) {
 	return false;
 }
 
-function pwp_onesignal() {
-	return pwp_plugin_active( 'onesignal-free-web-push-notifications/onesignal.php' );
-}

@@ -118,39 +118,27 @@ class Init {
 						<h2 class="pwp-features__title"><?php echo pwp_icon( 'pwp-push' ) . ' ' . __( 'Push notifications', 'progressive-wp' ) ?></h2>
 						<div class="pwp-features__content">
 							<p><?php _e( 'Keep your users <b>engaged</b> by sending push notifications!', 'progressive-wp' ); ?></p>
-							<?php if ( pwp_onesignal() ) { ?>
-								<p><?php printf( __( 'It looks like you are using %s to send push notifications.', 'progressive-wp' ), '<a href="https://onesignal.com" target="_blank">OneSignal</a>' ); ?></p>
-								<p><b><?php _e( 'Progressive WordPress is fully compatible with OneSignal!', 'progressive-wp' ) ?></b></p>
-							<?php } else { ?>
-								<p><?php _e( 'You just published new content and you want to let everyone know? Why not send a push notification? Progressive WordPress has an integrated connection to Firebase that lets you manage registered devices and send push notifications to all or selected devices!', 'progressive-wp' ); ?></p>
-							<?php } ?>
+							<p><?php _e( 'You just published new content and you want to let everyone know? Why not send a push notification? Progressive WordPress has an integrated connection to Firebase that lets you manage registered devices and send push notifications to all or selected devices!', 'progressive-wp' ); ?></p>
 						</div>
 						<div class="pwp-features__footer">
-							<?php if ( pwp_onesignal() ) { ?>
-								<div class="pwp-features__status">
-									<img style="width: 100px;" src="<?php echo trailingslashit( plugin_dir_url( pwp_get_instance()->file ) ) ?>assets/img/onesignal-logo.svg"/>
-								</div>
-								<a class="pwp-features__configure button button--small" href="<?php echo admin_url( 'admin.php?page=onesignal-push' ); ?>"><?php _e( 'OneSignal Settings', 'progressive-wp' ); ?></a>
-							<?php } else { ?>
-								<div class="pwp-features__status">
-									<?php
-									if ( ! pwp_push_set() ) {
-										echo '<span class="pwp-features__tooltip pwp-features__tooltip--error" data-pwp-features-tooltip="' . esc_attr( __( 'Please enter your Firebase cloud messaging credentials to enable push notifications.', 'progressive-wp' ) ) . '">';
-										echo pwp_icon( 'alert' );
-										echo '</span>';
-									} elseif ( empty( get_option( Push::$devices_option ) ) ) {
-										echo '<span class="pwp-features__tooltip pwp-features__tooltip--error" data-pwp-features-tooltip="' . esc_attr( __( 'There are no registered devices. You might consider using the built in "Push Button".', 'progressive-wp' ) ) . '">';
-										echo pwp_icon( 'alert' );
-										echo '</span>';
-									} else {
-										echo '<span class="pwp-features__tooltip" data-pwp-features-tooltip="' . esc_attr( __( 'All set up. Go ahead and inform your readers.', 'progressive-wp' ) ) . '">';
-										echo pwp_icon( 'check' );
-										echo '</span>';
-									}
-									?>
-								</div>
-								<a class="pwp-features__configure button button--small" href="<?php echo admin_url( 'admin.php?page=pwp-push' ); ?>"><?php _e( 'configure', 'progressive-wp' ); ?></a>
-							<?php } ?>
+							<div class="pwp-features__status">
+								<?php
+								if ( ! pwp_push_set() ) {
+									echo '<span class="pwp-features__tooltip pwp-features__tooltip--error" data-pwp-features-tooltip="' . esc_attr( __( 'Please enter your Firebase cloud messaging credentials to enable push notifications.', 'progressive-wp' ) ) . '">';
+									echo pwp_icon( 'alert' );
+									echo '</span>';
+								} elseif ( empty( get_option( Push::$devices_option ) ) ) {
+									echo '<span class="pwp-features__tooltip pwp-features__tooltip--error" data-pwp-features-tooltip="' . esc_attr( __( 'There are no registered devices. You might consider using the built in "Push Button".', 'progressive-wp' ) ) . '">';
+									echo pwp_icon( 'alert' );
+									echo '</span>';
+								} else {
+									echo '<span class="pwp-features__tooltip" data-pwp-features-tooltip="' . esc_attr( __( 'All set up. Go ahead and inform your readers.', 'progressive-wp' ) ) . '">';
+									echo pwp_icon( 'check' );
+									echo '</span>';
+								}
+								?>
+							</div>
+							<a class="pwp-features__configure button button--small" href="<?php echo admin_url( 'admin.php?page=pwp-push' ); ?>"><?php _e( 'configure', 'progressive-wp' ); ?></a>
 						</div>
 					</div>
 					<div class="pwp-features__element pwp-features__element--large pwp-features__element--transparent">

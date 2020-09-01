@@ -1,0 +1,12 @@
+{
+    "name": "nicos/progressive-wordpress",
+    "require": {
+        "minishlink/web-push": "^2.0"
+    },
+    "authors": [
+        {
+            "name": "Nico Martin",
+            "email": "mail@nicomartin.ch"
+        }
+    ]
+}

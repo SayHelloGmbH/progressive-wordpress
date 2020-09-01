@@ -80,10 +80,6 @@ class Push {
 
 	public function settings_push() {
 
-		if ( pwp_onesignal() ) {
-			return;
-		}
-
 		$section = pwp_settings()->add_section( pwp_settings_page_push(), 'pwp_push_push', __( 'Push Notification settings', 'progressive-wp' ) );
 
 		pwp_settings()->add_checkbox( $section, 'push-failed-remove', __( 'Remove devices if failed once', 'progressive-wp' ), false );

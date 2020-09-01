@@ -14,16 +14,8 @@ class Tracking {
 				'title' => __( 'Start URL tracking', 'progressive-wp' ),
 				// translators: %s = tracking
 				'desc'  => __( '%s will be added to the start URL', 'progressive-wp' ),
-			]
+			],
 		];
-
-		if ( ! pwp_onesignal() ) {
-			$this->utm_types['pushurl'] = [
-				'title' => __( 'Push URL tracking', 'progressive-wp' ),
-				// translators: %s = tracking
-				'desc'  => __( '%s will be added to the push notification redirect URL', 'progressive-wp' ),
-			];
-		}
 	}
 
 	public function run() {

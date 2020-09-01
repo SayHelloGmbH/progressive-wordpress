@@ -106,22 +106,19 @@ if ( version_compare( $wp_version, '4.7', '<' ) || version_compare( PHP_VERSION,
 	 * Push
 	 */
 
-	if ( ! pwp_onesignal() ) {
-
-		if ( pwp_push_v2() ) {
-			pwp_get_instance()->WebPushCredentials = new nicomartin\ProgressiveWordPress\WebPushCredentials();
-			pwp_get_instance()->WebPushCredentials->run();
-		} else {
-			pwp_get_instance()->PushCredentials = new nicomartin\ProgressiveWordPress\PushCredentials();
-			pwp_get_instance()->PushCredentials->run();
-		}
-
-		pwp_get_instance()->Push = new nicomartin\ProgressiveWordPress\Push();
-		pwp_get_instance()->Push->run();
-
-		pwp_get_instance()->PushPost = new nicomartin\ProgressiveWordPress\PushPost();
-		pwp_get_instance()->PushPost->run();
+	if ( pwp_push_v2() ) {
+		pwp_get_instance()->WebPushCredentials = new nicomartin\ProgressiveWordPress\WebPushCredentials();
+		pwp_get_instance()->WebPushCredentials->run();
+	} else {
+		pwp_get_instance()->PushCredentials = new nicomartin\ProgressiveWordPress\PushCredentials();
+		pwp_get_instance()->PushCredentials->run();
 	}
+
+	pwp_get_instance()->Push = new nicomartin\ProgressiveWordPress\Push();
+	pwp_get_instance()->Push->run();
+
+	pwp_get_instance()->PushPost = new nicomartin\ProgressiveWordPress\PushPost();
+	pwp_get_instance()->PushPost->run();
 
 	/**
 	 * AMP
@@ -143,13 +140,6 @@ if ( version_compare( $wp_version, '4.7', '<' ) || version_compare( PHP_VERSION,
 	// https://wordpress.org/plugins/accelerated-mobile-pages/
 	if ( pwp_plugin_active( 'accelerated-mobile-pages/accelerated-moblie-pages.php' ) ) {
 		require_once '3rdparty-support/accelerated-moblie-pages.php';
-	}
-
-	// https://wordpress.org/plugins/onesignal-free-web-push-notifications/
-	if ( pwp_plugin_active( 'onesignal-free-web-push-notifications/onesignal.php' ) ) {
-		require_once '3rdparty-support/class-onesignal.php';
-		pwp_get_instance()->OneSignal = new nicomartin\ProgressiveWordPress\ThirdParty\OneSignal();
-		pwp_get_instance()->OneSignal->run();
 	}
 
 	/**
