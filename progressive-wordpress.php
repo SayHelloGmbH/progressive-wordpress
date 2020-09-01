@@ -36,6 +36,8 @@ if ( version_compare( $wp_version, '4.7', '<' ) || version_compare( PHP_VERSION,
 	define( 'PWP_SETTINGS_PARENT', 'progressive-wordpress' );
 	define( 'PWP_SETTINGS_OPTION', 'pwp-option' );
 
+	require_once 'vendor/autoload.php';
+
 	require_once 'inc/funcs.php';
 	require_once 'inc/funcs-global.php';
 	require_once 'Classes/class-plugin.php';

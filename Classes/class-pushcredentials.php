@@ -62,7 +62,7 @@ class PushCredentials {
 
 		// translators: Since version 2.2 progressive WordPress also supports the HTTP Web Push protocol...
 		$section_v2_desc = '<p>' . sprintf( __( 'Since version %s progressive WordPress also supports the HTTP Web Push protocol. Please note that if you switch to the Web Push Protocol you will loose your currently registered devices.', 'progressive-wp' ), '2.2' ) . '</p>';
-		$section_v2_desc .= '<p><a class="button button-primary" onclick="return confirm(\'' . __( 'Are you sure you want to remove all current registrations?', 'progressive-wp' ) . '\')" href="admin.php?action=pwp_activate_web_push&site=' . get_current_blog_id() . '">' . __( 'Activate Web Push', 'progressive-wp' ) . '</a></p>';
+		$section_v2_desc .= '<p><a class="button button-primary" onclick="return confirm(\'' . __( 'Are you sure you want to switch?', 'progressive-wp' ) . '\')" href="admin.php?action=pwp_activate_web_push&site=' . get_current_blog_id() . '">' . __( 'Activate Web Push', 'progressive-wp' ) . '</a></p>';
 		$section_v2      = pwp_settings()->add_section( pwp_settings_page_push(), 'pwp_webpush', __( 'HTTP Web Push', 'progressive-wp' ), $section_v2_desc );
 	}
 
@@ -126,7 +126,8 @@ class PushCredentials {
 		}
 
 		update_option( 'pwp-web-push', true );
-		update_option( Push::$devices_option, [] );
+		//keep old devices. just in case :D
+		//update_option( Push::$devices_option, [] );
 
 		$sendback = wp_get_referer();
 		wp_redirect( esc_url_raw( $sendback ) );

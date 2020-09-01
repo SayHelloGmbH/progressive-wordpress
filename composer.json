@@ -1,12 +1,15 @@
 {
-    "name": "nicos/progressive-wordpress",
-    "require": {
-        "minishlink/web-push": "^2.0"
-    },
-    "authors": [
-        {
-            "name": "Nico Martin",
-            "email": "mail@nicomartin.ch"
-        }
-    ]
+  "name": "nicos/progressive-wordpress",
+  "require": {
+    "minishlink/web-push": "^6.0"
+  },
+  "authors": [
+    {
+      "name": "Nico Martin",
+      "email": "mail@nicomartin.ch"
+    }
+  ],
+  "config": {
+    "secure-http": false
+  }
 }

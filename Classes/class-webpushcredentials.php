@@ -2,7 +2,13 @@
 
 namespace nicomartin\ProgressiveWordPress;
 
+use Minishlink\WebPush\VAPID;
+
 class WebPushCredentials {
+
+	public function __construct() {
+		var_dump( VAPID::createVapidKeys() );
+	}
 
 	public static $vapid_option = 'pwp_vapid_credentials';
 
@@ -13,6 +19,8 @@ class WebPushCredentials {
 	}
 
 	public function settings() {
+
+		var_dump( VAPID::createVapidKeys() );
 
 		$section_desc = '<p>' . __( 'The Web Push Protocol uses a Voluntary Application Server Identification (VAPID) for identification', 'progressive-wp' ) . '</p>';
 		$section      = pwp_settings()->add_section( pwp_settings_page_push(), 'pwp_firebase', __( 'VAPID credentials', 'progressive-wp' ), $section_desc );
@@ -34,7 +42,7 @@ class WebPushCredentials {
 		}
 
 		if ( $email_setting ) {
-			pwp_settings()->add_message( $section, 'remove-firebase-creds', '', '<p style="text-align: right;"><a href="admin.php?action=pwp_reset_vapid&site=' . get_current_blog_id() . '" class="button button-pwpdelete" style="top: -24px; font-size: 12px; position:relative; padding-right: 0;">' . __( 'reset credentials', 'progressive-wp' ) . '</a></p>' );
+			pwp_settings()->add_message( $section, 'remove-firebase-creds', '', '<p style="text-align: right;"><a href="admin.php?action=pwp_reset_vapid&site=' . get_current_blog_id() . '" class="button button-pwpdelete" style="top: -24px; font-size: 12px; position:relative;">' . __( 'reset credentials', 'progressive-wp' ) . '</a></p>' );
 		}
 	}
 
@@ -42,6 +50,7 @@ class WebPushCredentials {
 
 		//if ( ! get_option( self::$vapid_option ) ) {
 		self::regenerate_vapid();
+
 		//}
 
 		return $data;

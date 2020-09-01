@@ -38,6 +38,7 @@ function pwp_push_set() {
 }
 
 function pwp_push_v2() {
+	// web push v2 is active if there are no subscriptions yet or the user choose to use web push v2
 	return empty( get_option( nicomartin\ProgressiveWordPress\Push::$devices_option ) ) || get_option( 'pwp-web-push' );
 }
 
