@@ -243,8 +243,15 @@ class Init {
 
 		if ( pwp_get_setting( 'firebase-serverkey' ) ) {
 			wp_enqueue_style( pwp_get_instance()->prefix . '-pushbutton-style', $dir_uri . 'assets/styles/ui-pushbutton' . ( $min ? '.min' : '' ) . '.css', [], $script_version );
-			wp_enqueue_script( 'clientjs', $dir_uri . 'assets/scripts/clientjs.min.js', [], '1.0.0', true );        //wp_enqueue_script( pwp_get_instance()->prefix . '-script', $dir_uri . 'assets/scripts/ui' . ( $min ? '.min' : '' ) . '.js', [ 'jquery', 'clientjs' ], $script_version, true );
+			wp_enqueue_script( 'clientjs', $dir_uri . 'assets/scripts/clientjs.min.js', [], '1.0.0', true );
 			wp_enqueue_script( pwp_get_instance()->prefix . '-pushbutton-script', $dir_uri . 'assets/scripts/ui-pushbutton' . ( $min ? '.min' : '' ) . '.js', [ 'clientjs' ], $script_version, true );
+		} elseif ( WebPushCredentials::get_vapid() ) {
+			wp_enqueue_style( pwp_get_instance()->prefix . '-pushbutton-style', $dir_uri . 'assets/styles/ui-pushbutton' . ( $min ? '.min' : '' ) . '.css', [], $script_version );
+			wp_enqueue_script( 'clientjs', $dir_uri . 'assets/scripts/clientjs.min.js', [], '1.0.0', true );
+			wp_enqueue_script( pwp_get_instance()->prefix . '-webpushbutton-script', $dir_uri . 'assets/scripts/ui-webpushbutton' . ( $min ? '.min' : '' ) . '.js', [ 'clientjs' ], $script_version, true );
+			wp_localize_script( pwp_get_instance()->prefix . '-webpushbutton-script', 'WebPushVars', [
+				'vapidPublcKey' => WebPushCredentials::get_vapid()['public'],
+			] );
 		}
 
 		wp_enqueue_script( pwp_get_instance()->prefix . '-installprompt-script', $dir_uri . 'assets/scripts/ui-installprompt' . ( $min ? '.min' : '' ) . '.js', [], $script_version, true );

@@ -14,6 +14,7 @@ export const config = {
 		subtasks: [
 			'ui-offline',
 			'ui-pushbutton',
+			'ui-webpushbutton',
 			'ui-installprompt',
 			'admin'
 		],
