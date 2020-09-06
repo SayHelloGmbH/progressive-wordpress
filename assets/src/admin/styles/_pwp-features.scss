@@ -1,0 +1,154 @@
+.pwp-features {
+
+	$padding: 18px;
+
+	display: flex;
+	flex-wrap: wrap;
+	margin: 30px -10px;
+
+	&__element {
+		background-color: #fff;
+		flex: calc(#{percentage(1/3)} - #{$padding}) 0 0;
+		@media screen and (max-width: 800px) {
+			flex-basis: calc(100% - #{$padding});
+
+		}
+		margin: 0 $padding/2 $padding $padding/2;
+		@include box-shadow();
+		display: flex;
+		flex-direction: column;
+		position: relative;
+
+		&--large {
+			flex-basis: calc(#{percentage(2/3)} - #{$padding});
+			@media screen and (max-width: 800px) {
+				flex-basis: calc(100% - #{$padding});
+			}
+		}
+
+		&--transparent {
+			background-color: transparent;
+			@include box-shadow(none);
+
+			.pwp-features__content {
+				padding: $padding 0 0 0;
+
+				p {
+					color: #7f7f7f;
+
+					b {
+						color: #000;
+					}
+
+					a {
+						opacity: 1;
+					}
+				}
+			}
+		}
+	}
+
+	&__title {
+		margin: 0;
+		padding: $padding;
+		border-bottom: 1px solid #e5e5e5;
+
+		.pwp-icon {
+			margin-right: 5px;
+			top: -2px;
+			position: relative;
+			transform: scale(1.6);
+		}
+	}
+
+	&__content {
+		padding: $padding;
+
+		p {
+			margin: 0;
+		}
+
+		p + p {
+			margin-top: $padding/2;
+		}
+	}
+
+	&__footer {
+		padding: 0 $padding $padding $padding;
+		display: flex;
+		justify-content: space-between;
+		align-items: flex-end;
+		margin-top: auto;
+	}
+
+	&__status,
+	&__configure {
+
+	}
+
+	&__tooltip {
+
+		.pwp-icon {
+			font-size: 20px;
+
+			&--check {
+				color: $color_green;
+			}
+
+			&--alert {
+				color: $color_orange;
+			}
+
+			&--close {
+				color: $color_red;
+			}
+		}
+
+		&:after {
+			content: attr(data-pwp-features-tooltip);
+			position: absolute;
+			left: 0;
+			bottom: -$padding*.6;
+			transform: translateY(100%);
+			background-color: #fff;
+			padding: $padding/2;
+			border: 1px solid #ccc;
+			border-left: 4px solid $color_green;
+			z-index: 40;
+		}
+
+		&--error:after {
+			border-left: 4px solid $color_red;
+		}
+
+		&:before {
+			content: '';
+			position: absolute;
+			left: $padding;
+			bottom: -$padding;
+			width: $padding*.6;
+			height: $padding*.6;
+			background-color: #fff;
+			border: 1px solid transparent;
+			border-left-color: #ccc;
+			border-top-color: #ccc;
+			transform: rotate(45deg);
+			z-index: 50;
+		}
+
+		&:after,
+		&:before {
+			display: none;
+			opacity: 0;
+			@include transition();
+		}
+
+		&:hover {
+			&:after,
+			&:before {
+				display: block;
+				opacity: 1;
+			}
+		}
+	}
+}

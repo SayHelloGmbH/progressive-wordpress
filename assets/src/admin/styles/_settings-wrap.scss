@@ -1,0 +1,83 @@
+.pwp-wrap {
+	.form-table td {
+		vertical-align: top;
+	}
+
+	h1 {
+		margin-bottom: 20px;
+	}
+
+	a {
+		color: darken($color_main, 5%);
+
+		&:hover {
+			color: $color_main;
+		}
+
+		text-decoration: none;
+	}
+
+	form {
+		margin-top: 20px;
+
+		select {
+			//width: 150px;
+		}
+
+		textarea {
+			width: 100%;
+		}
+	}
+
+	.beta p {
+		font-size: smaller;
+	}
+
+	p.error {
+		font-weight: bold;
+		color: red;
+	}
+
+	.settings-sub {
+		margin-top: 20px;
+		max-width: 430px;
+		width: 100%;
+	}
+
+	.button--pwp-settings-delete {
+		background-color: transparent;
+		border: none;
+		@include box-shadow(none);
+		color: #a00;
+		padding: 0;
+
+		&:hover {
+			color: #dc3232;
+		}
+
+		&:active {
+			background-color: transparent;
+			border-color: none;
+			@include box-shadow(none);
+		}
+	}
+
+	textarea#offline-content {
+		height: 150px;
+		line-height: 180%;
+		font-size: 12px;
+		white-space: nowrap;
+	}
+
+	// spacer
+
+	.form-table tr {
+		position: relative;
+		//display: block;
+	}
+
+	.pwp-settings--spacer {
+		border-top: 1px solid #e5e5e5;
+		margin-left: -220px;
+	}
+}

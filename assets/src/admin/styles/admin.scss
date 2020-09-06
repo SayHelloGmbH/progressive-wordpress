@@ -1,0 +1,47 @@
+$color_main: #11A87D;
+$color_red: #dc3232;
+$color_orange: #c7763c;
+$color_green: #46b450;
+
+$default-box-shadow-color: rgba(#000, 0.15);
+$default-box-shadow-h-offset: 0px;
+$default-box-shadow-v-offset: 3px;
+$default-box-shadow-blur: 6px;
+
+$default-transition-duration: 200ms;
+
+@keyframes spinner-animation {
+	0% {
+		transform: rotate(0deg);
+	}
+	100% {
+		transform: rotate(360deg);
+	}
+}
+
+@import "../../_includes/mixin.border-radius";
+@import "../../_includes/mixin.transition";
+@import "../../_includes/mixin.box-shadow";
+
+@import "./simptip";
+
+@import "./pwp-text";
+@import "./pwp-pushmodal";
+@import "./pwp-pushpost";
+@import "./pwp-features";
+@import "./pwp-icon";
+@import "./settings-page";
+@import "./settings-wrap";
+@import "./pwp-wrap";
+@import "./devices-table";
+@import "./pwp-activate-notice";
+
+#TB_window {
+	width: inherit !important;
+	height: auto !important;
+	margin-left: 0 !important;
+	margin-top: 0 !important;
+	top: 50% !important;
+	left: 50% !important;
+	transform: translate3d(-50%, -50%);
+}

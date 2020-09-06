@@ -1,51 +1,57 @@
 {
-    "name": "progressive-wordpress",
-    "version": "http-web-push-"http-web-push2.1.10.4",
-    "description": "This WordPress plugin adds progressive web app features to your WordPress site",
-    "main": "gulpfile.babel.js",
-    "repository": {
-        "type": "git",
-        "url": "git+ssh://git@github.com/SayHelloGmbH/progressive-wordpress.git"
-    },
-    "dependencies": {
-        "clientjs": "^0.1.11"
-    },
-    "devDependencies": {
-        "babel-core": "^6.26.3",
-        "babel-loader": "^7.1.4",
-        "babel-preset-env": "^1.7.0",
-        "babel-register": "^6.26.0",
-        "fs": "0.0.1-security",
-        "gulp": "^3.9.1",
-        "gulp-autoprefixer": "^6.0.0",
-        "gulp-concat": "^2.6.1",
-        "gulp-debug": "^4.0.0",
-        "gulp-livereload": "^3.8.1",
-        "gulp-load-plugins": "^1.5.0",
-        "gulp-minify-css": "^1.2.4",
-        "gulp-rename": "^1.2.3",
-        "gulp-sass": "^4.0.1",
-        "gulp-sass-import-json": "^1.0.2",
-        "gulp-svgmin": "^1.2.3",
-        "gulp-uglify": "^2.0.1",
-        "gulp-watch": "^5.0.0",
-        "json-loader": "^0.5.7",
-        "merge-stream": "^1.0.1",
-        "webpack": "^3.12.0",
-        "webpack-stream": "^3.2.0"
-    },
-    "author": "Nico Martin",
-    "license": "GPL-3.0",
-    "scripts": {
-        "test": "gulp"
-    },
-    "bugs": {
-        "url": "https://github.com/SayHelloGmbH/progressive-wordpress/issues"
-    },
-    "homepage": "https://github.com/SayHelloGmbH/progressive-wordpress#README",
-    "babel": {
-        "presets": [
-            "env"
-        ]
-    }
+  "name": "progressive-wordpress",
+  "version": "http-web-push--2.1.10.5",
+  "description": "This WordPress plugin adds progressive web app features to your WordPress site",
+  "main": "gulpfile.babel.js",
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/SayHelloGmbH/progressive-wordpress.git"
+  },
+  "dependencies": {
+    "clientjs": "^0.1.11"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.11.6",
+    "@babel/preset-env": "^7.11.5",
+    "@babel/register": "^7.11.5",
+    "autoprefixer": "^9.8.6",
+    "babel-eslint": "^10.1.0",
+    "babel-loader": "^8.1.0",
+    "clean-webpack-plugin": "^3.0.0",
+    "css-loader": "^4.2.2",
+    "eslint": "^7.8.1",
+    "eslint-config-prettier": "^6.11.0",
+    "eslint-import-resolver-webpack": "^0.12.2",
+    "eslint-plugin-import": "^2.22.0",
+    "eslint-plugin-prettier": "^3.1.4",
+    "eslint-plugin-react": "^7.20.6",
+    "json-loader": "^0.5.7",
+    "merge-stream": "^1.0.1",
+    "mini-css-extract-plugin": "^0.11.0",
+    "prettier": "^2.1.1",
+    "sass": "^1.26.10",
+    "sass-loader": "^10.0.2",
+    "style-loader": "^1.2.1",
+    "webpack": "^4.44.1",
+    "webpack-cli": "^3.3.12",
+    "webpack-livereload-plugin": "^2.3.0"
+  },
+  "author": "Nico Martin",
+  "license": "GPL-3.0",
+  "scripts": {
+    "dev": "webpack -d --watch"
+  },
+  "bugs": {
+    "url": "https://github.com/SayHelloGmbH/progressive-wordpress/issues"
+  },
+  "homepage": "https://github.com/SayHelloGmbH/progressive-wordpress#README",
+  "babel": {
+    "presets": [
+      "@babel/preset-env"
+    ]
+  },
+  "prettier": {
+    "singleQuote": true,
+    "trailingComma": "es5"
+  }
 }

@@ -1,0 +1,69 @@
+$padding: 15px;
+
+.pwp-wrap__section {
+	background-color: #fff;
+	//border: 1px solid #e5e5e5;
+	@include box-shadow();
+	padding: $padding;
+	margin-top: $padding * 2;
+	max-width: 700px;
+	width: 100%;
+
+	h2 {
+		margin: -$padding;
+		margin-bottom: $padding;
+		padding: $padding;
+		border-bottom: 1px solid #e5e5e5;
+	}
+
+	ul {
+		padding-left: 20px;
+		list-style: disc;
+	}
+
+	&.settings-sections {
+	}
+
+	.form-table {
+		td {
+			vertical-align: top;
+		}
+
+		select {
+			width: 250px;
+		}
+
+		textarea,
+		input[type=text] {
+			width: 100%;
+		}
+
+		textarea {
+			min-height: 100px;
+		}
+	}
+
+	.settings--fileuploader {
+		.fileuploader__controls {
+			margin-top: 1rem !important;
+
+			.delete-file {
+				margin-left: 1em;
+			}
+		}
+
+		.delete-file {
+			display: inline-block;
+		}
+
+		&[data-fileid='0'] {
+			.fileuploader__controls {
+				margin-top: 0 !important;
+			}
+
+			.delete-file {
+				display: none;
+			}
+		}
+	}
+}

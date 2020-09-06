@@ -230,46 +230,38 @@ class Init {
 	 */
 	public function add_assets() {
 		$script_version = pwp_get_instance()->version;
-		$min            = true;
-		if ( pwp_get_instance()->debug ) {
-			$min = false;
-		}
-		$dir_uri = trailingslashit( plugin_dir_url( pwp_get_instance()->file ) );
+		$dir_uri        = trailingslashit( plugin_dir_url( pwp_get_instance()->file ) );
 
 		if ( pwp_get_setting( 'offline-indicator' ) ) {
-			wp_enqueue_style( pwp_get_instance()->prefix . '-offline-style', $dir_uri . 'assets/styles/ui-offline' . ( $min ? '.min' : '' ) . '.css', [], $script_version );
-			wp_enqueue_script( pwp_get_instance()->prefix . '-offline-script', $dir_uri . 'assets/scripts/ui-offline' . ( $min ? '.min' : '' ) . '.js', [], $script_version, true );
+			wp_enqueue_style( pwp_get_instance()->prefix . '-offline-style', $dir_uri . 'assets/dist/offline.css', [], $script_version );
+			wp_enqueue_script( pwp_get_instance()->prefix . '-offline-script', $dir_uri . 'assets/dist/offline.js', [], $script_version, true );
 		}
 
 		if ( pwp_get_setting( 'firebase-serverkey' ) ) {
-			wp_enqueue_style( pwp_get_instance()->prefix . '-pushbutton-style', $dir_uri . 'assets/styles/ui-pushbutton' . ( $min ? '.min' : '' ) . '.css', [], $script_version );
+			wp_enqueue_style( pwp_get_instance()->prefix . '-pushbutton-style', $dir_uri . 'assets/dist/pushbutton.css', [], $script_version );
 			wp_enqueue_script( 'clientjs', $dir_uri . 'assets/scripts/clientjs.min.js', [], '1.0.0', true );
-			wp_enqueue_script( pwp_get_instance()->prefix . '-pushbutton-script', $dir_uri . 'assets/scripts/ui-pushbutton' . ( $min ? '.min' : '' ) . '.js', [ 'clientjs' ], $script_version, true );
+			wp_enqueue_script( pwp_get_instance()->prefix . '-pushbutton-script', $dir_uri . 'assets/dist/pushbutton.js', [ 'clientjs' ], $script_version, true );
 		} elseif ( WebPushCredentials::get_vapid() ) {
-			wp_enqueue_style( pwp_get_instance()->prefix . '-pushbutton-style', $dir_uri . 'assets/styles/ui-pushbutton' . ( $min ? '.min' : '' ) . '.css', [], $script_version );
+			wp_enqueue_style( pwp_get_instance()->prefix . '-pushbutton-style', $dir_uri . 'assets/dist/webpushbutton.css', [], $script_version );
 			wp_enqueue_script( 'clientjs', $dir_uri . 'assets/scripts/clientjs.min.js', [], '1.0.0', true );
-			wp_enqueue_script( pwp_get_instance()->prefix . '-webpushbutton-script', $dir_uri . 'assets/scripts/ui-webpushbutton' . ( $min ? '.min' : '' ) . '.js', [ 'clientjs' ], $script_version, true );
+			wp_enqueue_script( pwp_get_instance()->prefix . '-webpushbutton-script', $dir_uri . 'assets/dist/webpushbutton.js', [ 'clientjs' ], $script_version, true );
 			wp_localize_script( pwp_get_instance()->prefix . '-webpushbutton-script', 'WebPushVars', [
 				'vapidPublcKey' => WebPushCredentials::get_vapid()['public'],
 			] );
 		}
 
-		wp_enqueue_script( pwp_get_instance()->prefix . '-installprompt-script', $dir_uri . 'assets/scripts/ui-installprompt' . ( $min ? '.min' : '' ) . '.js', [], $script_version, true );
+		wp_enqueue_script( pwp_get_instance()->prefix . '-installprompt-script', $dir_uri . 'assets/dist/installprompt.js', [], $script_version, true );
 	}
 
 	public function add_admin_assets() {
 		$script_version = pwp_get_instance()->version;
-		$min            = true;
-		if ( pwp_get_instance()->debug && is_user_logged_in() ) {
-			$min = false;
-		}
 
 		wp_enqueue_style( 'wp-color-picker' );
 		wp_enqueue_script( 'wp-color-picker' );
 
 		$dir_uri = trailingslashit( plugin_dir_url( pwp_get_instance()->file ) );
-		wp_enqueue_style( pwp_get_instance()->prefix . '-admin-style', $dir_uri . 'assets/styles/admin' . ( $min ? '.min' : '' ) . '.css', [], $script_version );
-		wp_enqueue_script( pwp_get_instance()->prefix . '-admin-script', $dir_uri . 'assets/scripts/admin' . ( $min ? '.min' : '' ) . '.js', [ 'jquery' ], $script_version, true );
+		wp_enqueue_style( pwp_get_instance()->prefix . '-admin-style', $dir_uri . 'assets/dist/admin.css', [], $script_version );
+		wp_enqueue_script( pwp_get_instance()->prefix . '-admin-script', $dir_uri . 'assets/dist/admin.js', [ 'jquery' ], $script_version, true );
 
 		/**
 		 * Admin Footer JS
