@@ -101,20 +101,20 @@ class WebPush {
 
 		$send = '<p style="margin-bottom: 30px;line-height: 250%"><b>' . __( 'Send to all devices', 'progressive-wp' ) . ':</b><br>' . $this->render_push_modal() . '</p>';
 
-		$devices = get_option( self::$subscriptions_option );
-		$table   = '';
+		$subscriptions = get_option( self::$subscriptions_option );
+		$table         = '';
 		//$table   .= '<pre>' . print_r( $devices, true ) . '</pre>';
 		$table .= '<table class="pwp-devicestable">';
 		$table .= '<thead><tr><th>' . __( 'Device', 'progressive-wp' ) . '</th><th>' . __( 'Registered', 'progressive-wp' ) . '</th><th></th></tr></thead>';
 		$table .= '<tbody>';
-		if ( empty( $devices ) ) {
+		if ( empty( $subscriptions ) ) {
 			$table .= '<tr><td colspan="3" class="empty">' . __( 'No devices registered', 'progressive-wp' ) . '</td></tr>';
 		} else {
-			foreach ( $devices as $device ) {
+			foreach ( $subscriptions as $subscription ) {
 				//$table .= '<pre>' . print_r( get_option( self::$subscriptions_option ), true ) . '</pre>';
 				$table .= '<tr>';
 				$table .= '<td>';
-				foreach ( $device['data'] as $row => $values ) {
+				foreach ( $subscription['clientdata'] as $row => $values ) {
 					$infos   = [];
 					$prepend = '';
 					if ( 'browser' === $row ) {
@@ -134,17 +134,17 @@ class WebPush {
 				}
 				$table .= '</td>';
 				$table .= '<td>';
-				$date  = date( get_option( 'date_format' ) . ' ' . get_option( 'time_format' ), $device['time'] );
+				$date  = date( get_option( 'date_format' ) . ' ' . get_option( 'time_format' ), $subscription['time'] );
 				$table .= "<span class='devices-item devices-item--date'>{$date}</span>";
-				if ( 0 != $device['wp_user'] ) {
-					$display_name = get_userdata( $device['wp_user'] )->display_name;
+				if ( 0 != $subscription['wp_user'] ) {
+					$display_name = get_userdata( $subscription['wp_user'] )->display_name;
 					$table        .= "<span class='devices-item devices-item--user'>{$display_name}</span>";
 				}
 				$table .= '</td>';
 				$table .= '<td>';
 				//$table .= '<span class="devices-actions devices-actions--send"><a class="button" onclick="alert(\'Sorry not yet ready\');">send push</a></span>';
-				$table .= $this->render_push_modal( '', '', '', 0, $device['id'] );
-				$table .= '<span class="devices-actions devices-actions--delete"><a id="pwpDeleteDevice" data-deviceid="' . $device['id'] . '" class="button button-pwpdelete">' . __( 'Remove device', 'progressive-wp' ) . '</a></span>';
+				$table .= $this->render_push_modal( '', '', '', 0, $subscription['id'] );
+				$table .= '<span class="devices-actions devices-actions--delete"><a id="pwpDeleteDevice" data-endpoint="' . $subscription['subscription']->endpoint . '" class="button button-pwpdelete">' . __( 'Remove device', 'progressive-wp' ) . '</a></span>';
 				$table .= '</td>';
 				$table .= '</tr>';
 			} // End foreach().
@@ -211,85 +211,65 @@ class WebPush {
 	public function add_subscription() {
 
 		$data = json_decode( file_get_contents( 'php://input' ) );
-		pwp_exit_ajax( 'error', 'handle error', $data );
 
-		if ( ! isset( $_POST['user_id'] ) || '' == $_POST['user_id'] ) {
+		if ( ! isset( $data->subscription->endpoint ) || '' == $data->subscription->endpoint ) {
 			pwp_exit_ajax( 'error', 'user ID error' );
 		}
 
-		if ( ! isset( $_POST['handle'] ) || ! in_array( $_POST['handle'], [ 'add', 'remove' ] ) ) {
-			pwp_exit_ajax( 'error', 'handle error' );
+		$endpoint      = $data->subscription->endpoint;
+		$id            = sanitize_title( $endpoint );
+		$subscriptions = get_option( self::$subscriptions_option, [] );
+		if ( ! is_array( $subscriptions ) ) {
+			$subscriptions = [];
 		}
 
-		$device_id  = $_POST['user_id'];
-		$device_key = sanitize_title( $device_id );
-		$handle     = $_POST['handle'];
-		$devices    = get_option( self::$subscriptions_option );
-		if ( ! is_array( $devices ) ) {
-			$devices = [];
+		$do_first_push = ! array_key_exists( $id, $subscriptions );
+
+		$devices[ $id ] = [
+			'id'           => $id,
+			'wp_user'      => get_current_user_id(),
+			'time'         => time(),
+			'subscription' => $data->subscription,
+			'clientdata'   => $data->clientdata,
+			'groups'       => [],
+		];
+
+		$userdata = get_userdata( get_current_user_id() );
+
+		if ( is_object( $userdata ) && is_array( $userdata->roles ) ) {
+			$devices[ $id ]['groups'] = array_merge( $devices[ $id ]['groups'], $userdata->roles );
 		}
-
-		$do_first_push = false;
-
-		if ( 'add' == $handle ) {
-
-			/**
-			 * Check if is new device
-			 */
-
-			if ( ! array_key_exists( $device_key, $devices ) ) {
-				$do_first_push = true;
-			}
-
-			/**
-			 * Add Device
-			 */
-
-			$handled                = 'added';
-			$devices[ $device_key ] = [
-				'id'      => $device_id,
-				'wp_user' => get_current_user_id(),
-				'time'    => time(),
-				'data'    => $_POST['clientData'],
-				'groups'  => [],
-			];
-
-			$userdata = get_userdata( get_current_user_id() );
-
-			if ( is_object( $userdata ) && is_array( $userdata->roles ) ) {
-				$devices[ $device_key ]['groups'] = array_merge( $devices[ $device_key ]['groups'], $userdata->roles );
-			}
-		} elseif ( 'remove' == $handle ) {
-
-			/**
-			 * Remove Device
-			 */
-
-			$handled = 'removed';
-			unset( $devices[ $device_key ] );
-		} // End if().
 
 		update_option( self::$subscriptions_option, $devices );
 
-		/*
 		if ( $do_first_push ) {
 			$data = [
 				'title'    => 'hello!',
 				'body'     => __( 'Sie werden von nun an auf diesem Weg ab und zu ausgewählte Neuigkeiten erhalten.', 'progressive-wp' ),
 				'redirect' => '',
 				'groups'   => [
-					$device_id,
+					$id,
 				],
 			];
-			$this->do_push( $data );
+			//$this->do_push( $data );
 		}
-		*/
-		pwp_exit_ajax( 'success', "Device ID $device_id successfully $handled" );
+
+		pwp_exit_ajax( 'success', "Device ID {$id} successfully added" );
 	}
 
 	public function remove_subscription() {
-		$data = json_decode( file_get_contents( 'php://input' ) );
-		pwp_exit_ajax( 'error', 'handle error', $data );
+		$data     = json_decode( file_get_contents( 'php://input' ) );
+		$endpoint = $data->endpoint;
+		$id       = sanitize_title( $endpoint );
+
+		$subscriptions = get_option( self::$subscriptions_option, [] );
+		if ( ! is_array( $subscriptions ) ) {
+			$subscriptions = [];
+		}
+
+		unset( $subscriptions[ $id ] );
+		update_option( self::$subscriptions_option, $subscriptions );
+		pwp_exit_ajax( 'success', "Device ID {$id} successfully removed" );
 	}
 
 	public function do_modal_push() {

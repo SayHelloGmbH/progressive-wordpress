@@ -1,4 +1,4 @@
-(function (plugin) {
+(function (plugin, WebPushVars) {
   try {
     let active = false;
     const $body = document.getElementsByTagName('body')[0];
@@ -28,9 +28,8 @@
     };
 
     const register = () => {
-      console.log('register');
       $body.classList.add('pwp-notification--loader');
-      navigator.serviceWorker.ready.then((registration) => {
+      navigator.serviceWorker.getRegistration().then((registration) => {
         registration.pushManager
           .subscribe({
             userVisibleOnly: true,
@@ -44,14 +43,14 @@
           .catch(() => {
             changePushStatus(false);
             alert(plugin['message_pushadd_failed']);
-          });
+          })
+          .finally(() => $body.classList.remove('pwp-notification--loader'));
       });
     };
 
     const deregister = () => {
-      return;
       $body.classList.add('pwp-notification--loader');
-      navigator.serviceWorker.ready.then(function (registration) {
+      navigator.serviceWorker.getRegistration().then(function (registration) {
         registration.pushManager
           .getSubscription()
           .then(function (subscription) {
@@ -60,14 +59,18 @@
             }
             subscription
               .unsubscribe()
-              .then(function () {
-                handleSubscriptionID(subscription, 'remove');
-                changePushStatus(false);
-              })
+              .then(() =>
+                removeSubscription(subscription).then(() =>
+                  changePushStatus(false)
+                )
+              )
               .catch(function () {
                 changePushStatus(true);
                 alert(plugin['message_pushremove_failed']);
-              });
+              })
+              .finally(() =>
+                $body.classList.remove('pwp-notification--loader')
+              );
           });
       });
     };
@@ -75,7 +78,7 @@
     const addSubscription = (subscription) =>
       new Promise((resolve, reject) => {
         const client = new ClientJS();
-        const clientData = {
+        const clientdata = {
           browser: {
             browser: client.getBrowser(),
             version: client.getBrowserVersion(),
@@ -91,7 +94,43 @@
             vendor: client.getDeviceVendor(),
           },
         };
-        reject(clientData);
+
+        fetch(`${plugin['AjaxURL']}?action=pwp_ajax_add_webpush_subscription`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            subscription,
+            clientdata,
+          }),
+        })
+          .then((response) => response.json())
+          .then((data) => resolve(data))
+          .catch((e) => {
+            reject(e);
+          });
+      });
+
+    const removeSubscription = (subscription) =>
+      new Promise((resolve, reject) => {
+        fetch(
+          `${plugin['AjaxURL']}?action=pwp_ajax_remove_webpush_subscription`,
+          {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              endpoint: subscription.endpoint,
+            }),
+          }
+        )
+          .then((response) => response.json())
+          .then((data) => resolve(data))
+          .catch((e) => {
+            reject(e);
+          });
       });
 
     function handleSubscriptionID(subscription, handle) {
@@ -146,7 +185,7 @@
     }
 
     if ('serviceWorker' in navigator && 'PushManager' in window) {
-      navigator.serviceWorker.ready.then(function (registration) {
+      navigator.serviceWorker.getRegistration().then((registration) => {
         /**
          * Show toggler (hidden by default)
          */
@@ -160,7 +199,6 @@
         const $toggler = document.getElementById('pwp-notification-button');
         if ($toggler) {
           $toggler.onclick = function () {
-            active = false;
             if (active) {
               deregister();
             } else {
@@ -174,7 +212,9 @@
          */
 
         registration.pushManager.getSubscription().then((subscription) => {
+          console.log('SUBSCRIPTION', subscription);
           if (subscription) {
+            addSubscription(subscription);
             changePushStatus(true);
           }
         });
@@ -184,4 +224,4 @@
     window.pwpRegisterPushDevice = registerPushDevice;
     window.pwpDeregisterPushDevice = deregisterPushDevice;
   } catch (e) {}
-})(PwpJsVars);
+})(PwpJsVars, WebPushVars);
