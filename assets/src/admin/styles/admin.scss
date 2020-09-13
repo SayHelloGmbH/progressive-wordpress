@@ -35,13 +35,3 @@ $default-transition-duration: 200ms;
 @import "./pwp-wrap";
 @import "./devices-table";
 @import "./pwp-activate-notice";
-
-#TB_window {
-	width: inherit !important;
-	height: auto !important;
-	margin-left: 0 !important;
-	margin-top: 0 !important;
-	top: 50% !important;
-	left: 50% !important;
-	transform: translate3d(-50%, -50%);
-}

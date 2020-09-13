@@ -246,7 +246,7 @@ class Init {
 			wp_enqueue_script( 'clientjs', $dir_uri . 'assets/scripts/clientjs.min.js', [], '1.0.0', true );
 			wp_enqueue_script( pwp_get_instance()->prefix . '-webpushbutton-script', $dir_uri . 'assets/dist/webpushbutton.js', [ 'clientjs' ], $script_version, true );
 			wp_localize_script( pwp_get_instance()->prefix . '-webpushbutton-script', 'WebPushVars', [
-				'vapidPublcKey' => WebPushCredentials::get_vapid()['public'],
+				'vapidPublcKey' => WebPushCredentials::get_vapid()['publicKey'],
 			] );
 		}
 

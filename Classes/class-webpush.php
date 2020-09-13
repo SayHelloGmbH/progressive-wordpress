@@ -2,6 +2,9 @@
 
 namespace nicomartin\ProgressiveWordPress;
 
+use Minishlink\WebPush\WebPush as PHPWebPush;
+use Minishlink\WebPush\Subscription;
+
 class WebPush {
 
 	public static $subscriptions_option = 'pwp-push-subscriptions';
@@ -57,6 +60,9 @@ class WebPush {
 	}
 
 	public function get_sw_content() {
+		if ( ! WebPushCredentials::get_vapid() ) {
+			return;
+		}
 
 		$push_content = '';
 		$push_file    = plugin_dir_path( pwp_get_instance()->file ) . '/assets/serviceworker/webpush.js';
@@ -71,10 +77,13 @@ class WebPush {
 		$push_content = $minifier->minify();
 
 		echo $push_content;
-
 	}
 
 	public function settings_push() {
+
+		if ( ! WebPushCredentials::get_vapid() ) {
+			return;
+		}
 
 		$section = pwp_settings()->add_section( pwp_settings_page_push(), 'pwp_push_push', __( 'Push Notification settings', 'progressive-wp' ) );
 
@@ -88,6 +97,9 @@ class WebPush {
 	}
 
 	public function settings_button() {
+		if ( ! WebPushCredentials::get_vapid() ) {
+			return;
+		}
 		$section_desc = __( 'This adds a fixed push notification button to the bottom of your page.', 'progressive-wp' );
 		$section      = pwp_settings()->add_section( pwp_settings_page_push(), 'pwp_push_button', __( 'Push Button', 'progressive-wp' ), $section_desc );
 
@@ -98,10 +110,13 @@ class WebPush {
 	}
 
 	public function settings_devices() {
+		if ( ! WebPushCredentials::get_vapid() ) {
+			return;
+		}
 
 		$send = '<p style="margin-bottom: 30px;line-height: 250%"><b>' . __( 'Send to all devices', 'progressive-wp' ) . ':</b><br>' . $this->render_push_modal() . '</p>';
 
-		$subscriptions = get_option( self::$subscriptions_option );
+		$subscriptions = self::get_subscriptions();
 		$table         = '';
 		//$table   .= '<pre>' . print_r( $devices, true ) . '</pre>';
 		$table .= '<table class="pwp-devicestable">';
@@ -217,15 +232,12 @@ class WebPush {
 		}
 
 		$endpoint      = $data->subscription->endpoint;
-		$id            = sanitize_title( $endpoint );
-		$subscriptions = get_option( self::$subscriptions_option, [] );
-		if ( ! is_array( $subscriptions ) ) {
-			$subscriptions = [];
-		}
+		$id            = self::id_from_endpoint( $endpoint );
+		$subscriptions = self::get_subscriptions();
 
 		$do_first_push = ! array_key_exists( $id, $subscriptions );
 
-		$devices[ $id ] = [
+		$subscriptions[ $id ] = [
 			'id'           => $id,
 			'wp_user'      => get_current_user_id(),
 			'time'         => time(),
@@ -237,10 +249,10 @@ class WebPush {
 		$userdata = get_userdata( get_current_user_id() );
 
 		if ( is_object( $userdata ) && is_array( $userdata->roles ) ) {
-			$devices[ $id ]['groups'] = array_merge( $devices[ $id ]['groups'], $userdata->roles );
+			$subscriptions[ $id ]['groups'] = array_merge( $subscriptions[ $id ]['groups'], $userdata->roles );
 		}
 
-		update_option( self::$subscriptions_option, $devices );
+		update_option( self::$subscriptions_option, $subscriptions );
 
 		if ( $do_first_push ) {
 			$data = [
@@ -251,7 +263,7 @@ class WebPush {
 					$id,
 				],
 			];
-			//$this->do_push( $data );
+			$this->do_push( $data );
 		}
 
 		pwp_exit_ajax( 'success', "Device ID {$id} successfully added" );
@@ -260,12 +272,9 @@ class WebPush {
 	public function remove_subscription() {
 		$data     = json_decode( file_get_contents( 'php://input' ) );
 		$endpoint = $data->endpoint;
-		$id       = sanitize_title( $endpoint );
+		$id       = self::id_from_endpoint( $endpoint );
 
-		$subscriptions = get_option( self::$subscriptions_option, [] );
-		if ( ! is_array( $subscriptions ) ) {
-			$subscriptions = [];
-		}
+		$subscriptions = self::get_subscriptions();
 
 		unset( $subscriptions[ $id ] );
 		update_option( self::$subscriptions_option, $subscriptions );
@@ -303,9 +312,6 @@ class WebPush {
 		}
 
 		$return = $this->do_push( $data );
-		if ( 'success' == $return['type'] && $_POST['pwp-push-pushpost'] ) {
-			update_post_meta( $_POST['pwp-push-pushpost'], 'pwp_pushpost', 'done' );
-		}
 
 		pwp_exit_ajax( $return['type'], $return['message'], $return );
 	}
@@ -414,37 +420,30 @@ class WebPush {
 
 		$log = [];
 
-		$server_key = pwp_get_setting( 'firebase-serverkey' );
-		if ( ! pwp_get_instance()->PushCredentials->validate_serverkey( $server_key ) ) {
-			return [
-				'type'    => 'error',
-				'message' => __( 'Invalid firebase server key', 'progressive-wp' ),
-			];
-		}
-
 		$send_tos = $data['groups'];
 		unset( $data['groups'] );
 
-		$devices = [];
-		foreach ( get_option( self::$subscriptions_option ) as $device_data ) {
+		$send_to_subscriptions = [];
+		$subscriptions         = self::get_subscriptions();
+		foreach ( $subscriptions as $subscription_data ) {
 			$add_device = false;
 			if ( empty( $send_tos ) ) {
 				// send if no limitation set
 				$add_device = true;
 			} else {
 				foreach ( $send_tos as $send_to ) {
-					if ( $device_data['id'] == $send_to ) {
+					if ( $subscription_data['id'] == $send_to ) {
 						$add_device = true;
 					}
 				}
 			}
 			if ( $add_device ) {
-				$devices[]        = $device_data['id'];
-				$log['devices'][] = $device_data;
+				$send_to_subscriptions[] = $subscription_data['subscription'];
+				$log['devices'][]        = $subscription_data;
 			}
 		}
 
-		if ( ! is_array( $devices ) || count( $devices ) == 0 ) {
+		if ( ! is_array( $send_to_subscriptions ) || count( $send_to_subscriptions ) == 0 ) {
 			return [
 				'type'    => 'error',
 				'message' => __( 'No devices set', 'progressive-wp' ),
@@ -492,44 +491,50 @@ class WebPush {
 
 		$log['message'] = $data;
 
-		$fields = [
-			'registration_ids' => $devices,
-			'data'             => [
-				'message' => $data,
-			],
-		];
+		$web_push = new PHPWebPush();
 
-		$put_latest_post = pwp_put_contents( $this->latest_push_path, json_encode( $data, JSON_UNESCAPED_SLASHES ) );
-		if ( ! $put_latest_post ) {
-			return [
-				'type'    => 'error',
-				'message' => __( 'Could not write latest_push_json', 'progressive-wp' ),
-			];
+		foreach ( $send_to_subscriptions as $subscription ) {
+			$subscription                    = (array) $subscription;
+			$subscription['contentEncoding'] = 'aesgcm';
+			$web_push->sendNotification(
+				Subscription::create( $subscription ),
+				json_encode( $data )
+			);
 		}
 
-		$headers = [
-			'Authorization: key=' . $server_key,
-			'Content-Type: application/json',
+		$success = [];
+		$failed  = [];
+
+		foreach ( $web_push->flush() as $report ) {
+			$endpoint = $report->getRequest()->getUri()->__toString();
+
+			if ( $report->isSuccess() ) {
+				$success[] = [
+					'id' => self::id_from_endpoint( $endpoint ),
+				];
+			} else {
+				$failed[] = [
+					'id'     => self::id_from_endpoint( $endpoint ),
+					'reason' => $report->getReason(),
+				];
+			}
+		}
+
+		$file = 'push_log_' . time() . '.json';
+		pwp_put_contents( $this->upload_dir . $file, json_encode( [
+			'success' => $success,
+			'failed'  => $failed,
+			'log'     => $log,
+		] ) );
+
+		return [
+			'type'    => 'success',
+			'message' => '',
+			'success' => $success,
+			'failed'  => $failed,
 		];
 
-		$ch = curl_init();
-
-		//curl_setopt( $ch, CURLOPT_URL, 'https://android.googleapis.com/gcm/send' );
-		curl_setopt( $ch, CURLOPT_URL, 'https://fcm.googleapis.com/fcm/send' );
-		curl_setopt( $ch, CURLOPT_POST, true );
-		curl_setopt( $ch, CURLOPT_HTTPHEADER, $headers );
-		curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
-		curl_setopt( $ch, CURLOPT_POSTFIELDS, json_encode( $fields ) );
-		curl_setopt( $ch, CURLOPT_SSL_VERIFYHOST, false );
-		curl_setopt( $ch, CURLOPT_SSL_VERIFYPEER, false );
-		$result = curl_exec( $ch );
-		curl_close( $ch );
-
-		$result = json_decode( $result, true );
-
-		/**
-		 * Check for failed push keys and remove them
-		 */
+		/*
 
 		$success = [];
 		$failed  = [];
@@ -553,10 +558,6 @@ class WebPush {
 			}
 		}
 
-		/**
-		 * Save Push
-		 */
-
 		$log['resp'] = $result;
 
 		$file = 'push_log_' . time() . wp_generate_password( 30, false ) . '.json';
@@ -568,6 +569,7 @@ class WebPush {
 			'result'          => $result,
 			'devices_removed' => $failed,
 		];
+		*/
 	}
 
 	/**
@@ -595,5 +597,18 @@ class WebPush {
 		}
 
 		return $this->upload_url . $newest_file;
+	}
+
+	private function get_subscriptions() {
+		$subscriptions = get_option( self::$subscriptions_option );
+		if ( ! is_array( $subscriptions ) ) {
+			$subscriptions = [];
+		}
+
+		return $subscriptions;
+	}
+
+	private function id_from_endpoint( $endpoint ) {
+		return sanitize_title( $endpoint );
 	}
 }

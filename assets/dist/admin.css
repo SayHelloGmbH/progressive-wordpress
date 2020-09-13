@@ -988,13 +988,3 @@
   font-size: 1.1rem;
   margin: 0.5rem 0 0.7rem 0;
 }
-
-#TB_window {
-  width: inherit !important;
-  height: auto !important;
-  margin-left: 0 !important;
-  margin-top: 0 !important;
-  top: 50% !important;
-  left: 50% !important;
-  transform: translate3d(-50%, -50%);
-}

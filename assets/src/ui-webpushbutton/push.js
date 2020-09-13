@@ -6,10 +6,10 @@
     const urlBase64ToUint8Array = (base64String) => {
       const padding = '='.repeat((4 - (base64String.length % 4)) % 4);
       const base64 = (base64String + padding)
-        .replace(/-/g, '+')
+        .replace(/\-/g, '+')
         .replace(/_/g, '/');
 
-      const rawData = atob(base64);
+      const rawData = window.atob(base64);
       const outputArray = new Uint8Array(rawData.length);
 
       for (let i = 0; i < rawData.length; ++i) {
@@ -29,6 +29,7 @@
 
     const register = () => {
       $body.classList.add('pwp-notification--loader');
+      console.log('WebPushVars.vapidPublcKey', WebPushVars.vapidPublcKey);
       navigator.serviceWorker.getRegistration().then((registration) => {
         registration.pushManager
           .subscribe({
@@ -135,13 +136,13 @@
 
     function handleSubscriptionID(subscription, handle) {
       /*
-        const clientDatas = [];
-        Object.keys(clientData).forEach(function(key) {
-          Object.keys(clientData[key]).forEach(function(dataKey) {
-            clientDatas.push(
-                `clientData[${key}][${dataKey}]=${clientData[key][dataKey]}`);
-          });
-        });*/
+          const clientDatas = [];
+          Object.keys(clientData).forEach(function(key) {
+            Object.keys(clientData[key]).forEach(function(dataKey) {
+              clientDatas.push(
+                  `clientData[${key}][${dataKey}]=${clientData[key][dataKey]}`);
+            });
+          });*/
 
       console.log('POST', {
         subscription,
@@ -169,19 +170,19 @@
       // todo: add subscription
 
       /*
-      const action = 'pwp_ajax_handle_device_id';
-      const request = new XMLHttpRequest();
-      request.open('POST', plugin['AjaxURL'], true);
-      request.setRequestHeader('Content-Type',
-          'application/x-www-form-urlencoded; charset=UTF-8');
-      request.onload = function() {
-        $body.classList.remove('pwp-notification--loader');
-      };
-      request.send(
-          `action=${action}&user_id=${subscription_id}&handle=${handle}&${clientDatas.join(
-              '&')}`);
+        const action = 'pwp_ajax_handle_device_id';
+        const request = new XMLHttpRequest();
+        request.open('POST', plugin['AjaxURL'], true);
+        request.setRequestHeader('Content-Type',
+            'application/x-www-form-urlencoded; charset=UTF-8');
+        request.onload = function() {
+          $body.classList.remove('pwp-notification--loader');
+        };
+        request.send(
+            `action=${action}&user_id=${subscription_id}&handle=${handle}&${clientDatas.join(
+                '&')}`);
 
-         */
+           */
     }
 
     if ('serviceWorker' in navigator && 'PushManager' in window) {
