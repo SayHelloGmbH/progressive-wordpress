@@ -7,8 +7,8 @@ use Minishlink\WebPush\Subscription;
 
 class WebPush {
 
-	public static $subscriptions_option = 'pwp-push-subscriptions';
-	public $latestpushes_option = 'pwp-latest-pushes';
+	public static $subscriptions_option = 'pwp-webpush-subscriptions';
+	public $latestpushes_option = 'pwp-latest-webpushes';
 	public $latest_push_path = '';
 	public $latest_push_url = '';
 	public $upload_dir = '';
@@ -157,7 +157,6 @@ class WebPush {
 				}
 				$table .= '</td>';
 				$table .= '<td>';
-				//$table .= '<span class="devices-actions devices-actions--send"><a class="button" onclick="alert(\'Sorry not yet ready\');">send push</a></span>';
 				$table .= $this->render_push_modal( '', '', '', 0, $subscription['id'] );
 				$table .= '<span class="devices-actions devices-actions--delete"><a id="pwpDeleteDevice" data-endpoint="' . $subscription['subscription']->endpoint . '" class="button button-pwpdelete">' . __( 'Remove device', 'progressive-wp' ) . '</a></span>';
 				$table .= '</td>';

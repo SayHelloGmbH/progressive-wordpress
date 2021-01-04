@@ -1,28 +1,16 @@
-(function (plugin, WebPushVars) {
+import {urlBase64ToUint8Array} from './helpers';
+
+(function(plugin, WebPushVars) {
   try {
     let active = false;
     const $body = document.getElementsByTagName('body')[0];
-
-    const urlBase64ToUint8Array = (base64String) => {
-      const padding = '='.repeat((4 - (base64String.length % 4)) % 4);
-      const base64 = (base64String + padding)
-        .replace(/\-/g, '+')
-        .replace(/_/g, '/');
-
-      const rawData = window.atob(base64);
-      const outputArray = new Uint8Array(rawData.length);
-
-      for (let i = 0; i < rawData.length; ++i) {
-        outputArray[i] = rawData.charCodeAt(i);
-      }
-      return outputArray;
-    };
 
     const changePushStatus = (status) => {
       active = status;
       if (status) {
         $body.classList.add('pwp-notification--on');
-      } else {
+      }
+      else {
         $body.classList.remove('pwp-notification--on');
       }
     };
@@ -31,108 +19,100 @@
       $body.classList.add('pwp-notification--loader');
       console.log('WebPushVars.vapidPublcKey', WebPushVars.vapidPublcKey);
       navigator.serviceWorker.getRegistration().then((registration) => {
-        registration.pushManager
-          .subscribe({
-            userVisibleOnly: true,
-            applicationServerKey: urlBase64ToUint8Array(
-              WebPushVars.vapidPublcKey
-            ),
-          })
-          .then((subscription) =>
-            addSubscription(subscription).then(() => changePushStatus(true))
-          )
-          .catch(() => {
-            changePushStatus(false);
-            alert(plugin['message_pushadd_failed']);
-          })
-          .finally(() => $body.classList.remove('pwp-notification--loader'));
+        registration.pushManager.subscribe({
+          userVisibleOnly: true,
+          applicationServerKey: urlBase64ToUint8Array(
+              WebPushVars.vapidPublcKey,
+          ),
+        }).then((subscription) =>
+            addSubscription(subscription).then(() => changePushStatus(true)),
+        ).catch(() => {
+          changePushStatus(false);
+          alert(plugin.message_pushadd_failed);
+        }).finally(() => $body.classList.remove('pwp-notification--loader'));
       });
     };
 
     const deregister = () => {
       $body.classList.add('pwp-notification--loader');
-      navigator.serviceWorker.getRegistration().then(function (registration) {
-        registration.pushManager
-          .getSubscription()
-          .then(function (subscription) {
-            if (!subscription) {
-              return;
-            }
-            subscription
-              .unsubscribe()
-              .then(() =>
-                removeSubscription(subscription).then(() =>
-                  changePushStatus(false)
-                )
-              )
-              .catch(function () {
+      navigator.serviceWorker.getRegistration().then(function(registration) {
+        registration.pushManager.getSubscription().
+            then(function(subscription) {
+              if (!subscription) {
+                return;
+              }
+              subscription.unsubscribe().then(() =>
+                  removeSubscription(subscription).then(() =>
+                      changePushStatus(false),
+                  ),
+              ).catch(function() {
                 changePushStatus(true);
                 alert(plugin['message_pushremove_failed']);
-              })
-              .finally(() =>
-                $body.classList.remove('pwp-notification--loader')
+              }).finally(() =>
+                  $body.classList.remove('pwp-notification--loader'),
               );
-          });
+            });
       });
     };
 
     const addSubscription = (subscription) =>
-      new Promise((resolve, reject) => {
-        const client = new ClientJS();
-        const clientdata = {
-          browser: {
-            browser: client.getBrowser(),
-            version: client.getBrowserVersion(),
-            major: client.getBrowserMajorVersion(),
-          },
-          os: {
-            os: client.getOS(),
-            version: client.getOSVersion(),
-          },
-          device: {
-            device: client.getDevice(),
-            type: client.getDeviceType(),
-            vendor: client.getDeviceVendor(),
-          },
-        };
+        new Promise((resolve, reject) => {
+          const client = new ClientJS();
+          const clientdata = {
+            browser: {
+              browser: client.getBrowser(),
+              version: client.getBrowserVersion(),
+              major: client.getBrowserMajorVersion(),
+            },
+            os: {
+              os: client.getOS(),
+              version: client.getOSVersion(),
+            },
+            device: {
+              device: client.getDevice(),
+              type: client.getDeviceType(),
+              vendor: client.getDeviceVendor(),
+            },
+          };
 
-        fetch(`${plugin['AjaxURL']}?action=pwp_ajax_add_webpush_subscription`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            subscription,
-            clientdata,
-          }),
-        })
-          .then((response) => response.json())
-          .then((data) => resolve(data))
-          .catch((e) => {
-            reject(e);
-          });
-      });
+          fetch(`${plugin['AjaxURL']}?action=pwp_ajax_add_webpush_subscription`,
+              {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                  subscription,
+                  clientdata,
+                }),
+              }).
+              then((response) => response.json()).
+              then((data) => resolve(data)).
+              catch((e) => {
+                reject(e);
+              });
+        });
 
     const removeSubscription = (subscription) =>
-      new Promise((resolve, reject) => {
-        fetch(
-          `${plugin['AjaxURL']}?action=pwp_ajax_remove_webpush_subscription`,
-          {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-              endpoint: subscription.endpoint,
-            }),
-          }
-        )
-          .then((response) => response.json())
-          .then((data) => resolve(data))
-          .catch((e) => {
-            reject(e);
-          });
-      });
+        new Promise((resolve, reject) => {
+          fetch(
+              `${plugin['AjaxURL']}?action=pwp_ajax_remove_webpush_subscription`,
+              {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                  endpoint: subscription.endpoint,
+                }),
+              },
+          ).
+              then((response) => response.json()).
+              then((data) => resolve(data)).
+              catch((e) => {
+                reject(e);
+              });
+        });
 
     function handleSubscriptionID(subscription, handle) {
       /*
@@ -151,21 +131,19 @@
       });
 
       fetch(
-        `${plugin['AjaxURL']}?action=pwp_ajax_handle_webpush_subscription`,
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
+          `${plugin['AjaxURL']}?action=pwp_ajax_handle_webpush_subscription`,
+          {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              subscription,
+              clientData,
+              handle,
+            }),
           },
-          body: JSON.stringify({
-            subscription,
-            clientData,
-            handle,
-          }),
-        }
-      )
-        .then((response) => response.json())
-        .then((data) => console.log(data));
+      ).then((response) => response.json()).then((data) => console.log(data));
 
       // todo: add subscription
 
@@ -199,10 +177,11 @@
 
         const $toggler = document.getElementById('pwp-notification-button');
         if ($toggler) {
-          $toggler.onclick = function () {
+          $toggler.onclick = function() {
             if (active) {
               deregister();
-            } else {
+            }
+            else {
               register();
             }
           };
@@ -224,5 +203,6 @@
 
     window.pwpRegisterPushDevice = registerPushDevice;
     window.pwpDeregisterPushDevice = deregisterPushDevice;
-  } catch (e) {}
+  }
+  catch (e) {}
 })(PwpJsVars, WebPushVars);

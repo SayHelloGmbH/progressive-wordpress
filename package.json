@@ -1,8 +1,11 @@
 {
   "name": "progressive-wordpress",
-  "version": "2.1.10.6",
+  "version": "2.2.0",
   "description": "This WordPress plugin adds progressive web app features to your WordPress site",
   "main": "gulpfile.babel.js",
+  "scripts": {
+    "dev": "webpack -d --watch"
+  },
   "repository": {
     "type": "git",
     "url": "git+ssh://git@github.com/SayHelloGmbH/progressive-wordpress.git"
@@ -38,9 +41,6 @@
   },
   "author": "Nico Martin",
   "license": "GPL-3.0",
-  "scripts": {
-    "dev": "webpack -d --watch"
-  },
   "bugs": {
     "url": "https://github.com/SayHelloGmbH/progressive-wordpress/issues"
   },
@@ -53,5 +53,21 @@
   "prettier": {
     "singleQuote": true,
     "trailingComma": "es5"
+  },
+  "jshintConfig": {
+    "bitwise": true,
+    "browser": true,
+    "curly": true,
+    "eqeqeq": true,
+    "eqnull": true,
+    "esnext": true,
+    "immed": true,
+    "jquery": true,
+    "latedef": true,
+    "newcap": true,
+    "noarg": true,
+    "node": true,
+    "strict": false,
+    "esversion": 8
   }
 }
