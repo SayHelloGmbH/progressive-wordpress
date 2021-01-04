@@ -28,7 +28,10 @@ class Init {
 		add_action( 'admin_notices', [ $this, 'pwp_message' ] );
 
 		// Plugin Overview
-		add_filter( 'plugin_action_links_progressive-wordpress/progressive-wordpress.php', [ $this, 'settings_action_link' ] );
+		add_filter( 'plugin_action_links_progressive-wordpress/progressive-wordpress.php', [
+			$this,
+			'settings_action_link'
+		] );
 		add_filter( 'plugin_action_links_progressive-wp/progressive-wordpress.php', [ $this, 'settings_action_link' ] );
 
 		// Assets
@@ -56,17 +59,17 @@ class Init {
 		add_menu_page( pwp_get_instance()->name, $this->menu_title, $this->capability, PWP_SETTINGS_PARENT, '', $icon, 100 );
 		add_submenu_page( PWP_SETTINGS_PARENT, __( 'About', 'progressive-wp' ), __( 'About', 'progressive-wp' ), $this->capability, PWP_SETTINGS_PARENT, function () {
 			?>
-			<div class="wrap pwp-wrap mainpage-wrap">
-				<h1><?php echo pwp_get_instance()->name ?></h1>
-				<div class="pwp-features">
-					<div class="pwp-features__element">
-						<h2 class="pwp-features__title"><?php echo pwp_icon( 'pwp-installable' ) . ' ' . __( 'Add to homescreen', 'progressive-wp' ) ?></h2>
-						<div class="pwp-features__content">
-							<p><?php _e( 'Provide an <b>integrated</b> user experience!', 'progressive-wp' ); ?></p>
-							<p><?php _e( 'Progressive WordPress makes it easy to encourage users to add your website to their homescreen. But that\'s not all. It also allows you to control the display behaviour of your website so it will be shown without any browser elements. Just like a native app.', 'progressive-wp' ); ?></p>
-						</div>
-						<div class="pwp-features__footer">
-							<div class="pwp-features__status">
+            <div class="wrap pwp-wrap mainpage-wrap">
+                <h1><?php echo pwp_get_instance()->name ?></h1>
+                <div class="pwp-features">
+                    <div class="pwp-features__element">
+                        <h2 class="pwp-features__title"><?php echo pwp_icon( 'pwp-installable' ) . ' ' . __( 'Add to homescreen', 'progressive-wp' ) ?></h2>
+                        <div class="pwp-features__content">
+                            <p><?php _e( 'Provide an <b>integrated</b> user experience!', 'progressive-wp' ); ?></p>
+                            <p><?php _e( 'Progressive WordPress makes it easy to encourage users to add your website to their homescreen. But that\'s not all. It also allows you to control the display behaviour of your website so it will be shown without any browser elements. Just like a native app.', 'progressive-wp' ); ?></p>
+                        </div>
+                        <div class="pwp-features__footer">
+                            <div class="pwp-features__status">
 								<?php
 								if ( 'none' == pwp_get_setting( 'installable-mode' ) ) {
 									echo '<span class="pwp-features__tooltip pwp-features__tooltip--error" data-pwp-features-tooltip="' . esc_attr( __( 'You manually set "Show add to homescreen banner" to "never".', 'progressive-wp' ) ) . '">';
@@ -86,18 +89,19 @@ class Init {
 									echo '</span>';
 								}
 								?>
-							</div>
-							<a class="pwp-features__configure button button--small" href="<?php echo admin_url( 'admin.php?page=pwp-manifest' ); ?>"><?php _e( 'configure', 'progressive-wp' ); ?></a>
-						</div>
-					</div>
-					<div class="pwp-features__element">
-						<h2 class="pwp-features__title"><?php echo pwp_icon( 'pwp-offline' ) . ' ' . __( 'Offline usage', 'progressive-wp' ) ?></h2>
-						<div class="pwp-features__content">
-							<p><?php _e( 'Make your website <b>reliable</b>. Even on flaky internet connections!', 'progressive-wp' ); ?></p>
-							<p><?php _e( 'No connection? No problem. Progressive WordPress pre-caches all critical assets of your website, as well as all visited resources. So if there\'s no internet connection it will serve the resources from the local storage. No more error downasaur!', 'progressive-wp' ); ?></p>
-						</div>
-						<div class="pwp-features__footer">
-							<div class="pwp-features__status">
+                            </div>
+                            <a class="pwp-features__configure button button--small"
+                               href="<?php echo admin_url( 'admin.php?page=pwp-manifest' ); ?>"><?php _e( 'configure', 'progressive-wp' ); ?></a>
+                        </div>
+                    </div>
+                    <div class="pwp-features__element">
+                        <h2 class="pwp-features__title"><?php echo pwp_icon( 'pwp-offline' ) . ' ' . __( 'Offline usage', 'progressive-wp' ) ?></h2>
+                        <div class="pwp-features__content">
+                            <p><?php _e( 'Make your website <b>reliable</b>. Even on flaky internet connections!', 'progressive-wp' ); ?></p>
+                            <p><?php _e( 'No connection? No problem. Progressive WordPress pre-caches all critical assets of your website, as well as all visited resources. So if there\'s no internet connection it will serve the resources from the local storage. No more error downasaur!', 'progressive-wp' ); ?></p>
+                        </div>
+                        <div class="pwp-features__footer">
+                            <div class="pwp-features__status">
 								<?php
 								if ( 'page' != get_post_type( pwp_get_setting( 'offline-page' ) ) ) {
 									echo '<span class="pwp-features__tooltip pwp-features__tooltip--error" data-pwp-features-tooltip="' . esc_attr( __( 'Please create and select an offline fallback page', 'progressive-wp' ) ) . '">';
@@ -110,18 +114,19 @@ class Init {
 									echo '</span>';
 								}
 								?>
-							</div>
-							<a class="pwp-features__configure button button--small" href="<?php echo admin_url( 'admin.php?page=pwp-offlineusage' ); ?>"><?php _e( 'configure', 'progressive-wp' ); ?></a>
-						</div>
-					</div>
-					<div class="pwp-features__element">
-						<h2 class="pwp-features__title"><?php echo pwp_icon( 'pwp-push' ) . ' ' . __( 'Push notifications', 'progressive-wp' ) ?></h2>
-						<div class="pwp-features__content">
-							<p><?php _e( 'Keep your users <b>engaged</b> by sending push notifications!', 'progressive-wp' ); ?></p>
-							<p><?php _e( 'You just published new content and you want to let everyone know? Why not send a push notification? Progressive WordPress has an integrated connection to Firebase that lets you manage registered devices and send push notifications to all or selected devices!', 'progressive-wp' ); ?></p>
-						</div>
-						<div class="pwp-features__footer">
-							<div class="pwp-features__status">
+                            </div>
+                            <a class="pwp-features__configure button button--small"
+                               href="<?php echo admin_url( 'admin.php?page=pwp-offlineusage' ); ?>"><?php _e( 'configure', 'progressive-wp' ); ?></a>
+                        </div>
+                    </div>
+                    <div class="pwp-features__element">
+                        <h2 class="pwp-features__title"><?php echo pwp_icon( 'pwp-push' ) . ' ' . __( 'Push notifications', 'progressive-wp' ) ?></h2>
+                        <div class="pwp-features__content">
+                            <p><?php _e( 'Keep your users <b>engaged</b> by sending push notifications!', 'progressive-wp' ); ?></p>
+                            <p><?php _e( 'You just published new content and you want to let everyone know? Why not send a push notification? Progressive WordPress has an integrated connection to Firebase that lets you manage registered devices and send push notifications to all or selected devices!', 'progressive-wp' ); ?></p>
+                        </div>
+                        <div class="pwp-features__footer">
+                            <div class="pwp-features__status">
 								<?php
 								if ( ! pwp_push_set() ) {
 									echo '<span class="pwp-features__tooltip pwp-features__tooltip--error" data-pwp-features-tooltip="' . esc_attr( __( 'Please enter your Firebase cloud messaging credentials to enable push notifications.', 'progressive-wp' ) ) . '">';
@@ -137,45 +142,46 @@ class Init {
 									echo '</span>';
 								}
 								?>
-							</div>
-							<a class="pwp-features__configure button button--small" href="<?php echo admin_url( 'admin.php?page=pwp-push' ); ?>"><?php _e( 'configure', 'progressive-wp' ); ?></a>
-						</div>
-					</div>
-					<div class="pwp-features__element pwp-features__element--large pwp-features__element--transparent">
-						<div class="pwp-features__content">
-							<p>
-								<b>
+                            </div>
+                            <a class="pwp-features__configure button button--small"
+                               href="<?php echo admin_url( 'admin.php?page=pwp-push' ); ?>"><?php _e( 'configure', 'progressive-wp' ); ?></a>
+                        </div>
+                    </div>
+                    <div class="pwp-features__element pwp-features__element--large pwp-features__element--transparent">
+                        <div class="pwp-features__content">
+                            <p>
+                                <b>
 									<?php
 									// translators: Thank you for using plugin_name
 									printf( __( 'Thank you for using %s!', 'progressive-wp' ), pwp_get_instance()->name );
 									?>
-								</b><br>
+                                </b><br>
 								<?php
 								// translators: Why it was developed.
 								printf( __( 'This plugin was developed by %s to use progressive web app features for your WordPress website.', 'progressive-wp' ), '<a href="https://nicomartin.ch" target="_blank">Nico Martin</a>' );
 								?>
-							</p>
-							<p>
+                            </p>
+                            <p>
 								<?php
 								$sw_link = 'https://caniuse.com/#feat=serviceworkers';
 								echo __( 'To deliver app-like features this plugin uses a Service Worker. This technology is not yet supported in all browsers!', 'progressive-wp' ) . '</b><br><a href="' . $sw_link . '" target="_blank">' . $sw_link . '</a>';
 								?>
-							</p>
-							<p>
+                            </p>
+                            <p>
 								<?php
 								$github = '<a href="https://github.com/nico-martin/progressive-wordpress" target="_blank">GitHub</a>';
 								// translators: If you like this plugin feel free to buy me a beer or get involved in the development on GitHub
 								printf( __( 'If you like this plugin feel free to get involved with the development on %1$s', 'progressive-wp' ), $github );
 								?>
-							</p>
-						</div>
-					</div>
-					<div class="pwp-features__element pwp-features__element--transparent">
-						<div class="pwp-features__content">
-							<p>
-								<b style="display: block;">
+                            </p>
+                        </div>
+                    </div>
+                    <div class="pwp-features__element pwp-features__element--transparent">
+                        <div class="pwp-features__content">
+                            <p>
+                                <b style="display: block;">
 									<?php _e( 'Need Help?', 'progressive-wp' ); ?>
-								</b>
+                                </b>
 								<?php
 								// translators: Please make sure your device supports progressive web apps and the status above is green.
 								echo sprintf( __( 'Please make sure your device supports %s.', 'progressive-wp' ), '<a href="https://caniuse.com/#feat=serviceworkers" target="_blank">Progressive Web Apps</a>' ) . ' ';
@@ -183,17 +189,19 @@ class Init {
 								printf( __( 'Still not working? Please visit the %1$1s or %2$2s.', 'progressive-wp' ), '<a href="https://wordpress.org/support/plugin/progressive-wp/" target="_blank">' . __( 'support forum', 'progressive-wp' ) . '</a>', '<a href="mailto:hello@sayhello.ch">' . __( 'contact us', 'progressive-wp' ) . '</a>' );
 								//echo '<small><b>' . __( 'Attention!', 'progressive-wp' ) . '</b> ' . __( 'The Debug Log contains information that should not be public.', 'progressive-wp' ) . '</small>';
 								?>
-							</p>
-							<p style="text-align: right">
+                            </p>
+                            <p style="text-align: right">
 								<?php if ( isset( pwp_get_instance()->Push ) && pwp_get_instance()->Push->latest_push_log() ) { ?>
-									<button class="button button--small pwp-download-log" data-log="push-log"><?php _e( 'Download Push-Log', 'progressive-wp' ); ?></button>
+                                    <button class="button button--small pwp-download-log"
+                                            data-log="push-log"><?php _e( 'Download Push-Log', 'progressive-wp' ); ?></button>
 								<?php } ?>
-								<button class="button button--small pwp-download-log" data-log="debug-log"><?php _e( 'Download Debug-Log', 'progressive-wp' ); ?></button>
-							</p>
-						</div>
-					</div>
-				</div>
-			</div>
+                                <button class="button button--small pwp-download-log"
+                                        data-log="debug-log"><?php _e( 'Download Debug-Log', 'progressive-wp' ); ?></button>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
 		<?php } );
 	}
 
@@ -237,17 +245,17 @@ class Init {
 			wp_enqueue_script( pwp_get_instance()->prefix . '-offline-script', $dir_uri . 'assets/dist/offline.js', [], $script_version, true );
 		}
 
-		if ( pwp_get_setting( 'firebase-serverkey' ) ) {
-			wp_enqueue_style( pwp_get_instance()->prefix . '-pushbutton-style', $dir_uri . 'assets/dist/pushbutton.css', [], $script_version );
-			wp_enqueue_script( 'clientjs', $dir_uri . 'assets/scripts/clientjs.min.js', [], '1.0.0', true );
-			wp_enqueue_script( pwp_get_instance()->prefix . '-pushbutton-script', $dir_uri . 'assets/dist/pushbutton.js', [ 'clientjs' ], $script_version, true );
-		} elseif ( WebPushCredentials::get_vapid() ) {
+		if ( WebPushCredentials::get_vapid() ) {
 			wp_enqueue_style( pwp_get_instance()->prefix . '-pushbutton-style', $dir_uri . 'assets/dist/webpushbutton.css', [], $script_version );
 			wp_enqueue_script( 'clientjs', $dir_uri . 'assets/scripts/clientjs.min.js', [], '1.0.0', true );
 			wp_enqueue_script( pwp_get_instance()->prefix . '-webpushbutton-script', $dir_uri . 'assets/dist/webpushbutton.js', [ 'clientjs' ], $script_version, true );
 			wp_localize_script( pwp_get_instance()->prefix . '-webpushbutton-script', 'WebPushVars', [
 				'vapidPublcKey' => WebPushCredentials::get_vapid()['publicKey'],
 			] );
+		} elseif ( pwp_get_setting( 'firebase-serverkey' ) ) {
+			wp_enqueue_style( pwp_get_instance()->prefix . '-pushbutton-style', $dir_uri . 'assets/dist/pushbutton.css', [], $script_version );
+			wp_enqueue_script( 'clientjs', $dir_uri . 'assets/scripts/clientjs.min.js', [], '1.0.0', true );
+			wp_enqueue_script( pwp_get_instance()->prefix . '-pushbutton-script', $dir_uri . 'assets/dist/pushbutton.js', [ 'clientjs' ], $script_version, true );
 		}
 
 		wp_enqueue_script( pwp_get_instance()->prefix . '-installprompt-script', $dir_uri . 'assets/dist/installprompt.js', [], $script_version, true );
