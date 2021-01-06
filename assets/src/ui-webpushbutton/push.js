@@ -17,7 +17,6 @@ import {urlBase64ToUint8Array} from './helpers';
 
     const register = () => {
       $body.classList.add('pwp-notification--loader');
-      console.log('WebPushVars.vapidPublcKey', WebPushVars.vapidPublcKey);
       navigator.serviceWorker.getRegistration().then((registration) => {
         registration.pushManager.subscribe({
           userVisibleOnly: true,
@@ -114,55 +113,6 @@ import {urlBase64ToUint8Array} from './helpers';
               });
         });
 
-    function handleSubscriptionID(subscription, handle) {
-      /*
-          const clientDatas = [];
-          Object.keys(clientData).forEach(function(key) {
-            Object.keys(clientData[key]).forEach(function(dataKey) {
-              clientDatas.push(
-                  `clientData[${key}][${dataKey}]=${clientData[key][dataKey]}`);
-            });
-          });*/
-
-      console.log('POST', {
-        subscription,
-        clientData,
-        handle,
-      });
-
-      fetch(
-          `${plugin['AjaxURL']}?action=pwp_ajax_handle_webpush_subscription`,
-          {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-              subscription,
-              clientData,
-              handle,
-            }),
-          },
-      ).then((response) => response.json()).then((data) => console.log(data));
-
-      // todo: add subscription
-
-      /*
-        const action = 'pwp_ajax_handle_device_id';
-        const request = new XMLHttpRequest();
-        request.open('POST', plugin['AjaxURL'], true);
-        request.setRequestHeader('Content-Type',
-            'application/x-www-form-urlencoded; charset=UTF-8');
-        request.onload = function() {
-          $body.classList.remove('pwp-notification--loader');
-        };
-        request.send(
-            `action=${action}&user_id=${subscription_id}&handle=${handle}&${clientDatas.join(
-                '&')}`);
-
-           */
-    }
-
     if ('serviceWorker' in navigator && 'PushManager' in window) {
       navigator.serviceWorker.getRegistration().then((registration) => {
         /**
@@ -192,7 +142,6 @@ import {urlBase64ToUint8Array} from './helpers';
          */
 
         registration.pushManager.getSubscription().then((subscription) => {
-          console.log('SUBSCRIPTION', subscription);
           if (subscription) {
             addSubscription(subscription);
             changePushStatus(true);

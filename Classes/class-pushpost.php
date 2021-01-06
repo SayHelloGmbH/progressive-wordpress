@@ -4,7 +4,14 @@ namespace nicomartin\ProgressiveWordPress;
 
 class PushPost {
 
+	private $push_instance = '';
+
 	public function __construct() {
+		if ( WebPushCredentials::get_vapid() ) {
+			$this->push_instance = pwp_get_instance()->WebPush;
+		} else {
+			$this->push_instance = pwp_get_instance()->Push;
+		}
 	}
 
 	public function run() {
@@ -40,7 +47,7 @@ class PushPost {
 				echo '<div class="pushpost-meta-container ' . $class . '">';
 				echo '<div class="pushpost-meta pushpost-meta--send">';
 				echo '<p>' . __( 'This function opens the push notification modal for this post.', 'progressive-wp' ) . '</p>';
-				echo pwp_get_instance()->Push->render_push_modal( $title, $body, get_permalink( $post ), get_post_thumbnail_id( $post ), '', $post->ID );
+				echo $this->push_instance->render_push_modal( $title, $body, get_permalink( $post ), get_post_thumbnail_id( $post ), '', $post->ID );
 				echo '</div>';
 
 				echo '<div class="pushpost-meta pushpost-meta--done">';

@@ -490,19 +490,28 @@ class WebPush {
 
 		$log['message'] = $data;
 
-		$web_push = new PHPWebPush();
+		$vapid_details = WebPushCredentials::get_vapid();
+
+		$web_push = new PHPWebPush( [
+			'VAPID' => [
+				'subject'    => $vapid_details['subject'],
+				'publicKey'  => $vapid_details['publicKey'],
+				'privateKey' => $vapid_details['privateKey'],
+			]
+		] );
 
 		foreach ( $send_to_subscriptions as $subscription ) {
-			$subscription                    = (array) $subscription;
-			$subscription['contentEncoding'] = 'aesgcm';
-			$web_push->sendNotification(
-				Subscription::create( $subscription ),
+			$web_push->queueNotification(
+				Subscription::create( [
+					'endpoint' => $subscription->endpoint,
+					'keys'     => [
+						'p256dh' => $subscription->keys->p256dh,
+						'auth'   => $subscription->keys->auth
+					],
+				] ),
 				json_encode( $data )
 			);
 		}
-
-		$success = [];
-		$failed  = [];
 
 		foreach ( $web_push->flush() as $report ) {
 			$endpoint = $report->getRequest()->getUri()->__toString();
@@ -532,43 +541,6 @@ class WebPush {
 			'success' => $success,
 			'failed'  => $failed,
 		];
-
-		/*
-
-		$success = [];
-		$failed  = [];
-
-		if ( pwp_get_setting( 'push-failed-remove' ) ) {
-			foreach ( $result['results'] as $key => $answer ) {
-				if ( array_key_exists( 'error', $answer ) ) {
-					$failed[] = $devices[ $key ];
-				} else {
-					$success[] = $devices[ $key ];
-				}
-			}
-
-			if ( ! empty( $failed ) ) {
-				$old_devices = get_option( self::$subscriptions_option );
-				foreach ( $failed as $f ) {
-					$f_key = sanitize_key( $f );
-					unset( $old_devices[ $f_key ] );
-				}
-				update_option( self::$subscriptions_option, $old_devices );
-			}
-		}
-
-		$log['resp'] = $result;
-
-		$file = 'push_log_' . time() . wp_generate_password( 30, false ) . '.json';
-		$put  = pwp_put_contents( $this->upload_dir . $file, json_encode( $log ) );
-
-		return [
-			'type'            => 'success',
-			'message'         => '',
-			'result'          => $result,
-			'devices_removed' => $failed,
-		];
-		*/
 	}
 
 	/**
