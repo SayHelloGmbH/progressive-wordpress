@@ -1,7 +1,7 @@
 # Progressive WordPress
 
 ## Description
-It has never been easier to add progressive web app features (PWA) to your WordPress website. It even supports [Accelerate Mobile Pages (AMP)](https://www.ampproject.org/) and is compatible with [OneSignal](https://onesignal.com/)!
+It has never been easier to add progressive web app features (PWA) to your WordPress website. It even supports [Accelerate Mobile Pages (AMP)](https://www.ampproject.org/).
 
 ### Add to homescreen
 Provide an **integrated** user experience!
@@ -63,7 +63,6 @@ add_filter( 'web_app_manifest', 'myplugin_manifest_values' );
 ```
 
 ### Push notifications
-If you are using OneSignal please visit [https://documentation.onesignal.com](https://documentation.onesignal.com).  
 
 **customoize Button**  
 If you don't want to use the built in Button, you can create your own from a shortcode or a php function:  
