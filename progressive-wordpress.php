@@ -1,5 +1,7 @@
 <?php
 
+namespace nicomartin\ProgressiveWordPress;
+
 /*
 Plugin Name: Progressive WordPress (PWA)
 Plugin URI: https://github.com/SayHelloGmbH/progressive-wordpress
@@ -34,12 +36,28 @@ if ( version_compare( $wp_version, '4.7', '<' ) || version_compare( PHP_VERSION,
 	return;
 } else {
 
-	require_once 'src/class-plugin.php';
 	require_once 'src/class-helpers.php';
 
-	function pwp(): nicomartin\ProgressiveWordPress\Plugin {
-		return nicomartin\ProgressiveWordPress\Plugin::get_instance( __FILE__ );
+	require_once 'src/class-plugin.php';
+	function pwp_get_instance(): Plugin {
+		return Plugin::get_instance( __FILE__ );
 	}
 
-	pwp()->name;
+	pwp_get_instance();
+
+	require_once 'api/class-settings.php';
+	pwp_get_instance()->settings = new Settings();
+	pwp_get_instance()->settings->registerSetting( 'test', 'Test', function ( $value ): string {
+		return $value !== 'test' ? 'not valid' : '';
+	} );
+	pwp_get_instance()->settings->run();
+
+	require_once 'src/class-adminpage.php';
+	pwp_get_instance()->adminPage = new AdminPage();
+	pwp_get_instance()->adminPage->run();
+
+	require_once 'src/class-assets.php';
+	pwp_get_instance()->assets = new Assets();
+	pwp_get_instance()->assets->run();
+
 } // End if().

@@ -4,11 +4,12 @@ namespace nicomartin\ProgressiveWordPress;
 
 class Plugin {
 
-	private static Plugin $instance;
+	private static $instance;
 
 	public string $name = '';
 	public string $version = '';
 	public string $prefix = '';
+	public string $apiNamespace = '';
 	public bool $debug = false;
 	public $file;
 
@@ -17,11 +18,15 @@ class Plugin {
 
 	public string $option_key = 'pwp_data';
 
+	public Settings $settings;
+	public AdminPage $adminPage;
+	public Assets $assets;
+
 	public static function get_instance( $file ): Plugin {
 
 		if ( ! isset( self::$instance ) && ! ( self::$instance instanceof Plugin ) ) {
 
-			self::$instance = new Plugin;
+			self::$instance = new Plugin();
 
 			if ( get_option( pwp_get_instance()->option_key ) ) {
 				$data = get_option( pwp_get_instance()->option_key );
@@ -35,9 +40,10 @@ class Plugin {
 			self::$instance->name    = $data['Name'];
 			self::$instance->version = $data['Version'];
 
-			self::$instance->prefix = 'pwp';
-			self::$instance->debug  = true;
-			self::$instance->file   = __FILE__;
+			self::$instance->prefix       = 'pwp';
+			self::$instance->apiNamespace = 'pwp/v1';
+			self::$instance->debug        = true;
+			self::$instance->file         = $file;
 
 			self::$instance->upload_dir = wp_upload_dir()['basedir'] . '/progressive-wp/';
 			self::$instance->upload_url = wp_upload_dir()['baseurl'] . '/progressive-wp/';

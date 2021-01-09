@@ -13,11 +13,11 @@ module.exports = (env, argv) => {
 
   return {
     entry: {
-      admin: `${dirSrc}/admin/`,
-      installprompt: `${dirSrc}/ui-installprompt`,
-      offline: `${dirSrc}/ui-offline`,
-      pushbutton: `${dirSrc}/ui-pushbutton`,
-      webpushbutton: `${dirSrc}/ui-webpushbutton`,
+      admin: `${dirSrc}/admin/index.ts`,
+      //installprompt: `${dirSrc}/ui-installprompt`,
+      //offline: `${dirSrc}/ui-offline`,
+      //pushbutton: `${dirSrc}/ui-pushbutton`,
+      //webpushbutton: `${dirSrc}/ui-webpushbutton`,
     },
     output: {
       path: dirDist,
@@ -38,25 +38,46 @@ module.exports = (env, argv) => {
     module: {
       rules: [
         {
+          test: /\.(ts|tsx)$/,
+          loader: 'ts-loader',
+          exclude: /node_modules/,
+        },
+        {
           test: /\.(js|jsx)$/,
           loader: 'babel-loader',
           exclude: /node_modules/,
         },
         {
-          test: /\.s[ac]ss$/i,
+          test: /\.css$/,
           use: [
             {
               loader: MiniCssExtractPlugin.loader,
+              options: {
+                hmr: dev,
+                //reloadAll: true,
+              },
             },
             'css-loader',
-            'sass-loader',
+            {
+              loader: 'postcss-loader',
+              options: {
+                plugins: () => [
+                  require('postcss-nested'),
+                  require('autoprefixer'),
+                ],
+              },
+            },
           ],
         },
       ],
     },
     resolve: {
       alias: {},
-      extensions: ['.js', '.jsx'],
+      extensions: ['.js', '.jsx', '.ts', '.tsx'],
+    },
+    externals: {
+      react: 'React',
+      'react-dom': 'ReactDOM',
     },
   };
 };

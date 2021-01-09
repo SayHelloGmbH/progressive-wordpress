@@ -1,7 +1,8 @@
 {
   "plugins": [
     "import",
-    "prettier"
+    "prettier",
+    "react"
   ],
   "parser": "babel-eslint",
   "extends": [
@@ -11,11 +12,16 @@
     "no-console": "warn"
   },
   "settings": {
+    "react": {
+      "version": "17.00.0"
+    },
     "import/resolver": {
       "node": {
         "extensions": [
           ".js",
-          ".jsx"
+          ".jsx",
+          ".ts",
+          ".tsx"
         ]
       }
     },
