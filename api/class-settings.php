@@ -4,8 +4,8 @@ namespace nicomartin\ProgressiveWordPress;
 
 class Settings {
 
-	public static string $key = 'pwp-settings';
-	public array $registeredSettings = [];
+	public static $key = 'pwp-settings';
+	public $registeredSettings = [];
 
 	public function __construct() {
 		$this->registeredSettings = apply_filters( 'pwp_register_setting', $this->registeredSettings );
