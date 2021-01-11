@@ -1,22 +1,68 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {Link, useLocation} from "./src/location";
+import { Link, useLocation } from './src/location';
+import { useSettings, SettingsProvider } from './src/settings';
 
 const app = document.querySelector('#pwp-app');
+
 const App = () => {
-    const [count, setCount] = React.useState(0);
-    const location = useLocation();
-    return (
-        <div>
-            <p>test: {count}</p>
-            <button onClick={() => setCount(count + 1)}>count up</button>
-            <br/>{location}<br/>
-            <Link to="hallo">Hallo</Link>
-            <Link to="welt">Welt</Link>
-        </div>
-    );
+  const location = useLocation();
+  const [settings, saveSettings] = useSettings();
+
+  return (
+    <div>
+      LOCATION: {location}
+      <br />
+      <Link to="hallo">Hallo</Link> - <Link to="welt">Welt</Link>
+      <br />
+      <br />
+      SETTINGS ERROR: {settings.error}
+      <br />
+      SETTINGS LOADING: {settings.loading ? 'true' : 'false'}
+      <br />
+      SETTINGS: {JSON.stringify(settings.data)}
+      <br />
+      <button
+        disabled={settings.loading}
+        onClick={() =>
+          saveSettings({
+            test: 'test',
+          })
+        }
+      >
+        set test
+      </button>
+      <br />
+      <button
+        disabled={settings.loading}
+        onClick={() =>
+          saveSettings({
+            test: 'updated',
+          })
+        }
+      >
+        set updated
+      </button>
+      <br />
+      <button
+        disabled={settings.loading}
+        onClick={() =>
+          saveSettings({
+            test: 'error',
+          })
+        }
+      >
+        set error
+      </button>
+    </div>
+  );
 };
 
 if (app) {
-    ReactDOM.render(<App/>, app);
+  ReactDOM.render(
+    <SettingsProvider>
+      <App />
+    </SettingsProvider>,
+    app
+  );
 }
