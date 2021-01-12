@@ -15,7 +15,10 @@ const InputText = ({
   label: string;
   [key: string]: any;
 }) => {
-  const { field, meta } = useController({
+  const {
+    field: { value = '', ...field },
+    meta,
+  } = useController({
     control: form.control,
     name,
     ...props,
@@ -24,10 +27,8 @@ const InputText = ({
   const error = React.useMemo(() =>
     name in form.errors ? form.errors[name] : null
   );
-  //console.log('field', field);
-  //console.log('meta', meta);
-  console.log('error', error);
-  const Input = <input {...field} type="text" />;
+
+  const Input = <input {...field} value={value} type="text" />;
 
   return <FormElement input={Input} label={label} error={error} />;
 };

@@ -12,7 +12,9 @@ const app = document.querySelector('#pwp-app');
 const App = () => {
   const location = useLocation();
   const [settings, saveSettings] = useSettings();
-  const methods = useForm();
+  const methods = useForm({
+    defaultValues: {},
+  });
 
   return (
     <Page title={__('plugin.name') + `: ${location}`}>
