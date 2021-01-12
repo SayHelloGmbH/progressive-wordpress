@@ -52,19 +52,16 @@ module.exports = (env, argv) => {
           use: [
             {
               loader: MiniCssExtractPlugin.loader,
-              options: {
-                hmr: dev,
-                //reloadAll: true,
-              },
             },
             'css-loader',
             {
               loader: 'postcss-loader',
               options: {
-                plugins: () => [
-                  require('postcss-nested'),
-                  require('autoprefixer'),
-                ],
+                postcssOptions: {
+                  plugins: [
+                    [require('postcss-nested'), require('autoprefixer')],
+                  ],
+                },
               },
             },
           ],

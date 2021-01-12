@@ -28,3 +28,11 @@ export const Link = ({
     {children}
   </a>
 );
+
+export const Route = ({
+  page = '',
+  children,
+}: {
+  page?: string;
+  children?: any;
+}) => (useLocation() === page ? children : null);

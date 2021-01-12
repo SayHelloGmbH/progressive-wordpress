@@ -1,0 +1,67 @@
+.pwp-page {
+  padding-top: 0 !important;
+}
+
+  .pwp-page__content {
+    margin-top: 16px;
+  }
+
+.pwp-card .hndle {
+    cursor: pointer !important;
+    line-height: 1;
+  }
+  .pwp-card .toggle-indicator::before {
+    position: relative;
+    top: .05rem;
+    text-indent: -1px;
+    content: "\f140";
+    width: 20px;
+    border-radius: 50%;
+    display: inline-block;
+    font: normal 20px/1 dashicons;
+  }
+  .pwp-card.closed .toggle-indicator::before {
+      content: "\f142";
+    }
+
+.tab-navigation {
+  border-bottom: 1px solid #ccc;
+  margin: 0 0 23px 0;
+  padding-top: 9px;
+  padding-bottom: 0;
+  line-height: inherit;
+  display: flex;
+}
+
+  .tab-navigation__link {
+    display: block;
+    border: 1px solid #ccc;
+    border-bottom: none;
+    margin-left: .5em;
+    padding: 5px 10px;
+    font-size: 14px;
+    line-height: 1.71428571;
+    font-weight: 600;
+    background: #e5e5e5;
+    color: #555;
+    text-decoration: none;
+    white-space: nowrap;
+  }
+
+  .tab-navigation__link:hover {
+      background-color: #fff;
+      color: #444;
+    }
+
+  .tab-navigation__link--active {
+      border-bottom: 1px solid #f1f1f1;
+      background: #f1f1f1;
+      color: #000;
+      margin-bottom: -1px;
+    }
+
+  .tab-navigation__link--active:hover {
+        background: #f1f1f1;
+        color: #000;
+      }
+

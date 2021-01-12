@@ -1,0 +1,7 @@
+.pwp-page {
+  padding-top: 0 !important;
+
+  &__content {
+    margin-top: 16px;
+  }
+}

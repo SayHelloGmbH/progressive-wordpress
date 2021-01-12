@@ -1,0 +1,23 @@
+.pwp-card {
+  .hndle {
+    cursor: pointer !important;
+    line-height: 1;
+  }
+
+  .toggle-indicator::before {
+    position: relative;
+    top: .05rem;
+    text-indent: -1px;
+    content: "\f140";
+    width: 20px;
+    border-radius: 50%;
+    display: inline-block;
+    font: normal 20px/1 dashicons;
+  }
+
+  &.closed {
+    .toggle-indicator::before {
+      content: "\f142";
+    }
+  }
+}

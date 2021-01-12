@@ -1,20 +1,52 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Link, useLocation } from './src/location';
-import { useSettings, SettingsProvider } from './src/settings';
-import { __ } from './src/i18n';
+import { useForm, Controller } from 'react-hook-form';
+
+import { Link, Route, useLocation } from './utils/location';
+import { useSettings, SettingsProvider } from './utils/settings';
+import { __ } from './utils/i18n';
+import { Card, Form, Page, TabNavigation, InputText } from './theme';
+
 const app = document.querySelector('#pwp-app');
 
 const App = () => {
   const location = useLocation();
   const [settings, saveSettings] = useSettings();
+  const methods = useForm();
 
   return (
-    <div>
-      <h1>{__('plugin.name')}</h1>
-      LOCATION: {location}
-      <br />
-      <Link to="hallo">Hallo</Link> - <Link to="welt">Welt</Link>
+    <Page title={__('plugin.name') + `: ${location}`}>
+      <TabNavigation
+        links={{
+          '': 'Home',
+          hello: 'Edit Menus',
+          world: 'Manage Locations',
+        }}
+      />
+      <Route page="">
+        <Card title="Hallo Welt">
+          <p>Home</p>
+        </Card>
+        <Card>
+          <Form
+            onSubmit={methods.handleSubmit((data) => console.log('DATA', data))}
+          >
+            <InputText
+              form={methods}
+              name="FirstName"
+              label="First Name"
+              rules={{
+                required: 'This value is required',
+                pattern: {
+                  value: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+                  message: 'This needs to be a valid Email adress',
+                },
+              }}
+            />
+            <button type="submit">submit</button>
+          </Form>
+        </Card>
+      </Route>
       <br />
       <br />
       SETTINGS ERROR: {settings.error}
@@ -55,7 +87,7 @@ const App = () => {
       >
         set error
       </button>
-    </div>
+    </Page>
   );
 };
 

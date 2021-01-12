@@ -11,7 +11,8 @@
     "url": "git+ssh://git@github.com/SayHelloGmbH/progressive-wordpress.git"
   },
   "dependencies": {
-    "clientjs": "^0.1.11"
+    "clientjs": "^0.1.11",
+    "react-hook-form": "^6.14.1"
   },
   "devDependencies": {
     "@babel/core": "^7.12.10",
