@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Link, useLocation } from './src/location';
 import { useSettings, SettingsProvider } from './src/settings';
-
+import { __ } from './src/i18n';
 const app = document.querySelector('#pwp-app');
 
 const App = () => {
@@ -11,6 +11,7 @@ const App = () => {
 
   return (
     <div>
+      <h1>{__('plugin.name')}</h1>
       LOCATION: {location}
       <br />
       <Link to="hallo">Hallo</Link> - <Link to="welt">Welt</Link>
