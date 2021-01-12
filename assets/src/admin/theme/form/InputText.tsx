@@ -30,7 +30,7 @@ const InputText = ({
 
   const Input = <input {...field} value={value} type="text" />;
 
-  return <FormElement input={Input} label={label} error={error} />;
+  return <FormElement input={Input} name={name} label={label} error={error} />;
 };
 
 export default InputText;
