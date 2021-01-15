@@ -8,6 +8,7 @@ declare global {
       generalError: string;
       settings: Settings;
       restBase: string;
+      restPwpBase: string;
       translationStrings: Translations;
     };
   }

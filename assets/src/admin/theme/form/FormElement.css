@@ -1,0 +1,5 @@
+.form-element {
+  &__input:not([type="checkbox"]) {
+    width: 25em !important;
+  }
+}

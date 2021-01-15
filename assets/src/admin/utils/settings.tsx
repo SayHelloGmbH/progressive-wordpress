@@ -23,7 +23,7 @@ export const SettingsProvider = ({ children }: { children?: any }) => {
         settings: currentSettings,
         saveSettings: (newSettings) => {
           setSettings({ loading: true, error: '' });
-          fetch(`${PWP_VARS.restBase}/settings`, {
+          fetch(`${PWP_VARS.restPwpBase}/settings`, {
             method: 'POST',
             body: JSON.stringify(newSettings),
             headers: { 'Content-Type': 'application/json' },

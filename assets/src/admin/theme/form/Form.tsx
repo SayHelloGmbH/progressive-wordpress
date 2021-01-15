@@ -12,7 +12,7 @@ const Form = ({
   onSubmit: Function;
 }) => (
   <form className={cn('pwp-form', className)} onSubmit={onSubmit}>
-    {children}
+    <table className="form-table">{children}</table>
   </form>
 );
 

@@ -1,36 +1,54 @@
 import React from 'react';
 
-import { useController } from 'react-hook-form';
-
-import { FormElement } from '../index';
+import cn from '../../utils/classnames';
+import FormElement, { Input } from './FormElement';
 
 const InputText = ({
   form,
   name,
   label,
-  ...props
+  rules = {},
+  type = 'text',
 }: {
   form: any;
   name: string;
   label: string;
-  [key: string]: any;
+  rules?: {};
+  type?:
+    | 'text'
+    | 'color'
+    | 'date'
+    | 'datetime-local'
+    | 'email'
+    | 'hidden'
+    | 'month'
+    | 'number'
+    | 'password'
+    | 'search'
+    | 'tel'
+    | 'time'
+    | 'url'
+    | 'week';
 }) => {
-  const {
-    field: { value = '', ...field },
-    meta,
-  } = useController({
-    control: form.control,
-    name,
-    ...props,
-  });
-
-  const error = React.useMemo(() =>
-    name in form.errors ? form.errors[name] : null
+  const Input = ({ id, className, field, value }: Input) => (
+    <input
+      {...field}
+      value={value}
+      id={id}
+      className={cn(className)}
+      type={type}
+    />
   );
 
-  const Input = <input {...field} value={value} type="text" />;
-
-  return <FormElement input={Input} name={name} label={label} error={error} />;
+  return (
+    <FormElement
+      form={form}
+      Input={Input}
+      label={label}
+      name={name}
+      rules={rules}
+    />
+  );
 };
 
 export default InputText;

@@ -17,10 +17,12 @@ class Assets {
     $script_version = pwp_get_instance()->version;
     $dir_uri        = trailingslashit( plugin_dir_url( pwp_get_instance()->file ) );
 
+    wp_enqueue_media();
     wp_enqueue_script( 'react', $dir_uri . 'assets/react.production.min.js', [], '17', true );
     wp_enqueue_script( 'react-dom', $dir_uri . 'assets/react-dom.production.min.js', [], '17', true );
 
-    wp_enqueue_style( pwp_get_instance()->prefix . '-admin-style', $dir_uri . 'assets/dist/admin.css', [], $script_version );
+    wp_enqueue_style( pwp_get_instance()->prefix . '-admin-style', $dir_uri . 'assets/dist/admin.css', [],
+      $script_version );
     wp_enqueue_script( pwp_get_instance()->prefix . '-admin-script', $dir_uri . 'assets/dist/admin.js', [
       'react',
       'react-dom',
@@ -35,7 +37,8 @@ class Assets {
       'homeUrl'            => trailingslashit( get_site_url() ),
       'generalError'       => __( 'An unexpected error occured', 'progressive-wp' ),
       'settings'           => pwp_get_instance()->settings->getSettings(),
-      'restBase'           => trailingslashit( get_rest_url() ) . pwp_get_instance()->api_namespace,
+      'restBase'           => trailingslashit( get_rest_url() ),
+      'restPwpBase'        => trailingslashit( get_rest_url() ) . pwp_get_instance()->api_namespace,
       'translationStrings' => apply_filters( 'pwp_translation_strings', [] ),
     ];
 

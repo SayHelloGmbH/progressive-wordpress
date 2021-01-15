@@ -3,6 +3,13 @@ export { default as Card } from './layout/Card';
 
 export { default as TabNavigation } from './navigation/TabNavigation';
 
+export { default as Image } from './media/Image';
+
 export { default as Form } from './form/Form';
 export { default as FormElement } from './form/FormElement';
 export { default as InputText } from './form/InputText';
+export { default as InputTextarea } from './form/InputTextarea';
+export { default as InputSelect } from './form/InputSelect';
+export { default as InputCheckbox } from './form/InputCheckbox';
+export { default as InputRadio } from './form/InputRadio';
+export { default as InputUpload } from './form/InputUpload';

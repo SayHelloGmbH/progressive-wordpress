@@ -65,3 +65,109 @@
         color: #000;
       }
 
+.image {
+  display: inline-block;
+  background-color: #f1f1f1;
+  border: 1px solid #b0b0b0;
+  box-sizing: border-box;
+}
+
+  .image__img {
+    display: block;
+  }
+
+.form-element__input:not([type="checkbox"]) {
+    width: 25em !important;
+  }
+
+.input-radio__element + .input-radio__element {
+    margin-top: 0.3em;
+  }
+
+.input-upload {
+  display: flex;
+  flex-wrap: wrap;
+  margin: -0.5rem;
+}
+
+  .input-upload__element {
+    position: relative;
+    box-sizing: border-box;
+    margin: 0.5rem;
+  }
+
+  .input-upload__element:hover .input-upload__remove {
+      opacity: 1;
+    }
+
+  .input-upload__image {
+    display: block
+  }
+
+  .input-upload__remove {
+    position: absolute;
+    right: -7%;
+    top: -7%;
+    text-indent: -99999px;
+    width: 1.1rem;
+    height: 1.1rem;
+    background-color: #ca4a1f;
+    padding: 0;
+    border: none;
+    outline: none;
+    border-radius: 50%;
+    cursor: pointer;
+    opacity: 0;
+  }
+
+  .input-upload__remove:hover, .input-upload__remove:focus {
+      background-color: #b1411a;
+    }
+
+  .input-upload__remove:after, .input-upload__remove:before {
+      content: '';
+      position: absolute;
+      height: 60%;
+      width: 1px;
+      left: 50%;
+      top: 50%;
+      background-color: #fff;
+      transform: translateY(-50%) translateX(-50%) rotate(45deg);
+    }
+
+  .input-upload__remove:before {
+      transform: translateY(-50%) translateX(-50%) rotate(-45deg);
+    }
+
+  .input-upload__add {
+    padding: 0;
+    cursor: pointer;
+    position: relative;
+    text-indent: -99999px;
+    background-color: #f1f1f1;
+    border: 3px dashed #c4c4c4;
+  }
+
+  .input-upload__add:hover, .input-upload__add:focus {
+      border-color: #969696;
+    }
+
+  .input-upload__add:hover:after, .input-upload__add:hover:before, .input-upload__add:focus:after, .input-upload__add:focus:before {
+        background-color: #818181;
+      }
+
+  .input-upload__add:after, .input-upload__add:before {
+      content: '';
+      position: absolute;
+      height: 15px;
+      width: 3px;
+      left: 50%;
+      top: 50%;
+      background-color: #9f9f9f;
+      transform: translateY(-50%) translateX(-50%);
+    }
+
+  .input-upload__add:before {
+      transform: translateY(-50%) translateX(-50%) rotate(90deg);
+    }
+

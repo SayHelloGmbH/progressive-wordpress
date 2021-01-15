@@ -1,30 +1,45 @@
 import React from 'react';
 
-import { useController } from 'react-hook-form';
+import cn from '../../utils/classnames';
+import FormElement, { Input } from './FormElement';
 
-import { FormElement } from '../index';
-
-const InputText = ({
-  control,
+const InputSelect = ({
+  form,
   name,
-  options,
-  ...props
+  label,
+  rules = {},
+  options = {},
+  optionProps = () => ({}),
+  emptyOption = false,
 }: {
-  control: any;
+  form: any;
   name: string;
+  label: string;
+  rules?: {};
   options: Record<string, string>;
-  [key: string]: any;
+  optionProps?: (value: string, label: string) => Record<string, any>;
+  emptyOption?: boolean;
 }) => {
-  const { field, meta } = useController({ control, name, ...props });
-  const Input = (
-    <select {...field}>
-      {Object.entries(options).map(([key, label]) => (
-        <option value={key}>{label}</option>
+  const Input = ({ id, className, field, value }: Input) => (
+    <select {...field} value={value} id={id} className={cn(className)}>
+      {emptyOption && <option value="" {...optionProps('', '')} />}
+      {Object.entries(options).map(([value, label]) => (
+        <option value={value} {...optionProps(value, label)}>
+          {label}
+        </option>
       ))}
     </select>
   );
 
-  return <FormElement input={Input} label={name} />;
+  return (
+    <FormElement
+      form={form}
+      Input={Input}
+      label={label}
+      name={name}
+      rules={rules}
+    />
+  );
 };
 
-export default InputText;
+export default InputSelect;

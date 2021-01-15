@@ -1,22 +1,40 @@
 import React from 'react';
 
-import { useController } from 'react-hook-form';
+import cn from '../../utils/classnames';
+import FormElement, { Input } from './FormElement';
 
-import { FormElement } from '../index';
-
-const InputText = ({
-  control,
+const InputTextarea = ({
+  form,
   name,
-  ...props
+  label,
+  rules = {},
+  rows = 4,
 }: {
-  control: any;
+  form: any;
   name: string;
-  [key: string]: any;
+  label: string;
+  rules?: {};
+  rows?: number;
 }) => {
-  const { field, meta } = useController({ control, name, ...props });
-  const Input = <textaxrea {...field} />;
+  const Input = ({ id, className, field, value }: Input) => (
+    <textarea
+      {...field}
+      value={value}
+      id={id}
+      className={cn(className)}
+      rows={rows}
+    />
+  );
 
-  return <FormElement input={Input} label={name} />;
+  return (
+    <FormElement
+      form={form}
+      Input={Input}
+      label={label}
+      name={name}
+      rules={rules}
+    />
+  );
 };
 
-export default InputText;
+export default InputTextarea;

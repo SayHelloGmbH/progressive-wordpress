@@ -1,0 +1,10 @@
+.image {
+  display: inline-block;
+  background-color: #f1f1f1;
+  border: 1px solid #b0b0b0;
+  box-sizing: border-box;
+
+  &__img {
+    display: block;
+  }
+}
