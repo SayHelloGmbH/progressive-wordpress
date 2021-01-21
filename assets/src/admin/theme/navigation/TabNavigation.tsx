@@ -1,9 +1,9 @@
 import React from 'react';
 
 import cn from '../../utils/classnames';
-import { Link, useLocation } from '../../utils/location';
+import { Link, useLocation } from '../../utils/router';
 
-import './TabNavigation.css';
+import styles from './TabNavigation.css';
 
 const TabNavigation = ({
   className = '',
@@ -14,11 +14,11 @@ const TabNavigation = ({
 }) => {
   const location = useLocation();
   return (
-    <nav className={cn(className, 'tab-navigation')}>
+    <nav className={cn(className, styles.navigation)}>
       {Object.entries(links).map(([to, title]) => (
         <Link
-          className={cn('tab-navigation__link', {
-            'tab-navigation__link--active': location === to,
+          className={cn(styles.link, {
+            [styles.linkActive]: location === to,
           })}
           key={to}
           to={to}

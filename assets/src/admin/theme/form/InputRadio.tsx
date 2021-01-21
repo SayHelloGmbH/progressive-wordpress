@@ -1,59 +1,43 @@
 import React from 'react';
 
 import cn from '../../utils/classnames';
-import FormElement, { Input } from './FormElement';
 
-import './InputRadio.css';
+import styles from './InputRadio.css';
 
 const InputRadio = ({
-  form,
   name,
-  label,
-  rules = {},
+  value = '',
+  className = '',
   options = {},
   optionProps = () => ({}),
+  onChange = () => ({}),
 }: {
-  form: any;
   name: string;
-  label: string;
-  rules?: {};
+  value?: string;
+  className?: string;
   options: Record<string, string>;
   optionProps?: (value: string, label: string) => Record<string, any>;
-}) => {
-  const Input = ({ id, className, field, value }: Input) => (
-    <div className={cn(className, 'input-radio')}>
-      {Object.entries(options).map(([optionValue, optionLabel]) => (
-        <div className="input-radio__element">
-          <input
-            type="radio"
-            className="input-radio__input"
-            id={`${id}-${optionValue}`}
-            name={id}
-            value={optionValue}
-            checked={value === optionValue}
-            onChange={(e) => field.onChange(optionValue)}
-            {...optionProps(optionValue, optionLabel)}
-          />
-          <label
-            className="input-radio__label"
-            htmlFor={`${id}-${optionValue}`}
-          >
-            {optionLabel}
-          </label>
-        </div>
-      ))}
-    </div>
-  );
-
-  return (
-    <FormElement
-      form={form}
-      Input={Input}
-      label={label}
-      name={name}
-      rules={rules}
-    />
-  );
-};
+  onChange?: Function;
+}) => (
+  <div className={cn(className, styles.input)}>
+    {Object.entries(options).map(([optionValue, optionLabel]) => (
+      <div className={styles.element} key={optionValue}>
+        <input
+          type="radio"
+          className={styles.input}
+          id={`${name}-${optionValue}`}
+          name={name}
+          value={optionValue}
+          checked={value === optionValue}
+          onChange={(e) => onChange(optionValue)}
+          {...optionProps(optionValue, optionLabel)}
+        />
+        <label className={styles.label} htmlFor={`${name}-${optionValue}`}>
+          {optionLabel}
+        </label>
+      </div>
+    ))}
+  </div>
+);
 
 export default InputRadio;

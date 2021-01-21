@@ -2,7 +2,7 @@ import React from 'react';
 
 import cn from '../../utils/classnames';
 
-import './Card.css';
+import styles from './Card.css';
 
 const Card = ({
   className = '',
@@ -17,7 +17,7 @@ const Card = ({
 }) => {
   const [open, setOpen] = React.useState<boolean>(true);
   return (
-    <div className={cn(className, 'pwp-card', 'postbox', { closed: !open })}>
+    <div className={cn(className, styles.card, 'postbox', { closed: !open })}>
       {title && (
         <div className="postbox-header">
           <h2

@@ -1,19 +1,15 @@
 import React from 'react';
 
-import cn from '../../utils/classnames';
-import FormElement, { Input } from './FormElement';
-
 const InputText = ({
-  form,
   name,
-  label,
-  rules = {},
+  value = '',
+  className = '',
   type = 'text',
+  ...props
 }: {
-  form: any;
   name: string;
-  label: string;
-  rules?: {};
+  value?: string;
+  className?: string;
   type?:
     | 'text'
     | 'color'
@@ -29,26 +25,15 @@ const InputText = ({
     | 'time'
     | 'url'
     | 'week';
-}) => {
-  const Input = ({ id, className, field, value }: Input) => (
-    <input
-      {...field}
-      value={value}
-      id={id}
-      className={cn(className)}
-      type={type}
-    />
-  );
-
-  return (
-    <FormElement
-      form={form}
-      Input={Input}
-      label={label}
-      name={name}
-      rules={rules}
-    />
-  );
-};
+}) => (
+  <input
+    name={name}
+    className={className}
+    id={name}
+    value={value}
+    type={type}
+    {...props}
+  />
+);
 
 export default InputText;

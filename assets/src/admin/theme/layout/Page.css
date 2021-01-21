@@ -1,7 +1,11 @@
-.pwp-page {
+.page {
   padding-top: 0 !important;
+}
 
-  &__content {
-    margin-top: 16px;
-  }
+.title {
+  font-weight: bold;
+}
+
+.content {
+  margin-top: 16px;
 }

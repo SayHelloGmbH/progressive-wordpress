@@ -4,6 +4,14 @@ export const useLocation = () => {
   const [location, setLocation] = React.useState<string>('');
 
   React.useEffect(() => {
+    window.onkeydown = function (e) {
+      if (e.keyCode == 8 && e.target == document.body) {
+        e.preventDefault();
+      }
+    };
+  }, []);
+
+  React.useEffect(() => {
     setLocation(window.location.hash.replace('#', ''));
     window.addEventListener(
       'hashchange',

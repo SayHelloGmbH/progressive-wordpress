@@ -2,16 +2,16 @@ import { Settings, Translations } from './types';
 
 declare global {
   interface Window {
-    PwpJsVars: {
+    pwpJsVars: {
       ajaxUrl: string;
       homeUrl: string;
       generalError: string;
       settings: Settings;
       restBase: string;
-      restPwpBase: string;
+      restPluginBase: string;
       translationStrings: Translations;
     };
   }
 }
 
-export const PWP_VARS = window.PwpJsVars;
+export const VARS = window.pwpJsVars;

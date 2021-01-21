@@ -1,10 +1,10 @@
-.pwp-card {
-  .hndle {
+.card {
+  :global(.hndle) {
     cursor: pointer !important;
     line-height: 1;
   }
 
-  .toggle-indicator::before {
+  :global(.toggle-indicator)::before {
     position: relative;
     top: .05rem;
     text-indent: -1px;
@@ -15,8 +15,8 @@
     font: normal 20px/1 dashicons;
   }
 
-  &.closed {
-    .toggle-indicator::before {
+  &:global(.closed) {
+    :global(.toggle-indicator)::before {
       content: "\f142";
     }
   }

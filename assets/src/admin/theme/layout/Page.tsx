@@ -2,7 +2,7 @@ import React from 'react';
 
 import cn from '../../utils/classnames';
 
-import './Page.css';
+import styles from './Page.css';
 
 const Page = ({
   title,
@@ -13,9 +13,9 @@ const Page = ({
   className?: string;
   children?: any;
 }) => (
-  <div className={cn('pwp-page', 'wrap', 'metabox-holder', className)}>
-    <h1 className="pwp-page__title">{title}</h1>
-    <div className="pwp-page__content">{children}</div>
+  <div className={cn(styles.page, 'wrap', 'metabox-holder', className)}>
+    <h1 className={styles.title}>{title}</h1>
+    <div className={styles.content}>{children}</div>
   </div>
 );
 

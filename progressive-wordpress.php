@@ -43,12 +43,6 @@ if ( version_compare( $wp_version, '4.7', '<' ) || version_compare( PHP_VERSION,
 
   require_once 'api/class-settings.php';
   pwp_get_instance()->settings = new Settings();
-  pwp_get_instance()->settings->registerSetting( 'test', 'Test', function ( $value ) {
-    return 'test' !== $value && 'updated' !== $value ? 'not valid' : '';
-  } );
-  pwp_get_instance()->settings->registerSetting( 'hello', 'World', function ( $value ) {
-    return '';
-  } );
   pwp_get_instance()->settings->run();
 
   require_once 'src/class-adminpage.php';

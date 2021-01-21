@@ -1,0 +1,43 @@
+.notice {
+  background: #fff;
+  border: 1px solid #ccd0d4;
+  border-left-width: 4px;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, .04);
+  padding: 12px 15px;
+
+  & > * {
+    margin: 0 !important;
+
+    & + * {
+      margin-top: 0.5em !important;
+    }
+  }
+
+  ul {
+    list-style: initial;
+    padding-left: 20px;
+  }
+
+  p {
+    margin-top: 0;
+  }
+}
+
+.noticeInfo {
+  border-left-color: #00a0d2;
+
+}
+
+.noticeWarning {
+  border-left-color: #ffb900;
+
+}
+
+.noticeError {
+  border-left-color: #dc3232;
+
+}
+
+.noticeSuccess {
+  border-left-color: #46b450;
+}

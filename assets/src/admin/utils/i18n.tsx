@@ -1,6 +1,6 @@
-import { PWP_VARS } from './constants';
+import { VARS } from './constants';
 
-const strings = PWP_VARS.translationStrings;
+const strings = VARS.translationStrings;
 
 export const __ = (
   key: string,

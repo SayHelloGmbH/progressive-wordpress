@@ -1,5 +1,11 @@
-.form-element {
-  &__input:not([type="checkbox"]) {
-    width: 25em !important;
-  }
+.input:not([type="checkbox"]) {
+  width: 25em !important;
+}
+
+.container {
+}
+
+.error {
+  color: #dc3232;
+  font-size: 0.8em !important;
 }

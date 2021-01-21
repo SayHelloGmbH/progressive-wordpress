@@ -1,5 +1,6 @@
-.input-radio {
-  &__element + .input-radio__element {
-    margin-top: 0.3em;
-  }
+.element + .element {
+  margin-top: 0.3em;
 }
+
+.input {}
+.label {}
