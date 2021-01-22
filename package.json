@@ -11,9 +11,7 @@
   },
   "dependencies": {
     "clientjs": "^0.1.11",
-    "react-hook-form": "^6.14.1",
-    "unistore": "^3.5.2",
-    "unistore-hooks": "^0.1.1"
+    "react-hook-form": "^6.14.1"
   },
   "devDependencies": {
     "@babel/core": "^7.12.10",
