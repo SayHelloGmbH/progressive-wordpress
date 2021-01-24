@@ -15,17 +15,19 @@ const TabNavigation = ({
   const location = useLocation();
   return (
     <nav className={cn(className, styles.navigation)}>
-      {Object.entries(links).map(([to, title]) => (
-        <Link
-          className={cn(styles.link, {
-            [styles.linkActive]: location === to,
-          })}
-          key={to}
-          to={to}
-        >
-          {title}
-        </Link>
-      ))}
+      {Object.entries(links).map(([to, title]) => {
+        return (
+          <Link
+            className={cn(styles.link, {
+              [styles.linkActive]: location === to,
+            })}
+            key={to}
+            to={to}
+          >
+            {title}
+          </Link>
+        );
+      })}
     </nav>
   );
 };

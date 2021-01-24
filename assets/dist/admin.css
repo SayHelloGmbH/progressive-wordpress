@@ -263,3 +263,20 @@
 }
 */
 
+.PageAbout__intro___3Jir_, .PageAbout__footer___-Ns6G {
+	display: grid;
+	grid-gap: 20px;
+	grid-template-columns: 1fr 1fr 1fr;
+}
+
+.PageAbout__footer___-Ns6G {
+	//grid-column: span 2 / 1;
+}
+
+.PageAbout__credits___227BZ {
+	grid-column: span 2;
+}
+
+.PageAbout__help___1Pdym {
+	//grid-column: 2 / 3;
+}

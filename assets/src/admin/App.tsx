@@ -29,11 +29,15 @@ const App = () => {
     <Page title={__('plugin.name') + `: ${location}`}>
       <TabNavigation
         links={{
-          '': 'About',
-          settings: useSettingsDiff(settingsKeys) ? 'Settings*' : 'Settings',
-          'settings-personal': useSettingsDiff(settingsPersonalKeys)
-            ? 'Settings Personal*'
-            : 'Settings Personal',
+          '': __('plugin.menu.about'),
+          manifest:
+            __('plugin.menu.manifest') +
+            (useSettingsDiff(settingsKeys) ? '*' : ''),
+          offline:
+            __('plugin.menu.offline') +
+            (useSettingsDiff(settingsKeys) ? '*' : ''),
+          push:
+            __('plugin.menu.push') + (useSettingsDiff(settingsKeys) ? '*' : ''),
         }}
       />
       <Route page="">

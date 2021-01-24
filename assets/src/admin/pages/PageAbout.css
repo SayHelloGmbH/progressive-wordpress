@@ -1,0 +1,17 @@
+.intro, .footer {
+	display: grid;
+	grid-gap: 20px;
+	grid-template-columns: 1fr 1fr 1fr;
+}
+
+.footer {
+	//grid-column: span 2 / 1;
+}
+
+.credits {
+	grid-column: span 2;
+}
+
+.help {
+	//grid-column: 2 / 3;
+}
