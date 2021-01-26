@@ -35,6 +35,7 @@ const InputColor = ({
           type="text"
           onFocus={() => setShow(true)}
           onBlur={() => setShow(false)}
+          onChange={(e) => onChange(e)}
         />
       </div>
       {show && (

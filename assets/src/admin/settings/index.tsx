@@ -107,7 +107,6 @@ export const useSettingsForm = (
 
   const values: Record<string, any> = form.watch(Object.keys(defaultValues));
   React.useEffect(() => {
-    console.log('values', values);
     !compareObjects(keyValueFromSettings(filteredSettings), values) &&
       setSettings(values);
   }, [values]);

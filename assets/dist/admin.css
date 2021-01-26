@@ -271,7 +271,7 @@
     position: absolute;
     left: 0;
     bottom: -10px;
-    width: 350px;
+    width: 250px;
     background-color: #f1f1f1;
     padding: 10px;
     border-radius: 5px;
@@ -298,10 +298,12 @@
     transform: translateY(-50%);
     background-color: transparent;
     border-radius: 50%;
+    box-shadow: 0 0 0 transparent;
+        border: 1px solid #7e8993;
 }
 
 .InputColor__input___2Sn2U:not([type="checkbox"]) {
-    width: 6em !important;
+    width: 5.1em !important;
 }
 .PageAbout__intro___3Jir_, .PageAbout__footer___-Ns6G {
 	display: grid;
