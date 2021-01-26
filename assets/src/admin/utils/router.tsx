@@ -1,5 +1,7 @@
 import React from 'react';
 
+import cn from './classnames';
+
 export const useLocation = () => {
   const [location, setLocation] = React.useState<string>('');
 
@@ -26,13 +28,24 @@ export const useLocation = () => {
 export const Link = ({
   to,
   children,
+  isButton = false,
+  className = '',
   ...props
 }: {
   to: string;
   children?: any;
+  isButton?: boolean;
+  className?: string;
   [key: string]: any;
 }) => (
-  <a href={`#${to}`} {...props}>
+  <a
+    href={`#${to}`}
+    className={cn(className, {
+      button: isButton,
+      'button-primary': isButton,
+    })}
+    {...props}
+  >
     {children}
   </a>
 );

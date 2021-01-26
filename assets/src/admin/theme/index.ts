@@ -17,3 +17,4 @@ export { default as InputSelect } from './form/InputSelect';
 export { default as InputCheckbox } from './form/InputCheckbox';
 export { default as InputRadio } from './form/InputRadio';
 export { default as InputUpload } from './form/InputUpload';
+export { default as InputColor } from './form/InputColor';

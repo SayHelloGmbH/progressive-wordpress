@@ -1,4 +1,6 @@
-export const filterObject = (object: Object, keys: string[] = []) => {
+import { ISettings, ISettingValue } from './types';
+
+export const filterObject = <T>(object: T, keys: string[] = []) => {
   if (keys.length === 0) {
     return object;
   }
@@ -18,8 +20,15 @@ export const compareObjects = (obj1, obj2): boolean => {
   if (arr1.length !== arr2.length) {
     return false;
   }
-  return (
-    arr1.reduce((acc, value) => `${acc}${value}`, '') ===
-    arr2.reduce((acc, value) => `${acc}${value}`, '')
-  );
+  return JSON.stringify(arr1) === JSON.stringify(arr2);
+};
+
+export const keyValueFromSettings = (
+  settings: ISettings
+): Record<string, ISettingValue> => {
+  const newSettings = {};
+  Object.entries(settings).map(([key, setting]) => {
+    newSettings[key] = setting.value;
+  });
+  return newSettings;
 };

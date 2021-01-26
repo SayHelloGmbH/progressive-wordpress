@@ -263,6 +263,46 @@
 }
 */
 
+.InputColor__wrapper___3j6MI {
+    position: relative;
+}
+
+.InputColor__picker___v2Zz0 {
+    position: absolute;
+    left: 0;
+    bottom: -10px;
+    width: 350px;
+    background-color: #f1f1f1;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccd0d4;
+    box-shadow: 0 1px 10px rgba(0, 0, 0, .1);
+    transform: translateY(100%);
+    z-index: 100;
+}
+
+.InputColor__picker___v2Zz0 .components-color-picker__inputs-wrapper {
+        display: none;
+    }
+
+.InputColor__inputWrapper___2sdI0 {
+    padding-left: 2rem;
+}
+
+.InputColor__colorPreview___3fl9k {
+    position: absolute;
+    height: 1.5rem;
+    width: 1.5rem;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: transparent;
+    border-radius: 50%;
+}
+
+.InputColor__input___2Sn2U:not([type="checkbox"]) {
+    width: 6em !important;
+}
 .PageAbout__intro___3Jir_, .PageAbout__footer___-Ns6G {
 	display: grid;
 	grid-gap: 20px;

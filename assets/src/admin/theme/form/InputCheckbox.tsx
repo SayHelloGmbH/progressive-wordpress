@@ -19,7 +19,7 @@ const InputCheckbox = ({
     name={name}
     className={cn(className)}
     type="checkbox"
-    checked={value}
+    checked={Boolean(value)}
     onChange={(e) => onChange(e.target.checked)}
   />
 );

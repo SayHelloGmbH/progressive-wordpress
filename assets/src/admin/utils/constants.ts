@@ -1,4 +1,4 @@
-import { Settings, Translations } from './types';
+import { ISettings, IPluginStrings } from './types';
 
 declare global {
   interface Window {
@@ -6,10 +6,10 @@ declare global {
       ajaxUrl: string;
       homeUrl: string;
       generalError: string;
-      settings: Settings;
+      settings: ISettings;
       restBase: string;
       restPluginBase: string;
-      translationStrings: Translations;
+      pluginStrings: IPluginStrings;
     };
   }
 }

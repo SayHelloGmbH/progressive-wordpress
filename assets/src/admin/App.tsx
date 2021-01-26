@@ -1,53 +1,50 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { __ } from '@wordpress/i18n';
 
 import { Route, useLocation } from './utils/router';
 import { SettingsProvider, useSettingsDiff } from './settings';
 
-import { __ } from './utils/i18n';
 import { Page, TabNavigation } from './theme';
 import PageAbout from './pages/PageAbout';
-import PageSettings from './pages/PageSettings';
-import PageSettingsPersonal from './pages/PageSettingsPersonal';
+import ManifestSettings from './pages/ManifestSettings';
+import { pluginString } from './utils/pluginStrings';
 
 const app = document.querySelector('#pwp-app');
 
-const settingsKeys = [
-  'myString',
-  'myStringArea',
-  'mySelectValue',
-  'myCheckox',
-  'myRadio',
-  'myImages',
+const manifestSettingsKeys = [
+  'installable-mode',
+  'installable-onclick',
+  'manifest-theme-color',
+  'manifest-background-color',
 ];
-const settingsPersonalKeys = ['myEmail'];
+const offlineSettingsKeys = [];
+const pushSettingsKeys = [];
 
 const App = () => {
   const location = useLocation();
 
   return (
-    <Page title={__('plugin.name') + `: ${location}`}>
+    <Page title={pluginString('plugin.name') + `: ${location}`}>
       <TabNavigation
         links={{
-          '': __('plugin.menu.about'),
+          '': __('About', 'progressive-wp'),
           manifest:
-            __('plugin.menu.manifest') +
-            (useSettingsDiff(settingsKeys) ? '*' : ''),
+            __('Add to Homescreen', 'progressive-wp') +
+            (useSettingsDiff(manifestSettingsKeys) ? '*' : ''),
           offline:
-            __('plugin.menu.offline') +
-            (useSettingsDiff(settingsKeys) ? '*' : ''),
+            __('Offline usage', 'progressive-wp') +
+            (useSettingsDiff(offlineSettingsKeys) ? '*' : ''),
           push:
-            __('plugin.menu.push') + (useSettingsDiff(settingsKeys) ? '*' : ''),
+            __('Push Notifications', 'progressive-wp') +
+            (useSettingsDiff(pushSettingsKeys) ? '*' : ''),
         }}
       />
       <Route page="">
         <PageAbout />
       </Route>
-      <Route page="settings">
-        <PageSettings settingsKeys={settingsKeys} />
-      </Route>
-      <Route page="settings-personal">
-        <PageSettingsPersonal settingsKeys={settingsPersonalKeys} />
+      <Route page="manifest">
+        <ManifestSettings settingsKeys={manifestSettingsKeys} />
       </Route>
     </Page>
   );

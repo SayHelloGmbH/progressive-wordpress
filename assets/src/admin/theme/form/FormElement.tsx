@@ -4,6 +4,7 @@ import cn from '../../utils/classnames';
 
 import styles from './FormElement.css';
 import { useController } from 'react-hook-form';
+import { useSettings } from '../../settings';
 
 const FormElement = ({
   form,
@@ -29,16 +30,18 @@ const FormElement = ({
     name,
     rules,
   });
+  const { [name]: setting } = useSettings([name]);
 
-  const error = React.useMemo(() =>
-    name in form.errors ? form.errors[name] : null
+  const error = React.useMemo(
+    () => (name in form.errors ? form.errors[name] : null),
+    [form.errors, name]
   );
 
   return (
     <tr className={cn(styles.container, className)}>
       <th scope="row">
         <label htmlFor={name}>
-          {label}
+          {label || setting.label}
           {'required' in rules && '*'}
         </label>
       </th>
@@ -46,6 +49,7 @@ const FormElement = ({
         <Input
           name={name}
           className={cn(styles.input, inputClassName)}
+          setting={setting}
           {...field}
           {...inputProps}
         />

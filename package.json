@@ -10,6 +10,8 @@
     "url": "git+ssh://git@github.com/SayHelloGmbH/progressive-wordpress.git"
   },
   "dependencies": {
+    "@types/wordpress__components": "^9.8.6",
+    "@types/wordpress__i18n": "^3.11.0",
     "clientjs": "^0.1.11",
     "react-hook-form": "^6.14.1"
   },

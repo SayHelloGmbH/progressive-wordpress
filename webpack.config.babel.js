@@ -85,6 +85,8 @@ module.exports = (env, argv) => {
     externals: {
       react: 'React',
       'react-dom': 'ReactDOM',
+      '@wordpress/components': 'wp.components',
+      '@wordpress/i18n': 'wp.i18n',
     },
   };
 };

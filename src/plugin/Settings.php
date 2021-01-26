@@ -63,6 +63,9 @@ class Settings
         }
 
         $options = $this->getSettings();
+        foreach ($options as $key => $setting) {
+            $options[$key] = $setting['value'];
+        }
 
         update_option(self::$key, array_merge($options, $settings));
 
@@ -106,10 +109,20 @@ class Settings
 
         $settings_to_return = [];
         foreach ($keys_to_return as $settings_key) {
-            $settings_to_return[$settings_key] = array_key_exists(
-                $settings_key,
-                $saved_options
-            ) ? $saved_options[$settings_key] : $this->registered_settings[$settings_key]['default'];
+            $settings_to_return[$settings_key] = [
+                'value'  => array_key_exists(
+                    $settings_key,
+                    $saved_options
+                ) ? $saved_options[$settings_key] : $this->registered_settings[$settings_key]['default'],
+                'label'  => array_key_exists(
+                    'label',
+                    $this->registered_settings[$settings_key]
+                ) ? $this->registered_settings[$settings_key]['label'] : '',
+                'values' => array_key_exists(
+                    'values',
+                    $this->registered_settings[$settings_key]
+                ) ? $this->registered_settings[$settings_key]['values'] : null,
+            ];
         }
 
         return $settings_to_return;

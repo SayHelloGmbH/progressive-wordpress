@@ -1,0 +1,40 @@
+.wrapper {
+    position: relative;
+}
+
+.picker {
+    position: absolute;
+    left: 0;
+    bottom: -10px;
+    width: 350px;
+    background-color: #f1f1f1;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccd0d4;
+    box-shadow: 0 1px 10px rgba(0, 0, 0, .1);
+    transform: translateY(100%);
+    z-index: 100;
+
+    :global(.components-color-picker__inputs-wrapper) {
+        display: none;
+    }
+}
+
+.inputWrapper {
+    padding-left: 2rem;
+}
+
+.colorPreview {
+    position: absolute;
+    height: 1.5rem;
+    width: 1.5rem;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: transparent;
+    border-radius: 50%;
+}
+
+.input:not([type="checkbox"]) {
+    width: 6em !important;
+}

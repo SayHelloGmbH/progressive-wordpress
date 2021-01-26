@@ -2,10 +2,19 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 
 import { VARS } from '../utils/constants';
-import { Settings } from '../utils/types';
-import { compareObjects, filterObject } from '../utils/objects';
+import { ISetting, ISettings } from '../utils/types';
+import {
+  compareObjects,
+  filterObject,
+  keyValueFromSettings,
+} from '../utils/objects';
 
-const SettingsContext = React.createContext();
+const SettingsContext = React.createContext({
+  settings: VARS.settings,
+  savedSettings: VARS.settings,
+  setSettings: (newSettingsValues: ISettings) => {},
+  syncSettings: (keys: string[] = []) => new Promise((resolve, reject) => {}),
+});
 
 const postSettings = (data) =>
   new Promise((resolve, reject) => {
@@ -28,8 +37,8 @@ const postSettings = (data) =>
   });
 
 export const SettingsProvider = ({ children }: { children?: any }) => {
-  const [settings, setSettings] = React.useState<Settings>(VARS.settings);
-  const [savedSettings, setSavedSettings] = React.useState<Settings>(
+  const [settings, setSettings] = React.useState<ISettings>(VARS.settings);
+  const [savedSettings, setSavedSettings] = React.useState<ISettings>(
     VARS.settings
   );
 
@@ -38,15 +47,23 @@ export const SettingsProvider = ({ children }: { children?: any }) => {
       value={{
         settings,
         savedSettings,
-        setSettings: (newSettings: Settings) =>
+        setSettings: (newSettingsValues: ISettings) => {
+          const newSettings = {};
+          Object.entries(newSettingsValues).map(([key, value]) => {
+            newSettings[key] = {
+              ...settings[key],
+              value,
+            };
+          });
           setSettings({
             ...settings,
             ...newSettings,
-          }),
+          });
+        },
         syncSettings: (keys: string[] = []) =>
           new Promise((resolve, reject) =>
-            postSettings(filterObject(settings, keys))
-              .then((response) => {
+            postSettings(keyValueFromSettings(filterObject(settings, keys)))
+              .then((response: ISettings) => {
                 resolve(response);
                 setSavedSettings(response);
               })
@@ -68,24 +85,31 @@ export const useSettingsForm = (
   const [error, setError] = React.useState<string>('');
 
   const {
-    settings = {},
-    saveSettings = {},
+    settings,
+    savedSettings,
     setSettings = () => {},
     syncSettings = () => Promise.resolve(),
   } = React.useContext(SettingsContext);
 
-  const filteredSettings = React.useMemo(() => filterObject(settings, keys), [
-    settings,
-    keys,
-  ]);
+  const filteredSettings = React.useMemo<ISettings>(
+    () => filterObject<ISettings>(settings, keys),
+    [settings, keys]
+  );
+
+  const defaultValues = React.useMemo(
+    () => keyValueFromSettings(filteredSettings),
+    [filteredSettings]
+  );
 
   const form = useForm({
-    defaultValues: filteredSettings,
+    defaultValues,
   });
 
-  const values = form.watch(Object.keys(filteredSettings));
+  const values: Record<string, any> = form.watch(Object.keys(defaultValues));
   React.useEffect(() => {
-    !compareObjects(filteredSettings, values) && setSettings(values);
+    console.log('values', values);
+    !compareObjects(keyValueFromSettings(filteredSettings), values) &&
+      setSettings(values);
   }, [values]);
 
   const submit = form.handleSubmit((data) => {
@@ -114,7 +138,7 @@ export const useSettingsForm = (
     return () => {
       window.removeEventListener('keydown', keyEvent);
     };
-  }, [settings, saveSettings]);
+  }, [settings, savedSettings]);
 
   return { form, submit, error, loading };
 };
@@ -130,7 +154,12 @@ export const useSettingsDiff = (keys: string[] = []): boolean => {
   );
 };
 
-export const useSettings = (keys: string[] = []): Settings => {
+export const useSettings = (keys: string[] = []): ISettings => {
   const { savedSettings = {} } = React.useContext(SettingsContext);
-  return filterObject(savedSettings, keys);
+  return filterObject<ISettings>(savedSettings, keys);
+};
+
+export const useTempSettings = (keys: string[] = []): ISettings => {
+  const { settings = {} } = React.useContext(SettingsContext);
+  return filterObject<ISettings>(settings, keys);
 };

@@ -41,8 +41,8 @@ if (version_compare($wp_version, '4.7', '<') || version_compare(PHP_VERSION, '7.
 
     return;
 } else {
-    require_once 'src/Helpers.php';
-    require_once 'src/Plugin.php';
+    require_once 'src/plugin/Helpers.php';
+    require_once 'src/plugin/Plugin.php';
     function pwpGetInstance(): Plugin
     {
         return Plugin::getInstance(__FILE__);
@@ -50,15 +50,19 @@ if (version_compare($wp_version, '4.7', '<') || version_compare(PHP_VERSION, '7.
 
     pwpGetInstance();
 
-    require_once 'src/Settings.php';
+    require_once 'src/plugin/Settings.php';
     pwpGetInstance()->settings = new Settings();
     pwpGetInstance()->settings->run();
 
-    require_once 'src/AdminPage.php';
+    require_once 'src/plugin/AdminPage.php';
     pwpGetInstance()->admin_page = new AdminPage();
     pwpGetInstance()->admin_page->run();
 
-    require_once 'src/Assets.php';
+    require_once 'src/plugin/Assets.php';
     pwpGetInstance()->assets = new Assets();
     pwpGetInstance()->assets->run();
+
+    require_once 'src/Manifest.php';
+    pwpGetInstance()->manifest = new Manifest();
+    pwpGetInstance()->manifest->run();
 } // End if().
