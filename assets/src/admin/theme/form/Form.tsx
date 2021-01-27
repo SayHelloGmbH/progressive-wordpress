@@ -1,5 +1,6 @@
 import React from 'react';
 
+import styles from './Form.css';
 import cn from '../../utils/classnames';
 
 const Form = ({
@@ -12,12 +13,10 @@ const Form = ({
   onSubmit: Function;
 }) => (
   <form
-    className={cn('pwp-form', className)}
+    className={cn(className, styles.form)}
     onSubmit={(data) => onSubmit(data)}
   >
-    <table className="form-table">
-      <tbody>{children}</tbody>
-    </table>
+    <table className={styles.table}>{children}</table>
   </form>
 );
 

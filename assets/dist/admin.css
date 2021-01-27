@@ -14,6 +14,7 @@
     cursor: pointer !important;
     line-height: 1;
   }
+
   .Card__card___3pcSL .toggle-indicator::before {
     position: relative;
     top: .05rem;
@@ -24,6 +25,7 @@
     display: inline-block;
     font: normal 20px/1 dashicons;
   }
+
   .Card__card___3pcSL.closed .toggle-indicator::before {
       content: "\f142";
     }
@@ -126,8 +128,61 @@
   display: block;
 }
 
+.Form__form___1Mbrs {
+    max-width: var(--form-max-width);
+}
+
+.Form__table___3v27X {
+    border-spacing: 0;
+    display: block;
+}
+
+.Form__table___3v27X tr {
+        display: flex;
+        align-items: center;
+    }
+
+.Form__table___3v27X tr th {
+            flex: 0 0 var(--form-th-width);
+        }
+
+.Form__table___3v27X tr td {
+            flex: 1 1 auto;
+        }
+
+.Form__table___3v27X tr + tr th, .Form__table___3v27X tr + tr td {
+            padding-top: var(--form-spacing);
+        }
+
+.Form__table___3v27X th, .Form__table___3v27X td {
+        text-align: left;
+    }
+
+.Form__table___3v27X th {
+        padding-right: var(--form-spacing);
+    }
+
+.Form__table___3v27X tbody {
+        display: block;
+    }
+
+.Form__table___3v27X tbody + tbody {
+            margin-top: var(--form-spacing);
+        }
+.FormTableGroup__card___9hnIl {
+    position: relative;
+    border: 1px solid #ccd0d4;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, .04);
+    background: #fff;
+    padding: var(--form-spacing);
+}
+
+    .FormTableGroup__card___9hnIl tr th {
+        flex-basis: calc(var(--form-th-width) - var(--form-spacing));
+    }
 .FormElement__input___19qDv:not([type="checkbox"]) {
-  width: 25em !important;
+  width: 100% !important;
+  max-width: 100%;
 }
 
 .FormElement__container___TbJPB {
@@ -138,11 +193,16 @@
   font-size: 0.8em !important;
 }
 
+.FormControls__controls___2EPjf {
+    margin-top: calc(var(--form-spacing) * 2);
+}
 .FormFeedback__td___2_j1N {
   padding: 20px 0 !important;
 }
 
-
+.FormFeedback__wrapper___1ZrQp {
+  margin-top: var(--form-spacing);
+}
 .InputRadio__element___1WCGL + .InputRadio__element___1WCGL {
   margin-top: 0.3em;
 }
@@ -321,4 +381,9 @@
 
 .PageAbout__help___1Pdym {
 	//grid-column: 2 / 3;
+}
+:root {
+    --form-spacing: 1.5rem;
+    --form-th-width: 180px;
+    --form-max-width: 700px;
 }

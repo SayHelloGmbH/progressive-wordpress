@@ -3,6 +3,7 @@ import React from 'react';
 import {
   Card,
   Form,
+  FormTableGroup,
   FormControls,
   FormElement,
   FormFeedback,
@@ -24,40 +25,44 @@ const ManifestSettings = ({ settingsKeys }: { settingsKeys: string[] }) => {
 
   return (
     <Form onSubmit={submit}>
-      <FormElement
-        form={form}
-        name="installable-mode"
-        rules={{
-          required: 'This value is required',
-        }}
-        Input={InputSelect}
-      />
-      {mode === 'trigger' && (
+      <FormTableGroup card>
         <FormElement
           form={form}
-          name="installable-onclick"
+          name="installable-mode"
           rules={{
             required: 'This value is required',
           }}
-          Input={InputText}
+          Input={InputSelect}
         />
-      )}
-      <FormElement
-        form={form}
-        name="manifest-theme-color"
-        rules={{
-          required: 'This value is required',
-        }}
-        Input={InputColor}
-      />
-      <FormElement
-        form={form}
-        name="manifest-background-color"
-        rules={{
-          required: 'This value is required',
-        }}
-        Input={InputColor}
-      />
+        {mode === 'trigger' && (
+          <FormElement
+            form={form}
+            name="installable-onclick"
+            rules={{
+              required: 'This value is required',
+            }}
+            Input={InputText}
+          />
+        )}
+      </FormTableGroup>
+      <FormTableGroup>
+        <FormElement
+          form={form}
+          name="manifest-theme-color"
+          rules={{
+            required: 'This value is required',
+          }}
+          Input={InputColor}
+        />
+        <FormElement
+          form={form}
+          name="manifest-background-color"
+          rules={{
+            required: 'This value is required',
+          }}
+          Input={InputColor}
+        />
+      </FormTableGroup>
       {error !== '' && (
         <FormFeedback type={NOTICE_TYPES.ERROR} message={error} />
       )}

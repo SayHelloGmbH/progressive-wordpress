@@ -3,6 +3,7 @@
 declare namespace FormFeedbackCssNamespace {
   export interface IFormFeedbackCss {
     td: string;
+    wrapper: string;
   }
 }
 

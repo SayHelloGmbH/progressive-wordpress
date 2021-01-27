@@ -1,5 +1,6 @@
 .input:not([type="checkbox"]) {
-  width: 25em !important;
+  width: 100% !important;
+  max-width: 100%;
 }
 
 .container {

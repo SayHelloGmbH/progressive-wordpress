@@ -16,7 +16,7 @@ const FormFeedback = ({
   message?: string;
   children?: any;
 }) => (
-  <tr className={cn(className, 'form-feedback')}>
+  <tr className={cn(className, styles.wrapper)}>
     <td colSpan={2} className={styles.td}>
       <Notice type={type} message={message}>
         {children}

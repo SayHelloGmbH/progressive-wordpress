@@ -1,0 +1,42 @@
+.form {
+    max-width: var(--form-max-width);
+}
+
+.table {
+    border-spacing: 0;
+    display: block;
+
+    tr {
+        display: flex;
+        align-items: center;
+        th {
+            flex: 0 0 var(--form-th-width);
+        }
+
+        td {
+            flex: 1 1 auto;
+        }
+    }
+
+    tr + tr {
+        th, td {
+            padding-top: var(--form-spacing);
+        }
+    }
+
+    th, td {
+        text-align: left;
+    }
+
+    th {
+        padding-right: var(--form-spacing);
+    }
+
+    tbody {
+        display: block;
+
+        & + tbody {
+            margin-top: var(--form-spacing);
+        }
+    }
+}

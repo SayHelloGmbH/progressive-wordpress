@@ -10,6 +10,8 @@ import PageAbout from './pages/PageAbout';
 import ManifestSettings from './pages/ManifestSettings';
 import { pluginString } from './utils/pluginStrings';
 
+import './App.css';
+
 const app = document.querySelector('#pwp-app');
 
 const manifestSettingsKeys = [

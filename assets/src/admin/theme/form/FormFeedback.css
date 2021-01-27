@@ -2,3 +2,6 @@
   padding: 20px 0 !important;
 }
 
+.wrapper {
+  margin-top: var(--form-spacing);
+}

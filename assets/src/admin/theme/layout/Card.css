@@ -1,4 +1,5 @@
 .card {
+
   :global(.hndle) {
     cursor: pointer !important;
     line-height: 1;

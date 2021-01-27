@@ -1,0 +1,11 @@
+.card {
+    position: relative;
+    border: 1px solid #ccd0d4;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, .04);
+    background: #fff;
+    padding: var(--form-spacing);
+
+    tr th {
+        flex-basis: calc(var(--form-th-width) - var(--form-spacing));
+    }
+}
