@@ -37,8 +37,21 @@ class Assets
 
         wp_enqueue_media();
         wp_enqueue_style('wp-color-picker');
+
         wp_enqueue_script('react', $dir_uri . 'assets/react.production.min.js', [], '17', true);
-        wp_enqueue_script('react-dom', $dir_uri . 'assets/react-dom.production.min.js', [], '17', true);
+        wp_enqueue_script('react-dom', $dir_uri . 'assets/react-dom.production.min.js', ['react'], '17', true);
+
+        /*
+         * we can't use preact if we want to use wp-components
+        wp_enqueue_script('preact', $dir_uri . 'assets/preact/preact.min.js', [], '10.5.12', true);
+        wp_enqueue_script('preact-hooks', $dir_uri . 'assets/preact/preact-hooks.min.js', ['preact'], '10.5.12', true);
+        wp_enqueue_script(
+            'preact-compat',
+            $dir_uri . 'assets/preact/preact-compat.min.js',
+            ['preact', 'preact-hooks'],
+            '10.5.12',
+            true
+        );*/
 
         wp_enqueue_style(
             pwpGetInstance()->prefix . '-admin-style',
@@ -46,6 +59,7 @@ class Assets
             [],
             $script_version
         );
+
         wp_enqueue_script(
             pwpGetInstance()->prefix . '-admin-script',
             $dir_uri . 'assets/dist/admin.js',

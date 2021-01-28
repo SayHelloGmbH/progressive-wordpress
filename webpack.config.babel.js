@@ -83,6 +83,9 @@ module.exports = (env, argv) => {
       extensions: ['.js', '.jsx', '.ts', '.tsx'],
     },
     externals: {
+      /*
+      react: 'preactCompat',
+      'react-dom': 'preactCompat',*/
       react: 'React',
       'react-dom': 'ReactDOM',
       '@wordpress/components': 'wp.components',

@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+
 import { __ } from '@wordpress/i18n';
 
 import { Route, useLocation } from './utils/router';
