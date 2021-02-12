@@ -170,16 +170,49 @@
             margin-top: var(--form-spacing);
         }
 .FormTableGroup__card___9hnIl {
-    position: relative;
-    border: 1px solid #ccd0d4;
-    box-shadow: 0 1px 1px rgba(0, 0, 0, .04);
-    background: #fff;
-    padding: var(--form-spacing);
+  position: relative;
+  border: 1px solid #ccd0d4;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, .04);
+  background: #fff;
+  padding: var(--form-spacing);
 }
 
-    .FormTableGroup__card___9hnIl tr th {
-        flex-basis: calc(var(--form-th-width) - var(--form-spacing));
+  .FormTableGroup__card___9hnIl tr th {
+    flex-basis: calc(var(--form-th-width) - var(--form-spacing));
+  }
+
+.FormTableGroup__title___2bfEC {
+  margin: 0;
+  padding-bottom: var(--form-spacing);
+  position: relative;
+}
+
+.FormTableGroup__title___2bfEC:after {
+    content: '';
+    position: absolute;
+    border-bottom: 1px solid #ccd0d4;
+    bottom: 0;
+    right: calc(var(--form-spacing) * -1);
+    left: calc(var(--form-spacing) * -1);
+  }
+
+.Content__content___2ErA3 > * {
+    margin: 0;
+  }
+  .Content__content___2ErA3 > * + * {
+      margin-top: 1em;
     }
+  .Content__content___2ErA3 ul {
+    list-style: disc;
+    padding-left: 1em;
+  }
+  .Content__content___2ErA3 ul li {
+      margin-bottom: 0;
+    }
+  .Content__content___2ErA3 ul li + li {
+        margin-top: 0.5em;
+      }
+
 .FormElement__input___19qDv:not([type="checkbox"]) {
   width: 100% !important;
   max-width: 100%;
@@ -383,7 +416,8 @@
 	//grid-column: 2 / 3;
 }
 :root {
-    --form-spacing: 1.5rem;
+    --form-spacing: 1rem;
     --form-th-width: 180px;
     --form-max-width: 700px;
 }
+

@@ -1,11 +1,26 @@
 .card {
-    position: relative;
-    border: 1px solid #ccd0d4;
-    box-shadow: 0 1px 1px rgba(0, 0, 0, .04);
-    background: #fff;
-    padding: var(--form-spacing);
+  position: relative;
+  border: 1px solid #ccd0d4;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, .04);
+  background: #fff;
+  padding: var(--form-spacing);
 
-    tr th {
-        flex-basis: calc(var(--form-th-width) - var(--form-spacing));
-    }
+  tr th {
+    flex-basis: calc(var(--form-th-width) - var(--form-spacing));
+  }
+}
+
+.title {
+  margin: 0;
+  padding-bottom: var(--form-spacing);
+  position: relative;
+
+  &:after {
+    content: '';
+    position: absolute;
+    border-bottom: 1px solid #ccd0d4;
+    bottom: 0;
+    right: calc(var(--form-spacing) * -1);
+    left: calc(var(--form-spacing) * -1);
+  }
 }

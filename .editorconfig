@@ -11,7 +11,9 @@ max_line_length = off
 tab_width = 4
 quote_type = single
 
-[*.{js, ts, tsx, jsx}]
+[*.{js, ts, tsx, jsx, css, json}]
+max_line_length = off
+insert_final_newline = true
 indent_style = space
 indent_size = 2
-max_line_length = off
+trim_trailing_whitespace = true

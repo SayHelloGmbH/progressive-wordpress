@@ -1,74 +1,188 @@
 import React from 'react';
 
+import { __ } from '@wordpress/i18n';
+
 import {
-  Card,
-  Form,
-  FormTableGroup,
-  FormControls,
-  FormElement,
-  FormFeedback,
-  InputCheckbox,
-  InputColor,
-  InputRadio,
-  InputSelect,
-  InputText,
-  InputTextarea,
-  InputUpload,
-  NOTICE_TYPES,
+	Card,
+	Form,
+	FormTableGroup,
+	FormControls,
+	FormElement,
+	FormFeedback,
+	InputCheckbox,
+	InputColor,
+	InputRadio,
+	InputSelect,
+	InputText,
+	InputTextarea,
+	InputUpload,
+	NOTICE_TYPES,
+	FormContent,
 } from '../theme';
 import { useSettingsForm } from '../settings';
 
 const ManifestSettings = ({ settingsKeys }: { settingsKeys: string[] }) => {
-  const { form, submit, error, loading } = useSettingsForm(settingsKeys);
+	const { form, submit, error, loading } = useSettingsForm(settingsKeys);
 
-  const { ['installable-mode']: mode } = form.watch(['installable-mode']);
+	const { ['installable-mode']: mode } = form.watch(['installable-mode']);
 
-  return (
-    <Form onSubmit={submit}>
-      <FormTableGroup card>
-        <FormElement
-          form={form}
-          name="installable-mode"
-          rules={{
-            required: 'This value is required',
-          }}
-          Input={InputSelect}
-        />
-        {mode === 'trigger' && (
-          <FormElement
-            form={form}
-            name="installable-onclick"
-            rules={{
-              required: 'This value is required',
-            }}
-            Input={InputText}
-          />
-        )}
-      </FormTableGroup>
-      <FormTableGroup>
-        <FormElement
-          form={form}
-          name="manifest-theme-color"
-          rules={{
-            required: 'This value is required',
-          }}
-          Input={InputColor}
-        />
-        <FormElement
-          form={form}
-          name="manifest-background-color"
-          rules={{
-            required: 'This value is required',
-          }}
-          Input={InputColor}
-        />
-      </FormTableGroup>
-      {error !== '' && (
-        <FormFeedback type={NOTICE_TYPES.ERROR} message={error} />
-      )}
-      <FormControls type="submit" disabled={loading} />
-    </Form>
-  );
+	return (
+		<Form onSubmit={submit}>
+			<FormTableGroup
+				title={__('Add to homescreen', 'progressive-wp')}
+				card
+			>
+				<FormContent>
+					<p>
+						<b>
+							{__(
+								'Make your website installable!',
+								'progressive-wp'
+							)}
+						</b>
+						<br />
+						{__(
+							'With this feature you are able to display an "add to homescreen" prompt. This way your website gets a prominent place on the users home screen right next to the native apps.',
+							'progressive-wp'
+						)}
+					</p>
+					<ul>
+						<li>
+							<b>{__('Normal', 'progressive-wp')}</b>:{' '}
+							{__(
+								'The browser will show a mini-infobar which opens the install promt',
+								'progressive-wp'
+							)}
+						</li>
+						<li>
+							<b>{__('On element click', 'progressive-wp')}</b>:{' '}
+							{__(
+								'Define an element as an install-prompt trigger',
+								'progressive-wp'
+							)}
+						</li>
+						<li>
+							<b>{__('Never', 'progressive-wp')}</b>:{' '}
+							{__(
+								'This will override the display mode to `browser`, so the browser will not try to add an install-prompt',
+								'progressive-wp'
+							)}
+						</li>
+					</ul>
+				</FormContent>
+				<FormElement
+					form={form}
+					name="installable-mode"
+					rules={{
+						required: 'This value is required',
+					}}
+					Input={InputSelect}
+				/>
+				{mode === 'trigger' && (
+					<FormElement
+						form={form}
+						name="installable-onclick"
+						rules={{
+							required: 'This value is required',
+						}}
+						Input={InputText}
+					/>
+				)}
+			</FormTableGroup>
+			<FormTableGroup
+				title={__('Homescreen values', 'progressive-wp')}
+				card
+			>
+				<FormContent>
+					<p>
+						{__(
+							'This values are used to create a manifest.json file, which then controls the appearance of you progressive web app.',
+							'progressive-wp'
+						)}
+						<br />
+						{__(
+							'Read all about the web app manifest:',
+							'progressive-wp'
+						)}{' '}
+						<a
+							href="https://developer.mozilla.org/de/docs/Web/Manifest"
+							target="_blank"
+						>
+							https://developer.mozilla.org/de/docs/Web/Manifest
+						</a>
+					</p>
+				</FormContent>
+				<FormElement
+					form={form}
+					name="manifest-name"
+					rules={{
+						required: 'This value is required',
+					}}
+					Input={InputText}
+				/>
+				<FormElement
+					form={form}
+					name="manifest-short-name"
+					rules={{
+						required: 'This value is required',
+					}}
+					Input={InputText}
+				/>
+				<FormElement
+					form={form}
+					name="manifest-starturl"
+					rules={{
+						required: 'This value is required',
+					}}
+					Input={InputSelect}
+				/>
+				<FormElement
+					form={form}
+					name="manifest-description"
+					rules={{
+						required: 'This value is required',
+					}}
+					Input={InputTextarea}
+				/>
+				<FormElement
+					form={form}
+					name="manifest-display"
+					rules={{
+						required: 'This value is required',
+					}}
+					Input={InputSelect}
+				/>
+				<FormElement
+					form={form}
+					name="manifest-orientation"
+					rules={{
+						required: 'This value is required',
+					}}
+					Input={InputSelect}
+				/>
+				<FormElement
+					form={form}
+					name="manifest-theme-color"
+					rules={{
+						required: 'This value is required',
+					}}
+					Input={InputColor}
+				/>
+				<FormElement
+					form={form}
+					name="manifest-background-color"
+					rules={{
+						required: 'This value is required',
+					}}
+					Input={InputColor}
+				/>
+			</FormTableGroup>
+			{error !== '' && (
+				<FormFeedback type={NOTICE_TYPES.ERROR} message={error} />
+			)}
+			<FormControls type="submit" disabled={loading} />
+		</Form>
+	);
 };
 
 export default ManifestSettings;

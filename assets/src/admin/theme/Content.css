@@ -1,0 +1,22 @@
+.content {
+  & > * {
+    margin: 0;
+
+    & + * {
+      margin-top: 1em;
+    }
+  }
+
+  ul {
+    list-style: disc;
+    padding-left: 1em;
+
+    li {
+      margin-bottom: 0;
+
+      & + li {
+        margin-top: 0.5em;
+      }
+    }
+  }
+}
