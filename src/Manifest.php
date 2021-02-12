@@ -109,6 +109,36 @@ class Manifest
 			'validate' => null,
 		];
 
+        $settings['manifest-tracking-starturl-source'] = [
+            'default'  => '',
+            'label'    => __('Campaign Source', 'progressive-wp'),
+            'validate' => null,
+        ];
+
+        $settings['manifest-tracking-starturl-medium'] = [
+            'default'  => '',
+            'label'    => __('Campaign Medium', 'progressive-wp'),
+            'validate' => null,
+        ];
+
+        $settings['manifest-tracking-starturl-campaign'] = [
+            'default'  => '',
+            'label'    => __('Campaign Name', 'progressive-wp'),
+            'validate' => null,
+        ];
+
+        $settings['manifest-tracking-starturl-term'] = [
+            'default'  => '',
+            'label'    => __('Campaign Term', 'progressive-wp'),
+            'validate' => null,
+        ];
+
+        $settings['manifest-tracking-starturl-content'] = [
+            'default'  => '',
+            'label'    => __('Campaign Content', 'progressive-wp'),
+            'validate' => null,
+        ];
+
 		return $settings;
 	}
 }

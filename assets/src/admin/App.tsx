@@ -18,8 +18,19 @@ const app = document.querySelector('#pwp-app');
 const manifestSettingsKeys = [
   'installable-mode',
   'installable-onclick',
+  'manifest-name',
+  'manifest-short-name',
+  'manifest-starturl',
+  'manifest-description',
+  'manifest-display',
+  'manifest-orientation',
   'manifest-theme-color',
   'manifest-background-color',
+  'manifest-tracking-starturl-source',
+  'manifest-tracking-starturl-medium',
+  'manifest-tracking-starturl-campaign',
+  'manifest-tracking-starturl-term',
+  'manifest-tracking-starturl-content',
 ];
 const offlineSettingsKeys = [];
 const pushSettingsKeys = [];
