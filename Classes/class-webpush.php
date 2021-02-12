@@ -31,6 +31,7 @@ class WebPush {
 		add_action( 'pwp_settings', [ $this, 'settings_push' ] );
 		add_action( 'pwp_settings', [ $this, 'settings_button' ] );
 		add_action( 'pwp_settings', [ $this, 'settings_devices' ] );
+		add_action( 'pwp_settings', [ $this, 'settingsFirstpush' ] );
 
 		add_filter( 'pwp_footer_js', [ $this, 'footer_js' ] );
 
@@ -85,14 +86,17 @@ class WebPush {
 			return;
 		}
 
-		$section = pwp_settings()->add_section( pwp_settings_page_push(), 'pwp_push_push', __( 'Push Notification settings', 'progressive-wp' ) );
+		$section = pwp_settings()->add_section( pwp_settings_page_push(), 'pwp_push_push',
+			__( 'Push Notification settings', 'progressive-wp' ) );
 
-		pwp_settings()->add_checkbox( $section, 'push-failed-remove', __( 'Remove devices if failed once', 'progressive-wp' ), false );
+		pwp_settings()->add_checkbox( $section, 'push-failed-remove',
+			__( 'Remove devices if failed once', 'progressive-wp' ), false );
 		pwp_settings()->add_file( $section, 'push-badge', __( 'Notification Bar Icon', 'progressive-wp' ), 0, [
 			'mimes'       => 'png',
 			'min-width'   => 96,
 			'min-height'  => 96,
-			'after_field' => '<p class="pwp-smaller">' . __( 'This image will represent the notification when there is not enough space to display the notification itself such as, for example, the Android Notification Bar. It will be automatically masked. For the best result use a single-color graphic with transparent background.', 'progressive-wp' ) . '<br>' . __( 'Has to be at least 92x92px', 'progressive-wp' ) . '</p>',
+			'after_field' => '<p class="pwp-smaller">' . __( 'This image will represent the notification when there is not enough space to display the notification itself such as, for example, the Android Notification Bar. It will be automatically masked. For the best result use a single-color graphic with transparent background.',
+					'progressive-wp' ) . '<br>' . __( 'Has to be at least 92x92px', 'progressive-wp' ) . '</p>',
 		] );
 	}
 
@@ -100,13 +104,18 @@ class WebPush {
 		if ( ! WebPushCredentials::get_vapid() ) {
 			return;
 		}
-		$section_desc = __( 'This adds a fixed push notification button to the bottom of your page.', 'progressive-wp' );
-		$section      = pwp_settings()->add_section( pwp_settings_page_push(), 'pwp_push_button', __( 'Push Button', 'progressive-wp' ), $section_desc );
+		$section_desc = __( 'This adds a fixed push notification button to the bottom of your page.',
+			'progressive-wp' );
+		$section      = pwp_settings()->add_section( pwp_settings_page_push(), 'pwp_push_button',
+			__( 'Push Button', 'progressive-wp' ), $section_desc );
 
-		pwp_settings()->add_checkbox( $section, 'notification-button', __( 'Add notification button', 'progressive-wp' ) );
-		pwp_settings()->add_message( $section, 'notification-button-heading', '<h3>' . __( 'Button appearance', 'pwa' ) . '</h3>' );
+		pwp_settings()->add_checkbox( $section, 'notification-button',
+			__( 'Add notification button', 'progressive-wp' ) );
+		pwp_settings()->add_message( $section, 'notification-button-heading',
+			'<h3>' . __( 'Button appearance', 'pwa' ) . '</h3>' );
 		pwp_settings()->add_color( $section, 'notification-button-icon-color', __( 'Icon color', 'pwa' ), '#ffffff' );
-		pwp_settings()->add_color( $section, 'notification-button-bkg-color', __( 'Background color', 'pwa' ), '#333333' );
+		pwp_settings()->add_color( $section, 'notification-button-bkg-color', __( 'Background color', 'pwa' ),
+			'#333333' );
 	}
 
 	public function settings_devices() {
@@ -114,16 +123,19 @@ class WebPush {
 			return;
 		}
 
-		$send = '<p style="margin-bottom: 30px;line-height: 250%"><b>' . __( 'Send to all devices', 'progressive-wp' ) . ':</b><br>' . $this->render_push_modal() . '</p>';
+		$send = '<p style="margin-bottom: 30px;line-height: 250%"><b>' . __( 'Send to all devices',
+				'progressive-wp' ) . ':</b><br>' . $this->render_push_modal() . '</p>';
 
 		$subscriptions = self::get_subscriptions();
 		$table         = '';
 		//$table   .= '<pre>' . print_r( $devices, true ) . '</pre>';
 		$table .= '<table class="pwp-devicestable">';
-		$table .= '<thead><tr><th>' . __( 'Device', 'progressive-wp' ) . '</th><th>' . __( 'Registered', 'progressive-wp' ) . '</th><th></th></tr></thead>';
+		$table .= '<thead><tr><th>' . __( 'Device', 'progressive-wp' ) . '</th><th>' . __( 'Registered',
+				'progressive-wp' ) . '</th><th></th></tr></thead>';
 		$table .= '<tbody>';
 		if ( empty( $subscriptions ) ) {
-			$table .= '<tr><td colspan="3" class="empty">' . __( 'No devices registered', 'progressive-wp' ) . '</td></tr>';
+			$table .= '<tr><td colspan="3" class="empty">' . __( 'No devices registered',
+					'progressive-wp' ) . '</td></tr>';
 		} else {
 			foreach ( $subscriptions as $subscription ) {
 				//$table .= '<pre>' . print_r( get_option( self::$subscriptions_option ), true ) . '</pre>';
@@ -158,7 +170,8 @@ class WebPush {
 				$table .= '</td>';
 				$table .= '<td>';
 				$table .= $this->render_push_modal( '', '', '', 0, $subscription['id'] );
-				$table .= '<span class="devices-actions devices-actions--delete"><a id="pwpDeleteDevice" data-endpoint="' . $subscription['subscription']->endpoint . '" class="button button-pwpdelete">' . __( 'Remove device', 'progressive-wp' ) . '</a></span>';
+				$table .= '<span class="devices-actions devices-actions--delete"><a id="pwpDeleteDevice" data-endpoint="' . $subscription['subscription']->endpoint . '" class="button button-pwpdelete">' . __( 'Remove device',
+						'progressive-wp' ) . '</a></span>';
 				$table .= '</td>';
 				$table .= '</tr>';
 			} // End foreach().
@@ -166,7 +179,23 @@ class WebPush {
 		$table .= '</tbody>';
 		$table .= '</table>';
 
-		$section = pwp_settings()->add_section( pwp_settings_page_push(), 'pwp_devices', __( 'Devices', 'progressive-wp' ), $send . "<div class='pwp-devicestable__container'>$table</div>" );
+		$section = pwp_settings()->add_section( pwp_settings_page_push(), 'pwp_devices',
+			__( 'Devices', 'progressive-wp' ), $send . "<div class='pwp-devicestable__container'>$table</div>" );
+	}
+
+	public function settingsFirstpush() {
+		if ( ! WebPushCredentials::get_vapid() ) {
+			return;
+		}
+		$section_desc = __( 'Greet your subscribers with a custom push notification (Leave empty to disable)',
+			'progressive-wp' );
+		$section      = pwp_settings()->add_section( pwp_settings_page_push(), 'pwp_push_first',
+			__( 'First Push', 'progressive-wp' ), $section_desc );
+
+		pwp_settings()->add_input( $section, 'notification-push-first-title', __( 'Title', 'progressive-wp' ),
+			__( 'Hello!', 'progressive-wp' ) );
+		pwp_settings()->add_input( $section, 'notification-push-first-body', __( 'Body', 'progressive-wp' ),
+			__( 'From now on you will receive selected news on this way from time to time.', 'progressive-wp' ) );
 	}
 
 	public function footer_js( $args ) {
@@ -253,10 +282,13 @@ class WebPush {
 
 		update_option( self::$subscriptions_option, $subscriptions );
 
-		if ( $do_first_push ) {
+		$first_push_title = pwp_get_setting( 'notification-push-first-title' );
+		$first_push_body  = pwp_get_setting( 'notification-push-first-body' );
+
+		if ( $do_first_push && $first_push_title && $first_push_body ) {
 			$data = [
-				'title'    => 'hello!',
-				'body'     => __( 'Sie werden von nun an auf diesem Weg ab und zu ausgewählte Neuigkeiten erhalten.', 'progressive-wp' ),
+				'title'    => $first_push_title,
+				'body'     => $first_push_body,
 				'redirect' => '',
 				'groups'   => [
 					$id,
@@ -338,7 +370,14 @@ class WebPush {
 	 * Send push
 	 */
 
-	public function render_push_modal( $title = '', $body = '', $url = '', $image_id = 0, $limit = '', $pushpost = '' ) {
+	public function render_push_modal(
+		$title = '',
+		$body = '',
+		$url = '',
+		$image_id = 0,
+		$limit = '',
+		$pushpost = ''
+	) {
 
 		if ( is_admin() ) {
 			add_thickbox();
@@ -383,19 +422,23 @@ class WebPush {
 		$GLOBALS['pwp_push_modal_count'] ++;
 
 		$r = '';
-		$r .= '<a id="pwp-pushmodal-trigger" href="#TB_inline&inlineId=pwp-pushmodal-container-' . $GLOBALS['pwp_push_modal_count'] . '&width=400&height=510&class=test" class="thickbox button">' . __( 'Create push notification', 'progressive-wp' ) . '</a>';
+		$r .= '<a id="pwp-pushmodal-trigger" href="#TB_inline&inlineId=pwp-pushmodal-container-' . $GLOBALS['pwp_push_modal_count'] . '&width=400&height=510&class=test" class="thickbox button">' . __( 'Create push notification',
+				'progressive-wp' ) . '</a>';
 		$r .= '<div id="pwp-pushmodal-container-' . $GLOBALS['pwp_push_modal_count'] . '" style="display: none;">';
 		$r .= '<div class="pwp-pushmodal">';
 		$r .= '<h3>' . __( 'New Push-Notification', 'progressive-wp' ) . '</h3>';
 		if ( '' != $limit ) {
-			$r .= '<b>' . __( 'This notification will be sent to the selected device.', 'progressive-wp' ) . '</b><br><br>';
+			$r .= '<b>' . __( 'This notification will be sent to the selected device.',
+					'progressive-wp' ) . '</b><br><br>';
 		}
 		foreach ( $fields as $key => $args ) {
 			$r .= "<label class='pwp-pushmodal__label pwp-pushmodal__label--$key'><b>{$args['name']}:</b>";
 			if ( 'image' == $key ) {
 				$r .= "<input type='hidden' name='pwp-push-{$key}' value='{$args['value']}' />";
 				$r .= '<span class="pwpmodal-uploader">';
-				$r .= '<span class="pwpmodal-uploader__image">' . $image_thumbnail . '</span><a id="uploadImage" class="button">' . __( 'upload image', 'progressive-wp' ) . '</a><a id="removeImage" class="button button-pwpdelete">' . __( 'remove image', 'progressive-wp' ) . '</a>';
+				$r .= '<span class="pwpmodal-uploader__image">' . $image_thumbnail . '</span><a id="uploadImage" class="button">' . __( 'upload image',
+						'progressive-wp' ) . '</a><a id="removeImage" class="button button-pwpdelete">' . __( 'remove image',
+						'progressive-wp' ) . '</a>';
 				$r .= '</span>';
 			} else {
 				$r .= "<input type='text' name='pwp-push-{$key}' value='{$args['value']}' />";
@@ -406,9 +449,11 @@ class WebPush {
 		$r .= '<input type="hidden" name="pwp-push-action" value="pwp_push_do_push" />';
 		$r .= '<input type="hidden" name="pwp-push-pushpost" value="' . $pushpost . '" />';
 		$r .= wp_nonce_field( 'pwp-push-action', 'pwp-push-nonce', true, false );
-		$r .= '<div class="pwp-pushmodal__label pwp-pushmodal__controls"><a id="send" class="button button-primary">' . __( 'Send push', 'progressive-wp' ) . '</a></div>';
+		$r .= '<div class="pwp-pushmodal__label pwp-pushmodal__controls"><a id="send" class="button button-primary">' . __( 'Send push',
+				'progressive-wp' ) . '</a></div>';
 		$r .= '<div class="loader"></div>';
-		$r .= '<div class="success"><div class="success__content">' . $icon . __( 'Notifications have been sent', 'progressive-wp' ) . '</div></div>';
+		$r .= '<div class="success"><div class="success__content">' . $icon . __( 'Notifications have been sent',
+				'progressive-wp' ) . '</div></div>';
 		$r .= '</div>';
 		$r .= '</div>';
 
