@@ -5,18 +5,21 @@ namespace nicomartin\ProgressiveWordPress;
 class PushPost {
 
 	private $push_instance = '';
+	private $push_admin_page = '';
 
 	public function __construct() {
 		if ( WebPushCredentials::get_vapid() ) {
-			$this->push_instance = pwp_get_instance()->WebPush;
+			$this->push_instance   = pwp_get_instance()->WebPush;
+			$this->push_admin_page = pwp_settings_page_push();
 		} else {
-			$this->push_instance = pwp_get_instance()->Push;
+			$this->push_instance   = pwp_get_instance()->Push;
+			$this->push_admin_page = pwp_settings_page_push();
 		}
 	}
 
 	public function run() {
 
-		if ( ! pwp_push_set() ) {
+		if ( ! pwp_push_set() && ! WebPushCredentials::get_vapid() ) {
 			return;
 		}
 
@@ -25,6 +28,15 @@ class PushPost {
 		add_action( 'admin_init', [ $this, 'save_post_types' ], 50 );
 		add_action( 'pwp_settings', [ $this, 'settings' ] );
 		add_filter( 'pwp_admin_footer_js', [ $this, 'post_types_footer' ] );
+
+		$post_types = get_option( 'pwp_post_types' );
+		if ( is_array( $post_types ) ) {
+			foreach ( $post_types as $pt => $labels ) {
+				if ( pwp_get_setting( "pwp_pushpost_active_{$pt}" ) && pwp_get_setting( "pwp_pushpost_auto_{$pt}" ) ) {
+					add_action( "publish_{$pt}", [ $this, 'auto_push' ], 10, 2 );
+				}
+			}
+		}
 	}
 
 	public function meta_box() {
@@ -46,13 +58,17 @@ class PushPost {
 				}
 				echo '<div class="pushpost-meta-container ' . $class . '">';
 				echo '<div class="pushpost-meta pushpost-meta--send">';
-				echo '<p>' . __( 'This function opens the push notification modal for this post.', 'progressive-wp' ) . '</p>';
-				echo $this->push_instance->render_push_modal( $title, $body, get_permalink( $post ), get_post_thumbnail_id( $post ), '', $post->ID );
+				echo '<p>' . __( 'This function opens the push notification modal for this post.',
+						'progressive-wp' ) . '</p>';
+				echo $this->push_instance->render_push_modal( $title, $body, get_permalink( $post ),
+					get_post_thumbnail_id( $post ), '', $post->ID );
 				echo '</div>';
 
 				echo '<div class="pushpost-meta pushpost-meta--done">';
-				echo '<p>' . __( 'Push notification has already been sent. Do you want to send it again?', 'progressive-wp' ) . '</p>';
-				echo '<p><a class="pushpost-meta__sendagain" data-confirmation="' . esc_attr( __( 'Are you sure you want to send a new push notification?', 'progressive-wp' ) ) . '">' . __( 'Send again', 'progressive-wp' ) . '</a></p>';
+				echo '<p>' . __( 'Push notification has already been sent. Do you want to send it again?',
+						'progressive-wp' ) . '</p>';
+				echo '<p><a class="pushpost-meta__sendagain" data-confirmation="' . esc_attr( __( 'Are you sure you want to send a new push notification?',
+						'progressive-wp' ) ) . '">' . __( 'Send again', 'progressive-wp' ) . '</a></p>';
 				echo '</div>';
 				echo '</div>';
 			}, $pt, 'side' );
@@ -95,10 +111,13 @@ class PushPost {
 			return;
 		}
 
-		$section_desc = __( 'This will add a meta box to the post edit screen, where you can easily send a push notification for this post.', 'progressive-wp' );
+		$section_desc = __( 'This will add a meta box to the post edit screen, where you can easily send a push notification for this post.',
+			'progressive-wp' );
 		// translators: `{post_title}` will be replaced with the post title.
-		$section_desc .= sprintf( __( '%s will be replaced with the post title.', 'progressive-wp' ), '<code>{post_title}</code>' );
-		$section      = pwp_settings()->add_section( pwp_settings_page_push(), 'pwp_pushpost', __( 'Push Post', 'progressive-wp' ), $section_desc );
+		$section_desc .= sprintf( __( '%s will be replaced with the post title.', 'progressive-wp' ),
+			'<code>{post_title}</code>' );
+		$section      = pwp_settings()->add_section( pwp_settings_page_push(), 'pwp_pushpost',
+			__( 'Push Post', 'progressive-wp' ), $section_desc );
 
 		foreach ( $post_types as $pt => $labels ) {
 
@@ -112,6 +131,17 @@ class PushPost {
 			// translators: "PushPost" for Post
 			$name = sprintf( __( 'Push Post for "%s"', 'progressive-wp' ), $label );
 			pwp_settings()->add_checkbox( $section, "pwp_pushpost_active_{$pt}", $name );
+
+			pwp_settings()->add_checkbox(
+				$section,
+				"pwp_pushpost_auto_{$pt}",
+				__( 'Autopush', 'progressive-wp' ),
+				false,
+				[
+					'after_field' => '<p class="pwp-smaller">' . __( 'If checked, the push notification will be triggered automatically as soon as the status is changed to "published".',
+							'progressive-wp' ) . '</p>',
+				]
+			);
 
 			// translators: Post: Title
 			$name    = sprintf( __( '%s: Title', 'progressive-wp' ), $label );
@@ -132,5 +162,18 @@ class PushPost {
 		$atts['post_types'] = get_option( 'pwp_post_types' );
 
 		return $atts;
+	}
+
+	public function auto_push( $post_id, $post ) {
+		$title    = pwp_get_setting( "pwp_pushpost_title_{$post->post_type}" );
+		$title    = str_replace( '{post_title}', get_the_title( $post ), $title );
+		$body     = pwp_get_setting( "pwp_pushpost_body_{$post->post_type}" );
+		$body     = str_replace( '{post_title}', get_the_title( $post ), $body );
+		$redirect = get_permalink( $post_id );
+		$this->push_instance->do_push( [
+			'title'    => $title,
+			'body'     => $body,
+			'redirect' => $redirect,
+		] );
 	}
 }

@@ -231,7 +231,7 @@ class Settings {
 				}
 				$data_atts = implode( ' ', $data_atts );
 
-				$return .= "<div class='settings--fileuploader' data-fileid='{$file_id}' $data_atts>";
+				$return .= "<div class='settings--fileuploader' data-fileid='{$file_id}' id='pwp-settings-{$key}' $data_atts>";
 				$return .= '<div class="fileuploader__preview">' . $preview . '</div>';
 				$return .= '<p class="fileuploader__controls">';
 				$return .= '<a class="button select-file">Upload</a>';
