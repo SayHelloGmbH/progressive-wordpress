@@ -460,7 +460,7 @@ class WebPush {
 		return $r;
 	}
 
-	private function do_push( $data ) {
+	public function do_push( $data ) {
 
 		$log = [];
 
