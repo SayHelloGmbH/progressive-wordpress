@@ -29,17 +29,7 @@ class PushPost {
 		add_action( 'pwp_settings', [ $this, 'settings' ] );
 		add_filter( 'pwp_admin_footer_js', [ $this, 'post_types_footer' ] );
 
-
-		add_action( 'transition_post_status', [ $this, 'auto_push' ] );
-		/*
-		$post_types = get_option( 'pwp_post_types' );
-		if ( is_array( $post_types ) ) {
-			foreach ( $post_types as $pt => $labels ) {
-				if ( pwp_get_setting( "pwp_pushpost_active_{$pt}" ) && pwp_get_setting( "pwp_pushpost_auto_{$pt}" ) ) {
-					add_action( "publish_{$pt}", [ $this, 'auto_push' ], 10, 2 );
-				}
-			}
-		}*/
+		add_action( 'transition_post_status', [ $this, 'auto_push' ], 10, 3 );
 	}
 
 	public function meta_box() {
