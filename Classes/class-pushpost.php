@@ -29,6 +29,9 @@ class PushPost {
 		add_action( 'pwp_settings', [ $this, 'settings' ] );
 		add_filter( 'pwp_admin_footer_js', [ $this, 'post_types_footer' ] );
 
+
+		add_action( 'transition_post_status', [ $this, 'auto_push' ] );
+		/*
 		$post_types = get_option( 'pwp_post_types' );
 		if ( is_array( $post_types ) ) {
 			foreach ( $post_types as $pt => $labels ) {
@@ -36,7 +39,7 @@ class PushPost {
 					add_action( "publish_{$pt}", [ $this, 'auto_push' ], 10, 2 );
 				}
 			}
-		}
+		}*/
 	}
 
 	public function meta_box() {
@@ -164,16 +167,21 @@ class PushPost {
 		return $atts;
 	}
 
-	public function auto_push( $post_id, $post ) {
-		$title    = pwp_get_setting( "pwp_pushpost_title_{$post->post_type}" );
-		$title    = str_replace( '{post_title}', get_the_title( $post ), $title );
-		$body     = pwp_get_setting( "pwp_pushpost_body_{$post->post_type}" );
-		$body     = str_replace( '{post_title}', get_the_title( $post ), $body );
-		$redirect = get_permalink( $post_id );
-		$this->push_instance->do_push( [
-			'title'    => $title,
-			'body'     => $body,
-			'redirect' => $redirect,
-		] );
+	public function auto_push( $new_status, $old_status, $post ) {
+		if ( ! pwp_get_setting( "pwp_pushpost_active_{$post->post_type}" ) || ! pwp_get_setting( "pwp_pushpost_auto_{$post->post_type}" ) ) {
+			return;
+		}
+		if ( ( $old_status != 'publish' ) && ( $new_status == 'publish' ) ) {
+			$title    = pwp_get_setting( "pwp_pushpost_title_{$post->post_type}" );
+			$title    = str_replace( '{post_title}', get_the_title( $post ), $title );
+			$body     = pwp_get_setting( "pwp_pushpost_body_{$post->post_type}" );
+			$body     = str_replace( '{post_title}', get_the_title( $post ), $body );
+			$redirect = get_permalink( $post->ID );
+			$this->push_instance->do_push( [
+				'title'    => $title,
+				'body'     => $body,
+				'redirect' => $redirect,
+			] );
+		}
 	}
 }
