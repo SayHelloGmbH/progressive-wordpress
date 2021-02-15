@@ -50,6 +50,18 @@ if (version_compare($wp_version, '4.7', '<') || version_compare(PHP_VERSION, '7.
 
     pwpGetInstance();
 
+    /**
+     * Register
+     */
+
+    require_once 'src/RegisterManifest.php';
+    pwpGetInstance()->registerManifest = new RegisterManifest();
+    pwpGetInstance()->registerManifest->run();
+
+    /**
+     * Plugin
+     */
+
     require_once 'src/plugin/Settings.php';
     pwpGetInstance()->settings = new Settings();
     pwpGetInstance()->settings->run();
@@ -62,7 +74,15 @@ if (version_compare($wp_version, '4.7', '<') || version_compare(PHP_VERSION, '7.
     pwpGetInstance()->assets = new Assets();
     pwpGetInstance()->assets->run();
 
-    require_once 'src/Manifest.php';
-    pwpGetInstance()->manifest = new Manifest();
-    pwpGetInstance()->manifest->run();
+    /**
+     * Modules
+     */
+
+    require_once 'src/AddToHomescreen.php';
+    pwpGetInstance()->a2h = new AddToHomescreen();
+    pwpGetInstance()->a2h->run();
+
+    require_once 'src/Tracking.php';
+    pwpGetInstance()->tracking = new Tracking();
+    pwpGetInstance()->tracking->run();
 } // End if().

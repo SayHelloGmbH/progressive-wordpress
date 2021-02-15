@@ -141,6 +141,16 @@ class Settings
         return $all_settings[$key];
     }
 
+    public function getSingleSettingValue($key)
+    {
+        $setting = $this->getSingleSetting($key);
+        if ( ! $setting) {
+            return null;
+        }
+
+        return $setting['value'];
+    }
+
     public function validateSetting($key, $value)
     {
         if ( ! array_key_exists($key, $this->registered_settings)) {

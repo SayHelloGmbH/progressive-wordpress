@@ -3,7 +3,12 @@
 declare namespace FormTableGroupCssNamespace {
   export interface IFormTableGroupCss {
     card: string;
+    cardClosed: string;
+    cardTableRow: string;
+    heading: string;
     title: string;
+    toggleButton: string;
+    toggleButtonIcon: string;
   }
 }
 

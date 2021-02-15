@@ -1,26 +1,86 @@
 .card {
   position: relative;
   border: 1px solid #ccd0d4;
-  box-shadow: 0 1px 1px rgba(0, 0, 0, .04);
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
   background: #fff;
-  padding: var(--form-spacing);
+  //padding: var(--form-spacing);
 
-  tr th {
-    flex-basis: calc(var(--form-th-width) - var(--form-spacing));
+  tr {
+    width: 100%;
+
+    td {
+      width: 100%;
+    }
+
+    th {
+      flex-basis: calc(var(--form-th-width) - var(--form-spacing));
+    }
+  }
+
+  td,
+  th {
+    max-width: 100%;
+    padding: var(--form-spacing);
   }
 }
 
-.title {
+.cardTableRow {
+  display: block;
+}
+
+.cardClosed {
+  tr {
+    display: none;
+
+    &.cardTableRow {
+      display: block;
+    }
+  }
+}
+
+.heading {
   margin: 0;
-  padding-bottom: var(--form-spacing);
   position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 !important;
 
   &:after {
     content: '';
     position: absolute;
     border-bottom: 1px solid #ccd0d4;
     bottom: 0;
-    right: calc(var(--form-spacing) * -1);
-    left: calc(var(--form-spacing) * -1);
+    right: 0;
+    left: 0;
   }
+}
+
+.title {
+  margin: 0;
+  padding: var(--form-spacing);
+}
+
+.toggleButton {
+  background-color: transparent;
+  border: 1px solid transparent;
+  width: 1.6rem;
+  height: 1.6rem;
+  padding: 0;
+  margin: 0 var(--form-spacing) 0 0;
+  border-radius: 50%;
+  position: relative;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #efefef;
+    border-color: #9f9f9f;
+  }
+}
+
+.toggleButtonIcon {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translateY(-50%) translateX(-50%) scale(0.8);
 }

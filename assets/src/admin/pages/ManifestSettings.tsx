@@ -20,32 +20,39 @@ import {
   FormContent,
 } from '../theme';
 import { useTempSettings, useSettingsForm } from '../settings';
+import { VARS } from '../utils/constants';
+
+import styles from './ManifestSettings.css';
 
 const ManifestSettings = ({ settingsKeys }: { settingsKeys: string[] }) => {
   const { form, submit, error, loading } = useSettingsForm(settingsKeys);
-  const trackingKeys = ['source', 'medium', 'term', 'content', 'campaign'];
-  const trackingSettings = useTempSettings(
-    trackingKeys.map((key) => `manifest-tracking-starturl-${key}`)
-  );
+  const trackingKeys = VARS.trackingParamKeys;
+  const trackingSettings = trackingKeys
+    ? useTempSettings(
+        trackingKeys.map((key) => `manifest-tracking-starturl-${key}`)
+      )
+    : [];
 
   const { ['installable-mode']: mode } = form.watch(['installable-mode']);
 
   const gtmTrackingString = React.useMemo(
     () =>
       trackingKeys
-        .map((key) => {
-          if (
-            trackingSettings[`manifest-tracking-starturl-${key}`] &&
-            trackingSettings[`manifest-tracking-starturl-${key}`].value
-          ) {
-            return (
-              `utm_${key}=` +
-              trackingSettings[`manifest-tracking-starturl-${key}`].value
-            );
-          }
-        })
-        .filter((e) => !!e)
-        .join('&'),
+        ? trackingKeys
+            .map((key) => {
+              if (
+                trackingSettings[`manifest-tracking-starturl-${key}`] &&
+                trackingSettings[`manifest-tracking-starturl-${key}`].value
+              ) {
+                return (
+                  `utm_${key}=` +
+                  trackingSettings[`manifest-tracking-starturl-${key}`].value
+                );
+              }
+            })
+            .filter((e) => !!e)
+            .join('&')
+        : '',
     [trackingSettings]
   );
 
@@ -186,28 +193,33 @@ const ManifestSettings = ({ settingsKeys }: { settingsKeys: string[] }) => {
           Input={InputColor}
         />
       </FormTableGroup>
-      <FormTableGroup card title={__('Homescreen values', 'progressive-wp')}>
-        <FormContent>
-          <p>
-            {__(
-              'A query string will be added to the start URL',
-              'progressive-wp'
-            )}
-          </p>
-          {gtmTrackingString !== '' && (
+      {!!trackingKeys && (
+        <FormTableGroup card title={__('Homescreen values', 'progressive-wp')}>
+          <FormContent>
             <p>
-              <code>{gtmTrackingString}</code>
+              {__(
+                'A query string will be added to the start URL',
+                'progressive-wp'
+              )}
             </p>
-          )}
-        </FormContent>
-        {trackingKeys.map((key) => (
-          <FormElement
-            form={form}
-            name={`manifest-tracking-starturl-${key}`}
-            Input={InputText}
-          />
-        ))}
-      </FormTableGroup>
+            {gtmTrackingString !== '' && (
+              <p>
+                <code className={styles.gtmTrackingCode}>
+                  {gtmTrackingString}
+                </code>
+              </p>
+            )}
+          </FormContent>
+          {trackingKeys.map((key) => (
+            <FormElement
+              form={form}
+              name={`manifest-tracking-starturl-${key}`}
+              Input={InputText}
+              sanitizeValue={(value) => encodeURIComponent(value)}
+            />
+          ))}
+        </FormTableGroup>
+      )}
       {error !== '' && (
         <FormFeedback type={NOTICE_TYPES.ERROR} message={error} />
       )}

@@ -10,6 +10,7 @@ declare global {
       restBase: string;
       restPluginBase: string;
       pluginStrings: IPluginStrings;
+      trackingParamKeys: Array<string>;
     };
   }
 }

@@ -12,6 +12,7 @@ import ManifestSettings from './pages/ManifestSettings';
 import { pluginString } from './utils/pluginStrings';
 
 import './App.css';
+import { VARS } from './utils/constants';
 
 const app = document.querySelector('#pwp-app');
 
@@ -26,11 +27,9 @@ const manifestSettingsKeys = [
   'manifest-orientation',
   'manifest-theme-color',
   'manifest-background-color',
-  'manifest-tracking-starturl-source',
-  'manifest-tracking-starturl-medium',
-  'manifest-tracking-starturl-campaign',
-  'manifest-tracking-starturl-term',
-  'manifest-tracking-starturl-content',
+  ...(VARS.trackingParamKeys
+    ? VARS.trackingParamKeys.map((key) => `manifest-tracking-starturl-${key}`)
+    : []),
 ];
 const offlineSettingsKeys = [];
 const pushSettingsKeys = [];

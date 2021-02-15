@@ -172,29 +172,87 @@
 .FormTableGroup__card___9hnIl {
   position: relative;
   border: 1px solid #ccd0d4;
-  box-shadow: 0 1px 1px rgba(0, 0, 0, .04);
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
   background: #fff;
-  padding: var(--form-spacing);
+  //padding: var(--form-spacing);
 }
 
-  .FormTableGroup__card___9hnIl tr th {
-    flex-basis: calc(var(--form-th-width) - var(--form-spacing));
+  .FormTableGroup__card___9hnIl tr {
+    width: 100%;
   }
 
-.FormTableGroup__title___2bfEC {
-  margin: 0;
-  padding-bottom: var(--form-spacing);
-  position: relative;
+  .FormTableGroup__card___9hnIl tr td {
+      width: 100%;
+    }
+
+  .FormTableGroup__card___9hnIl tr th {
+      flex-basis: calc(var(--form-th-width) - var(--form-spacing));
+    }
+
+  .FormTableGroup__card___9hnIl td,
+  .FormTableGroup__card___9hnIl th {
+    max-width: 100%;
+    padding: var(--form-spacing);
+  }
+
+.FormTableGroup__cardTableRow___2MU5A {
+  display: block;
 }
 
-.FormTableGroup__title___2bfEC:after {
+.FormTableGroup__cardClosed___3SKW4 tr {
+    display: none;
+  }
+
+.FormTableGroup__cardClosed___3SKW4 tr.FormTableGroup__cardTableRow___2MU5A {
+      display: block;
+    }
+
+.FormTableGroup__heading___1vxJj {
+  margin: 0;
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 !important;
+}
+
+.FormTableGroup__heading___1vxJj:after {
     content: '';
     position: absolute;
     border-bottom: 1px solid #ccd0d4;
     bottom: 0;
-    right: calc(var(--form-spacing) * -1);
-    left: calc(var(--form-spacing) * -1);
+    right: 0;
+    left: 0;
   }
+
+.FormTableGroup__title___2bfEC {
+  margin: 0;
+  padding: var(--form-spacing);
+}
+
+.FormTableGroup__toggleButton___2ZMqO {
+  background-color: transparent;
+  border: 1px solid transparent;
+  width: 1.6rem;
+  height: 1.6rem;
+  padding: 0;
+  margin: 0 var(--form-spacing) 0 0;
+  border-radius: 50%;
+  position: relative;
+  cursor: pointer;
+}
+
+.FormTableGroup__toggleButton___2ZMqO:hover {
+    background-color: #efefef;
+    border-color: #9f9f9f;
+  }
+
+.FormTableGroup__toggleButtonIcon___16d1R {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translateY(-50%) translateX(-50%) scale(0.8);
+}
 
 .Content__content___2ErA3 > * {
     margin: 0;
@@ -415,6 +473,10 @@
 .PageAbout__help___1Pdym {
 	//grid-column: 2 / 3;
 }
+.ManifestSettings__gtmTrackingCode___ef41F {
+  overflow-wrap: break-word;
+}
+
 :root {
     --form-spacing: 1rem;
     --form-th-width: 180px;

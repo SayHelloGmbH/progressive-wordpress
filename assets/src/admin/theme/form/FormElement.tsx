@@ -14,6 +14,7 @@ const FormElement = ({
   Input,
   className = '',
   inputClassName = '',
+  sanitizeValue = (value) => value,
   ...inputProps
 }: {
   form?: any;
@@ -23,6 +24,7 @@ const FormElement = ({
   Input?: any;
   className?: string;
   inputClassName?: string;
+  sanitizeValue?: Function;
   [key: string]: any;
 }) => {
   const { field } = useController({
@@ -52,6 +54,7 @@ const FormElement = ({
           setting={setting}
           {...field}
           {...inputProps}
+          onBlur={(e) => field.onChange(sanitizeValue(e.target.value))}
         />
         {error && <p className={styles.error}>{error.message}</p>}
       </td>
