@@ -3,22 +3,29 @@ import React from 'react';
 import cn from '../../utils/classnames';
 
 import styles from './FormTableGroup.css';
+import { isCardClosed, setCardClosed } from '../../utils/localstorage';
 
 const FormTableGroup = ({
   className = '',
-  canToggle = true,
+  canToggleKey = '',
   children,
   card = false,
   title = '',
 }: {
   className?: string;
-  canToggle?: boolean;
+  canToggleKey?: string;
   children?: any;
   card?: boolean;
   title?: string;
 }) => {
-  const [open, setOpen] = React.useState<boolean>(true);
-  // todo: persist open state
+  const [open, setOpen] = React.useState<boolean>(!isCardClosed(canToggleKey));
+
+  const canToggle = React.useMemo(() => canToggleKey !== '', [canToggleKey]);
+
+  React.useEffect(() => {
+    canToggle && setCardClosed(canToggleKey, !open);
+  }, [open]);
+
   return (
     <tbody
       className={cn(className, {

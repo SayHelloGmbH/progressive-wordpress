@@ -62,7 +62,7 @@ class AddToHomescreen
             'default'  => '',
             'label'    => __('Start Page', 'progressive-wp'),
             'validate' => null,
-            'values'   => Helpers::pwpGetPages(),
+            'values'   => Helpers::getPages(),
         ];
 
         $settings['manifest-description'] = [
@@ -153,7 +153,7 @@ class AddToHomescreen
 
     public function getSetting($key)
     {
-        return pwpGetInstance()->settings->getSingleSettingValue($key);
+        return pwpGetInstance()->Settings->getSingleSettingValue($key);
     }
 
     public function sanitizeHex($hex, $default = '#ffffff')

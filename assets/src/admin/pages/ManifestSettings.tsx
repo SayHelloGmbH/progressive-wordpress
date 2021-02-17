@@ -58,7 +58,11 @@ const ManifestSettings = ({ settingsKeys }: { settingsKeys: string[] }) => {
 
   return (
     <Form onSubmit={submit}>
-      <FormTableGroup title={__('Add to homescreen', 'progressive-wp')} card>
+      <FormTableGroup
+        title={__('Add to homescreen', 'progressive-wp')}
+        card
+        canToggleKey="a2h"
+      >
         <FormContent>
           <p>
             <b>{__('Make your website installable!', 'progressive-wp')}</b>
@@ -111,7 +115,11 @@ const ManifestSettings = ({ settingsKeys }: { settingsKeys: string[] }) => {
           />
         )}
       </FormTableGroup>
-      <FormTableGroup title={__('Homescreen values', 'progressive-wp')} card>
+      <FormTableGroup
+        title={__('Homescreen values', 'progressive-wp')}
+        card
+        canToggleKey="homescreen"
+      >
         <FormContent>
           <p>
             {__(
@@ -194,7 +202,11 @@ const ManifestSettings = ({ settingsKeys }: { settingsKeys: string[] }) => {
         />
       </FormTableGroup>
       {!!trackingKeys && (
-        <FormTableGroup card title={__('Homescreen values', 'progressive-wp')}>
+        <FormTableGroup
+          card
+          title={__('Tracking', 'progressive-wp')}
+          canToggleKey="starturl-tracking"
+        >
           <FormContent>
             <p>
               {__(

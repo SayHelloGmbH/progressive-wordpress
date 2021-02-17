@@ -48,7 +48,7 @@ class Tracking
     {
         $queryParams = [];
         foreach ($this->trackingKeys as $key => $label) {
-            $value = pwpGetInstance()->settings->getSingleSettingValue("manifest-tracking-starturl-{$key}");
+            $value = pwpGetInstance()->Settings->getSingleSettingValue("manifest-tracking-starturl-{$key}");
             if ($value) {
                 $queryParams[] = "utm_{$key}={$value}";
             }

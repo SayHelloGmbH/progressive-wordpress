@@ -58,7 +58,7 @@ class RegisterManifest
             return;
         }
 
-        $theme_color  = pwpGetInstance()->settings->getSingleSettingValue('manifest-theme-color');
+        $theme_color  = pwpGetInstance()->Settings->getSingleSettingValue('manifest-theme-color');
         $manifest_url = esc_url(rest_url(pwpGetInstance()->api_namespace . $this->rest_route));
 
         echo "<link rel='manifest' href='{$manifest_url}'>";

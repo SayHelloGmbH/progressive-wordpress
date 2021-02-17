@@ -9,16 +9,11 @@ class Helpers
         return current_user_can('administrator');
     }
 
-    public static function pwpGetPages()
+    public static function getPages()
     {
         $pages = [];
-
-        foreach (get_pages() as $page) {
-            $pages[get_permalink($page)] = get_the_title($page);
-        }
-
-        if ( ! array_key_exists(get_site_url(), $pages)) {
-            $pages = array_merge([get_site_url() => 'Front Page'], $pages);
+        foreach (get_pages() as $post) {
+            $pages[$post->ID] = get_the_title($post);
         }
 
         return $pages;

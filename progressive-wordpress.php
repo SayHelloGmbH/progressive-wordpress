@@ -55,34 +55,42 @@ if (version_compare($wp_version, '4.7', '<') || version_compare(PHP_VERSION, '7.
      */
 
     require_once 'src/RegisterManifest.php';
-    pwpGetInstance()->registerManifest = new RegisterManifest();
-    pwpGetInstance()->registerManifest->run();
+    pwpGetInstance()->RegisterManifest = new RegisterManifest();
+    pwpGetInstance()->RegisterManifest->run();
+
+    require_once 'src/RegisterServiceWorker.php';
+    pwpGetInstance()->RegisterServiceWorker = new RegisterServiceWorker();
+    pwpGetInstance()->RegisterServiceWorker->run();
 
     /**
      * Plugin
      */
 
     require_once 'src/plugin/Settings.php';
-    pwpGetInstance()->settings = new Settings();
-    pwpGetInstance()->settings->run();
+    pwpGetInstance()->Settings = new Settings();
+    pwpGetInstance()->Settings->run();
 
     require_once 'src/plugin/AdminPage.php';
-    pwpGetInstance()->admin_page = new AdminPage();
-    pwpGetInstance()->admin_page->run();
+    pwpGetInstance()->AdminPage = new AdminPage();
+    pwpGetInstance()->AdminPage->run();
 
     require_once 'src/plugin/Assets.php';
-    pwpGetInstance()->assets = new Assets();
-    pwpGetInstance()->assets->run();
+    pwpGetInstance()->Assets = new Assets();
+    pwpGetInstance()->Assets->run();
 
     /**
      * Modules
      */
 
     require_once 'src/AddToHomescreen.php';
-    pwpGetInstance()->a2h = new AddToHomescreen();
-    pwpGetInstance()->a2h->run();
+    pwpGetInstance()->AddToHomescreen = new AddToHomescreen();
+    pwpGetInstance()->AddToHomescreen->run();
+
+    require_once 'src/OfflineUsage.php';
+    pwpGetInstance()->OfflineUsage = new OfflineUsage();
+    pwpGetInstance()->OfflineUsage->run();
 
     require_once 'src/Tracking.php';
-    pwpGetInstance()->tracking = new Tracking();
-    pwpGetInstance()->tracking->run();
+    pwpGetInstance()->Tracking = new Tracking();
+    pwpGetInstance()->Tracking->run();
 } // End if().

@@ -9,6 +9,7 @@ import { SettingsProvider, useSettingsDiff } from './settings';
 import { Page, TabNavigation } from './theme';
 import PageAbout from './pages/PageAbout';
 import ManifestSettings from './pages/ManifestSettings';
+import OfflineUsageSettings from './pages/OfflineUsageSettings';
 import { pluginString } from './utils/pluginStrings';
 
 import './App.css';
@@ -31,7 +32,7 @@ const manifestSettingsKeys = [
     ? VARS.trackingParamKeys.map((key) => `manifest-tracking-starturl-${key}`)
     : []),
 ];
-const offlineSettingsKeys = [];
+const offlineSettingsKeys = ['offline-page', 'offline-content'];
 const pushSettingsKeys = [];
 
 const App = () => {
@@ -58,6 +59,9 @@ const App = () => {
       </Route>
       <Route page="manifest">
         <ManifestSettings settingsKeys={manifestSettingsKeys} />
+      </Route>
+      <Route page="offline">
+        <OfflineUsageSettings settingsKeys={offlineSettingsKeys} />
       </Route>
     </Page>
   );
