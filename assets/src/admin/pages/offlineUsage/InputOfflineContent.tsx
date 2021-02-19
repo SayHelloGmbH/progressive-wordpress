@@ -23,14 +23,17 @@ const InputOfflineContent = ({
   const [addUrl, setAddUrl] = React.useState<string>('');
   const urls = React.useMemo<Array<string>>(() => value.split('\n'), [value]);
 
-  console.log(props);
-
   const removeURL = (url: string): void => {
     onChange(urls.filter((e) => e !== url).join('\n'));
   };
 
-  const addURL = (url: string): void => {
-    onChange((urls.indexOf(url) === -1 ? [...urls, url] : urls).join('\n'));
+  const addURL = (): void => {
+    if (!isValid) {
+      return;
+    }
+    onChange(
+      (urls.indexOf(addUrl) === -1 ? [...urls, addUrl] : urls).join('\n')
+    );
     setAddUrl('');
   };
 
@@ -78,7 +81,7 @@ const InputOfflineContent = ({
           <button
             className={cn(styles.buttonAdd)}
             type="button"
-            onClick={() => addURL(addUrl)}
+            onClick={() => addURL()}
             disabled={!isValid}
           >
             {__('Add URL', 'progressive-wp')}

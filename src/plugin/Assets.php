@@ -15,19 +15,22 @@ class Assets
         $script_version = pwpGetInstance()->version;
         $dir_uri        = trailingslashit(plugin_dir_url(pwpGetInstance()->file));
 
-        wp_enqueue_style(
-            pwpGetInstance()->prefix . '-ui-style',
-            $dir_uri . 'assets/dist/ui.css',
-            [],
-            $script_version
-        );
-        wp_enqueue_script(
-            pwpGetInstance()->prefix . '-ui-script',
-            $dir_uri . 'assets/dist/ui.js',
-            [],
-            $script_version,
-            true
-        );
+        if (pwpGetInstance()->Settings->getSingleSettingValue('offline-indicator')) {
+            wp_enqueue_style(
+                pwpGetInstance()->prefix . '-ui-offline-indicator',
+                $dir_uri . 'assets/dist/ui-offline-indicator.css',
+                [],
+                $script_version
+            );
+
+            wp_enqueue_script(
+                pwpGetInstance()->prefix . '-ui-offline-indicator',
+                $dir_uri . 'assets/dist/ui-offline-indicator.js',
+                [],
+                $script_version,
+                true
+            );
+        }
     }
 
     public function addAdminAssets()

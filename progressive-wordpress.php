@@ -90,6 +90,10 @@ if (version_compare($wp_version, '4.7', '<') || version_compare(PHP_VERSION, '7.
     pwpGetInstance()->OfflineUsage = new OfflineUsage();
     pwpGetInstance()->OfflineUsage->run();
 
+    require_once 'src/OfflineIndicator.php';
+    pwpGetInstance()->OfflineIndicator = new OfflineIndicator();
+    pwpGetInstance()->OfflineIndicator->run();
+
     require_once 'src/Tracking.php';
     pwpGetInstance()->Tracking = new Tracking();
     pwpGetInstance()->Tracking->run();

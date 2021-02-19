@@ -13,7 +13,8 @@ module.exports = (env, argv) => {
   return {
     entry: {
       admin: `${dirSrc}/admin/index.ts`,
-      ui: `${dirSrc}/ui/index.ts`,
+      'ui-offline-indicator': `${dirSrc}/ui/offline-indicator.ts`,
+      'ui-push': `${dirSrc}/ui/push.ts`,
     },
     output: {
       path: dirDist,

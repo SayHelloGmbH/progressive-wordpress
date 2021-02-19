@@ -541,6 +541,10 @@
   transition: 200ms all ease-in-out;
 }
 
+.InputOfflineContent__buttonRemove___2-0am:disabled, .InputOfflineContent__buttonAdd___YEqcH:disabled {
+    pointer-events: none;
+  }
+
 .InputOfflineContent__buttonRemove___2-0am:after,
   .InputOfflineContent__buttonRemove___2-0am:before,
   .InputOfflineContent__buttonAdd___YEqcH:after,

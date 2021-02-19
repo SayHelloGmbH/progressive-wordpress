@@ -61,6 +61,10 @@
   border: 1px solid #9f9f9f;
   transition: 200ms all ease-in-out;
 
+  &:disabled {
+    pointer-events: none;
+  }
+
   &:after,
   &:before {
     content: '';

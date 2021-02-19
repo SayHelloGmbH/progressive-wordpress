@@ -1,5 +1,11 @@
 import { ISettings, IPluginStrings } from './types';
 
+type cachingStrategy =
+  | 'staleWhileRevalidate'
+  | 'networkFirst'
+  | 'cacheFirst'
+  | 'networkOnly';
+
 declare global {
   interface Window {
     pwpJsVars: {
@@ -11,6 +17,15 @@ declare global {
       restPluginBase: string;
       pluginStrings: IPluginStrings;
       trackingParamKeys: Array<string>;
+      cachingStrategyRoutes: Record<
+        string,
+        {
+          name: string;
+          regex: string;
+          default: cachingStrategy;
+        }
+      >;
+      cachingStrategies: Record<cachingStrategy, string>;
     };
   }
 }

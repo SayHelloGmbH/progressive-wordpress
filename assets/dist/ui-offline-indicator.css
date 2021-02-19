@@ -1,0 +1,28 @@
+.offline-indicator {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  text-align: center;
+  padding: 0.8em;
+  transform: translateY(100%);
+  will-change: transform;
+  transition: 200ms transform ease-in-out;
+  display: block !important;
+  z-index: 9999;
+}
+
+  .offline-indicator p {
+    margin: 0;
+  }
+
+  .offline-indicator--top {
+    transform: translateY(-100%);
+    top: 0;
+    bottom: auto;
+  }
+
+  .offline-indicator[hidden='false'] {
+    transform: translateY(0);
+  }
+

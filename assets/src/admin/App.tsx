@@ -32,7 +32,18 @@ const manifestSettingsKeys = [
     ? VARS.trackingParamKeys.map((key) => `manifest-tracking-starturl-${key}`)
     : []),
 ];
-const offlineSettingsKeys = ['offline-page', 'offline-content'];
+const offlineSettingsKeys = [
+  'offline-page',
+  'offline-content',
+  ...Object.keys(VARS.cachingStrategyRoutes).map(
+    (key) => `offline-strategy-${key}`
+  ),
+  'offline-indicator',
+  'offline-indicator-text',
+  'offline-indicator-position',
+  'offline-indicator-color-text',
+  'offline-indicator-color-background',
+];
 const pushSettingsKeys = [];
 
 const App = () => {

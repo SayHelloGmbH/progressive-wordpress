@@ -34,6 +34,10 @@ const FormElement = ({
   });
   const { [name]: setting } = useSettings([name]);
 
+  /**
+   *
+   */
+
   const error = React.useMemo(
     () => (name in form.errors ? form.errors[name] : null),
     [form.errors, name]
@@ -54,7 +58,7 @@ const FormElement = ({
           setting={setting}
           {...field}
           {...inputProps}
-          onBlur={(e) => field.onChange(sanitizeValue(e.target.value))}
+          onBlur={(e) => e && field.onChange(sanitizeValue(e.target.value))}
         />
         {error && <p className={styles.error}>{error.message}</p>}
       </td>

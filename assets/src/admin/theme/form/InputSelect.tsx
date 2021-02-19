@@ -31,7 +31,7 @@ const InputSelect = ({
       {...props}
     >
       {emptyOption && <option value="" {...optionProps('', '')} />}
-      {Object.entries(settingsOptions).map(([value, label]) => (
+      {Object.entries(settingsOptions || {}).map(([value, label]) => (
         <option
           value={value}
           key={value}
