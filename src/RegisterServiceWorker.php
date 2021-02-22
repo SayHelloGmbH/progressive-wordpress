@@ -11,7 +11,6 @@ class RegisterServiceWorker
         add_action('query_vars', [$this, 'queryVars']);
         add_action('wp_head', [$this, 'registerServiceWorkerScript']);
         add_action('parse_request', [$this, 'returnServiceWorker']);
-        add_action('pwp_serviceworker', [$this, 'test']);
     }
 
     public function registerServiceWorkerScript()
@@ -57,7 +56,7 @@ class RegisterServiceWorker
             echo "/**\n";
             echo " * Service Worker initialized by Progressive WordPress\n";
             echo " * https://de.wordpress.org/plugins/progressive-wp/ \n";
-            echo " */\n";
+            echo " */\n\n";
             do_action('pwp_serviceworker');
             exit;
         }
@@ -74,10 +73,5 @@ class RegisterServiceWorker
         }
 
         return $url;
-    }
-
-    public function test()
-    {
-        echo 'console.log("Hallo Welt 2")';
     }
 }

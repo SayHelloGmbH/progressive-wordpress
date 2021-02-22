@@ -21,7 +21,10 @@ const InputOfflineContent = ({
   rows?: number;
 }) => {
   const [addUrl, setAddUrl] = React.useState<string>('');
-  const urls = React.useMemo<Array<string>>(() => value.split('\n'), [value]);
+  const urls = React.useMemo<Array<string>>(
+    () => value.split('\n').filter((e) => Boolean(e)),
+    [value]
+  );
 
   const removeURL = (url: string): void => {
     onChange(urls.filter((e) => e !== url).join('\n'));

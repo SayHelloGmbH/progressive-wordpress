@@ -6,6 +6,7 @@ class OfflineUsage
 {
     public $strategies = [];
     public $routes = [];
+    public $workboxVersion = '6.1.1';
 
     public function __construct()
     {
@@ -21,6 +22,8 @@ class OfflineUsage
     {
         add_filter('pwp_register_settings', [$this, 'settings']);
         add_filter('pwp_admin_footer_js', [$this, 'addPossibleStrategies']);
+        add_filter('pwp_serviceworker', [$this, 'serviceWorker']);
+        add_filter('pwp_precache_urls', [$this, 'precacheUrlsFromSettings']);
     }
 
     public function settings($settings)
@@ -61,32 +64,79 @@ class OfflineUsage
 
     public function getOfflineRoutes()
     {
+        $site_url = preg_quote(get_site_url(), '/');
+
         return apply_filters('pwp_offline_routes', [
-            'default' => [
-                'name'    => __('Default caching strategy', 'progressive-wp'),
-                'regex'   => get_site_url() . '.*',
-                'default' => 'networkFirst',
-            ],
             'static'  => [
                 'name'    => __('Caching strategy for CSS and JS Files', 'progressive-wp'),
-                'regex'   => get_site_url() . '.*\.(css|js)',
+                'regex'   => $site_url . '.*\.(css|js)',
                 'default' => 'staleWhileRevalidate',
             ],
             'images'  => [
                 'name'    => __('Caching strategy for images', 'progressive-wp'),
-                'regex'   => get_site_url() . '.*\.(png|jpg|jpeg|gif|ico)',
+                'regex'   => $site_url . '.*\.(png|jpg|jpeg|gif|ico)',
                 'default' => 'cacheFirst',
             ],
             'fonts'   => [
                 'name'    => __('Caching strategy for fonts', 'progressive-wp'),
-                'regex'   => get_site_url() . '.*\.(woff|eot|woff2|ttf|svg)',
+                'regex'   => $site_url . '.*\.(woff|eot|woff2|ttf|svg)',
                 'default' => 'cacheFirst',
             ],
-            'rest'    => [
+            'default'    => [
                 'name'    => __('Caching strategy for WP Rest', 'progressive-wp'),
-                'regex'   => get_rest_url() . '.*',
+                'regex'   => $site_url . '.*',
                 'default' => 'networkOnly',
             ],
         ]);
+    }
+
+    public function serviceWorker()
+    {
+        /**
+         * register workbox
+         */
+
+        $path        = "assets/dist/workbox/workbox-v{$this->workboxVersion}/";
+        $workbox_dir = trailingslashit(plugin_dir_url(pwpGetInstance()->file)) . $path;
+        echo sprintf("importScripts( %s );\n", wp_json_encode("{$workbox_dir}workbox-sw.js"));
+
+        $options = [
+            'debug'            => pwpGetInstance()->debug,
+            'modulePathPrefix' => $workbox_dir,
+        ];
+        echo sprintf("workbox.setConfig( %s );\n", wp_json_encode($options));
+
+        /**
+         * add precaching
+         */
+
+        echo "workbox.loadModule('workbox-precaching');\n";
+
+        $precache_urls   = apply_filters('pwp_precache_urls', ['/']);
+        $precache_routes = array_map(function ($url) {
+            return [
+                'url'      => $url,
+                'revision' => null,
+            ];
+        }, $precache_urls);
+
+        echo sprintf("workbox.precaching.precacheAndRoute( %s );\n", wp_json_encode($precache_routes));
+
+        /**
+         * add runtime caching
+         */
+
+        echo "workbox.loadModule('workbox-routing');\n";
+        echo "workbox.loadModule('workbox-strategies');\n";
+        echo "workbox.routing.registerRoute(new RegExp('\/wp-admin(.*)|(.*)preview=true(.*)\/'), new workbox.strategies.NetworkOnly());\n";
+        foreach ($this->getOfflineRoutes() as $key => $route) {
+            $strategy = ucfirst(pwpGetInstance()->Settings->getSingleSettingValue("offline-strategy-${key}"));
+            echo "workbox.routing.registerRoute(new RegExp('{$route['regex']}'), new workbox.strategies.{$strategy}({ cacheName: 'pwp-{$key}'}));\n";
+        }
+    }
+
+    public function precacheUrlsFromSettings($urls)
+    {
+        return array_merge($urls, explode("\n", pwpGetInstance()->Settings->getSingleSettingValue('offline-content')));
     }
 }
