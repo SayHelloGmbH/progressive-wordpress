@@ -82,7 +82,7 @@ class OfflineUsage
                 'regex'   => $site_url . '.*\.(woff|eot|woff2|ttf|svg)',
                 'default' => 'cacheFirst',
             ],
-            'default'    => [
+            'default' => [
                 'name'    => __('Caching strategy for WP Rest', 'progressive-wp'),
                 'regex'   => $site_url . '.*',
                 'default' => 'networkOnly',
@@ -116,7 +116,7 @@ class OfflineUsage
         $precache_routes = array_map(function ($url) {
             return [
                 'url'      => $url,
-                'revision' => null,
+                'revision' => null, // should be ok since WP handles cache invalidation using the "ver" param
             ];
         }, $precache_urls);
 
@@ -128,10 +128,20 @@ class OfflineUsage
 
         echo "workbox.loadModule('workbox-routing');\n";
         echo "workbox.loadModule('workbox-strategies');\n";
-        echo "workbox.routing.registerRoute(new RegExp('\/wp-admin(.*)|(.*)preview=true(.*)\/'), new workbox.strategies.NetworkOnly());\n";
+
+        // no caching for wp-admin
+        echo "workbox.routing.registerRoute(";
+        echo "new RegExp('\/wp-admin(.*)|(.*)preview=true(.*)\/'),";
+        echo "new workbox.strategies.NetworkOnly()";
+        echo ");\n";
+
+        // runtime caching for routes
         foreach ($this->getOfflineRoutes() as $key => $route) {
             $strategy = ucfirst(pwpGetInstance()->Settings->getSingleSettingValue("offline-strategy-${key}"));
-            echo "workbox.routing.registerRoute(new RegExp('{$route['regex']}'), new workbox.strategies.{$strategy}({ cacheName: 'pwp-{$key}'}));\n";
+            echo "workbox.routing.registerRoute(";
+            echo "new RegExp('{$route['regex']}'),";
+            echo "new workbox.strategies.{$strategy}({ cacheName: 'pwp-{$key}'})";
+            echo ");\n";
         }
     }
 
