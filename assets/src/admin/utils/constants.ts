@@ -15,6 +15,7 @@ declare global {
       settings: ISettings;
       restBase: string;
       restPluginBase: string;
+      restPluginNamespace: string;
       pluginStrings: IPluginStrings;
       trackingParamKeys: Array<string>;
       cachingStrategyRoutes: Record<
@@ -26,6 +27,7 @@ declare global {
         }
       >;
       cachingStrategies: Record<cachingStrategy, string>;
+      nonce: string;
     };
   }
 }

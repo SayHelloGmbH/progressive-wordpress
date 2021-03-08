@@ -8,6 +8,7 @@ import {
   filterObject,
   keyValueFromSettings,
 } from '../utils/objects';
+import { apiPost, pluginNamespace } from '../utils/apiFetch';
 
 const SettingsContext = React.createContext({
   settings: VARS.settings,
@@ -16,25 +17,7 @@ const SettingsContext = React.createContext({
   syncSettings: (keys: string[] = []) => new Promise((resolve, reject) => {}),
 });
 
-const postSettings = (data) =>
-  new Promise((resolve, reject) => {
-    fetch(`${VARS.restPluginBase}settings`, {
-      method: 'POST',
-      body: JSON.stringify(data),
-      headers: { 'Content-Type': 'application/json' },
-    })
-      .then((resp) => Promise.all([resp, resp.json()]))
-      .then(([resp, data]) => {
-        if (resp.status < 300) {
-          resolve(data);
-        } else {
-          reject(new Error(data.message));
-        }
-      })
-      .catch(() => {
-        reject(new Error('<p>' + VARS.generalError + '</p>'));
-      });
-  });
+const postSettings = (data) => apiPost(pluginNamespace + 'settings', data);
 
 export const SettingsProvider = ({ children }: { children?: any }) => {
   const [settings, setSettings] = React.useState<ISettings>(VARS.settings);
@@ -118,8 +101,8 @@ export const useSettingsForm = (
       .then((data) => {
         setLoading(false);
       })
-      .catch((data) => {
-        setError(data.message);
+      .catch((e) => {
+        setError(e);
         setLoading(false);
       });
   });

@@ -26,13 +26,19 @@ class Settings
     public function registerRoute()
     {
         register_rest_route(pwpGetInstance()->api_namespace, 'settings', [
-            'methods'  => 'POST',
-            'callback' => [$this, 'apiUpdateSetting'],
+            'methods'             => 'POST',
+            'callback'            => [$this, 'apiUpdateSetting'],
+            'permission_callback' => function () {
+                return current_user_can(Helpers::$authAdmin);
+            }
         ]);
 
         register_rest_route(pwpGetInstance()->api_namespace, 'settings', [
-            'methods'  => 'GET',
-            'callback' => [$this, 'apiGetSettings'],
+            'methods'             => 'GET',
+            'callback'            => [$this, 'apiGetSettings'],
+            'permission_callback' => function () {
+                return current_user_can(Helpers::$authAdmin);
+            }
         ]);
     }
 
@@ -74,12 +80,6 @@ class Settings
 
     public function apiGetSettings()
     {
-        if (Helpers::checkAuth()) {
-            return new \WP_Error('unauthorized', 'Unauthorized', [
-                'status' => 401,
-            ]);
-        }
-
         $return              = [];
         $valid_settings_keys = array_keys($this->registered_settings);
         foreach ($valid_settings_keys as $key) {

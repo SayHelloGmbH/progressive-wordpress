@@ -1,7 +1,8 @@
 {
   "name": "nicos/progressive-wordpress",
   "require": {
-    "minishlink/web-push": "^6.0.3"
+    "minishlink/web-push": "^6.0.3",
+    "ext-openssl": "^7.4"
   },
   "authors": [
     {

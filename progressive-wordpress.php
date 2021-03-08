@@ -43,6 +43,8 @@ if (version_compare($wp_version, '4.7', '<') || version_compare(PHP_VERSION, '7.
 } else {
     require_once 'src/plugin/Helpers.php';
     require_once 'src/plugin/Plugin.php';
+    require_once 'vendor/autoload.php';
+
     function pwpGetInstance(): Plugin
     {
         return Plugin::getInstance(__FILE__);
@@ -97,4 +99,8 @@ if (version_compare($wp_version, '4.7', '<') || version_compare(PHP_VERSION, '7.
     require_once 'src/Tracking.php';
     pwpGetInstance()->Tracking = new Tracking();
     pwpGetInstance()->Tracking->run();
+
+    require_once 'src/PushCredentials.php';
+    pwpGetInstance()->PushCredentials = new PushCredentials();
+    pwpGetInstance()->PushCredentials->run();
 } // End if().

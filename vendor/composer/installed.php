@@ -6,7 +6,7 @@
     'aliases' => 
     array (
     ),
-    'reference' => 'c14545da6686d3b23b32af542ff2a13ee05efac7',
+    'reference' => 'df7382e48378aee8516a6199f1d3c4b65fe28480',
     'name' => 'nicos/progressive-wordpress',
   ),
   'versions' => 
@@ -72,7 +72,7 @@
       'aliases' => 
       array (
       ),
-      'reference' => 'c14545da6686d3b23b32af542ff2a13ee05efac7',
+      'reference' => 'df7382e48378aee8516a6199f1d3c4b65fe28480',
     ),
     'psr/http-client' => 
     array (

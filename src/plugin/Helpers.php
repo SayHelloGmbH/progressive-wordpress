@@ -4,9 +4,11 @@ namespace nicomartin\ProgressiveWordPress;
 
 class Helpers
 {
+    public static $authAdmin = 'administrator';
+
     public static function checkAuth()
     {
-        return current_user_can('administrator');
+        return current_user_can(self::$authAdmin);
     }
 
     public static function getPages()

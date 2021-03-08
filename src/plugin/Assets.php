@@ -82,14 +82,16 @@ class Assets
          */
 
         $defaults = [
-            'ajaxUrl'        => admin_url('admin-ajax.php'),
-            'homeUrl'        => trailingslashit(get_site_url()),
-            'generalError'   => __('An unexpected error occured', 'progressive-wp'),
-            'settings'       => pwpGetInstance()->Settings->getSettings(),
-            'settingsData'   => pwpGetInstance()->Settings->getSettings(),
-            'restBase'       => trailingslashit(get_rest_url()),
-            'restPluginBase' => trailingslashit(get_rest_url() . pwpGetInstance()->api_namespace),
-            'pluginStrings'  => apply_filters('pwp_plugin_strings', []),
+            'ajaxUrl'             => admin_url('admin-ajax.php'),
+            'homeUrl'             => trailingslashit(get_site_url()),
+            'generalError'        => __('An unexpected error occured', 'progressive-wp'),
+            'settings'            => pwpGetInstance()->Settings->getSettings(),
+            'settingsData'        => pwpGetInstance()->Settings->getSettings(),
+            'restBase'            => trailingslashit(get_rest_url()),
+            'restPluginBase'      => trailingslashit(get_rest_url() . pwpGetInstance()->api_namespace),
+            'restPluginNamespace' => pwpGetInstance()->api_namespace,
+            'pluginStrings'       => apply_filters('pwp_plugin_strings', []),
+            'nonce'               => wp_create_nonce('wp_rest'),
         ];
 
         $vars = json_encode(apply_filters('pwp_admin_footer_js', $defaults));
