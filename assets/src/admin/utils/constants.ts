@@ -1,4 +1,4 @@
-import { ISettings, IPluginStrings } from './types';
+import { ISettings, IPluginStrings, IVapid } from './types';
 
 type cachingStrategy =
   | 'staleWhileRevalidate'
@@ -28,6 +28,7 @@ declare global {
       >;
       cachingStrategies: Record<cachingStrategy, string>;
       nonce: string;
+      vapid: IVapid;
     };
   }
 }

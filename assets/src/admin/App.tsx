@@ -10,10 +10,12 @@ import { Page, TabNavigation } from './theme';
 import PageAbout from './pages/PageAbout';
 import ManifestSettings from './pages/ManifestSettings';
 import OfflineUsageSettings from './pages/OfflineUsageSettings';
+import PushSettings from './pages/PushSettings';
 import { pluginString } from './utils/pluginStrings';
 
 import './App.css';
 import { VARS } from './utils/constants';
+import PushCredentials from './pages/PushCredentials';
 
 const app = document.querySelector('#pwp-app');
 
@@ -50,7 +52,7 @@ const App = () => {
   const location = useLocation();
 
   return (
-    <Page title={pluginString('plugin.name') + `: ${location}`}>
+    <Page title={pluginString('plugin.name')}>
       <TabNavigation
         links={{
           '': __('About', 'progressive-wp'),
@@ -73,6 +75,12 @@ const App = () => {
       </Route>
       <Route page="offline">
         <OfflineUsageSettings settingsKeys={offlineSettingsKeys} />
+      </Route>
+      <Route page="push">
+        <PushCredentials />
+        {VARS.vapid.privateKey !== '' && (
+          <PushSettings settingsKeys={pushSettingsKeys} />
+        )}
       </Route>
     </Page>
   );

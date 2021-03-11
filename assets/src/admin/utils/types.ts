@@ -9,3 +9,9 @@ export interface ISetting {
 export type ISettings = Record<string, ISetting>;
 
 export type IPluginStrings = Record<string, string>;
+
+export interface IVapid {
+  privateKey: string;
+  publicKey: string;
+  subject: string;
+}

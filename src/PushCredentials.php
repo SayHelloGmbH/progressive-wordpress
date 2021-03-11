@@ -18,6 +18,7 @@ class PushCredentials
     public function run()
     {
         add_action('rest_api_init', [$this, 'registerRoute']);
+        add_filter('pwp_admin_footer_js', [$this, 'footerJs']);
 
         add_action('admin_action_pwp_reset_vapid', [$this, 'resetVapid']);
     }
@@ -47,6 +48,13 @@ class PushCredentials
                 return current_user_can(Helpers::$authAdmin);
             }
         ]);
+    }
+
+    public function footerJs($values)
+    {
+        $values['vapid'] = self::getVapid();
+
+        return $values;
     }
 
     public function apiSetVapid()
