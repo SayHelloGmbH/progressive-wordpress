@@ -5,6 +5,7 @@ import { apiPut, pluginNamespace } from '../utils/apiFetch';
 import { IVapid } from '../utils/types';
 import {
   Form,
+  FormContent,
   FormControls,
   FormElement,
   FormFeedback,
@@ -13,6 +14,7 @@ import {
   NOTICE_TYPES,
 } from '../theme';
 import { useForm } from 'react-hook-form';
+import { VARS } from '../utils/constants';
 
 const PushCredentials = ({
   credentials,
@@ -24,7 +26,7 @@ const PushCredentials = ({
   const [loading, setLoading] = React.useState<boolean>(false);
   const [error, setError] = React.useState<string>('');
   const form = useForm({
-    defaultValues: { subject: '' },
+    defaultValues: { subject: VARS.homeUrl },
   });
 
   return (
@@ -45,11 +47,22 @@ const PushCredentials = ({
           .finally(() => setLoading(false));
       })}
     >
-      <FormTableGroup title={__('Set-up', 'progressive-wp')} card>
+      <FormTableGroup title={__('Setup', 'progressive-wp')} card>
+        <FormContent>
+          <p>
+            <b>{__('VAPID Subject', 'progressive-wp')}</b>
+          </p>
+          <p>
+            {__(
+              'The subject needs to be a URL or a mailto: URL. This provides a point of contact in case the push service needs to contact the message sender.',
+              'progressive-wp'
+            )}
+          </p>
+        </FormContent>
         <FormElement
           form={form}
           name="subject"
-          label={__('VAPID Subject', 'progressive-wp')}
+          label={__('Subject', 'progressive-wp')}
           rules={{
             required: 'This value is required',
           }}
