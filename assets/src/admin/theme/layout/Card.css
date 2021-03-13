@@ -1,24 +1,63 @@
 .card {
-
-  :global(.hndle) {
-    cursor: pointer !important;
-    line-height: 1;
-  }
-
-  :global(.toggle-indicator)::before {
     position: relative;
-    top: .05rem;
-    text-indent: -1px;
-    content: "\f140";
-    width: 20px;
-    border-radius: 50%;
-    display: inline-block;
-    font: normal 20px/1 dashicons;
-  }
+    border: 1px solid #ccd0d4;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
+    background: #fff;
+}
 
-  &:global(.closed) {
-    :global(.toggle-indicator)::before {
-      content: "\f142";
+.heading {
+    margin: 0;
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 !important;
+
+    &:after {
+        content: '';
+        position: absolute;
+        border-bottom: 1px solid #ccd0d4;
+        bottom: 0;
+        right: 0;
+        left: 0;
     }
-  }
+}
+
+.title {
+    margin: 0;
+    padding: var(--pwp-form-spacing-small) var(--pwp-form-spacing);
+}
+
+.toggleButton {
+    background-color: transparent;
+    border: 1px solid transparent;
+    width: 1.6rem;
+    height: 1.6rem;
+    padding: 0;
+    margin: 0 var(--pwp-form-spacing) 0 0;
+    border-radius: 50%;
+    position: relative;
+    cursor: pointer;
+
+    &:hover {
+        background-color: #efefef;
+        border-color: #9f9f9f;
+    }
+}
+
+.toggleButtonIcon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateY(-50%) translateX(-50%) scale(0.8);
+}
+
+.content {
+    padding: var(--pwp-form-spacing);
+}
+
+.cardClosed {
+    .content {
+        display: none;
+    }
 }

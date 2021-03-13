@@ -1,5 +1,6 @@
 :root {
-    --form-spacing: 1rem;
-    --form-th-width: 180px;
-    --form-max-width: 700px;
+    --pwp-form-spacing-small: 1rem;
+    --pwp-form-spacing: 1.5rem;
+    --pwp-form-label-width: 180px;
+    --pwp-form-max-width: 700px;
 }

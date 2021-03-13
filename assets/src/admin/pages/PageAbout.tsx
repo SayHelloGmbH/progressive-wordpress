@@ -2,16 +2,16 @@ import React from 'react';
 import { __ } from '@wordpress/i18n';
 
 import cn from '../utils/classnames';
+import { Link } from '../utils/router';
 
 import { Card } from '../theme';
 
 import styles from './PageAbout.css';
-import { Link } from '../utils/router';
 
 const PageAbout = ({ className = '' }: { className?: string }) => (
   <React.Fragment>
     <div className={cn(className, styles.intro)}>
-      <Card title={__('Add to Homescreen', 'progressive-wp')} canToggle={false}>
+      <Card title={__('Add to Homescreen', 'progressive-wp')}>
         <p
           dangerouslySetInnerHTML={{
             __html: __(
@@ -26,11 +26,13 @@ const PageAbout = ({ className = '' }: { className?: string }) => (
             'progressive-wp'
           )}
         </p>
-        <Link to="manifest" isButton>
-          {__('configure', 'progressive-wp')}
-        </Link>
+        <p>
+          <Link to="manifest" isButton>
+            {__('configure', 'progressive-wp')}
+          </Link>
+        </p>
       </Card>
-      <Card title={__('Offline usage', 'progressive-wp')} canToggle={false}>
+      <Card title={__('Offline usage', 'progressive-wp')}>
         <p
           dangerouslySetInnerHTML={{
             __html: __(
@@ -46,10 +48,7 @@ const PageAbout = ({ className = '' }: { className?: string }) => (
           )}
         </p>
       </Card>
-      <Card
-        title={__('Push Notifications', 'progressive-wp')}
-        canToggle={false}
-      >
+      <Card title={__('Push Notifications', 'progressive-wp')}>
         <p
           dangerouslySetInnerHTML={{
             __html: __(

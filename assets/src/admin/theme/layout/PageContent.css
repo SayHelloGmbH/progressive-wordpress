@@ -1,0 +1,9 @@
+.content {
+    max-width: var(--pwp-form-max-width);
+
+    & > * + * {
+        margin-top: var(--pwp-form-spacing);
+    }
+
+    margin-top: var(--pwp-form-spacing);
+}

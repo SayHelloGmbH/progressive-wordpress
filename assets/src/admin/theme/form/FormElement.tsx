@@ -44,14 +44,12 @@ const FormElement = ({
   );
 
   return (
-    <tr className={cn(styles.container, className)}>
-      <th scope="row">
-        <label htmlFor={name}>
-          {label || setting.label}
-          {'required' in rules && '*'}
-        </label>
-      </th>
-      <td>
+    <div className={cn(styles.container, className)}>
+      <label htmlFor={name} className={styles.label}>
+        {label || setting.label}
+        {'required' in rules && '*'}
+      </label>
+      <div className={styles.content}>
         <Input
           name={name}
           className={cn(styles.input, inputClassName)}
@@ -61,8 +59,8 @@ const FormElement = ({
           onBlur={(e) => e && field.onChange(sanitizeValue(e.target.value))}
         />
         {error && <p className={styles.error}>{error.message}</p>}
-      </td>
-    </tr>
+      </div>
+    </div>
   );
 };
 

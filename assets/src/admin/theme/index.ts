@@ -1,6 +1,5 @@
-import FormTableGroup from './form/FormTableGroup';
-
 export { default as Page } from './layout/Page';
+export { default as PageContent } from './layout/PageContent';
 export { default as Card } from './layout/Card';
 export { NOTICE_TYPES, default as Notice } from './layout/Notice';
 
@@ -10,8 +9,6 @@ export { default as Image } from './media/Image';
 
 export { default as Button } from './form/Button';
 export { default as Form } from './form/Form';
-export { default as FormTableGroup } from './form/FormTableGroup';
-export { default as FormContent } from './form/FormContent';
 export { default as FormElement } from './form/FormElement';
 export { default as FormControls } from './form/FormControls';
 export { default as FormFeedback } from './form/FormFeedback';

@@ -57,8 +57,25 @@ class PushCredentials
         return $values;
     }
 
-    public function apiSetVapid()
+    public function apiSetVapid($req)
     {
+        $params  = $req->get_params();
+        $subject = $params['subject'];
+
+        if ($subject === '' || ( ! Helpers::isEmail($subject) && ! Helpers::isUrl($subject))) {
+            return new \WP_Error(
+                'vapid_subject_invalid',
+                __('Subject must be a valid email or URL', 'progressive-wp'),
+                [
+                    'status' => 400,
+                ]
+            );
+        }
+
+        if (Helpers::isEmail($subject)) {
+            $subject = "mailto:<{$subject}>";
+        }
+
         $vapid = self::getVapid();
         if ($vapid['publicKey'] !== '' || $vapid['privateKey'] !== '') {
             return new \WP_Error('vapid_already_set', __('VAPID already set', 'progressive-wp'), [
@@ -66,7 +83,7 @@ class PushCredentials
             ]);
         }
 
-        $generated = self::regenerateVapid();
+        $generated = self::regenerateVapid($subject);
         if ($generated) {
             return self::getVapid();
         } else {
@@ -80,9 +97,7 @@ class PushCredentials
     {
         self::deleteVapid();
 
-        return [
-            'deleted' => true,
-        ];
+        return self::getVapid();
     }
 
     public function apiGetVapid()
@@ -97,7 +112,11 @@ class PushCredentials
 
     public static function regenerateVapid($subject = '')
     {
-        $generatedVapid      = VAPID::createVapidKeys();
+        //$generatedVapid      = VAPID::createVapidKeys();
+        $generatedVapid      = [
+            'publicKey'  => 'BCDDyJGde94pQn802U8zZPZIzbTT8LYzaDcGLxL2-ipoXY8QTQS-zvC7QXJXf4sKHf2N8fVP0-7eBnFExe2nAMk',
+            'privateKey' => 'Zli-ptfBaCudV-jWrhrhPdR3ESUXQTqXVCIM8HI4GPw',
+        ];
         $vapid['publicKey']  = $generatedVapid['publicKey'];
         $vapid['privateKey'] = $generatedVapid['privateKey'];
         $vapid['subject']    = $subject;

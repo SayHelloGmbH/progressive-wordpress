@@ -2,19 +2,18 @@ import React from 'react';
 
 import { __ } from '@wordpress/i18n';
 import { useSettingsForm } from '../settings';
-import { Form, FormContent, FormTableGroup } from '../theme';
+import { Card, Form, PageContent } from '../theme';
 
 const PushSettings = ({ settingsKeys }: { settingsKeys: string[] }) => {
   const { form, submit, error, loading } = useSettingsForm(settingsKeys);
 
   return (
     <Form onSubmit={submit}>
-      <FormTableGroup
-        title={__('Offline Usage', 'progressive-wp')}
-        card
-        canToggleKey="offline"
-      >
-        <FormContent>
+      <PageContent>
+        <Card
+          title={__('Offline Usage', 'progressive-wp')}
+          canToggleKey="offline"
+        >
           <p>
             <b>
               {__(
@@ -28,8 +27,8 @@ const PushSettings = ({ settingsKeys }: { settingsKeys: string[] }) => {
               'progressive-wp'
             )}
           </p>
-        </FormContent>
-      </FormTableGroup>
+        </Card>
+      </PageContent>
     </Form>
   );
 };

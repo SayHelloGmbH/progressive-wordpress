@@ -10,25 +10,96 @@
   margin-top: 16px;
 }
 
-.Card__card___3pcSL .hndle {
-    cursor: pointer !important;
-    line-height: 1;
-  }
+.PageContent__content___3Iwc8 {
+    max-width: var(--pwp-form-max-width);
+}
 
-  .Card__card___3pcSL .toggle-indicator::before {
-    position: relative;
-    top: .05rem;
-    text-indent: -1px;
-    content: "\f140";
-    width: 20px;
-    border-radius: 50%;
-    display: inline-block;
-    font: normal 20px/1 dashicons;
-  }
-
-  .Card__card___3pcSL.closed .toggle-indicator::before {
-      content: "\f142";
+    .PageContent__content___3Iwc8 > * + * {
+        margin-top: var(--pwp-form-spacing);
     }
+
+    .PageContent__content___3Iwc8 {
+
+    margin-top: var(--pwp-form-spacing);
+}
+.Card__card___3pcSL {
+    position: relative;
+    border: 1px solid #ccd0d4;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
+    background: #fff;
+}
+
+.Card__heading___3ezs4 {
+    margin: 0;
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 !important;
+}
+
+.Card__heading___3ezs4:after {
+        content: '';
+        position: absolute;
+        border-bottom: 1px solid #ccd0d4;
+        bottom: 0;
+        right: 0;
+        left: 0;
+    }
+
+.Card__title___258Vk {
+    margin: 0;
+    padding: var(--pwp-form-spacing-small) var(--pwp-form-spacing);
+}
+
+.Card__toggleButton___1-4jS {
+    background-color: transparent;
+    border: 1px solid transparent;
+    width: 1.6rem;
+    height: 1.6rem;
+    padding: 0;
+    margin: 0 var(--pwp-form-spacing) 0 0;
+    border-radius: 50%;
+    position: relative;
+    cursor: pointer;
+}
+
+.Card__toggleButton___1-4jS:hover {
+        background-color: #efefef;
+        border-color: #9f9f9f;
+    }
+
+.Card__toggleButtonIcon___EDZqS {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateY(-50%) translateX(-50%) scale(0.8);
+}
+
+.Card__content___UvNPu {
+    padding: var(--pwp-form-spacing);
+}
+
+.Card__cardClosed___g-FMj .Card__content___UvNPu {
+        display: none;
+    }
+
+.Content__content___2ErA3 > * {
+    margin: 0;
+  }
+  .Content__content___2ErA3 > * + * {
+      margin-top: 1em;
+    }
+  .Content__content___2ErA3 ul {
+    list-style: disc;
+    padding-left: 1em;
+  }
+  .Content__content___2ErA3 ul li {
+      margin-bottom: 0;
+    }
+  .Content__content___2ErA3 ul li + li {
+        margin-top: 0.5em;
+      }
 
 .Notice__notice___2GQrp {
   background: #fff;
@@ -129,154 +200,27 @@
 }
 
 .Form__form___1Mbrs {
-    max-width: var(--form-max-width);
 }
 
-.Form__table___3v27X {
-    border-spacing: 0;
-    display: block;
-}
-
-.Form__table___3v27X tr {
-        display: flex;
-        align-items: center;
-    }
-
-.Form__table___3v27X tr th {
-            flex: 0 0 var(--form-th-width);
-        }
-
-.Form__table___3v27X tr td {
-            flex: 1 1 auto;
-        }
-
-.Form__table___3v27X tr + tr th, .Form__table___3v27X tr + tr td {
-            padding-top: var(--form-spacing);
-        }
-
-.Form__table___3v27X th, .Form__table___3v27X td {
-        text-align: left;
-    }
-
-.Form__table___3v27X th {
-        padding-right: var(--form-spacing);
-    }
-
-.Form__table___3v27X tbody {
-        display: block;
-    }
-
-.Form__table___3v27X tbody + tbody {
-            margin-top: var(--form-spacing);
-        }
-.FormTableGroup__card___9hnIl {
-  position: relative;
-  border: 1px solid #ccd0d4;
-  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
-  background: #fff;
-  //padding: var(--form-spacing);
-}
-
-  .FormTableGroup__card___9hnIl tr {
-    width: 100%;
-  }
-
-  .FormTableGroup__card___9hnIl tr td {
-      width: 100%;
-    }
-
-  .FormTableGroup__card___9hnIl tr th {
-      flex-basis: calc(var(--form-th-width) - var(--form-spacing));
-    }
-
-  .FormTableGroup__card___9hnIl td,
-  .FormTableGroup__card___9hnIl th {
-    max-width: 100%;
-    padding: var(--form-spacing);
-  }
-
-.FormTableGroup__cardTableRow___2MU5A {
-  display: block;
-}
-
-.FormTableGroup__cardClosed___3SKW4 tr {
-    display: none;
-  }
-
-.FormTableGroup__cardClosed___3SKW4 tr.FormTableGroup__cardTableRow___2MU5A {
-      display: block;
-    }
-
-.FormTableGroup__heading___1vxJj {
-  margin: 0;
-  position: relative;
+.FormElement__container___TbJPB {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0 !important;
+  vertical-align: top;
+  margin-top: var(--pwp-form-spacing);
 }
 
-.FormTableGroup__heading___1vxJj:after {
-    content: '';
-    position: absolute;
-    border-bottom: 1px solid #ccd0d4;
-    bottom: 0;
-    right: 0;
-    left: 0;
-  }
-
-.FormTableGroup__title___2bfEC {
-  margin: 0;
-  padding: var(--form-spacing);
+.FormElement__label___3aosw {
+  width: var(--pwp-form-label-width);
+  margin-right: var(--pwp-form-spacing);
+  font-weight: bold;
 }
 
-.FormTableGroup__toggleButton___2ZMqO {
-  background-color: transparent;
-  border: 1px solid transparent;
-  width: 1.6rem;
-  height: 1.6rem;
-  padding: 0;
-  margin: 0 var(--form-spacing) 0 0;
-  border-radius: 50%;
-  position: relative;
-  cursor: pointer;
+.FormElement__content___3TDPi {
+  flex: 1 1 auto;
 }
-
-.FormTableGroup__toggleButton___2ZMqO:hover {
-    background-color: #efefef;
-    border-color: #9f9f9f;
-  }
-
-.FormTableGroup__toggleButtonIcon___16d1R {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translateY(-50%) translateX(-50%) scale(0.8);
-}
-
-.Content__content___2ErA3 > * {
-    margin: 0;
-  }
-  .Content__content___2ErA3 > * + * {
-      margin-top: 1em;
-    }
-  .Content__content___2ErA3 ul {
-    list-style: disc;
-    padding-left: 1em;
-  }
-  .Content__content___2ErA3 ul li {
-      margin-bottom: 0;
-    }
-  .Content__content___2ErA3 ul li + li {
-        margin-top: 0.5em;
-      }
 
 .FormElement__input___19qDv:not([type="checkbox"]) {
   width: 100% !important;
   max-width: 100%;
-}
-
-.FormElement__container___TbJPB {
 }
 
 .FormElement__error___26oJ3 {
@@ -285,14 +229,14 @@
 }
 
 .FormControls__controls___2EPjf {
-    margin-top: calc(var(--form-spacing) * 2);
+    margin-top: calc(var(--pwp-form-spacing) * 2);
 }
 .FormFeedback__td___2_j1N {
   padding: 20px 0 !important;
 }
 
 .FormFeedback__wrapper___1ZrQp {
-  margin-top: var(--form-spacing);
+  margin-top: var(--pwp-form-spacing);
 }
 .InputRadio__element___1WCGL + .InputRadio__element___1WCGL {
   margin-top: 0.3em;
@@ -598,8 +542,9 @@
   }
 
 :root {
-    --form-spacing: 1rem;
-    --form-th-width: 180px;
-    --form-max-width: 700px;
+    --pwp-form-spacing-small: 1rem;
+    --pwp-form-spacing: 1.5rem;
+    --pwp-form-label-width: 180px;
+    --pwp-form-max-width: 700px;
 }
 

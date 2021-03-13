@@ -3,18 +3,18 @@ import { __ } from '@wordpress/i18n';
 
 import { useSettingsForm } from '../settings';
 import {
+  Card,
   Form,
-  FormContent,
   FormControls,
   FormElement,
   FormFeedback,
-  FormTableGroup,
   InputCheckbox,
   InputColor,
   InputSelect,
   InputText,
   InputTextarea,
   NOTICE_TYPES,
+  PageContent,
 } from '../theme';
 import InputOfflineContent from './offlineUsage/InputOfflineContent';
 import { VARS } from '../utils/constants';
@@ -24,12 +24,12 @@ const OfflineUsageSettings = ({ settingsKeys }: { settingsKeys: string[] }) => {
 
   return (
     <Form onSubmit={submit}>
-      <FormTableGroup
-        title={__('Offline Usage', 'progressive-wp')}
-        card
-        canToggleKey="offline"
-      >
-        <FormContent>
+      {' '}
+      <PageContent>
+        <Card
+          title={__('Offline Usage', 'progressive-wp')}
+          canToggleKey="offline"
+        >
           <p>
             <b>
               {__(
@@ -43,20 +43,17 @@ const OfflineUsageSettings = ({ settingsKeys }: { settingsKeys: string[] }) => {
               'progressive-wp'
             )}
           </p>
-        </FormContent>
-        <FormElement form={form} name="offline-page" Input={InputSelect} />
-        <FormElement
-          form={form}
-          name="offline-content"
-          Input={InputOfflineContent}
-        />
-      </FormTableGroup>
-      <FormTableGroup
-        title={__('Caching strategies', 'progressive-wp')}
-        card
-        canToggleKey="caching-strategies"
-      >
-        <FormContent>
+          <FormElement form={form} name="offline-page" Input={InputSelect} />
+          <FormElement
+            form={form}
+            name="offline-content"
+            Input={InputOfflineContent}
+          />
+        </Card>
+        <Card
+          title={__('Caching strategies', 'progressive-wp')}
+          canToggleKey="caching-strategies"
+        >
           <p>
             {__(
               'All network requests are cached by progressive WordPress. Here you are able to manually change the caching strategy for some request types.',
@@ -93,58 +90,55 @@ const OfflineUsageSettings = ({ settingsKeys }: { settingsKeys: string[] }) => {
               )}
             </li>
           </ul>
-        </FormContent>
-        {Object.entries(VARS.cachingStrategyRoutes).map(([key, route]) => (
-          <FormElement
-            form={form}
-            name={`offline-strategy-${key}`}
-            Input={InputSelect}
-          />
-        ))}
-      </FormTableGroup>
-      <FormTableGroup
-        title={__('Offline indicator', 'progressive-wp')}
-        card
-        canToggleKey="offline-indicator"
-      >
-        <FormContent>
+          {Object.entries(VARS.cachingStrategyRoutes).map(([key, route]) => (
+            <FormElement
+              form={form}
+              name={`offline-strategy-${key}`}
+              Input={InputSelect}
+            />
+          ))}
+        </Card>
+        <Card
+          title={__('Offline indicator', 'progressive-wp')}
+          canToggleKey="offline-indicator"
+        >
           <p>
             {__(
               'This adds a little notice which will be displayed if the device is offline.',
               'progressive-wp'
             )}
           </p>
-        </FormContent>
-        <FormElement
-          form={form}
-          name="offline-indicator"
-          Input={InputCheckbox}
-        />
-        <FormElement
-          form={form}
-          name="offline-indicator-text"
-          Input={InputText}
-        />
-        <FormElement
-          form={form}
-          name="offline-indicator-position"
-          Input={InputSelect}
-        />
-        <FormElement
-          form={form}
-          name="offline-indicator-color-text"
-          Input={InputColor}
-        />
-        <FormElement
-          form={form}
-          name="offline-indicator-color-background"
-          Input={InputColor}
-        />
-      </FormTableGroup>
-      {error !== '' && (
-        <FormFeedback type={NOTICE_TYPES.ERROR} message={error} />
-      )}
-      <FormControls type="submit" disabled={loading} />
+          <FormElement
+            form={form}
+            name="offline-indicator"
+            Input={InputCheckbox}
+          />
+          <FormElement
+            form={form}
+            name="offline-indicator-text"
+            Input={InputText}
+          />
+          <FormElement
+            form={form}
+            name="offline-indicator-position"
+            Input={InputSelect}
+          />
+          <FormElement
+            form={form}
+            name="offline-indicator-color-text"
+            Input={InputColor}
+          />
+          <FormElement
+            form={form}
+            name="offline-indicator-color-background"
+            Input={InputColor}
+          />
+        </Card>
+        {error !== '' && (
+          <FormFeedback type={NOTICE_TYPES.ERROR} message={error} />
+        )}
+        <FormControls type="submit" disabled={loading} />
+      </PageContent>
     </Form>
   );
 };

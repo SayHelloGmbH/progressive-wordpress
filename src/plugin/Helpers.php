@@ -124,4 +124,14 @@ class Helpers
 
         return false;
     }
+
+    public static function isEmail($string)
+    {
+        return filter_var($string, FILTER_VALIDATE_EMAIL);
+    }
+
+    public static function isUrl($string)
+    {
+        return filter_var($string, FILTER_VALIDATE_URL);
+    }
 }

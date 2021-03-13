@@ -3,7 +3,6 @@
 declare namespace FormCssNamespace {
   export interface IFormCss {
     form: string;
-    table: string;
   }
 }
 

@@ -16,7 +16,7 @@ const Form = ({
     className={cn(className, styles.form)}
     onSubmit={(data) => onSubmit(data)}
   >
-    <table className={styles.table}>{children}</table>
+    {children}
   </form>
 );
 

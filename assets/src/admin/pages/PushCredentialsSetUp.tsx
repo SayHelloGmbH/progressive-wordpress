@@ -4,14 +4,14 @@ import { __ } from '@wordpress/i18n';
 import { apiPut, pluginNamespace } from '../utils/apiFetch';
 import { IVapid } from '../utils/types';
 import {
+  Card,
   Form,
-  FormContent,
   FormControls,
   FormElement,
   FormFeedback,
-  FormTableGroup,
   InputText,
   NOTICE_TYPES,
+  PageContent,
 } from '../theme';
 import { useForm } from 'react-hook-form';
 import { VARS } from '../utils/constants';
@@ -47,8 +47,8 @@ const PushCredentials = ({
           .finally(() => setLoading(false));
       })}
     >
-      <FormTableGroup title={__('Setup', 'progressive-wp')} card>
-        <FormContent>
+      <PageContent>
+        <Card title={__('Setup', 'progressive-wp')}>
           <p>
             <b>{__('VAPID Subject', 'progressive-wp')}</b>
           </p>
@@ -58,21 +58,21 @@ const PushCredentials = ({
               'progressive-wp'
             )}
           </p>
-        </FormContent>
-        <FormElement
-          form={form}
-          name="subject"
-          label={__('Subject', 'progressive-wp')}
-          rules={{
-            required: 'This value is required',
-          }}
-          Input={InputText}
-        />
-      </FormTableGroup>
-      {error !== '' && (
-        <FormFeedback type={NOTICE_TYPES.ERROR} message={error} />
-      )}
-      <FormControls type="submit" disabled={loading} />
+          <FormElement
+            form={form}
+            name="subject"
+            label={__('Subject', 'progressive-wp')}
+            rules={{
+              required: 'This value is required',
+            }}
+            Input={InputText}
+          />
+        </Card>
+        {error !== '' && (
+          <FormFeedback type={NOTICE_TYPES.ERROR} message={error} />
+        )}
+        <FormControls type="submit" disabled={loading} />
+      </PageContent>
     </Form>
   );
 };

@@ -1,9 +1,22 @@
+.container {
+  display: flex;
+  vertical-align: top;
+  margin-top: var(--pwp-form-spacing);
+}
+
+.label {
+  width: var(--pwp-form-label-width);
+  margin-right: var(--pwp-form-spacing);
+  font-weight: bold;
+}
+
+.content {
+  flex: 1 1 auto;
+}
+
 .input:not([type="checkbox"]) {
   width: 100% !important;
   max-width: 100%;
-}
-
-.container {
 }
 
 .error {

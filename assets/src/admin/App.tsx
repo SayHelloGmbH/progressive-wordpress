@@ -16,6 +16,7 @@ import { pluginString } from './utils/pluginStrings';
 import './App.css';
 import { VARS } from './utils/constants';
 import PushCredentials from './pages/PushCredentials';
+import { IVapid } from './utils/types';
 
 const app = document.querySelector('#pwp-app');
 
@@ -49,6 +50,9 @@ const offlineSettingsKeys = [
 const pushSettingsKeys = [];
 
 const App = () => {
+  const [pushCredentials, setPushCredentials] = React.useState<IVapid>(
+    VARS.vapid
+  );
   const location = useLocation();
 
   return (
@@ -77,8 +81,11 @@ const App = () => {
         <OfflineUsageSettings settingsKeys={offlineSettingsKeys} />
       </Route>
       <Route page="push">
-        <PushCredentials />
-        {VARS.vapid.privateKey !== '' && (
+        <PushCredentials
+          credentials={pushCredentials}
+          setCredentials={setPushCredentials}
+        />
+        {pushCredentials.privateKey !== '' && (
           <PushSettings settingsKeys={pushSettingsKeys} />
         )}
       </Route>

@@ -3,38 +3,57 @@ import React from 'react';
 import cn from '../../utils/classnames';
 
 import styles from './Card.css';
+import contentStyles from '../Content.css';
+
+import { isCardClosed, setCardClosed } from '../../utils/localstorage';
 
 const Card = ({
   className = '',
-  canToggle = true,
-  title,
+  canToggleKey = '',
+  title = '',
   children,
 }: {
   className?: string;
-  canToggle?: boolean;
+  canToggleKey?: string;
   title?: string;
   children?: any;
 }) => {
-  const [open, setOpen] = React.useState<boolean>(true);
+  const [open, setOpen] = React.useState<boolean>(!isCardClosed(canToggleKey));
+
+  const canToggle = React.useMemo(() => canToggleKey !== '', [canToggleKey]);
+
+  React.useEffect(() => {
+    canToggle && setCardClosed(canToggleKey, !open);
+  }, [open]);
+
   return (
-    <div className={cn(className, styles.card, 'postbox', { closed: !open })}>
+    <div
+      className={cn(className, styles.card, {
+        [styles.cardClosed]: !open && canToggle,
+      })}
+    >
       {title && (
-        <div className="postbox-header">
-          <h2
-            className="hndle"
-            onClick={() => (canToggle ? setOpen(!open) : null)}
-          >
-            {title}
-          </h2>
+        <div className={styles.heading}>
+          <h2 className={styles.title}>{title}</h2>
           {canToggle && (
-            <button className="handlediv" onClick={() => setOpen(!open)}>
+            <button
+              className={styles.toggleButton}
+              onClick={() => setOpen(!open)}
+            >
               <span className="screen-reader-text">Toggle panel</span>
-              <span className="toggle-indicator" aria-hidden="true" />
+              <span
+                className={cn('dashicons', styles.toggleButtonIcon, {
+                  'dashicons-arrow-up-alt2': open,
+                  'dashicons-arrow-down-alt2': !open,
+                })}
+              />
             </button>
           )}
         </div>
       )}
-      {open && <div className="inside">{children}</div>}
+      <div className={cn(styles.content, contentStyles.content)}>
+        {children}
+      </div>
     </div>
   );
 };

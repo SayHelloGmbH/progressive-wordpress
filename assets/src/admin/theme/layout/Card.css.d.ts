@@ -3,6 +3,12 @@
 declare namespace CardCssNamespace {
   export interface ICardCss {
     card: string;
+    cardClosed: string;
+    content: string;
+    heading: string;
+    title: string;
+    toggleButton: string;
+    toggleButtonIcon: string;
   }
 }
 

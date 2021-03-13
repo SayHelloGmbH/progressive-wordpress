@@ -11,13 +11,11 @@ const FormControls = ({
   className?: string;
   [key: string]: any;
 }) => (
-  <tr className={styles.controls}>
-    <td colSpan={2}>
-      <button className="button button-primary" {...buttonProps}>
-        {value}
-      </button>
-    </td>
-  </tr>
+  <div className={styles.controls}>
+    <button className="button button-primary" {...buttonProps}>
+      {value}
+    </button>
+  </div>
 );
 
 export default FormControls;

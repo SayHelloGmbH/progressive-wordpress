@@ -3,8 +3,10 @@
 declare namespace FormElementCssNamespace {
   export interface IFormElementCss {
     container: string;
+    content: string;
     error: string;
     input: string;
+    label: string;
   }
 }
 
