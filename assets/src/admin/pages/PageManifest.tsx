@@ -18,9 +18,9 @@ import {
 import { useTempSettings, useSettingsForm } from '../settings';
 import { VARS } from '../utils/constants';
 
-import styles from './ManifestSettings.css';
+import styles from './PageManifest.css';
 
-const ManifestSettings = ({ settingsKeys }: { settingsKeys: string[] }) => {
+const PageManifest = ({ settingsKeys }: { settingsKeys: string[] }) => {
   const { form, submit, error, loading } = useSettingsForm(settingsKeys);
   const trackingKeys = VARS.trackingParamKeys;
   const trackingSettings = trackingKeys
@@ -229,4 +229,4 @@ const ManifestSettings = ({ settingsKeys }: { settingsKeys: string[] }) => {
   );
 };
 
-export default ManifestSettings;
+export default PageManifest;

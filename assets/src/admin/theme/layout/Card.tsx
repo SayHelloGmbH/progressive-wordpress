@@ -12,11 +12,13 @@ const Card = ({
   canToggleKey = '',
   title = '',
   children,
+  toggleButtonClose,
 }: {
   className?: string;
   canToggleKey?: string;
   title?: string;
   children?: any;
+  toggleButtonClose?: Function;
 }) => {
   const [open, setOpen] = React.useState<boolean>(!isCardClosed(canToggleKey));
 
@@ -35,16 +37,23 @@ const Card = ({
       {title && (
         <div className={styles.heading}>
           <h2 className={styles.title}>{title}</h2>
-          {canToggle && (
+          {(canToggle || Boolean(toggleButtonClose)) && (
             <button
-              className={styles.toggleButton}
-              onClick={() => setOpen(!open)}
+              className={cn(styles.toggleButton)}
+              onClick={() =>
+                Boolean(toggleButtonClose)
+                  ? toggleButtonClose()
+                  : setOpen(!open)
+              }
             >
               <span className="screen-reader-text">Toggle panel</span>
               <span
                 className={cn('dashicons', styles.toggleButtonIcon, {
-                  'dashicons-arrow-up-alt2': open,
-                  'dashicons-arrow-down-alt2': !open,
+                  'dashicons-no-alt': Boolean(toggleButtonClose),
+                  'dashicons-arrow-up-alt2':
+                    open && !Boolean(toggleButtonClose),
+                  'dashicons-arrow-down-alt2':
+                    !open && !Boolean(toggleButtonClose),
                 })}
               />
             </button>

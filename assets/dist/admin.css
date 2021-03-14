@@ -146,6 +146,94 @@
 }
 
 
+.ShadowBox__shadowbox___A77Fe {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    top: 0;
+    z-index: 9999;
+    transition: opacity 0.2s ease-in;
+    will-change: opacity;
+}
+
+.ShadowBox__shadow___14WR3 {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    top: 0;
+    background-color: #000;
+    cursor: pointer;
+}
+
+.ShadowBox__header___3nkw1 {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    background-color: #fff;
+    padding: var(--pwp-form-spacing);
+    z-index: 10;
+}
+
+.ShadowBox__title___3JE3h {
+    display: flex;
+    vertical-align: center;
+}
+
+.ShadowBox__box___2wqRB {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    max-height: calc(100vh - (var(--pwp-form-spacing) * 2));
+    width: 900px;
+    max-width: calc(100vw - (var(--pwp-form-spacing) * 2));
+    background-color: #fff;
+    transition: opacity 0.2s ease-in;
+    will-change: transform;
+    overflow: auto;
+}
+
+.ShadowBox__shadowboxSmall___C1fkF .ShadowBox__box___2wqRB {
+        width: 500px;
+    }
+
+.ShadowBox__content___2XuV8 {
+    padding: var(--pwp-form-spacing);
+}
+
+.ShadowBox__loader___3YJXn {
+    margin: 6vh auto 10vh auto;
+    font-size: 2rem;
+    width: 2rem;
+}
+
+.ShadowBox__box___2wqRB,
+.ShadowBox__shadow___14WR3 {
+    opacity: 0;
+    will-change: opacity;
+    transition: all 200ms ease-in-out;
+}
+
+.ShadowBox__box___2wqRB {
+    transform: translateX(-50%) translateY(-30%) scale(0.9);
+}
+
+
+.ShadowBox__shadowbox___A77Fe[data-visible='true'] .ShadowBox__box___2wqRB {
+        opacity: 1;
+        transform: translateX(-50%) translateY(-50%) scale(1);
+    }
+
+
+.ShadowBox__shadowbox___A77Fe[data-visible='true'] .ShadowBox__shadow___14WR3 {
+        opacity: 0.7;
+    }
+
+
 .TabNavigation__navigation___2BNr1 {
   border-bottom: 1px solid #ccc;
   margin: 0 0 23px 0;
@@ -417,52 +505,52 @@
 .PageAbout__help___1Pdym {
 	//grid-column: 2 / 3;
 }
-.ManifestSettings__gtmTrackingCode___ef41F {
+.PageManifest__gtmTrackingCode___16WHg {
   overflow-wrap: break-word;
 }
 
-.InputOfflineContent__list___26-Nv {
+.InputOfflineContent__list___2mP62 {
 }
 
-.InputOfflineContent__listEntry___3SZEu {
+.InputOfflineContent__listEntry___3GAMI {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin: 0;
 }
 
-.InputOfflineContent__listEntry___3SZEu + .InputOfflineContent__listEntry___3SZEu {
+.InputOfflineContent__listEntry___3GAMI + .InputOfflineContent__listEntry___3GAMI {
     margin-top: 0.6em;
     padding-top: 0.6em;
     border-top: 1px solid #efefef;
   }
 
-.InputOfflineContent__url___5pa2i {
+.InputOfflineContent__url___1qVtb {
   flex: 0 1 calc(100% - 1.6rem);
   font-size: 0.75rem;
   line-height: 1.4;
 }
 
-.InputOfflineContent__addUrlContainer___KBgKp {
+.InputOfflineContent__addUrlContainer___1g318 {
   margin-top: 2rem;
   padding-bottom: 2rem;
   position: relative;
 }
 
-.InputOfflineContent__addUrl___2CIfm {
+.InputOfflineContent__addUrl___3PRzQ {
   display: flex;
   align-items: center;
 }
 
-.InputOfflineContent__addUrlTitle___1w4Z- {
+.InputOfflineContent__addUrlTitle___2nRjY {
 }
 
-.InputOfflineContent__addUrlInput___3SsJ7 {
+.InputOfflineContent__addUrlInput___2X0sg {
   margin-right: 1rem;
   flex: 0 1 calc(100% - 1.6rem);
 }
 
-.InputOfflineContent__addUrlError___2RpLj {
+.InputOfflineContent__addUrlError___811kO {
   font-size: 0.7rem;
   position: absolute;
   color: #a00;
@@ -471,8 +559,8 @@
   width: 100%;
 }
 
-.InputOfflineContent__buttonRemove___2-0am,
-.InputOfflineContent__buttonAdd___YEqcH {
+.InputOfflineContent__buttonRemove___1VXFT,
+.InputOfflineContent__buttonAdd___3Uqag {
   width: 1.4rem;
   height: 1.4rem;
   text-indent: -9999px;
@@ -485,14 +573,14 @@
   transition: 200ms all ease-in-out;
 }
 
-.InputOfflineContent__buttonRemove___2-0am:disabled, .InputOfflineContent__buttonAdd___YEqcH:disabled {
+.InputOfflineContent__buttonRemove___1VXFT:disabled, .InputOfflineContent__buttonAdd___3Uqag:disabled {
     pointer-events: none;
   }
 
-.InputOfflineContent__buttonRemove___2-0am:after,
-  .InputOfflineContent__buttonRemove___2-0am:before,
-  .InputOfflineContent__buttonAdd___YEqcH:after,
-  .InputOfflineContent__buttonAdd___YEqcH:before {
+.InputOfflineContent__buttonRemove___1VXFT:after,
+  .InputOfflineContent__buttonRemove___1VXFT:before,
+  .InputOfflineContent__buttonAdd___3Uqag:after,
+  .InputOfflineContent__buttonAdd___3Uqag:before {
     content: '';
     display: block;
     position: absolute;
@@ -504,11 +592,11 @@
     background-color: currentColor;
   }
 
-.InputOfflineContent__buttonAdd___YEqcH:hover {
+.InputOfflineContent__buttonAdd___3Uqag:hover {
     background-color: #e2e2e2;
   }
 
-.InputOfflineContent__buttonRemove___2-0am {
+.InputOfflineContent__buttonRemove___1VXFT {
   border: 1px solid #a00;
   background-color: #a00;
   color: #fff;
@@ -516,28 +604,28 @@
   transform: scale(0.9);
 }
 
-.InputOfflineContent__buttonRemove___2-0am:after {
+.InputOfflineContent__buttonRemove___1VXFT:after {
     transform: translateX(-50%) translateY(-50%) scale(0.6) rotate(45deg);
   }
 
-.InputOfflineContent__buttonRemove___2-0am:before {
+.InputOfflineContent__buttonRemove___1VXFT:before {
     transform: translateX(-50%) translateY(-50%) scale(0.6) rotate(-45deg);
   }
 
-.InputOfflineContent__listEntry___3SZEu:hover .InputOfflineContent__buttonRemove___2-0am {
+.InputOfflineContent__listEntry___3GAMI:hover .InputOfflineContent__buttonRemove___1VXFT {
   opacity: 0.6;
 }
 
-.InputOfflineContent__listEntry___3SZEu:hover .InputOfflineContent__buttonRemove___2-0am:hover,
-  .InputOfflineContent__listEntry___3SZEu:hover .InputOfflineContent__buttonRemove___2-0am:active {
+.InputOfflineContent__listEntry___3GAMI:hover .InputOfflineContent__buttonRemove___1VXFT:hover,
+  .InputOfflineContent__listEntry___3GAMI:hover .InputOfflineContent__buttonRemove___1VXFT:active {
     opacity: 1;
   }
 
-.InputOfflineContent__buttonAdd___YEqcH:after {
+.InputOfflineContent__buttonAdd___3Uqag:after {
     transform: translateX(-50%) translateY(-50%) scale(0.6) rotate(0);
   }
 
-.InputOfflineContent__buttonAdd___YEqcH:before {
+.InputOfflineContent__buttonAdd___3Uqag:before {
     transform: translateX(-50%) translateY(-50%) scale(0.6) rotate(90deg);
   }
 

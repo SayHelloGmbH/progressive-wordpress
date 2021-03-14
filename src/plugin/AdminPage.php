@@ -31,6 +31,7 @@ class AdminPage
             function () {
                 ?>
                 <div id="pwp-app"></div>
+                <div id="pwp-shadowbox"></div>
                 <?php
             },
             $icon,

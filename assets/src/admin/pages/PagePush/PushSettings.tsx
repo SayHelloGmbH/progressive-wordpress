@@ -1,8 +1,10 @@
 import React from 'react';
 
 import { __ } from '@wordpress/i18n';
-import { useSettingsForm } from '../settings';
-import { Card, Form, PageContent } from '../theme';
+import { useSettingsForm } from '../../settings';
+import { Card, Form, PageContent } from '../../theme';
+import { IVapid } from '../../utils/types';
+import { VARS } from '../../utils/constants';
 
 const PushSettings = ({ settingsKeys }: { settingsKeys: string[] }) => {
   const { form, submit, error, loading } = useSettingsForm(settingsKeys);

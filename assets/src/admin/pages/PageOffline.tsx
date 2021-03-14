@@ -16,10 +16,10 @@ import {
   NOTICE_TYPES,
   PageContent,
 } from '../theme';
-import InputOfflineContent from './offlineUsage/InputOfflineContent';
+import InputOfflineContent from './PageOffline/InputOfflineContent';
 import { VARS } from '../utils/constants';
 
-const OfflineUsageSettings = ({ settingsKeys }: { settingsKeys: string[] }) => {
+const PageOffline = ({ settingsKeys }: { settingsKeys: string[] }) => {
   const { form, submit, error, loading } = useSettingsForm(settingsKeys);
 
   return (
@@ -143,4 +143,4 @@ const OfflineUsageSettings = ({ settingsKeys }: { settingsKeys: string[] }) => {
   );
 };
 
-export default OfflineUsageSettings;
+export default PageOffline;

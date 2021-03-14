@@ -1,0 +1,90 @@
+
+.shadowbox {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    top: 0;
+    z-index: 9999;
+    transition: opacity 0.2s ease-in;
+    will-change: opacity;
+}
+
+.shadow {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    top: 0;
+    background-color: #000;
+    cursor: pointer;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    background-color: #fff;
+    padding: var(--pwp-form-spacing);
+    z-index: 10;
+}
+
+.title {
+    display: flex;
+    vertical-align: center;
+}
+
+.box {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    max-height: calc(100vh - (var(--pwp-form-spacing) * 2));
+    width: 900px;
+    max-width: calc(100vw - (var(--pwp-form-spacing) * 2));
+    background-color: #fff;
+    transition: opacity 0.2s ease-in;
+    will-change: transform;
+    overflow: auto;
+}
+
+.shadowboxSmall {
+    .box {
+        width: 500px;
+    }
+}
+
+.content {
+    padding: var(--pwp-form-spacing);
+}
+
+.loader {
+    margin: 6vh auto 10vh auto;
+    font-size: 2rem;
+    width: 2rem;
+}
+
+.box,
+.shadow {
+    opacity: 0;
+    will-change: opacity;
+    transition: all 200ms ease-in-out;
+}
+
+.box {
+    transform: translateX(-50%) translateY(-30%) scale(0.9);
+}
+
+
+.shadowbox[data-visible='true'] {
+    .box {
+        opacity: 1;
+        transform: translateX(-50%) translateY(-50%) scale(1);
+    }
+
+    .shadow {
+        opacity: 0.7;
+    }
+}

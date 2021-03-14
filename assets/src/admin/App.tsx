@@ -8,15 +8,14 @@ import { SettingsProvider, useSettingsDiff } from './settings';
 
 import { Page, TabNavigation } from './theme';
 import PageAbout from './pages/PageAbout';
-import ManifestSettings from './pages/ManifestSettings';
-import OfflineUsageSettings from './pages/OfflineUsageSettings';
-import PushSettings from './pages/PushSettings';
+import PageManifest from './pages/PageManifest';
+import PageOffline from './pages/PageOffline';
+import PagePush from './pages/PagePush';
 import { pluginString } from './utils/pluginStrings';
 
-import './App.css';
 import { VARS } from './utils/constants';
-import PushCredentials from './pages/PushCredentials';
-import { IVapid } from './utils/types';
+
+import './App.css';
 
 const app = document.querySelector('#pwp-app');
 
@@ -50,9 +49,6 @@ const offlineSettingsKeys = [
 const pushSettingsKeys = [];
 
 const App = () => {
-  const [pushCredentials, setPushCredentials] = React.useState<IVapid>(
-    VARS.vapid
-  );
   const location = useLocation();
 
   return (
@@ -75,19 +71,13 @@ const App = () => {
         <PageAbout />
       </Route>
       <Route page="manifest">
-        <ManifestSettings settingsKeys={manifestSettingsKeys} />
+        <PageManifest settingsKeys={manifestSettingsKeys} />
       </Route>
       <Route page="offline">
-        <OfflineUsageSettings settingsKeys={offlineSettingsKeys} />
+        <PageOffline settingsKeys={offlineSettingsKeys} />
       </Route>
       <Route page="push">
-        <PushCredentials
-          credentials={pushCredentials}
-          setCredentials={setPushCredentials}
-        />
-        {pushCredentials.privateKey !== '' && (
-          <PushSettings settingsKeys={pushSettingsKeys} />
-        )}
+        <PagePush settingsKeys={pushSettingsKeys} />
       </Route>
     </Page>
   );

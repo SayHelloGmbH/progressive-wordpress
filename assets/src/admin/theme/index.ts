@@ -2,6 +2,7 @@ export { default as Page } from './layout/Page';
 export { default as PageContent } from './layout/PageContent';
 export { default as Card } from './layout/Card';
 export { NOTICE_TYPES, default as Notice } from './layout/Notice';
+export { default as ShadowBox } from './ShadowBox/ShadowBox';
 
 export { default as TabNavigation } from './navigation/TabNavigation';
 

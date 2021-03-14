@@ -1,8 +1,8 @@
 import React from 'react';
 import { __ } from '@wordpress/i18n';
 
-import { apiPut, pluginNamespace } from '../utils/apiFetch';
-import { IVapid } from '../utils/types';
+import { apiPut, pluginNamespace } from '../../utils/apiFetch';
+import { IVapid } from '../../utils/types';
 import {
   Card,
   Form,
@@ -12,9 +12,9 @@ import {
   InputText,
   NOTICE_TYPES,
   PageContent,
-} from '../theme';
+} from '../../theme';
 import { useForm } from 'react-hook-form';
-import { VARS } from '../utils/constants';
+import { VARS } from '../../utils/constants';
 
 const PushCredentials = ({
   credentials,
