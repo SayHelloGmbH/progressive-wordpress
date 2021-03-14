@@ -9,6 +9,7 @@ export { default as TabNavigation } from './navigation/TabNavigation';
 export { default as Image } from './media/Image';
 
 export { default as Button } from './form/Button';
+export { default as ButtonGroup } from './form/ButtonGroup';
 export { default as Form } from './form/Form';
 export { default as FormElement } from './form/FormElement';
 export { default as FormControls } from './form/FormControls';

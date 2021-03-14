@@ -137,7 +137,7 @@ const PageOffline = ({ settingsKeys }: { settingsKeys: string[] }) => {
         {error !== '' && (
           <FormFeedback type={NOTICE_TYPES.ERROR} message={error} />
         )}
-        <FormControls type="submit" disabled={loading} />
+        <FormControls type="submit" loading={loading} />
       </PageContent>
     </Form>
   );

@@ -47,8 +47,8 @@ const authFetch = <T>({
         if (resp.status < 300) {
           resolve(data);
         } else {
-          reject(data.message);
+          reject(new Error(data.message));
         }
       })
-      .catch((e) => reject(VARS.generalError));
+      .catch((e) => reject(new Error(VARS.generalError)));
   });

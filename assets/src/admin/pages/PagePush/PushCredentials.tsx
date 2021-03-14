@@ -4,7 +4,6 @@ import { __ } from '@wordpress/i18n';
 import { IVapid } from '../../utils/types';
 
 import PushCredentialsSetUp from './PushCredentialsSetUp';
-import { apiDelete, pluginNamespace } from '../../utils/apiFetch';
 import { Card, PageContent } from '../../theme';
 import VapidResetModal from './VapidResetModal';
 
@@ -28,20 +27,13 @@ const PushCredentials = ({
   return (
     <PageContent>
       <Card title="test">
-        CREDENTIALS{' '}
-        <button
-          onClick={() => {
-            /*
-            apiDelete<IVapid>(pluginNamespace + 'vapid')
-              .then((vapid) => setCredentials(vapid))
-              .catch(() => alert('failed'));
-          */
-            setResetModal(true);
-          }}
-        >
-          delete
-        </button>
-        {resetModal && <VapidResetModal onClose={() => setResetModal(false)} />}
+        CREDENTIALS <button onClick={() => setResetModal(true)}>delete</button>
+        {resetModal && (
+          <VapidResetModal
+            setCredentials={setCredentials}
+            setResetModal={setResetModal}
+          />
+        )}
       </Card>
     </PageContent>
   );

@@ -31,12 +31,14 @@ export default ({
     };
   }, []);
 
-  const onClose = () => {
-    setShow(false);
-    window.setTimeout(() => {
-      close();
-    }, 200);
-  };
+  const onClose = () =>
+    new Promise<void>((resolve) => {
+      setShow(false);
+      window.setTimeout(() => {
+        close();
+        resolve();
+      }, 200);
+    });
 
   return (
     <Portal>
@@ -48,7 +50,7 @@ export default ({
       >
         <div className={styles.shadow} onClick={onClose} />
         <Card className={styles.box} title={title} toggleButtonClose={onClose}>
-          {children}
+          {children(onClose)}
         </Card>
       </div>
     </Portal>

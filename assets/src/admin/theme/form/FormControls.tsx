@@ -1,6 +1,7 @@
 import React from 'react';
 
 import styles from './FormControls.css';
+import { Button } from '../index';
 
 const FormControls = ({
   value = 'Submit',
@@ -12,9 +13,9 @@ const FormControls = ({
   [key: string]: any;
 }) => (
   <div className={styles.controls}>
-    <button className="button button-primary" {...buttonProps}>
+    <Button primary {...buttonProps}>
       {value}
-    </button>
+    </Button>
   </div>
 );
 

@@ -1,0 +1,20 @@
+.group {
+    display: flex;
+    vertical-align: center;
+
+    & > * + * {
+        margin-left: 1rem;
+    }
+}
+
+.alignLeft {
+    justify-content: flex-start;
+}
+
+.alignCenter {
+    justify-content: center;
+}
+
+.alignRight {
+    justify-content: flex-end;
+}
