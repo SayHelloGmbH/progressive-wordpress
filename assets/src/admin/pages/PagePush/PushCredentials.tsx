@@ -4,7 +4,14 @@ import { __ } from '@wordpress/i18n';
 import { IVapid } from '../../utils/types';
 
 import PushCredentialsSetUp from './PushCredentialsSetUp';
-import { Card, PageContent } from '../../theme';
+import {
+  Button,
+  ButtonGroup,
+  Card,
+  FormElement,
+  InputText,
+  PageContent,
+} from '../../theme';
 import VapidResetModal from './VapidResetModal';
 
 const PushCredentials = ({
@@ -26,8 +33,33 @@ const PushCredentials = ({
 
   return (
     <PageContent>
-      <Card title="test">
-        CREDENTIALS <button onClick={() => setResetModal(true)}>delete</button>
+      <Card title={__('VAPID Credentials', 'progressive-wp')}>
+        <FormElement
+          name="vapid-public"
+          Input={InputText}
+          label={__('Public Key', 'progressive-wp')}
+          value={credentials.publicKey}
+          disabled
+        />
+        <FormElement
+          name="vapid-private"
+          Input={InputText}
+          label={__('Private Key', 'progressive-wp')}
+          value={credentials.privateKey}
+          disabled
+        />
+        <FormElement
+          name="vapid-subject"
+          Input={InputText}
+          label={__('Subject', 'progressive-wp')}
+          value={credentials.subject}
+          disabled
+        />
+        <ButtonGroup align="right">
+          <Button onClick={() => setResetModal(true)}>
+            {__('Reset credentials', 'progressive-wp')}
+          </Button>
+        </ButtonGroup>
         {resetModal && (
           <VapidResetModal
             setCredentials={setCredentials}

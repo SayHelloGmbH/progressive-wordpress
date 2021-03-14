@@ -27,11 +27,13 @@ const FormElement = ({
   sanitizeValue?: Function;
   [key: string]: any;
 }) => {
-  const { field } = useController({
-    control: form.control,
-    name,
-    rules,
-  });
+  const { field } = form
+    ? useController({
+        control: form.control,
+        name,
+        rules,
+      })
+    : { field: { onChange: () => {} } };
   const { [name]: setting } = useSettings([name]);
 
   /**
@@ -39,8 +41,8 @@ const FormElement = ({
    */
 
   const error = React.useMemo(
-    () => (name in form.errors ? form.errors[name] : null),
-    [form.errors, name]
+    () => (form && name in form.errors ? form.errors[name] : null),
+    [form, name]
   );
 
   return (

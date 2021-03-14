@@ -13,8 +13,8 @@ const PushSettings = ({ settingsKeys }: { settingsKeys: string[] }) => {
     <Form onSubmit={submit}>
       <PageContent>
         <Card
-          title={__('Offline Usage', 'progressive-wp')}
-          canToggleKey="offline"
+          title={__('Push Notification settings', 'progressive-wp')}
+          canToggleKey="push-notification-settings"
         >
           <p>
             <b>
