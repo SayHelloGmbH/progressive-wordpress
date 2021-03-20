@@ -10,6 +10,7 @@ import {
 } from '../../theme';
 import { apiDelete, pluginNamespace } from '../../utils/apiFetch';
 import { IVapid } from '../../utils/types';
+import { useMenu } from '../../utils/router';
 
 const VapidResetModal = ({
   setCredentials,

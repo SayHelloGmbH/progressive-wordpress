@@ -22,6 +22,7 @@ const PushCredentials = ({
   setCredentials: (credentials: IVapid) => void;
 }) => {
   const [resetModal, setResetModal] = React.useState<boolean>(false);
+
   if (credentials.privateKey === '' || credentials.publicKey === '') {
     return (
       <PushCredentialsSetUp

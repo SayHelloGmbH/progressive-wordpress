@@ -15,10 +15,26 @@ class AdminPage
         $this->settings_parent = pwpGetInstance()->prefix . '-settings';
         $this->menu_title      = __('Progressive WP', 'progressive-wp');
         $this->menu            = [
-            'settings' => __('About', 'progressive-wp'),
-            'manifest' => __('Add to Homescreen', 'progressive-wp'),
-            'offline'  => __('Offline usage', 'progressive-wp'),
-            'push'     => __('Push Notifications', 'progressive-wp'),
+            'settings'           => [
+                'title'   => __('About', 'progressive-wp'),
+                'visible' => true,
+            ],
+            'manifest'           => [
+                'title'   => __('Add to Homescreen', 'progressive-wp'),
+                'visible' => true,
+            ],
+            'offline'            => [
+                'title'   => __('Offline usage', 'progressive-wp'),
+                'visible' => true,
+            ],
+            'push'               => [
+                'title'   => __('Push Notifications', 'progressive-wp'),
+                'visible' => true,
+            ],
+            'push-subscriptions' => [
+                'title'   => __('Push Subscriptions', 'progressive-wp'),
+                'visible' => PushCredentials::issetVapid(),
+            ],
         ];
     }
 
@@ -41,11 +57,11 @@ class AdminPage
             100
         );
 
-        foreach ($this->menu as $slug => $title) {
+        foreach ($this->menu as $slug => $menuElment) {
             add_submenu_page(
                 $this->settings_parent,
-                $title,
-                $title,
+                $menuElment['title'],
+                $menuElment['title'],
                 $this->capability,
                 pwpGetInstance()->prefix . '-' . $slug,
                 [$this, 'page']

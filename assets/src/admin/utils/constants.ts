@@ -1,4 +1,4 @@
-import { ISettings, IPluginStrings, IVapid } from './types';
+import { ISettings, IPluginStrings, IVapid, IMenuItems } from './types';
 
 type cachingStrategy =
   | 'staleWhileRevalidate'
@@ -32,7 +32,7 @@ declare global {
       nonce: string;
       vapid: IVapid;
       settingsParentKey: string;
-      menu: Record<string, string>;
+      menu: IMenuItems;
     };
   }
 }

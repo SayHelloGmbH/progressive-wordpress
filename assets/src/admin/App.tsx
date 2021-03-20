@@ -3,8 +3,9 @@ import ReactDOM from 'react-dom';
 
 import { __ } from '@wordpress/i18n';
 
-import { Route, useLocation, RouterProvider } from './utils/router';
+import { Route, useLocation, RouterProvider, useMenu } from './utils/router';
 import { SettingsProvider, useSettingsDiff } from './settings';
+import { IVapid } from './utils/types';
 
 import { Page, TabNavigation } from './theme';
 import PageAbout from './pages/PageAbout';
@@ -55,11 +56,22 @@ const pushSettingsKeys = [
 ];
 
 const App = () => {
-  const location = useLocation();
+  const [pushCredentials, setPushCredentials] = React.useState<IVapid>(
+    VARS.vapid
+  );
+  const { showMenuItem, hideMenuItem } = useMenu();
+
+  React.useEffect(() => {
+    if (pushCredentials.privateKey === '' || pushCredentials.publicKey === '') {
+      hideMenuItem('push-subscriptions');
+    } else {
+      showMenuItem('push-subscriptions');
+    }
+  }, [pushCredentials]);
 
   return (
     <Page title={pluginString('plugin.name')}>
-      <TabNavigation links={VARS.menu} />
+      <TabNavigation />
       <Route page="settings">
         <PageAbout />
       </Route>
@@ -70,7 +82,11 @@ const App = () => {
         <PageOffline settingsKeys={offlineSettingsKeys} />
       </Route>
       <Route page="push">
-        <PagePush settingsKeys={pushSettingsKeys} />
+        <PagePush
+          settingsKeys={pushSettingsKeys}
+          pushCredentials={pushCredentials}
+          setPushCredentials={setPushCredentials}
+        />
       </Route>
     </Page>
   );

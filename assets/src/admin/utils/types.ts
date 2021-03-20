@@ -15,3 +15,11 @@ export interface IVapid {
   publicKey: string;
   subject: string;
 }
+
+export type IMenuItems = Record<
+  string,
+  {
+    title: string;
+    visible: boolean;
+  }
+>;

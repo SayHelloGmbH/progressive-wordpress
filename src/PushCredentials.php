@@ -76,8 +76,7 @@ class PushCredentials
             $subject = "mailto:<{$subject}>";
         }
 
-        $vapid = self::getVapid();
-        if ($vapid['publicKey'] !== '' || $vapid['privateKey'] !== '') {
+        if (self::issetVapid()) {
             return new \WP_Error('vapid_already_set', __('VAPID already set', 'progressive-wp'), [
                 'status' => 400,
             ]);
@@ -135,5 +134,12 @@ class PushCredentials
         }
 
         return $vapid;
+    }
+
+    public static function issetVapid()
+    {
+        $vapid = self::getVapid();
+
+        return ($vapid['publicKey'] !== '' && $vapid['privateKey'] !== '');
     }
 }

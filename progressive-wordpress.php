@@ -41,9 +41,23 @@ if (version_compare($wp_version, '4.7', '<') || version_compare(PHP_VERSION, '7.
 
     return;
 } else {
+    require_once 'vendor/autoload.php';
+
     require_once 'src/plugin/Helpers.php';
     require_once 'src/plugin/Plugin.php';
-    require_once 'vendor/autoload.php';
+    require_once 'src/plugin/AdminPage.php';
+    require_once 'src/plugin/Settings.php';
+    require_once 'src/plugin/Assets.php';
+
+    require_once 'src/RegisterManifest.php';
+    require_once 'src/RegisterServiceWorker.php';
+    require_once 'src/AddToHomescreen.php';
+    require_once 'src/OfflineUsage.php';
+    require_once 'src/OfflineIndicator.php';
+    require_once 'src/Tracking.php';
+    require_once 'src/PushCredentials.php';
+    require_once 'src/PushNotifications.php';
+    require_once 'src/PushSubscriptions.php';
 
     function pwpGetInstance(): Plugin
     {
@@ -53,62 +67,50 @@ if (version_compare($wp_version, '4.7', '<') || version_compare(PHP_VERSION, '7.
     pwpGetInstance();
 
     /**
-     * Register
-     */
-
-    require_once 'src/RegisterManifest.php';
-    pwpGetInstance()->RegisterManifest = new RegisterManifest();
-    pwpGetInstance()->RegisterManifest->run();
-
-    require_once 'src/RegisterServiceWorker.php';
-    pwpGetInstance()->RegisterServiceWorker = new RegisterServiceWorker();
-    pwpGetInstance()->RegisterServiceWorker->run();
-
-    /**
      * Plugin
      */
 
-    require_once 'src/plugin/Settings.php';
     pwpGetInstance()->Settings = new Settings();
     pwpGetInstance()->Settings->run();
 
-    require_once 'src/plugin/AdminPage.php';
     pwpGetInstance()->AdminPage = new AdminPage();
     pwpGetInstance()->AdminPage->run();
 
-    require_once 'src/plugin/Assets.php';
     pwpGetInstance()->Assets = new Assets();
     pwpGetInstance()->Assets->run();
+
+    /**
+     * Register
+     */
+
+    pwpGetInstance()->RegisterManifest = new RegisterManifest();
+    pwpGetInstance()->RegisterManifest->run();
+
+    pwpGetInstance()->RegisterServiceWorker = new RegisterServiceWorker();
+    pwpGetInstance()->RegisterServiceWorker->run();
 
     /**
      * Modules
      */
 
-    require_once 'src/AddToHomescreen.php';
     pwpGetInstance()->AddToHomescreen = new AddToHomescreen();
     pwpGetInstance()->AddToHomescreen->run();
 
-    require_once 'src/OfflineUsage.php';
     pwpGetInstance()->OfflineUsage = new OfflineUsage();
     pwpGetInstance()->OfflineUsage->run();
 
-    require_once 'src/OfflineIndicator.php';
     pwpGetInstance()->OfflineIndicator = new OfflineIndicator();
     pwpGetInstance()->OfflineIndicator->run();
 
-    require_once 'src/Tracking.php';
     pwpGetInstance()->Tracking = new Tracking();
     pwpGetInstance()->Tracking->run();
 
-    require_once 'src/PushCredentials.php';
     pwpGetInstance()->PushCredentials = new PushCredentials();
     pwpGetInstance()->PushCredentials->run();
 
-    require_once 'src/PushNotifications.php';
     pwpGetInstance()->PushNotifications = new PushNotifications();
     pwpGetInstance()->PushNotifications->run();
 
-    require_once 'src/PushSubscriptions.php';
     pwpGetInstance()->PushSubscriptions = new PushSubscriptions();
     pwpGetInstance()->PushSubscriptions->run();
 } // End if().
