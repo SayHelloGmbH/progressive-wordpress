@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 
 import { __ } from '@wordpress/i18n';
 
-import { Route, useLocation } from './utils/router';
+import { Route, useLocation, RouterProvider } from './utils/router';
 import { SettingsProvider, useSettingsDiff } from './settings';
 
 import { Page, TabNavigation } from './theme';
@@ -46,28 +46,21 @@ const offlineSettingsKeys = [
   'offline-indicator-color-text',
   'offline-indicator-color-background',
 ];
-const pushSettingsKeys = [];
+const pushSettingsKeys = [
+  'push-badge',
+  'notification-button',
+  'notification-button-icon-color',
+  'notification-button-bkg-color',
+  'notification-button-bkg-color',
+];
 
 const App = () => {
   const location = useLocation();
 
   return (
     <Page title={pluginString('plugin.name')}>
-      <TabNavigation
-        links={{
-          '': __('About', 'progressive-wp'),
-          manifest:
-            __('Add to Homescreen', 'progressive-wp') +
-            (useSettingsDiff(manifestSettingsKeys) ? '*' : ''),
-          offline:
-            __('Offline usage', 'progressive-wp') +
-            (useSettingsDiff(offlineSettingsKeys) ? '*' : ''),
-          push:
-            __('Push Notifications', 'progressive-wp') +
-            (useSettingsDiff(pushSettingsKeys) ? '*' : ''),
-        }}
-      />
-      <Route page="">
+      <TabNavigation links={VARS.menu} />
+      <Route page="settings">
         <PageAbout />
       </Route>
       <Route page="manifest">
@@ -86,7 +79,9 @@ const App = () => {
 if (app) {
   ReactDOM.render(
     <SettingsProvider>
-      <App />
+      <RouterProvider>
+        <App />
+      </RouterProvider>
     </SettingsProvider>,
     app
   );

@@ -103,4 +103,12 @@ if (version_compare($wp_version, '4.7', '<') || version_compare(PHP_VERSION, '7.
     require_once 'src/PushCredentials.php';
     pwpGetInstance()->PushCredentials = new PushCredentials();
     pwpGetInstance()->PushCredentials->run();
+
+    require_once 'src/PushNotifications.php';
+    pwpGetInstance()->PushNotifications = new PushNotifications();
+    pwpGetInstance()->PushNotifications->run();
+
+    require_once 'src/PushSubscriptions.php';
+    pwpGetInstance()->PushSubscriptions = new PushSubscriptions();
+    pwpGetInstance()->PushSubscriptions->run();
 } // End if().

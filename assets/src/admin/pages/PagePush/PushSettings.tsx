@@ -2,7 +2,19 @@ import React from 'react';
 
 import { __ } from '@wordpress/i18n';
 import { useSettingsForm } from '../../settings';
-import { Card, Form, PageContent } from '../../theme';
+import {
+  Card,
+  Form,
+  FormControls,
+  FormElement,
+  FormFeedback,
+  InputCheckbox,
+  InputColor,
+  InputSelect,
+  InputUpload,
+  NOTICE_TYPES,
+  PageContent,
+} from '../../theme';
 import { IVapid } from '../../utils/types';
 import { VARS } from '../../utils/constants';
 
@@ -16,20 +28,38 @@ const PushSettings = ({ settingsKeys }: { settingsKeys: string[] }) => {
           title={__('Push Notification settings', 'progressive-wp')}
           canToggleKey="push-notification-settings"
         >
-          <p>
-            <b>
-              {__(
-                'This feature allows you to provide offline usage for your website.',
-                'progressive-wp'
-              )}
-            </b>
-            <br />
-            {__(
-              'By default, a copy of each page is stored in the browser cache as the visitor views it. This allows a visitor to load any previously viewed page while they are offline. The plugin also defines a special “offline page”, which allows you to customize a message and the experience if the app is offline and the page is not in the cache. Additionally, you can define other pre-cached resources using the "offline content" feature',
-              'progressive-wp'
-            )}
-          </p>
+          <FormElement
+            form={form}
+            name="push-badge"
+            Input={InputUpload}
+            title={__('Select Image', 'progressive-wp')}
+            buttonText={__('Select', 'progressive-wp')}
+          />
         </Card>
+        <Card
+          title={__('Push Button', 'progressive-wp')}
+          canToggleKey="push-button"
+        >
+          <FormElement
+            form={form}
+            name="notification-button"
+            Input={InputCheckbox}
+          />
+          <FormElement
+            form={form}
+            name="notification-button-icon-color"
+            Input={InputColor}
+          />
+          <FormElement
+            form={form}
+            name="notification-button-bkg-color"
+            Input={InputColor}
+          />
+        </Card>
+        {error !== '' && (
+          <FormFeedback type={NOTICE_TYPES.ERROR} message={error} />
+        )}
+        <FormControls type="submit" loading={loading} />
       </PageContent>
     </Form>
   );

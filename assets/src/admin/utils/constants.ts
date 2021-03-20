@@ -11,7 +11,9 @@ declare global {
     pwpJsVars: {
       ajaxUrl: string;
       homeUrl: string;
+      adminUrl: string;
       generalError: string;
+      pluginPrefix: string;
       settings: ISettings;
       restBase: string;
       restPluginBase: string;
@@ -29,6 +31,8 @@ declare global {
       cachingStrategies: Record<cachingStrategy, string>;
       nonce: string;
       vapid: IVapid;
+      settingsParentKey: string;
+      menu: Record<string, string>;
     };
   }
 }

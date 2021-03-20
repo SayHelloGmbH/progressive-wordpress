@@ -39,7 +39,7 @@ class Assets
         $dir_uri        = trailingslashit(plugin_dir_url(pwpGetInstance()->file));
 
         wp_enqueue_media();
-        wp_enqueue_style('wp-color-picker');
+        wp_enqueue_style('wp-components');
 
         wp_enqueue_script('react', $dir_uri . 'assets/react.production.min.js', [], '17', true);
         wp_enqueue_script('react-dom', $dir_uri . 'assets/react-dom.production.min.js', ['react'], '17', true);
@@ -69,7 +69,6 @@ class Assets
             [
                 'react',
                 'react-dom',
-                'wp-color-picker',
                 'wp-components',
                 'wp-i18n',
             ],
@@ -84,6 +83,7 @@ class Assets
         $defaults = [
             'ajaxUrl'             => admin_url('admin-ajax.php'),
             'homeUrl'             => trailingslashit(get_site_url()),
+            'pluginPrefix'        => pwpGetInstance()->prefix,
             'generalError'        => __('An unexpected error occured', 'progressive-wp'),
             'settings'            => pwpGetInstance()->Settings->getSettings(),
             'settingsData'        => pwpGetInstance()->Settings->getSettings(),
