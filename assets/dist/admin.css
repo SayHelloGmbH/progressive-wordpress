@@ -558,6 +558,8 @@
 }
 
 .InputOfflineContent__list___2mP62 {
+  margin: 0;
+  padding-left: 0 !important;
 }
 
 .InputOfflineContent__listEntry___3GAMI {
@@ -580,7 +582,7 @@
 }
 
 .InputOfflineContent__addUrlContainer___1g318 {
-  margin-top: 2rem;
+  margin-top: 1rem;
   padding-bottom: 2rem;
   position: relative;
 }

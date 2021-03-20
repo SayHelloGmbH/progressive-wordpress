@@ -1,4 +1,6 @@
 .list {
+  margin: 0;
+  padding-left: 0 !important;
 }
 
 .listEntry {
@@ -21,7 +23,7 @@
 }
 
 .addUrlContainer {
-  margin-top: 2rem;
+  margin-top: 1rem;
   padding-bottom: 2rem;
   position: relative;
 }
