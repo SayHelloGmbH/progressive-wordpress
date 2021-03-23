@@ -409,7 +409,7 @@ class Init
               we
               rely on getting honest feedback from active users.<br />Therefore, it would be great if you could take a
               few minutes to fill out this survey:</p>
-            <p><a href="https://yzaagu25ut6.typeform.com/to/ofdqfNSZ">https://yzaagu25ut6.typeform.com/to/ofdqfNSZ</a>
+            <p><a target='_blank' href="https://yzaagu25ut6.typeform.com/to/ofdqfNSZ">https://yzaagu25ut6.typeform.com/to/ofdqfNSZ</a>
               <br /><br /></p>
           </div>
             <?php
