@@ -404,7 +404,7 @@ class Init
         if (get_current_screen()->parent_file == 'progressive-wordpress') {
             ?>
           <div class="notice notice-warning is-dismissible">
-            <h4>Progressive WordPress 2.0</h4>
+            <h4>Progressive WordPress 3.0</h4>
             <p>We are currently working on a <b>completely new version</b> of progressive WordPress. In doing so,
               we
               rely on getting honest feedback from active users.<br />Therefore, it would be great if you could take a
