@@ -1,3 +1,0 @@
-@mixin transition($property: all, $duration: 200ms, $function: linear) {
-	transition: $property $duration $function;
-}
