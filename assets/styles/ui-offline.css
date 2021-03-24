@@ -1,3 +1,6 @@
+body.pwp-offline {
+  margin-top: 3rem; }
+
 .offline-indicator {
   background-color: #000;
   color: #fff;
@@ -6,6 +9,7 @@
   z-index: 9999;
   left: 0;
   bottom: 0;
+  height: 3rem;
   width: 100%;
   transform: translateY(100%);
   will-change: transform;
