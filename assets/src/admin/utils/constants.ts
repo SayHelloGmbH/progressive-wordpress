@@ -1,4 +1,10 @@
-import { ISettings, IPluginStrings, IVapid, IMenuItems } from './types';
+import {
+  ISettings,
+  IPluginStrings,
+  IVapid,
+  IFirebasePushCredentials,
+  IMenuItems,
+} from './types';
 
 type cachingStrategy =
   | 'staleWhileRevalidate'
@@ -31,6 +37,7 @@ declare global {
       cachingStrategies: Record<cachingStrategy, string>;
       nonce: string;
       vapid: IVapid;
+      firebasePushCredentials: IFirebasePushCredentials;
       settingsParentKey: string;
       menu: IMenuItems;
     };

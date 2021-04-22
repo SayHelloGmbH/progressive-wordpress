@@ -6,21 +6,16 @@ import PushSettings from './PagePush/PushSettings';
 
 const PagePush = ({
   settingsKeys,
-  pushCredentials,
-  setPushCredentials,
+  pushCredentialsSet,
+  setPushCredentialsSet,
 }: {
   settingsKeys: string[];
-  pushCredentials: IVapid;
-  setPushCredentials: (pushCredentials: IVapid) => void;
+  pushCredentialsSet: boolean;
+  setPushCredentialsSet: (pushCredentialsSet: boolean) => void;
 }) => (
   <React.Fragment>
-    <PushCredentials
-      credentials={pushCredentials}
-      setCredentials={setPushCredentials}
-    />
-    {pushCredentials.privateKey !== '' && (
-      <PushSettings settingsKeys={settingsKeys} />
-    )}
+    <PushCredentials setPushCredentialsSet={setPushCredentialsSet} />
+    {pushCredentialsSet && <PushSettings settingsKeys={settingsKeys} />}
   </React.Fragment>
 );
 

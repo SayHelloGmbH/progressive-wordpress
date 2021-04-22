@@ -16,6 +16,11 @@ export interface IVapid {
   subject: string;
 }
 
+export interface IFirebasePushCredentials {
+  serverKey: string;
+  senderId: string;
+}
+
 export type IMenuItems = Record<
   string,
   {

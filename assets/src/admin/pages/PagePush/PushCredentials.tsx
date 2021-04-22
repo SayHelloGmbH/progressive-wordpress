@@ -1,7 +1,7 @@
 import React from 'react';
 import { __ } from '@wordpress/i18n';
 
-import { IVapid } from '../../utils/types';
+import { IFirebasePushCredentials, IVapid } from '../../utils/types';
 
 import PushCredentialsSetUp from './PushCredentialsSetUp';
 import {
@@ -13,15 +13,33 @@ import {
   PageContent,
 } from '../../theme';
 import VapidResetModal from './VapidResetModal';
+import { VARS } from '../../utils/constants';
 
 const PushCredentials = ({
-  credentials,
-  setCredentials,
+  setPushCredentialsSet,
 }: {
-  credentials: IVapid;
-  setCredentials: (credentials: IVapid) => void;
+  setPushCredentialsSet: (pushCredentialsSet: boolean) => void;
 }) => {
+  const [vapidCredentials, setVapidCredentials] = React.useState<IVapid>(
+    VARS.vapid
+  );
+  const [
+    firebasePushCredentials,
+    setFirebasePushCredentials,
+  ] = React.useState<IFirebasePushCredentials>(VARS.firebasePushCredentials);
+
+  /**
+   * TODO:
+   *  - find a solution to guess which method should be use
+   *  - if firebasePushCredentials isset: create/show the firebase settings
+   *  - else, show the vapid settings, but move them to a different component
+   */
+
+  return <p />;
+
+  /*
   const [resetModal, setResetModal] = React.useState<boolean>(false);
+  const vapidCredentials = VARS.vapid;
 
   if (credentials.privateKey === '' || credentials.publicKey === '') {
     return (
@@ -69,7 +87,7 @@ const PushCredentials = ({
         )}
       </Card>
     </PageContent>
-  );
+  );*/
 };
 
 export default PushCredentials;

@@ -78,10 +78,11 @@ export const RouterProvider = ({ children }: { children?: any }) => {
     Array.from(subMenuItems).map((item) =>
       item.addEventListener('click', submenuClick)
     );
-    return () =>
+    return () => {
       Array.from(subMenuItems).map((item) =>
         item.removeEventListener('click', submenuClick)
       );
+    };
   }, []);
 
   const updateLocation = () =>

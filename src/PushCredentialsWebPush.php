@@ -4,7 +4,7 @@ namespace nicomartin\ProgressiveWordPress;
 
 use Minishlink\WebPush\VAPID;
 
-class PushCredentials
+class PushCredentialsWebPush
 {
 
     public static $vapid_option = 'pwp_vapid-credentials';

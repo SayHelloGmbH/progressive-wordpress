@@ -55,7 +55,8 @@ if (version_compare($wp_version, '4.7', '<') || version_compare(PHP_VERSION, '7.
     require_once 'src/OfflineUsage.php';
     require_once 'src/OfflineIndicator.php';
     require_once 'src/Tracking.php';
-    require_once 'src/PushCredentials.php';
+    require_once 'src/PushCredentialsWebPush.php';
+    require_once 'src/PushCredentialsFirebase.php';
     require_once 'src/PushNotifications.php';
     require_once 'src/PushSubscriptions.php';
 
@@ -105,8 +106,11 @@ if (version_compare($wp_version, '4.7', '<') || version_compare(PHP_VERSION, '7.
     pwpGetInstance()->Tracking = new Tracking();
     pwpGetInstance()->Tracking->run();
 
-    pwpGetInstance()->PushCredentials = new PushCredentials();
-    pwpGetInstance()->PushCredentials->run();
+    pwpGetInstance()->PushCredentialsWebPush = new PushCredentialsWebPush();
+    pwpGetInstance()->PushCredentialsWebPush->run();
+
+    pwpGetInstance()->PushCredentialsFirebase = new PushCredentialsFirebase();
+    pwpGetInstance()->PushCredentialsFirebase->run();
 
     pwpGetInstance()->PushNotifications = new PushNotifications();
     pwpGetInstance()->PushNotifications->run();

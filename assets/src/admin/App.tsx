@@ -56,18 +56,18 @@ const pushSettingsKeys = [
 ];
 
 const App = () => {
-  const [pushCredentials, setPushCredentials] = React.useState<IVapid>(
-    VARS.vapid
+  const [pushCredentialsSet, setPushCredentialsSet] = React.useState<boolean>(
+    false
   );
   const { showMenuItem, hideMenuItem } = useMenu();
 
   React.useEffect(() => {
-    if (pushCredentials.privateKey === '' || pushCredentials.publicKey === '') {
+    if (!pushCredentialsSet) {
       hideMenuItem('push-subscriptions');
     } else {
       showMenuItem('push-subscriptions');
     }
-  }, [pushCredentials]);
+  }, [pushCredentialsSet]);
 
   return (
     <Page title={pluginString('plugin.name')}>
@@ -84,8 +84,8 @@ const App = () => {
       <Route page="push">
         <PagePush
           settingsKeys={pushSettingsKeys}
-          pushCredentials={pushCredentials}
-          setPushCredentials={setPushCredentials}
+          pushCredentialsSet={pushCredentialsSet}
+          setPushCredentialsSet={setPushCredentialsSet}
         />
       </Route>
     </Page>

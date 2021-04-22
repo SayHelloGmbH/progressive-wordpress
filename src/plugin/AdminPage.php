@@ -33,7 +33,7 @@ class AdminPage
             ],
             'push-subscriptions' => [
                 'title'   => __('Push Subscriptions', 'progressive-wp'),
-                'visible' => PushCredentials::issetVapid(),
+                'visible' => PushCredentialsWebPush::issetVapid(),
             ],
         ];
     }
