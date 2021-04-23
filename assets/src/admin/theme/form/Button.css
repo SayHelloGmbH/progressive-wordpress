@@ -26,3 +26,15 @@
     text-decoration: none;
     text-shadow: none;
 }
+
+.buttonDelete {
+    background-color: transparent;
+    border-color: transparent;
+    padding-right: 0;
+    padding-left: 0;
+    color: #cc1818;
+
+    &:hover {
+        color: #710d0d;
+    }
+}

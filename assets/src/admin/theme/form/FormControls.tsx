@@ -13,7 +13,7 @@ const FormControls = ({
   [key: string]: any;
 }) => (
   <div className={styles.controls}>
-    <Button primary {...buttonProps}>
+    <Button buttonType="primary" {...buttonProps}>
       {value}
     </Button>
   </div>

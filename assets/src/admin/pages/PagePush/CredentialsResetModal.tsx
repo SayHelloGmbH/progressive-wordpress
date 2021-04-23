@@ -12,41 +12,39 @@ import { apiDelete, pluginNamespace } from '../../utils/apiFetch';
 import { IVapid } from '../../utils/types';
 import { useMenu } from '../../utils/router';
 
-const VapidResetModal = ({
-  setCredentials,
-  setResetModal,
+const CredentialsResetModal = ({
+  title,
+  description,
+  confirm,
+  closeModal,
 }: {
-  setCredentials: (vapid: IVapid) => void;
-  setResetModal: (resetModal: boolean) => void;
+  title: string;
+  description: string;
+  confirm: () => Promise<any>;
+  closeModal: () => void;
 }) => {
   const [loading, setLoading] = React.useState<boolean>(false);
   const [error, setError] = React.useState<string>('');
 
   return (
-    <ShadowBox
-      close={() => setResetModal(false)}
-      title={__('Reset VAPID', 'progressive-wp')}
-      size="small"
-    >
+    <ShadowBox close={() => closeModal()} title={title} size="small">
       {(close) => (
         <React.Fragment>
           {error !== '' && <Notice type={NOTICE_TYPES.ERROR}>{error}</Notice>}
-          <p>
-            {__(
-              'Are you sure you want to reset the VAPID credentials? This will invalidate and delete all current push subscriptions.',
-              'progressive-wp'
-            )}
-          </p>
+          <p>{description}</p>
           <ButtonGroup align="right">
-            <Button disabled={loading} onClick={close}>
+            <Button
+              disabled={loading}
+              onClick={() => close().then(() => closeModal())}
+            >
               {__('cancel', 'progressive-wp')}
             </Button>
             <Button
               loading={loading}
               onClick={() => {
                 setLoading(true);
-                apiDelete<IVapid>(pluginNamespace + 'vapid')
-                  .then((vapid) => close().then(() => setCredentials(vapid)))
+                confirm()
+                  .then(() => close().then(() => closeModal()))
                   .catch((error) => setError(error.toString()))
                   .finally(() => setLoading(false));
               }}
@@ -61,4 +59,4 @@ const VapidResetModal = ({
   );
 };
 
-export default VapidResetModal;
+export default CredentialsResetModal;

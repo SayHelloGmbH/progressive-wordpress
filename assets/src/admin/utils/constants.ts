@@ -12,6 +12,8 @@ type cachingStrategy =
   | 'cacheFirst'
   | 'networkOnly';
 
+export type PushProvider = 'webpush' | 'firebase';
+
 declare global {
   interface Window {
     pwpJsVars: {
@@ -38,6 +40,7 @@ declare global {
       nonce: string;
       vapid: IVapid;
       firebasePushCredentials: IFirebasePushCredentials;
+      pushProvider: PushProvider;
       settingsParentKey: string;
       menu: IMenuItems;
     };

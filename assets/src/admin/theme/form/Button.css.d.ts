@@ -3,6 +3,7 @@
 declare namespace ButtonCssNamespace {
   export interface IButtonCss {
     button: string;
+    buttonDelete: string;
     buttonPrimary: string;
   }
 }

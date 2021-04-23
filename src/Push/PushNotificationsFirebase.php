@@ -2,10 +2,9 @@
 
 namespace nicomartin\ProgressiveWordPress;
 
-class PushSubscriptions
+class PushNotificationsFirebase
 {
     public function run()
     {
-
     }
 }

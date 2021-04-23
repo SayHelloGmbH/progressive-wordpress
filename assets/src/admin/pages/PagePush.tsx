@@ -14,7 +14,10 @@ const PagePush = ({
   setPushCredentialsSet: (pushCredentialsSet: boolean) => void;
 }) => (
   <React.Fragment>
-    <PushCredentials setPushCredentialsSet={setPushCredentialsSet} />
+    <PushCredentials
+      setPushCredentialsSet={setPushCredentialsSet}
+      pushCredentialsSet={pushCredentialsSet}
+    />
     {pushCredentialsSet && <PushSettings settingsKeys={settingsKeys} />}
   </React.Fragment>
 );

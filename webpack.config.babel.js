@@ -11,6 +11,7 @@ module.exports = (env, argv) => {
   const dev = argv.mode !== 'production';
 
   return {
+    mode: dev ? 'development' : 'production',
     entry: {
       admin: `${dirSrc}/admin/index.ts`,
       'ui-offline-indicator': `${dirSrc}/ui/offline-indicator.ts`,
