@@ -132,7 +132,7 @@ const PushCredentialsFirebase = ({
             <CredentialsResetModal
               title={__('Reset Firebase credentials', 'progressive-wp')}
               description={__(
-                'Are you sure you want to reset the VAPID credentials? This will invalidate and delete all current push subscriptions.',
+                'Are you sure you want to reset the credentials? This will invalidate and delete all current push subscriptions.',
                 'progressive-wp'
               )}
               confirm={() =>
