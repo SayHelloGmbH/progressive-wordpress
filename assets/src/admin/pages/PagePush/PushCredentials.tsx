@@ -7,6 +7,7 @@ import { PushProvider, VARS } from '../../utils/constants';
 
 import PushCredentialsFirebase from './PushCredentialsFirebase';
 import PushCredentialsWebPush from './PushCredentialsWebPush';
+import { apiGet, pluginNamespace } from '../../utils/apiFetch';
 
 const PushCredentials = ({
   setPushCredentialsSet,
@@ -21,6 +22,7 @@ const PushCredentials = ({
   const [vapidCredentials, setVapidCredentials] = React.useState<IVapid>(
     VARS.vapid
   );
+
   const [
     firebasePushCredentials,
     setFirebasePushCredentials,
@@ -36,6 +38,9 @@ const PushCredentials = ({
     } else {
       setPushCredentialsSet(true);
     }
+    apiGet<{ provider: PushProvider }>(
+      pluginNamespace + 'push-provider'
+    ).then(({ provider }) => setPushProvider(provider));
   }, [vapidCredentials, firebasePushCredentials]);
 
   return (

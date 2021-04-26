@@ -31,6 +31,37 @@ class Assets
                 true
             );
         }
+
+        if (pwpGetInstance()->Settings->getSingleSettingValue('notification-button')) {
+            wp_enqueue_style(
+                pwpGetInstance()->prefix . '-ui-push',
+                $dir_uri . 'assets/dist/ui-push.css',
+                [],
+                $script_version
+            );
+
+            wp_enqueue_script(
+                pwpGetInstance()->prefix . '-ui-push',
+                $dir_uri . 'assets/dist/ui-push.js',
+                [],
+                $script_version,
+                true
+            );
+        }
+
+        $defaults = [
+            'ajaxUrl'             => admin_url('admin-ajax.php'),
+            'homeUrl'             => trailingslashit(get_site_url()),
+            'pluginPrefix'        => pwpGetInstance()->prefix,
+            'generalError'        => __('An unexpected error occured', 'progressive-wp'),
+            'restBase'            => trailingslashit(get_rest_url()),
+            'restPluginBase'      => trailingslashit(get_rest_url() . pwpGetInstance()->api_namespace),
+            'restPluginNamespace' => pwpGetInstance()->api_namespace,
+        ];
+
+        $vars = json_encode(apply_filters('pwp_footer_js', $defaults));
+
+        wp_add_inline_script(pwpGetInstance()->prefix . '-ui-push', "var pwpUiJsVars = {$vars};", 'before');
     }
 
     public function addAdminAssets()

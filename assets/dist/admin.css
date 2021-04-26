@@ -87,8 +87,7 @@
 .Content__content___2ErA3 > * {
     margin: 0;
   }
-
-    .Content__content___2ErA3 > * + * {
+  .Content__content___2ErA3 > * + * {
       margin-top: 1em;
     }
   .Content__content___2ErA3 ul {
