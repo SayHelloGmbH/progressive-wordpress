@@ -19,6 +19,7 @@ class PushCredentialsWebPush
     {
         add_action('rest_api_init', [$this, 'registerRoute']);
         add_filter('pwp_admin_footer_js', [$this, 'footerJs']);
+        add_filter('pwp_footer_js', [$this, 'footerUiJs']);
 
         add_action('admin_action_pwp_reset_vapid', [$this, 'resetVapid']);
     }
@@ -53,6 +54,16 @@ class PushCredentialsWebPush
     public function footerJs($values)
     {
         $values['vapid'] = self::getVapid();
+
+        return $values;
+    }
+
+    public function footerUiJs($values)
+    {
+        if (self::issetVapid() && PushNotifications::getPushProvider() === 'webpush') {
+            $vapid                   = self::getVapid();
+            $values['vapidPublcKey'] = $vapid['publicKey'];
+        }
 
         return $values;
     }

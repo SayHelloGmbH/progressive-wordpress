@@ -1,0 +1,15 @@
+.list {
+
+}
+
+.element {
+    padding: 1rem 0;
+
+    p {
+        margin: 0;
+    }
+
+    & + .element {
+        border-top: 1px solid #ccc;
+    }
+}

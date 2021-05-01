@@ -1,28 +1,39 @@
 import './push/styles.css';
 
-import { setPushButtonState } from './push/buttonHelpers';
+import { setPushButtonState, getPushButtonState } from './push/buttonHelpers';
 import {
   registerPushDevice,
   deregisterPushDevice,
 } from './push/registerDevice';
+import {
+  getServiceWorkerRegistration,
+  getPushManagerSubscription,
+  getPushPermission,
+  isPushManagerSupported,
+} from './utils/helpers';
 
 setPushButtonState('hidden');
 
-if ('serviceWorker' in navigator && 'PushManager' in window) {
-  navigator.serviceWorker.getRegistration().then((registration) =>
+if (isPushManagerSupported()) {
+  getServiceWorkerRegistration().then((registration) =>
     Promise.all([
       registration,
-      registration.pushManager.getSubscription(),
-      navigator.permissions.query({
-        userVisibleOnly: true,
-        name: 'push',
-      }),
+      getPushManagerSubscription(),
+      getPushPermission(),
     ]).then(([registration, subscription, permission]) => {
+      console.log({ registration, subscription, permission });
+      setPushButtonState('idle');
+
+      return;
       if (permission.state === 'denied') {
         setPushButtonState('blocked');
       } else if (permission.state === 'granted') {
-        setPushButtonState('granted');
-        subscription == null && registerPushDevice();
+        if (subscription) {
+          // todo: maybe send subscription to verify
+          setPushButtonState('granted');
+        } else {
+          setPushButtonState('idle');
+        }
       } else if (registration) {
         setPushButtonState('idle');
       }
@@ -32,10 +43,16 @@ if ('serviceWorker' in navigator && 'PushManager' in window) {
 
 declare global {
   interface Window {
+    pwpHandlePushDevice: () => void;
     pwpRegisterPushDevice: () => void;
     pwpDeregisterPushDevice: () => void;
   }
 }
+
+window.pwpHandlePushDevice = () =>
+  getPushButtonState() === 'idle'
+    ? registerPushDevice()
+    : deregisterPushDevice();
 
 window.pwpRegisterPushDevice = registerPushDevice;
 window.pwpDeregisterPushDevice = deregisterPushDevice;

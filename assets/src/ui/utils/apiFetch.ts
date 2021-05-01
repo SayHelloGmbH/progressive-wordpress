@@ -16,7 +16,7 @@ export const apiPut = <T>(
 
 export const apiDelete = <T>(
   path: string,
-  data: Record<string, any>
+  data: Record<string, any> = {}
 ): Promise<T> => authFetch({ path, method: 'DELETE', body: data });
 
 export const pluginNamespace = trailingSlashIt(VARS.restPluginNamespace);

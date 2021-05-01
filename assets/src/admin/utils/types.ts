@@ -1,3 +1,4 @@
+import DayJS from 'dayjs';
 export type ISettingValue = string | boolean;
 
 export interface ISetting {
@@ -28,3 +29,20 @@ export type IMenuItems = Record<
     visible: boolean;
   }
 >;
+
+interface Subscription {
+  clientdata: ClientDataI;
+  groups: Array<string>;
+  id: string;
+  subscription: null;
+  time: DayJS.Dayjs | string;
+  wp_user: string;
+}
+
+export interface SubscriptionApiI extends Subscription {
+  time: string;
+}
+
+export interface SubscriptionI extends Subscription {
+  time: DayJS.Dayjs;
+}

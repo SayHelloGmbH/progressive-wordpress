@@ -287,6 +287,46 @@
   display: block;
 }
 
+@keyframes Loader__spinner-animation___1gJ5S {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.Loader__container___2F4Dg {
+    display: inline-block;
+}
+
+.Loader__containerBlock___1I5I4 {
+    display: block;
+    text-align: center;
+}
+
+.Loader__loader___2RF2D {
+    display: inline-block;
+    position: relative;
+    width: 1em;
+    height: 1em;
+}
+
+.Loader__loader___2RF2D::after {
+        content: '';
+        display: block;
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        left: 0;
+        right: 0;
+        border: 0.15em currentColor solid;
+        border-left-color: transparent;
+        border-top-color: transparent;
+        border-radius: 50%;
+        animation: Loader__spinner-animation___1gJ5S 0.65s infinite linear;
+        box-sizing: border-box;
+    }
 .Button__button___1vX9r {
     display: inline-block;
     text-decoration: none;
@@ -698,3 +738,18 @@
     --pwp-form-max-width: 700px;
 }
 
+.PagePushSubscriptions__list___1d0Bp {
+
+}
+
+.PagePushSubscriptions__element___1fOvx {
+    padding: 1rem 0;
+}
+
+.PagePushSubscriptions__element___1fOvx p {
+        margin: 0;
+    }
+
+.PagePushSubscriptions__element___1fOvx + .PagePushSubscriptions__element___1fOvx {
+        border-top: 1px solid #ccc;
+    }

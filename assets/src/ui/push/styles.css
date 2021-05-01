@@ -1,1 +1,75 @@
-body {}
+body {
+}
+
+@keyframes spinner-animation {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+:global(.pwp-notification-button) {
+    width: 1.8em;
+    height: 1.8em;
+    position: fixed;
+    left: 1em;
+    bottom: 1em;
+    border: none;
+    border-radius: 50%;
+
+    &__icon {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        width: 1em;
+        height: 1em;
+        margin-left: -0.5em;
+        margin-top: -0.5em;
+        display: none;
+
+        svg {
+            display: block;
+        }
+
+        &--spinner {
+            background-color: transparent;
+            border: .12em solid currentColor;
+            border-top-color: transparent;
+            border-right-color: transparent;
+            vertical-align: middle;
+            box-sizing: border-box;
+            border-radius: 50%;
+            animation: spinner-animation 0.65s infinite linear;
+        }
+    }
+}
+
+body {
+    &[pwp-push-button-state="hidden"],
+    &[pwp-push-button-state="blocked"] {
+        :global(.pwp-notification-button) {
+            display: none;
+        }
+    }
+
+    &[pwp-push-button-state="granted"] {
+        :global(.pwp-notification-button__icon--on) {
+            display: block;
+        }
+    }
+
+    &[pwp-push-button-state="idle"] {
+        :global(.pwp-notification-button__icon--off) {
+            display: block;
+        }
+    }
+
+    &[pwp-push-button-state="loading"] {
+        :global(.pwp-notification-button__icon--spinner) {
+            display: block;
+        }
+    }
+}
+

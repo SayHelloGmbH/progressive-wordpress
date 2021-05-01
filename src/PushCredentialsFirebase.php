@@ -33,6 +33,7 @@ class PushCredentialsFirebase
         }
         add_action('rest_api_init', [$this, 'registerRoute']);
         add_filter('pwp_admin_footer_js', [$this, 'footerJs']);
+        add_filter('web_app_manifest', [$this, 'senderIdManifest']);
     }
 
     public function registerRoute()
@@ -65,6 +66,15 @@ class PushCredentialsFirebase
     public function footerJs($values)
     {
         $values['firebasePushCredentials'] = self::getCredentials();
+
+        return $values;
+    }
+
+    public function senderIdManifest($values)
+    {
+        if (PushNotifications::getPushProvider() === 'firebase' && self::getCredentials()['senderId'] !== '') {
+            $values['gcm_sender_id'] = self::getCredentials()['senderId'];
+        }
 
         return $values;
     }
@@ -121,7 +131,7 @@ class PushCredentialsFirebase
 
     public static function getCredentials()
     {
-        return get_option(self::$firebase_option, self::$firebase_option);
+        return get_option(self::$firebase_option, self::$emptyCredentials);
     }
 
     private static function isValidServerKey($serverKey)

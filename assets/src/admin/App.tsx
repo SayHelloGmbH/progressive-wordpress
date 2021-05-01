@@ -17,6 +17,7 @@ import { pluginString } from './utils/pluginStrings';
 import { VARS } from './utils/constants';
 
 import './App.css';
+import PagePushSubscriptions from './pages/PagePushSubscriptions';
 
 const app = document.querySelector('#pwp-app');
 
@@ -87,6 +88,9 @@ const App = () => {
           pushCredentialsSet={pushCredentialsSet}
           setPushCredentialsSet={setPushCredentialsSet}
         />
+      </Route>
+      <Route page="push-subscriptions">
+        <PagePushSubscriptions />
       </Route>
     </Page>
   );

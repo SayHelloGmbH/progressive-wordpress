@@ -8,6 +8,8 @@ export { default as TabNavigation } from './navigation/TabNavigation';
 
 export { default as Image } from './media/Image';
 
+export { default as Loader } from './misc/Loader';
+
 export { default as Button } from './form/Button';
 export { default as ButtonGroup } from './form/ButtonGroup';
 export { default as Form } from './form/Form';

@@ -6,8 +6,26 @@ class Assets
 {
     public function run()
     {
+        add_action('wp_head', [$this, 'uiJsVars']);
         add_action('wp_enqueue_scripts', [$this, 'addAssets']);
         add_action('admin_enqueue_scripts', [$this, 'addAdminAssets']);
+    }
+
+    public function uiJsVars()
+    {
+        $defaults = [
+            'ajaxUrl'             => admin_url('admin-ajax.php'),
+            'homeUrl'             => trailingslashit(get_site_url()),
+            'pluginPrefix'        => pwpGetInstance()->prefix,
+            'generalError'        => __('An unexpected error occured', 'progressive-wp'),
+            'restBase'            => trailingslashit(get_rest_url()),
+            'restPluginBase'      => trailingslashit(get_rest_url() . pwpGetInstance()->api_namespace),
+            'restPluginNamespace' => pwpGetInstance()->api_namespace,
+        ];
+        $vars     = json_encode(apply_filters('pwp_footer_js', $defaults));
+        echo '<script>' . PHP_EOL;
+        echo "var pwpUiJsVars = {$vars};";
+        echo '</script>' . PHP_EOL;
     }
 
     public function addAssets()
@@ -48,20 +66,6 @@ class Assets
                 true
             );
         }
-
-        $defaults = [
-            'ajaxUrl'             => admin_url('admin-ajax.php'),
-            'homeUrl'             => trailingslashit(get_site_url()),
-            'pluginPrefix'        => pwpGetInstance()->prefix,
-            'generalError'        => __('An unexpected error occured', 'progressive-wp'),
-            'restBase'            => trailingslashit(get_rest_url()),
-            'restPluginBase'      => trailingslashit(get_rest_url() . pwpGetInstance()->api_namespace),
-            'restPluginNamespace' => pwpGetInstance()->api_namespace,
-        ];
-
-        $vars = json_encode(apply_filters('pwp_footer_js', $defaults));
-
-        wp_add_inline_script(pwpGetInstance()->prefix . '-ui-push', "var pwpUiJsVars = {$vars};", 'before');
     }
 
     public function addAdminAssets()

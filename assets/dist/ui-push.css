@@ -1,1 +1,65 @@
-body {}
+body {
+}
+
+@keyframes styles__spinner-animation___tukMy {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.pwp-notification-button {
+    width: 1.8em;
+    height: 1.8em;
+    position: fixed;
+    left: 1em;
+    bottom: 1em;
+    border: none;
+    border-radius: 50%;
+}
+
+.pwp-notification-button__icon {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        width: 1em;
+        height: 1em;
+        margin-left: -0.5em;
+        margin-top: -0.5em;
+        display: none;
+    }
+
+.pwp-notification-button__icon svg {
+            display: block;
+        }
+
+.pwp-notification-button__icon--spinner {
+            background-color: transparent;
+            border: .12em solid currentColor;
+            border-top-color: transparent;
+            border-right-color: transparent;
+            vertical-align: middle;
+            box-sizing: border-box;
+            border-radius: 50%;
+            animation: styles__spinner-animation___tukMy 0.65s infinite linear;
+        }
+
+body[pwp-push-button-state="hidden"] .pwp-notification-button, body[pwp-push-button-state="blocked"] .pwp-notification-button {
+            display: none;
+        }
+
+body[pwp-push-button-state="granted"] .pwp-notification-button__icon--on {
+            display: block;
+        }
+
+body[pwp-push-button-state="idle"] .pwp-notification-button__icon--off {
+            display: block;
+        }
+
+body[pwp-push-button-state="loading"] .pwp-notification-button__icon--spinner {
+            display: block;
+        }
+
+
