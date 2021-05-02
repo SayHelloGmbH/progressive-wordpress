@@ -1,4 +1,5 @@
 import md5 from 'md5';
+
 import { setPushButtonState } from './buttonHelpers';
 import { apiDelete, apiPut, pluginNamespace } from '../utils/apiFetch';
 import {
@@ -12,21 +13,18 @@ import { VARS } from '../utils/constants';
 const getPushSubscriptionId = (subscription: PushSubscription): string =>
   md5(subscription.endpoint);
 
-const addSubscription = (subscription: PushSubscription): Promise<any> => {
-  console.log('add subscription', subscription);
-  return apiPut(pluginNamespace + 'push-subscription', {
+const addSubscription = (subscription: PushSubscription): Promise<any> =>
+  apiPut(pluginNamespace + 'push-subscription', {
     subscriptionId: getPushSubscriptionId(subscription),
     subscription,
     clientdata: getClientData(),
   });
-};
 
-const removeSubscription = (subscription) => {
-  console.log('remove subscription', subscription);
-  return apiDelete(
+const removeSubscription = (subscription) =>
+  apiDelete(
     pluginNamespace + `push-subscription/${getPushSubscriptionId(subscription)}`
   );
-};
+
 export const registerPushDevice = (): void => {
   setPushButtonState('loading');
   getServiceWorkerRegistration()
@@ -40,42 +38,41 @@ export const registerPushDevice = (): void => {
               }
             : {}),
         })
-        .then((subscription) => addSubscription(subscription))
+        .then((subscription) =>
+          addSubscription(subscription).then(() =>
+            setPushButtonState('granted')
+          )
+        )
     )
     .catch((e) => {
       setPushButtonState('idle');
-      console.log('ERROR: registerPushDevice pushManager.subscribe', e);
-      alert('failed');
+      console.log('ERROR', e);
+      alert('Failed: ' + e.toString());
     });
 };
 
-export const deregisterPushDevice = () => {
+export const deregisterPushDevice = (): void => {
   setPushButtonState('loading');
-  console.log('deregisterPushDevice');
-  getServiceWorkerRegistration().then((registration) => {
-    console.log('unregister for registration', registration);
-    getPushManagerSubscription()
-      .then((subscription) => {
-        console.log('subscription', Boolean(subscription));
-        Boolean(subscription) &&
-          subscription
-            .unsubscribe()
-            .then(() =>
-              removeSubscription(subscription).then(() =>
-                setPushButtonState('idle')
-              )
+  getPushManagerSubscription()
+    .then((subscription) => {
+      if (Boolean(subscription)) {
+        subscription
+          .unsubscribe()
+          .then(() =>
+            removeSubscription(subscription).then(() =>
+              setPushButtonState('idle')
             )
-            .catch((e) => {
-              console.log(
-                'ERROR: registerPushDevice getServiceWorkerRegistration',
-                e
-              );
-              setPushButtonState('granted');
-              alert('failed');
-            });
-      })
-      .catch((e) => {
-        console.log('ERROR: getPushManagerSubscription', e);
-      });
-  });
+          )
+          .catch((e) => {
+            throw e;
+          });
+      } else {
+        throw new Error(VARS.generalError);
+      }
+    })
+    .catch((e) => {
+      setPushButtonState('idle');
+      console.log('ERROR', e);
+      alert('Failed: ' + e.toString());
+    });
 };

@@ -32,9 +32,12 @@ class PushSubscriptions
             'callback' => [$this, 'apiPutPushSubscription'],
         ]);
 
-        register_rest_route(pwpGetInstance()->api_namespace, 'push-subscription', [
+        register_rest_route(pwpGetInstance()->api_namespace, 'push-subscription/(?P<subscriptionId>\S+)', [
             'methods'  => 'DELETE',
             'callback' => [$this, 'apiDeletePushSubscription'],
+            'args'     => [
+                'subscriptionId'
+            ],
         ]);
     }
 
@@ -78,9 +81,10 @@ class PushSubscriptions
 
     public function apiDeletePushSubscription($req)
     {
-        $params = $req->get_params();
+        $subscriptionId = $req->get_param('subscriptionId');
+        $deleted        = self::removeSubscription($subscriptionId);
 
-        return $params;
+        return $deleted;
     }
 
     private static function getPushSubscriptions()
@@ -111,13 +115,32 @@ class PushSubscriptions
         update_option('pwp-webpush-subscriptions', []);
     }
 
+    private static function removeSubscription($subscriptionId)
+    {
+        $subscriptions = self::getPushSubscriptions();
+        $to_save       = [];
+        if ( ! array_key_exists($subscriptionId, $subscriptions)) {
+            return new \WP_Error(
+                'subscription_id_does_not_exist',
+                __('No subscription found that matches the given id', 'progressive-wp')
+            );
+        }
+
+        foreach ($subscriptions as $id => $subscription) {
+            if ($id !== $subscriptionId) {
+                $to_save[$id] = $subscription;
+            }
+        }
+        update_option(self::$subscriptions_option, $to_save);
+
+        return true;
+    }
+
     private static function updateSubscription(
         $subscriptionId,
         $subscription = null,
         $subscriptionData = []
     ) {
-        return new \WP_Error('invalid_push_subscription', __('invalid push subscription', 'progressive-wp'));
-
         $subscriptions = self::getPushSubscriptions();
         if ( ! array_key_exists($subscriptionId, $subscriptions)) {
             if ($subscription === null) {

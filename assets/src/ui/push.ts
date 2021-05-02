@@ -21,10 +21,6 @@ if (isPushManagerSupported()) {
       getPushManagerSubscription(),
       getPushPermission(),
     ]).then(([registration, subscription, permission]) => {
-      console.log({ registration, subscription, permission });
-      setPushButtonState('idle');
-
-      return;
       if (permission.state === 'denied') {
         setPushButtonState('blocked');
       } else if (permission.state === 'granted') {
