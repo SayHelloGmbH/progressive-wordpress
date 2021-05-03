@@ -70,6 +70,8 @@ const App = () => {
     }
   }, [pushCredentialsSet]);
 
+  // todo: rethink Navigation concept: mainpages (About, a2h, offline, push) and extensible subpages depending on window vars and #nav
+
   return (
     <Page title={pluginString('plugin.name')}>
       <TabNavigation />
