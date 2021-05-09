@@ -77,7 +77,7 @@ const App = () => {
           setPushCredentialsSet={setPushCredentialsSet}
         />
       </Route>
-      <Route page="push-subscriptions">
+      <Route page="push" hash="subscriptions">
         <PagePushSubscriptions />
       </Route>
     </Page>

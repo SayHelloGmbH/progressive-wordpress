@@ -26,7 +26,8 @@ export type IMenuItems = Record<
   string,
   {
     title: string;
-    submenu: Record<string, string>;
+    subtitle?: string;
+    submenu?: Record<string, string>;
   }
 >;
 

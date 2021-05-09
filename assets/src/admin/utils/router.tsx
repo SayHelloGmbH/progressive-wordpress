@@ -95,7 +95,7 @@ export const RouterProvider = ({ children }: { children?: any }) => {
 
 export const useLocation = (): { page: string; hash: string } => {
   const { location } = React.useContext(RouterContext);
-  const [page, hash = null] = location.split('#');
+  const [page, hash = ''] = location.split('#');
   return { page, hash };
 };
 
@@ -123,7 +123,7 @@ export const Link = ({
   [key: string]: any;
 }) => (
   <a
-    href={URL_BASE + page ? `#${subpage}` : ''}
+    href={URL_BASE + page + (subpage !== '' ? `#${subpage}` : '')}
     className={cn(className, {
       button: isButton,
       'button-primary': isButton,
@@ -141,8 +141,13 @@ export const Link = ({
 
 export const Route = ({
   page = '',
+  hash = '',
   children,
 }: {
   page?: string;
+  hash?: string;
   children?: any;
-}) => (useLocation().page === page ? children : null);
+}) => {
+  const { page: activePage, hash: activeHash } = useLocation();
+  return activePage === page && activeHash === hash ? children : null;
+};

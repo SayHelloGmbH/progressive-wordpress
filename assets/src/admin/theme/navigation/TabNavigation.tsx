@@ -6,11 +6,18 @@ import { Link, useLocation, useMenu } from '../../utils/router';
 import styles from './TabNavigation.css';
 
 const TabNavigation = ({ className = '' }: { className?: string }) => {
-  const { page, hash: activeHash } = useLocation();
+  const { page, hash: activeHash = null } = useLocation();
   const { menuItems } = useMenu();
 
   const activeSubmenu: Record<string, string> = React.useMemo(
-    () => menuItems[page].submenu || {},
+    () =>
+      !menuItems[page].submenu ||
+      Object.entries(menuItems[page].submenu).length === 0
+        ? {}
+        : {
+            ['']: menuItems[page].subtitle || menuItems[page].title,
+            ...menuItems[page].submenu,
+          },
     [menuItems, page]
   );
 
@@ -29,20 +36,23 @@ const TabNavigation = ({ className = '' }: { className?: string }) => {
           </Link>
         ))}
       </div>
-      <div className={cn(styles.subnavigation)}>
-        {Object.entries(activeSubmenu).map(([hash, title]) => (
-          <Link
-            className={cn(styles.sublink, {
-              [styles.linkActive]: activeHash === hash,
-            })}
-            key={hash}
-            page={page}
-            subpage={hash}
-          >
-            {title}
-          </Link>
-        ))}
-      </div>
+      {activeSubmenu && (
+        <div className={cn(styles.subnavigation)}>
+          {Object.entries(activeSubmenu).map(([hash, title]) => (
+            <Link
+              className={cn(styles.sublink, {
+                [styles.sublinkActive]:
+                  activeHash === hash || (hash === '' && !activeHash),
+              })}
+              key={hash}
+              page={page}
+              subpage={hash}
+            >
+              {title}
+            </Link>
+          ))}
+        </div>
+      )}
     </nav>
   );
 };

@@ -9,7 +9,15 @@ class PushSubscriptions
     public function run()
     {
         self::maybeUpdateSubscriptions();
+        add_filter('pwp_submenu_push', [$this, 'addSubmenuItem']);
         add_action('rest_api_init', [$this, 'registerRoute']);
+    }
+
+    public function addSubmenuItem($items)
+    {
+        $items['subscriptions'] = __('Push Subscriptions', 'progressive-wp');
+
+        return $items;
     }
 
     public function registerRoute()

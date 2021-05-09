@@ -16,19 +16,24 @@ class AdminPage
         $this->menu_title      = __('Progressive WP', 'progressive-wp');
         $this->menu            = [
             'settings' => [
-                'title' => __('About', 'progressive-wp'),
+                'title'    => __('About', 'progressive-wp'),
+                'subtitle' => __('Einstellungen', 'progressive-wp'),
+                'submenu'  => [],
             ],
             'manifest' => [
-                'title' => __('Add to Homescreen', 'progressive-wp'),
+                'title'    => __('Add to Homescreen', 'progressive-wp'),
+                'subtitle' => __('Einstellungen', 'progressive-wp'),
+                'submenu'  => [],
             ],
             'offline'  => [
-                'title' => __('Offline usage', 'progressive-wp'),
+                'title'    => __('Offline usage', 'progressive-wp'),
+                'subtitle' => __('Einstellungen', 'progressive-wp'),
+                'submenu'  => [],
             ],
             'push'     => [
-                'title'   => __('Push Notifications', 'progressive-wp'),
-                'submenu' => [
-                    'subscriptions' => __('Push Subscriptions', 'progressive-wp'),
-                ]
+                'title'    => __('Push Notifications', 'progressive-wp'),
+                'subtitle' => __('Einstellungen', 'progressive-wp'),
+                'submenu'  => [],
             ],
         ];
     }
@@ -74,6 +79,9 @@ class AdminPage
 
     public function footerVars($vars)
     {
+        foreach ($this->menu as $slug => $item) {
+            $this->menu[$slug]['submenu'] = apply_filters('pwp_submenu_' . $slug, $item['submenu']);
+        }
         $vars['settingsParentKey'] = $this->settings_parent;
         $vars['menu']              = $this->menu;
         $vars['adminUrl']          = get_admin_url();
