@@ -31,13 +31,6 @@ export const RouterProvider = ({ children }: { children?: any }) => {
     getLocationFromUrl(window.location.href)
   );
   const [menuItems, setMenuItems] = React.useState<IMenuItems>(VARS.menu);
-  const activeMenuItemKeys = React.useMemo(
-    () =>
-      Object.entries(menuItems)
-        .filter(([key, { visible }]) => visible)
-        .map(([key]) => key),
-    [menuItems]
-  );
 
   React.useEffect(() => {
     const href = `admin.php?page=${VARS.pluginPrefix}-${location}`;
@@ -52,21 +45,6 @@ export const RouterProvider = ({ children }: { children?: any }) => {
       }
     });
   }, [location]);
-
-  React.useEffect(() => {
-    Array.from(subMenuItems).map((item) => {
-      const anchorElement = item as HTMLAnchorElement;
-      const liElement = anchorElement.parentNode;
-      const itemHref = anchorElement.getAttribute('href');
-      const itemKey = getLocationFromUrl(VARS.adminUrl + itemHref);
-
-      if (activeMenuItemKeys.indexOf(itemKey) === -1) {
-        (liElement as HTMLDListElement).style.display = 'none';
-      } else {
-        (liElement as HTMLDListElement).style.display = 'block';
-      }
-    });
-  }, [menuItems, activeMenuItemKeys]);
 
   const submenuClick = (e) => {
     e.preventDefault();
@@ -115,47 +93,37 @@ export const RouterProvider = ({ children }: { children?: any }) => {
   );
 };
 
-export const useLocation = () => {
+export const useLocation = (): { page: string; hash: string } => {
   const { location } = React.useContext(RouterContext);
-  return location;
+  const [page, hash = null] = location.split('#');
+  return { page, hash };
 };
 
 export const useMenu = () => {
-  const { menuItems, setMenuItems } = React.useContext(RouterContext);
-  const showHideMenuItem = (menuKey: string, show: boolean): void => {
-    if (Object.keys(menuItems).indexOf(menuKey) === -1) {
-      return;
-    }
-    setMenuItems({
-      ...menuItems,
-      [menuKey]: {
-        title: menuItems[menuKey].title,
-        visible: show,
-      },
-    });
-  };
+  const { menuItems } = React.useContext(RouterContext);
+
   return {
     menuItems,
-    showMenuItem: (menuKey: string): void => showHideMenuItem(menuKey, true),
-    hideMenuItem: (menuKey: string): void => showHideMenuItem(menuKey, false),
   };
 };
 
 export const Link = ({
-  to,
+  page,
+  subpage = '',
   children,
   isButton = false,
   className = '',
   ...props
 }: {
-  to: string;
+  page: string;
+  subpage?: string;
   children?: any;
   isButton?: boolean;
   className?: string;
   [key: string]: any;
 }) => (
   <a
-    href={URL_BASE + to}
+    href={URL_BASE + page ? `#${subpage}` : ''}
     className={cn(className, {
       button: isButton,
       'button-primary': isButton,
@@ -177,4 +145,4 @@ export const Route = ({
 }: {
   page?: string;
   children?: any;
-}) => (useLocation() === page ? children : null);
+}) => (useLocation().page === page ? children : null);

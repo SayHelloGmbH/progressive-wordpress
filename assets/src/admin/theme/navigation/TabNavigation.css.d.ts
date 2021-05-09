@@ -5,6 +5,8 @@ declare namespace TabNavigationCssNamespace {
     link: string;
     linkActive: string;
     navigation: string;
+    sublink: string;
+    subnavigation: string;
   }
 }
 

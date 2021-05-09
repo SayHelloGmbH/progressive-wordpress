@@ -6,23 +6,43 @@ import { Link, useLocation, useMenu } from '../../utils/router';
 import styles from './TabNavigation.css';
 
 const TabNavigation = ({ className = '' }: { className?: string }) => {
-  const location = useLocation();
+  const { page, hash: activeHash } = useLocation();
   const { menuItems } = useMenu();
+
+  const activeSubmenu: Record<string, string> = React.useMemo(
+    () => menuItems[page].submenu || {},
+    [menuItems, page]
+  );
+
   return (
-    <nav className={cn(className, styles.navigation)}>
-      {Object.entries(menuItems).map(([to, { title, visible }]) =>
-        visible ? (
+    <nav className={cn(className)}>
+      <div className={cn(styles.navigation)}>
+        {Object.entries(menuItems).map(([to, { title }]) => (
           <Link
             className={cn(styles.link, {
-              [styles.linkActive]: location === to,
+              [styles.linkActive]: page === to,
             })}
             key={to}
-            to={to}
+            page={to}
           >
             {title}
           </Link>
-        ) : null
-      )}
+        ))}
+      </div>
+      <div className={cn(styles.subnavigation)}>
+        {Object.entries(activeSubmenu).map(([hash, title]) => (
+          <Link
+            className={cn(styles.sublink, {
+              [styles.linkActive]: activeHash === hash,
+            })}
+            key={hash}
+            page={page}
+            subpage={hash}
+          >
+            {title}
+          </Link>
+        ))}
+      </div>
     </nav>
   );
 };

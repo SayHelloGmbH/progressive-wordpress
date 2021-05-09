@@ -26,7 +26,7 @@ export type IMenuItems = Record<
   string,
   {
     title: string;
-    visible: boolean;
+    submenu: Record<string, string>;
   }
 >;
 

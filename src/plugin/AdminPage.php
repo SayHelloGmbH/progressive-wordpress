@@ -15,25 +15,20 @@ class AdminPage
         $this->settings_parent = pwpGetInstance()->prefix . '-settings';
         $this->menu_title      = __('Progressive WP', 'progressive-wp');
         $this->menu            = [
-            'settings'           => [
-                'title'   => __('About', 'progressive-wp'),
-                'visible' => true,
+            'settings' => [
+                'title' => __('About', 'progressive-wp'),
             ],
-            'manifest'           => [
-                'title'   => __('Add to Homescreen', 'progressive-wp'),
-                'visible' => true,
+            'manifest' => [
+                'title' => __('Add to Homescreen', 'progressive-wp'),
             ],
-            'offline'            => [
-                'title'   => __('Offline usage', 'progressive-wp'),
-                'visible' => true,
+            'offline'  => [
+                'title' => __('Offline usage', 'progressive-wp'),
             ],
-            'push'               => [
+            'push'     => [
                 'title'   => __('Push Notifications', 'progressive-wp'),
-                'visible' => true,
-            ],
-            'push-subscriptions' => [
-                'title'   => __('Push Subscriptions', 'progressive-wp'),
-                'visible' => PushCredentialsWebPush::issetVapid(),
+                'submenu' => [
+                    'subscriptions' => __('Push Subscriptions', 'progressive-wp'),
+                ]
             ],
         ];
     }

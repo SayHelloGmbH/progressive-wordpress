@@ -27,7 +27,7 @@ const PageAbout = ({ className = '' }: { className?: string }) => (
           )}
         </p>
         <p>
-          <Link to="manifest" isButton>
+          <Link page="manifest" isButton>
             {__('configure', 'progressive-wp')}
           </Link>
         </p>

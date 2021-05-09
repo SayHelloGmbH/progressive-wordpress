@@ -1,11 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import { __ } from '@wordpress/i18n';
-
-import { Route, useLocation, RouterProvider, useMenu } from './utils/router';
-import { SettingsProvider, useSettingsDiff } from './settings';
-import { IVapid } from './utils/types';
+import { Route, RouterProvider, useMenu } from './utils/router';
+import { SettingsProvider } from './settings';
 
 import { Page, TabNavigation } from './theme';
 import PageAbout from './pages/PageAbout';
@@ -60,17 +57,6 @@ const App = () => {
   const [pushCredentialsSet, setPushCredentialsSet] = React.useState<boolean>(
     false
   );
-  const { showMenuItem, hideMenuItem } = useMenu();
-
-  React.useEffect(() => {
-    if (!pushCredentialsSet) {
-      hideMenuItem('push-subscriptions');
-    } else {
-      showMenuItem('push-subscriptions');
-    }
-  }, [pushCredentialsSet]);
-
-  // todo: rethink Navigation concept: mainpages (About, a2h, offline, push) and extensible subpages depending on window vars and #nav
 
   return (
     <Page title={pluginString('plugin.name')}>
