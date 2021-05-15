@@ -7,8 +7,11 @@ export { default as ShadowBox } from './ShadowBox/ShadowBox';
 export { default as TabNavigation } from './navigation/TabNavigation';
 
 export { default as Image } from './media/Image';
+export { default as SVG } from './media/SVG';
+export { default as Icon } from './media/Icon';
 
 export { default as Loader } from './misc/Loader';
+export { default as Tooltip } from './misc/Tooltip';
 
 export { default as Button } from './form/Button';
 export { default as ButtonGroup } from './form/ButtonGroup';

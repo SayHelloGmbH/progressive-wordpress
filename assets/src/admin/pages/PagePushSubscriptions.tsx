@@ -55,7 +55,7 @@ const PagePushSubscriptions = () => {
           {loading ? (
             <Loader block />
           ) : subscriptions.length === 0 ? (
-            <p>{__('There are no subscriptions yet', 'progressive-wp')}</p>
+            <p>{__('There are no subscriptions yet', 'progressive-wp')} </p>
           ) : (
             <div className={styles.list}>
               {subscriptions.map((subscription) => (

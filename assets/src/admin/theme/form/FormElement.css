@@ -4,10 +4,21 @@
   margin-top: var(--pwp-form-spacing);
 }
 
+.containerStacked {
+  display: block;
+}
+
 .label {
   width: var(--pwp-form-label-width);
   margin-right: var(--pwp-form-spacing);
   font-weight: bold;
+  display: block;
+}
+
+.containerStacked .label {
+  margin-right: 0;
+  width: 100%;
+  margin-bottom: var(--pwp-form-spacing-xsmall);
 }
 
 .content {

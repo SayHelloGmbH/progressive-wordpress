@@ -17,6 +17,12 @@ import './App.css';
 import PagePushSubscriptions from './pages/PagePushSubscriptions';
 
 const app = document.querySelector('#pwp-app');
+const shadowbox = document.querySelector('#pwp-shadowbox');
+if (!shadowbox) {
+  const elem = document.createElement('div');
+  elem.id = 'pwp-shadowbox';
+  document.body.appendChild(elem);
+}
 
 const manifestSettingsKeys = [
   'installable-mode',

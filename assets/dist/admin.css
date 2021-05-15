@@ -198,7 +198,7 @@
 }
 
 .ShadowBox__shadowboxSmall___C1fkF .ShadowBox__box___2wqRB {
-        width: 500px;
+        width: 450px;
     }
 
 .ShadowBox__content___2XuV8 {
@@ -323,6 +323,50 @@
   display: block;
 }
 
+.SVG__svg___1OkxZ {
+    margin: 0;
+}
+
+    .SVG__svg___1OkxZ.SVG__inline___vquPH {
+        width: 1em;
+        height: 1em;
+        display: inline-block;
+    }
+
+    .SVG__svg___1OkxZ svg {
+        width: 100%;
+        height: auto;
+        display: block;
+    }
+.Icon__icon___3gk1w {
+    display: inline-block;
+    line-height: 1;
+}
+
+    .Icon__icon___3gk1w svg {
+        text-align: center;
+        vertical-align: middle;
+        fill: currentColor;
+        height: 1em;
+        width: 1em;
+        display: block;
+    }
+
+    .Icon__icon___3gk1w.Icon__animationSpin___1rCZC {
+        animation: Icon__spinner___2c5ox 2s infinite linear;
+    }
+
+    .Icon__icon___3gk1w.Icon__border___2m0La {
+        border: 1px solid currentColor;
+    }
+
+    .Icon__icon___3gk1w.Icon__border___2m0La svg {
+            transform: scale(0.7);
+        }
+
+    .Icon__icon___3gk1w.Icon__round___LVyCO {
+        border-radius: 9999px;
+    }
 @keyframes Loader__spinner-animation___1gJ5S {
     0% {
         transform: rotate(0deg);
@@ -363,6 +407,50 @@
         animation: Loader__spinner-animation___1gJ5S 0.65s infinite linear;
         box-sizing: border-box;
     }
+.Tooltip__trigger___1XxnE {
+    position: relative;
+}
+
+    .Tooltip__trigger___1XxnE::after {
+        background-color: #1d2327;
+        border-radius: 5px;
+        color: #fff;
+        display: none;
+        padding: 0.8em 1em;
+        position: absolute;
+        text-align: center;
+        z-index: 999;
+        content: attr(data-tip);
+        bottom: 0;
+        left: 50%;
+        transform: translate(-50%, calc(100% + 10px));
+    }
+
+    .Tooltip__trigger___1XxnE::before {
+        background-color: #1d2327;
+        content: ' ';
+        display: none;
+        position: absolute;
+        width: 1em;
+        height: 1em;
+        z-index: 999;
+        bottom: 0;
+        left: 50%;
+        transform: translate(-50%, calc(100% + 5px)) rotate(45deg);
+    }
+
+    .Tooltip__trigger___1XxnE:hover::after {
+        display: block;
+    }
+
+    .Tooltip__trigger___1XxnE:hover::before {
+        display: block;
+    }
+
+.Tooltip__nowrap___9yXKg {
+    white-space: nowrap;
+}
+
 .Button__button___1vX9r {
     display: inline-block;
     text-decoration: none;
@@ -432,10 +520,21 @@
   margin-top: var(--pwp-form-spacing);
 }
 
+.FormElement__containerStacked___1Hh4B {
+  display: block;
+}
+
 .FormElement__label___3aosw {
   width: var(--pwp-form-label-width);
   margin-right: var(--pwp-form-spacing);
   font-weight: bold;
+  display: block;
+}
+
+.FormElement__containerStacked___1Hh4B .FormElement__label___3aosw {
+  margin-right: 0;
+  width: 100%;
+  margin-bottom: var(--pwp-form-spacing-xsmall);
 }
 
 .FormElement__content___3TDPi {
@@ -768,12 +867,32 @@
   }
 
 :root {
+    --pwp-form-spacing-xsmall: 0.5rem;
     --pwp-form-spacing-small: 1rem;
     --pwp-form-spacing: 1.5rem;
     --pwp-form-label-width: 180px;
     --pwp-form-max-width: 700px;
 }
 
+.PushSubscription__row___2hKyB {
+    display: flex;
+    justify-content: space-between;
+}
+
+.PushSubscription__user___aGYbg {
+
+}
+
+.PushSubscription__device___cTAkN {
+
+}
+
+.PushSubscription__notifications___yE816 {
+
+}
+
+.PushSubscription__controls___2cTPD {
+}
 .PagePushSubscriptions__list___1d0Bp {
 
 }

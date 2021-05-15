@@ -2,6 +2,7 @@ import path from 'path';
 import fs from 'fs';
 
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
+import CopyWebpackPlugin from 'copy-webpack-plugin';
 import { CleanWebpackPlugin } from 'clean-webpack-plugin';
 import LiveReloadPlugin from 'webpack-livereload-plugin';
 
@@ -31,10 +32,27 @@ module.exports = (env, argv) => {
         filename: '[name].css',
         chunkFilename: '[name].[id].css',
       }),
+      new CopyWebpackPlugin({
+        patterns: [
+          {
+            from: 'assets/src/admin/static',
+            to: 'static/admin',
+          },
+          {
+            from: 'assets/src/ui/static',
+            to: 'static/ui',
+          },
+        ],
+      }),
       new LiveReloadPlugin(),
     ],
     module: {
       rules: [
+        {
+          test: /\.svg$/,
+          exclude: /node_modules/,
+          loader: ['babel-loader', 'raw-loader'],
+        },
         {
           test: /\.(ts|tsx)$/,
           loader: 'ts-loader',

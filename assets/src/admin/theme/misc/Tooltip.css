@@ -1,0 +1,43 @@
+.trigger {
+    position: relative;
+
+    &::after {
+        background-color: #1d2327;
+        border-radius: 5px;
+        color: #fff;
+        display: none;
+        padding: 0.8em 1em;
+        position: absolute;
+        text-align: center;
+        z-index: 999;
+        content: attr(data-tip);
+        bottom: 0;
+        left: 50%;
+        transform: translate(-50%, calc(100% + 10px));
+    }
+
+    &::before {
+        background-color: #1d2327;
+        content: ' ';
+        display: none;
+        position: absolute;
+        width: 1em;
+        height: 1em;
+        z-index: 999;
+        bottom: 0;
+        left: 50%;
+        transform: translate(-50%, calc(100% + 5px)) rotate(45deg);
+    }
+
+    &:hover::after {
+        display: block;
+    }
+
+    &:hover::before {
+        display: block;
+    }
+}
+
+.nowrap {
+    white-space: nowrap;
+}

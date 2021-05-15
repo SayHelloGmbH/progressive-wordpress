@@ -15,6 +15,7 @@ const FormElement = ({
   className = '',
   inputClassName = '',
   sanitizeValue = (value) => value,
+  stacked = false,
   ...inputProps
 }: {
   form?: any;
@@ -25,6 +26,7 @@ const FormElement = ({
   className?: string;
   inputClassName?: string;
   sanitizeValue?: Function;
+  stacked?: boolean;
   [key: string]: any;
 }) => {
   const { field } = form
@@ -36,17 +38,17 @@ const FormElement = ({
     : { field: { onChange: () => {} } };
   const { [name]: setting } = useSettings([name]);
 
-  /**
-   *
-   */
-
   const error = React.useMemo(
     () => (form && name in form.errors ? form.errors[name] : null),
     [form, name]
   );
 
   return (
-    <div className={cn(styles.container, className)}>
+    <div
+      className={cn(styles.container, className, {
+        [styles.containerStacked]: stacked,
+      })}
+    >
       <label htmlFor={name} className={styles.label}>
         {label || setting.label}
         {'required' in rules && '*'}

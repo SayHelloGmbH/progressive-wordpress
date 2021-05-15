@@ -1,4 +1,5 @@
 :root {
+    --pwp-form-spacing-xsmall: 0.5rem;
     --pwp-form-spacing-small: 1rem;
     --pwp-form-spacing: 1.5rem;
     --pwp-form-label-width: 180px;

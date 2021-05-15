@@ -5,6 +5,7 @@ import cn from '../../utils/classnames';
 import { Card } from '../index';
 
 import styles from './ShadowBox.css';
+import { isFunction } from '../../utils/helpers';
 
 const Portal = ({ children }: { children?: any }) =>
   ReactDOM.createPortal(children, document.querySelector('#pwp-shadowbox'));
@@ -50,7 +51,7 @@ export default ({
       >
         <div className={styles.shadow} onClick={onClose} />
         <Card className={styles.box} title={title} toggleButtonClose={onClose}>
-          {children(onClose)}
+          {isFunction(children) ? children(onClose) : children}
         </Card>
       </div>
     </Portal>

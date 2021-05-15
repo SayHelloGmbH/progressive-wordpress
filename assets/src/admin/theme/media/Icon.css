@@ -1,0 +1,29 @@
+.icon {
+    display: inline-block;
+    line-height: 1;
+
+    svg {
+        text-align: center;
+        vertical-align: middle;
+        fill: currentColor;
+        height: 1em;
+        width: 1em;
+        display: block;
+    }
+
+    &.animationSpin {
+        animation: spinner 2s infinite linear;
+    }
+
+    &.border {
+        border: 1px solid currentColor;
+
+        svg {
+            transform: scale(0.7);
+        }
+    }
+
+    &.round {
+        border-radius: 9999px;
+    }
+}

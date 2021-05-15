@@ -73,7 +73,6 @@ class AdminPage
     {
         ?>
       <div id="pwp-app"></div>
-      <div id="pwp-shadowbox"></div>
         <?php
     }
 

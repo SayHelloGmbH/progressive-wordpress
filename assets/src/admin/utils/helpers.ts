@@ -3,3 +3,6 @@ export const untrailingSlashIt = (str: string): string =>
 
 export const trailingSlashIt = (str: string): string =>
   untrailingSlashIt(str) + '/';
+
+export const isFunction = (functionToCheck: any): boolean =>
+  functionToCheck && {}.toString.call(functionToCheck) === '[object Function]';
