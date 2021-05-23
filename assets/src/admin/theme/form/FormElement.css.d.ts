@@ -5,9 +5,11 @@ declare namespace FormElementCssNamespace {
     container: string;
     containerStacked: string;
     content: string;
+    description: string;
     error: string;
     input: string;
     label: string;
+    labelContainer: string;
   }
 }
 

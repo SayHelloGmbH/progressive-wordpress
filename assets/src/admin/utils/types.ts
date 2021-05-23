@@ -52,5 +52,5 @@ export interface PushNotificationDataI {
   title: string;
   body: string;
   url: string;
-  image?: Array<number>;
+  image?: string;
 }

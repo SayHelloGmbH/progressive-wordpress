@@ -102,7 +102,7 @@ const PushSubscription = ({
         {showCreateModal && (
           <CreatePushNotification
             onClose={() => setShowCreateModal(false)}
-            sendTo={[id]}
+            receiver={[id]}
           />
         )}
       </div>

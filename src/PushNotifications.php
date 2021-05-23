@@ -128,10 +128,10 @@ class PushNotifications
     public function apiSendPush($req)
     {
         $params = $req->get_params();
+        $push   = new WebPushNotification();
+        $push->setData($params['title'], $params['body'], $params['url'], $params['image']);
 
-        return [
-            'done' => true,
-        ];
+        return $push->send();
     }
 
     /**

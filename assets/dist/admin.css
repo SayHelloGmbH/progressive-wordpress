@@ -327,6 +327,11 @@
   display: block;
 }
 
+.MaskedImage__container___3248g {
+    background-color: #f1f1f1;
+    border: 1px solid #b0b0b0;
+    border-radius: 3px;
+}
 .SVG__svg___1OkxZ {
     margin: 0;
 }
@@ -519,40 +524,51 @@
 }
 
 .FormElement__container___TbJPB {
-  display: flex;
-  vertical-align: top;
-  margin-top: var(--pwp-form-spacing);
+    display: flex;
+    vertical-align: top;
+    margin-top: var(--pwp-form-spacing);
 }
 
 .FormElement__containerStacked___1Hh4B {
-  display: block;
+    display: block;
 }
+
+.FormElement__labelContainer___3bLFZ {
+    width: var(--pwp-form-label-width);
+    margin-right: var(--pwp-form-spacing);
+    display: block;
+}
+
+.FormElement__containerStacked___1Hh4B .FormElement__labelContainer___3bLFZ {
+    margin-right: 0;
+    width: 100%;
+    margin-bottom: var(--pwp-form-spacing-xsmall);
+}
+
+.FormElement__description___3ZCm3 {
+    color: #676767;
+}
+
+.FormElement__description___3ZCm3 p {
+        font-size: 0.9em;
+    }
 
 .FormElement__label___3aosw {
-  width: var(--pwp-form-label-width);
-  margin-right: var(--pwp-form-spacing);
-  font-weight: bold;
-  display: block;
-}
-
-.FormElement__containerStacked___1Hh4B .FormElement__label___3aosw {
-  margin-right: 0;
-  width: 100%;
-  margin-bottom: var(--pwp-form-spacing-xsmall);
+    font-weight: bold;
 }
 
 .FormElement__content___3TDPi {
-  flex: 1 1 auto;
+    flex: 1 1 auto;
 }
 
 .FormElement__input___19qDv:not([type="checkbox"]) {
-  width: 100% !important;
-  max-width: 100%;
+    width: 100% !important;
+    max-width: 100%;
 }
 
 .FormElement__error___26oJ3 {
-  color: #dc3232;
-  font-size: 0.8em !important;
+    color: #dc3232;
+    font-size: 0.8em !important;
 }
 
 .FormControls__controls___2EPjf {
@@ -870,6 +886,14 @@
     transform: translateX(-50%) translateY(-50%) scale(0.6) rotate(90deg);
   }
 
+.PushSettings__maskedBadge___3sk7e {
+    display: flex;
+    align-items: center;
+}
+
+.PushSettings__maskedBadgeContainer___3gsVX {
+    margin-left: 1rem;
+}
 :root {
     --pwp-form-spacing-xsmall: 0.5rem;
     --pwp-form-spacing-small: 1rem;

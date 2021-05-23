@@ -1,0 +1,8 @@
+.maskedBadge {
+    display: flex;
+    align-items: center;
+}
+
+.maskedBadgeContainer {
+    margin-left: 1rem;
+}

@@ -16,17 +16,17 @@ const initialFormState = {
   title: 'title',
   body: 'body',
   url: VARS.homeUrl,
-  image: [],
+  image: '',
 };
 
 // todo: should be able to pass default data
 
 const CreatePushNotification = ({
   onClose,
-  sendTo = null,
+  receiver = null,
 }: {
   onClose: () => void;
-  sendTo?: Array<string>;
+  receiver?: Array<string>;
 }) => {
   const form = useForm<PushNotificationDataI>({
     defaultValues: initialFormState,
@@ -43,7 +43,11 @@ const CreatePushNotification = ({
   const sendPush = (data: PushNotificationDataI) => {
     setLoading(true);
     setError('');
-    apiPost(pluginNamespace + 'push-send', { ...data, to: sendTo })
+    apiPost(pluginNamespace + 'push-send', {
+      ...data,
+      image: data.image[0] || 0,
+      receiver,
+    })
       .then(() => setSent(true))
       .catch((error) => setError(error.toString()))
       .finally(() => setLoading(false));
@@ -67,12 +71,12 @@ const CreatePushNotification = ({
         <div className={styles.form}>
           <p>
             <b>
-              {sendTo === null
+              {receiver === null
                 ? __(
                     'Send push notification to all subscriptions',
                     'progressive-wp'
                   )
-                : sendTo.length === 1
+                : receiver.length === 1
                 ? __(
                     'Send push notification to one subscription',
                     'progressive-wp'

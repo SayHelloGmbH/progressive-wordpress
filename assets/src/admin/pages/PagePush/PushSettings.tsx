@@ -10,16 +10,17 @@ import {
   FormFeedback,
   InputCheckbox,
   InputColor,
-  InputSelect,
   InputUpload,
+  MaskedImage,
   NOTICE_TYPES,
   PageContent,
 } from '../../theme';
-import { IVapid } from '../../utils/types';
-import { VARS } from '../../utils/constants';
+import styles from './PushSettings.css';
 
 const PushSettings = ({ settingsKeys }: { settingsKeys: string[] }) => {
   const { form, submit, error, loading } = useSettingsForm(settingsKeys);
+
+  const badgeImage = form.watch('push-badge');
 
   return (
     <Form onSubmit={submit}>
@@ -34,6 +35,24 @@ const PushSettings = ({ settingsKeys }: { settingsKeys: string[] }) => {
             Input={InputUpload}
             title={__('Select Image', 'progressive-wp')}
             buttonText={__('Select', 'progressive-wp')}
+            Description={
+              <React.Fragment>
+                <p>
+                  {__(
+                    'The image works best as a PNG in a clear shape with a transparent background. It will be automatically masked.',
+                    'progressive-wp'
+                  )}
+                </p>
+                <div className={styles.maskedBadge}>
+                  <p>
+                    <b>{__('Preview', 'progressive-wp')}:</b>
+                  </p>
+                  <div className={styles.maskedBadgeContainer}>
+                    <MaskedImage id={parseInt(badgeImage) || 0} size={20} />
+                  </div>
+                </div>
+              </React.Fragment>
+            }
           />
         </Card>
         <Card

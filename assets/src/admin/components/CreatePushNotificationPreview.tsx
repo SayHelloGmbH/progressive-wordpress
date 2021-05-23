@@ -4,24 +4,30 @@ import { Image } from '../theme';
 
 const CreatePushNotificationPreview = ({
   className = '',
-  data: { title = '', body = '', url = '', image = [] },
+  data: { title = '', body = '', url = '', image = '' },
 }: {
   className?: string;
   data: PushNotificationDataI;
-}) => (
-  <div className={className}>
-    <p>
-      <b>Preview:</b>
-    </p>
-    <p>
-      {title} - {body} - {url}
-    </p>
-    {image.length !== 0 && image[0] !== 0 && (
+}) => {
+  const imageId = React.useMemo<number>(
+    () => image.split(',').map(parseInt)[0] || 0,
+    [image]
+  );
+  return (
+    <div className={className}>
       <p>
-        <Image id={image[0]} />
+        <b>Preview:</b>
       </p>
-    )}
-  </div>
-);
+      <p>
+        {title} - {body} - {url}
+      </p>
+      {imageId !== 0 && (
+        <p>
+          <Image id={imageId} />
+        </p>
+      )}
+    </div>
+  );
+};
 
 export default CreatePushNotificationPreview;

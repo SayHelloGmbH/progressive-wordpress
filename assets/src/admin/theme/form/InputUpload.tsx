@@ -82,7 +82,7 @@ const InputUpload = ({
   }, [customMediaLibrary, images]);
 
   React.useEffect(() => {
-    onChange(images);
+    onChange(images.join());
   }, [images]);
 
   return (

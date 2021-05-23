@@ -1,36 +1,47 @@
 .container {
-  display: flex;
-  vertical-align: top;
-  margin-top: var(--pwp-form-spacing);
+    display: flex;
+    vertical-align: top;
+    margin-top: var(--pwp-form-spacing);
 }
 
 .containerStacked {
-  display: block;
+    display: block;
+}
+
+.labelContainer {
+    width: var(--pwp-form-label-width);
+    margin-right: var(--pwp-form-spacing);
+    display: block;
+}
+
+.containerStacked .labelContainer {
+    margin-right: 0;
+    width: 100%;
+    margin-bottom: var(--pwp-form-spacing-xsmall);
+}
+
+.description {
+    color: #676767;
+
+    p {
+        font-size: 0.9em;
+    }
 }
 
 .label {
-  width: var(--pwp-form-label-width);
-  margin-right: var(--pwp-form-spacing);
-  font-weight: bold;
-  display: block;
-}
-
-.containerStacked .label {
-  margin-right: 0;
-  width: 100%;
-  margin-bottom: var(--pwp-form-spacing-xsmall);
+    font-weight: bold;
 }
 
 .content {
-  flex: 1 1 auto;
+    flex: 1 1 auto;
 }
 
 .input:not([type="checkbox"]) {
-  width: 100% !important;
-  max-width: 100%;
+    width: 100% !important;
+    max-width: 100%;
 }
 
 .error {
-  color: #dc3232;
-  font-size: 0.8em !important;
+    color: #dc3232;
+    font-size: 0.8em !important;
 }

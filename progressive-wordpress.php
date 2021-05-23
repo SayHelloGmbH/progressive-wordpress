@@ -43,11 +43,11 @@ if (version_compare($wp_version, '4.7', '<') || version_compare(PHP_VERSION, '7.
 } else {
     require_once 'vendor/autoload.php';
 
-    require_once 'src/plugin/Helpers.php';
-    require_once 'src/plugin/Plugin.php';
-    require_once 'src/plugin/AdminPage.php';
-    require_once 'src/plugin/Settings.php';
-    require_once 'src/plugin/Assets.php';
+    require_once 'src/Plugin/Helpers.php';
+    require_once 'src/Plugin/Plugin.php';
+    require_once 'src/Plugin/AdminPage.php';
+    require_once 'src/Plugin/Settings.php';
+    require_once 'src/Plugin/Assets.php';
 
     require_once 'src/RegisterManifest.php';
     require_once 'src/RegisterServiceWorker.php';
@@ -59,6 +59,8 @@ if (version_compare($wp_version, '4.7', '<') || version_compare(PHP_VERSION, '7.
     require_once 'src/PushCredentialsFirebase.php';
     require_once 'src/PushNotifications.php';
     require_once 'src/PushSubscriptions.php';
+
+    require_once 'src/Push/WebPushNotification.php';
 
     function pwpGetInstance()
     {

@@ -7,6 +7,7 @@ export { default as ShadowBox } from './ShadowBox/ShadowBox';
 export { default as TabNavigation } from './navigation/TabNavigation';
 
 export { default as Image } from './media/Image';
+export { default as MaskedImage } from './media/MaskedImage';
 export { default as SVG } from './media/SVG';
 export { default as Icon } from './media/Icon';
 
