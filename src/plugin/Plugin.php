@@ -78,7 +78,7 @@ class Plugin
     }
 
     /**
-     * Update Plugin Data
+     * Update Assets Data
      */
     public function updatePluginData()
     {

@@ -1,41 +1,102 @@
 import React from 'react';
 import { __ } from '@wordpress/i18n';
 
-import { Button, ShadowBox } from '../theme';
+import { FormFeedback, ShadowBox, NOTICE_TYPES, Icon } from '../theme';
 
-import PushNotificationForm from './PushNotificationForm';
+import { apiPost, pluginNamespace } from '../utils/apiFetch';
+import { VARS } from '../utils/constants';
 import { PushNotificationDataI } from '../utils/types';
-import PushNotificationPreview from './PushNotificationPreview';
 
-const CreatePushNotification = ({ onClose }: { onClose: () => void }) => {
-  const [data, setData] = React.useState<PushNotificationDataI>({
-    title: 'title',
-    body: 'body',
-    url: 'https://google.com',
-    image: '',
+import CreatePushNotificationForm from './CreatePushNotificationForm';
+import CreatePushNotificationPreview from './CreatePushNotificationPreview';
+
+import styles from './CreatePushNotification.css';
+import { useForm } from 'react-hook-form';
+const initialFormState = {
+  title: 'title',
+  body: 'body',
+  url: VARS.homeUrl,
+  image: [],
+};
+
+// todo: should be able to pass default data
+
+const CreatePushNotification = ({
+  onClose,
+  sendTo = null,
+}: {
+  onClose: () => void;
+  sendTo?: Array<string>;
+}) => {
+  const form = useForm<PushNotificationDataI>({
+    defaultValues: initialFormState,
   });
-  const [showPreview, setShowPreview] = React.useState<boolean>(false);
+
+  const formDataPreview = form.watch();
+
+  const [loading, setLoading] = React.useState<boolean>(false);
+  const [error, setError] = React.useState<string>('');
+  const [sent, setSent] = React.useState<boolean>(false);
+
+  const onSubmit = (data) => sendPush(data);
+
+  const sendPush = (data: PushNotificationDataI) => {
+    setLoading(true);
+    setError('');
+    apiPost(pluginNamespace + 'push-send', { ...data, to: sendTo })
+      .then(() => setSent(true))
+      .catch((error) => setError(error.toString()))
+      .finally(() => setLoading(false));
+  };
 
   return (
     <ShadowBox
       title={__('Create push notification', 'progressive-wp')}
       close={onClose}
-      size="small"
+      size="medium"
     >
-      {showPreview ? (
-        <React.Fragment>
-          <PushNotificationPreview data={data} />
-          <Button onClick={() => setShowPreview(false)}>back</Button>
-        </React.Fragment>
-      ) : (
-        <PushNotificationForm
-          defaultValues={data}
-          onSubmit={(data) => {
-            setShowPreview(true);
-            setData(data);
-          }}
+      <div className={styles.content}>
+        {sent && (
+          <div className={styles.sent}>
+            <Icon icon="check-outline" className={styles.sentIcon} />
+            <p className={styles.sentText}>
+              {__('Push notification was sent successfully', 'progressive-wp')}
+            </p>
+          </div>
+        )}
+        <div className={styles.form}>
+          <p>
+            <b>
+              {sendTo === null
+                ? __(
+                    'Send push notification to all subscriptions',
+                    'progressive-wp'
+                  )
+                : sendTo.length === 1
+                ? __(
+                    'Send push notification to one subscription',
+                    'progressive-wp'
+                  )
+                : __(
+                    'Send push notification to multiple subscriptions',
+                    'progressive-wp'
+                  )}
+            </b>
+          </p>
+          {error !== '' && (
+            <FormFeedback type={NOTICE_TYPES.ERROR}>{error}</FormFeedback>
+          )}
+          <CreatePushNotificationForm
+            form={form}
+            onSubmit={onSubmit}
+            loading={loading}
+          />
+        </div>
+        <CreatePushNotificationPreview
+          data={formDataPreview}
+          className={styles.preview}
         />
-      )}
+      </div>
     </ShadowBox>
   );
 };

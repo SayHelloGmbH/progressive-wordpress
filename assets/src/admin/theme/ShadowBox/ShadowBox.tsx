@@ -20,7 +20,7 @@ export default ({
   title?: string;
   children?: any;
   close: Function;
-  size?: 'large' | 'small';
+  size?: 'large' | 'small' | 'medium';
   className?: string;
 }) => {
   const [show, setShow] = React.useState<boolean>(false);
@@ -46,6 +46,7 @@ export default ({
       <div
         className={cn(className, styles.shadowbox, {
           [styles.shadowboxSmall]: size === 'small',
+          [styles.shadowboxMedium]: size === 'medium',
         })}
         data-visible={show}
       >

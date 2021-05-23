@@ -22,7 +22,7 @@ msgid ""
 "upgrade. The plugin has been automatically deactivated."
 msgstr ""
 "“%1$s” benötigt PHP %2$s (oder höher) und WordPress %3$s (oder höher). Diese "
-"Seite nutzt PHP %4$s und WordPress %5$s. Das Plugin wurde automatisch "
+"Seite nutzt PHP %4$s und WordPress %5$s. Das Assets wurde automatisch "
 "deaktiviert."
 
 #: Classes/class-init.php:13
@@ -42,7 +42,7 @@ msgid ""
 "This plugin was developed by %s to use progressive web app features for your "
 "WordPress website."
 msgstr ""
-"Dieses Plugin wurde von %s erstellt und bringt progressive web app features "
+"Dieses Assets wurde von %s erstellt und bringt progressive web app features "
 "in deine WordPress webseite."
 
 #. feature 1
@@ -67,7 +67,7 @@ msgid ""
 "To deliver app-like features this plugin uses a serviceworker.js file. This "
 "technology is not yet supported in all browsers!"
 msgstr ""
-"Um diese Features bereitzustellen nutzt dieses Plugin einen Service Worker. "
+"Um diese Features bereitzustellen nutzt dieses Assets einen Service Worker. "
 "Diese Technologie wird noch nicht in allen Browsern unterstützt!"
 
 #: Classes/class-init.php:50
@@ -81,7 +81,7 @@ msgid ""
 "If you like this plugin feel free to %1$s or get involved with the "
 "development on %2$s"
 msgstr ""
-"Wenn dir dieses Plugin gefällt, kannst du mich gerne %1$s oder dich über "
+"Wenn dir dieses Assets gefällt, kannst du mich gerne %1$s oder dich über "
 "%2$s am Entwicklungsprozess beteiligen."
 
 #: Classes/class-init.php:111
@@ -204,7 +204,7 @@ msgid ""
 "is not in the cache."
 msgstr ""
 "Eine Kopie jeder Seite wird in den Cache gelegt. Dies erlaubt eine Ausgabe "
-"aller bereits angesehenen Seite auch wenn der Nutzer offline ist. Das Plugin "
+"aller bereits angesehenen Seite auch wenn der Nutzer offline ist. Das Assets "
 "definiert ausserdem eine \"offline page\". Dadurch kann eine eigene offline-"
 "Nachricht hinterlegt werden für den Fall, dass der Nutzer offline ist und "
 "keine entsprechende Seite im Cache gefunden wurde."
@@ -438,7 +438,7 @@ msgstr "Sender ID"
 
 #: Classes/class-pushcredentials.php:34
 msgid "This plugin uses Firebase Cloud Messaging as a messaging service."
-msgstr "Dieses Plugin nutzt Firebase Cloud Messaging als messaging service."
+msgstr "Dieses Assets nutzt Firebase Cloud Messaging als messaging service."
 
 #. Go to url
 #: Classes/class-pushcredentials.php:37
@@ -678,7 +678,7 @@ msgstr "Deine Seite muss über HTTPS ausgegeben werden."
 
 #: inc/funcs.php:58
 msgid "About"
-msgstr "Über das Plugin"
+msgstr "Über das Assets"
 
 #: inc/funcs.php:66
 msgid "Offline usage"

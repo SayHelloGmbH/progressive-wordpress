@@ -3,8 +3,8 @@
 namespace nicomartin\ProgressiveWordPress;
 
 /*
-Plugin Name: Progressive WordPress (PWA)
-Plugin URI: https://github.com/SayHelloGmbH/progressive-wordpress
+Assets Name: Progressive WordPress (PWA)
+Assets URI: https://github.com/SayHelloGmbH/progressive-wordpress
 Description: Turn your website into a Progressive Web App and make it installable, offline ready and send push notifications.
 Author: Nico Martin
 Author URI: https://nicomartin.ch
@@ -60,7 +60,7 @@ if (version_compare($wp_version, '4.7', '<') || version_compare(PHP_VERSION, '7.
     require_once 'src/PushNotifications.php';
     require_once 'src/PushSubscriptions.php';
 
-    function pwpGetInstance(): Plugin
+    function pwpGetInstance()
     {
         return Plugin::getInstance(__FILE__);
     }
@@ -68,7 +68,7 @@ if (version_compare($wp_version, '4.7', '<') || version_compare(PHP_VERSION, '7.
     pwpGetInstance();
 
     /**
-     * Plugin
+     * Assets
      */
 
     pwpGetInstance()->Settings = new Settings();

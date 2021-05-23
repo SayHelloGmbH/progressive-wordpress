@@ -65,7 +65,7 @@ const InputUpload = ({
           .state()
           .get('selection')
           .toJSON()
-          .map(({ id }) => id)
+          .map(({ id }) => parseInt(id))
           .slice(0, count)
       )
     );
@@ -82,7 +82,7 @@ const InputUpload = ({
   }, [customMediaLibrary, images]);
 
   React.useEffect(() => {
-    onChange(images.join(','));
+    onChange(images);
   }, [images]);
 
   return (

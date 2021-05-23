@@ -47,9 +47,10 @@ export interface SubscriptionApiI extends Subscription {
 export interface SubscriptionI extends Subscription {
   time: DayJS.Dayjs;
 }
+
 export interface PushNotificationDataI {
   title: string;
   body: string;
   url: string;
-  image?: string;
+  image?: Array<number>;
 }

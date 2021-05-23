@@ -1,0 +1,44 @@
+.content {
+    display: flex;
+    align-items: center;
+    position: relative;
+    min-height: 8rem;
+
+    .form {
+        flex: 0 0 250px;
+    }
+
+    .preview {
+        width: auto;
+        padding: var(--pwp-form-spacing) 0 var(--pwp-form-spacing) var(--pwp-form-spacing);
+        margin-left: var(--pwp-form-spacing);
+        border-left: 1px solid #ccc;
+        flex: 1 1 auto;
+    }
+}
+
+
+.sent {
+    position: absolute;
+    bottom: -2px;
+    right: -2px;
+    left: -2px;
+    top: -2px;
+    background-color: #fff;
+    z-index: 999;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.sentIcon {
+    font-size: 5rem;
+    color: #078f22;
+}
+
+.sentText {
+    margin: 1rem 20%;
+    font-size: 1.2rem;
+    text-align: center;
+}

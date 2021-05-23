@@ -5,11 +5,12 @@ import cn from '../../utils/classnames';
 import { SubscriptionI } from '../../utils/types';
 import { Button, Icon, Tooltip } from '../../theme';
 
-import styles from './PushSubscription.css';
 import CreatePushNotification from '../../components/CreatePushNotification';
 
+import styles from './PushSubscription.css';
+
 const PushSubscription = ({
-  subscription: { time, wp_user, clientdata },
+  subscription: { time, wp_user, clientdata, id },
   className = '',
 }: {
   subscription: SubscriptionI;
@@ -99,7 +100,10 @@ const PushSubscription = ({
           </Button>
         </Tooltip>
         {showCreateModal && (
-          <CreatePushNotification onClose={() => setShowCreateModal(false)} />
+          <CreatePushNotification
+            onClose={() => setShowCreateModal(false)}
+            sendTo={[id]}
+          />
         )}
       </div>
     </div>

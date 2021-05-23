@@ -201,6 +201,10 @@
         width: 450px;
     }
 
+.ShadowBox__shadowboxMedium___lSHdx .ShadowBox__box___2wqRB {
+        width: 650px;
+    }
+
 .ShadowBox__content___2XuV8 {
     padding: var(--pwp-form-spacing);
 }
@@ -874,6 +878,50 @@
     --pwp-form-max-width: 700px;
 }
 
+.CreatePushNotification__content___2mf9L {
+    display: flex;
+    align-items: center;
+    position: relative;
+    min-height: 8rem;
+}
+
+    .CreatePushNotification__content___2mf9L .CreatePushNotification__form___2bTFg {
+        flex: 0 0 250px;
+    }
+
+    .CreatePushNotification__content___2mf9L .CreatePushNotification__preview___3Ya33 {
+        width: auto;
+        padding: var(--pwp-form-spacing) 0 var(--pwp-form-spacing) var(--pwp-form-spacing);
+        margin-left: var(--pwp-form-spacing);
+        border-left: 1px solid #ccc;
+        flex: 1 1 auto;
+    }
+
+
+.CreatePushNotification__sent___2BRsD {
+    position: absolute;
+    bottom: -2px;
+    right: -2px;
+    left: -2px;
+    top: -2px;
+    background-color: #fff;
+    z-index: 999;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.CreatePushNotification__sentIcon___2TakT {
+    font-size: 5rem;
+    color: #078f22;
+}
+
+.CreatePushNotification__sentText___MPrjm {
+    margin: 1rem 20%;
+    font-size: 1.2rem;
+    text-align: center;
+}
 .PushSubscription__row___2hKyB {
     display: flex;
     justify-content: space-between;

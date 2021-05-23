@@ -2,6 +2,8 @@
 
 namespace nicomartin\ProgressiveWordPress;
 
+use SayHello\Theme\Package\Error;
+
 class PushNotifications
 {
     public function run()
@@ -113,6 +115,23 @@ class PushNotifications
                 return current_user_can(Helpers::$authAdmin);
             }
         ]);
+
+        register_rest_route(pwpGetInstance()->api_namespace, 'push-send', [
+            'methods'             => 'POST',
+            'callback'            => [$this, 'apiSendPush'],
+            'permission_callback' => function () {
+                return current_user_can(Helpers::$authAdmin);
+            }
+        ]);
+    }
+
+    public function apiSendPush($req)
+    {
+        $params = $req->get_params();
+
+        return [
+            'done' => true,
+        ];
     }
 
     /**

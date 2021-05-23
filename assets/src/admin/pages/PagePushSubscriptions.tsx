@@ -1,6 +1,7 @@
 import React from 'react';
 import { __ } from '@wordpress/i18n';
 
+import DayJS from '../utils/dayjs';
 import { SubscriptionI, SubscriptionApiI } from '../utils/types';
 import { apiGet, pluginNamespace } from '../utils/apiFetch';
 import {
@@ -10,7 +11,7 @@ import {
   NOTICE_TYPES,
   PageContent,
 } from '../theme';
-import DayJS from '../utils/dayjs';
+
 import PushSubscription from './PagePush/PushSubscription';
 
 import styles from './PagePushSubscriptions.css';

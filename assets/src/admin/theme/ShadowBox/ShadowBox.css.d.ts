@@ -8,6 +8,7 @@ declare namespace ShadowBoxCssNamespace {
     loader: string;
     shadow: string;
     shadowbox: string;
+    shadowboxMedium: string;
     shadowboxSmall: string;
     title: string;
   }

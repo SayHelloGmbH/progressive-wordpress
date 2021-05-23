@@ -56,6 +56,12 @@
     }
 }
 
+.shadowboxMedium {
+    .box {
+        width: 650px;
+    }
+}
+
 .content {
     padding: var(--pwp-form-spacing);
 }
