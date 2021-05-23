@@ -8,6 +8,7 @@ class WebPushNotification
     private $body = '';
     private $url = '';
     private $image = null;
+    private $receiver = [];
 
     public function __construct()
     {
@@ -15,12 +16,16 @@ class WebPushNotification
 
     public function send()
     {
+        // todo: send. it.
+        $subscriptions = PushSubscriptions::getPushSubscriptionsByIds($this->receiver);
+
         return [
-            'title' => $this->title,
-            'body'  => $this->body,
-            'url'   => $this->url,
-            'image' => $this->image,
-            'badge' => self::getBadge(),
+            'title'         => $this->title,
+            'body'          => $this->body,
+            'url'           => $this->url,
+            'image'         => $this->image,
+            'badge'         => self::getBadge(),
+            'subscriptions' => $subscriptions,
         ];
     }
 
@@ -31,6 +36,7 @@ class WebPushNotification
      * @param string $body
      * @param string $url
      * @param int $imageId a Post ID of an Image (Attachment)
+     * @return void
      */
 
     public function setData($title, $body, $url, $imageId)
@@ -45,6 +51,16 @@ class WebPushNotification
                 $this->image = $image[0];
             }
         }
+    }
+
+    /**
+     * @param array $receiver
+     * @return void
+     */
+
+    public function setReceiver($receiver = [])
+    {
+        $this->receiver = $receiver;
     }
 
     /**

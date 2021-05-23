@@ -95,9 +95,24 @@ class PushSubscriptions
         return $deleted;
     }
 
+    /**
+     * @return array
+     */
     private static function getPushSubscriptions()
     {
         return get_option(self::$subscriptions_option, []);
+    }
+
+    public static function getPushSubscriptionsByIds($ids = [])
+    {
+        $subs = self::getPushSubscriptions();
+        if (count($ids) === 0) {
+            return $subs;
+        }
+
+        return array_filter($subs, function ($sub) use ($ids) {
+            return in_array($sub['id'], $ids);
+        });
     }
 
     private function maybeUpdateSubscriptions()
@@ -142,6 +157,11 @@ class PushSubscriptions
         update_option(self::$subscriptions_option, $to_save);
 
         return true;
+    }
+
+    public static function getGroups()
+    {
+        return apply_filters('pwp_push_groups', []);
     }
 
     private static function updateSubscription(
