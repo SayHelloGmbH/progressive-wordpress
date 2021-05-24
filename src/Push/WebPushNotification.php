@@ -2,6 +2,9 @@
 
 namespace nicomartin\ProgressiveWordPress;
 
+use Minishlink\WebPush\WebPush as PHPWebPush;
+use Minishlink\WebPush\Subscription;
+
 class WebPushNotification
 {
     private $title = '';
@@ -16,16 +19,61 @@ class WebPushNotification
 
     public function send()
     {
-        // todo: send. it.
-        $subscriptions = PushSubscriptions::getPushSubscriptionsByIds($this->receiver);
+        $data = [
+            'title'    => addslashes($this->title), // Notification title
+            'badge'    => self::getBadge(), // small Icon for the notificaion bar (96x96 px, png)
+            'body'     => addslashes($this->body), // Notification message
+            'icon'     => $this->image, // small image
+            'image'    => '', // bigger image
+            'redirect' => $this->url, // url
+        ];
+
+        $data    = apply_filters('pwp_push_data_values', $data);
+        $vapid   = PushCredentialsWebPush::getVapid(false);
+        $webPush = new PHPWebPush([
+            'VAPID' => [
+                'subject'    => $vapid['subject'],
+                'publicKey'  => $vapid['publicKey'],
+                'privateKey' => $vapid['privateKey'],
+            ]
+        ]);
+
+        foreach ($this->receiver as $subscription) {
+            $webPush->queueNotification(
+                Subscription::create([
+                    'endpoint' => $subscription->endpoint,
+                    'keys'     => [
+                        'p256dh' => $subscription->keys->p256dh,
+                        'auth'   => $subscription->keys->auth
+                    ],
+                ]),
+                json_encode($data)
+            );
+        }
+
+        $success = [];
+        $failed  = [];
+
+        foreach ($webPush->flush() as $report) {
+            $endpoint = $report->getRequest()->getUri()->__toString();
+
+            if ($report->isSuccess()) {
+                $success[] = [
+                    'id' => $endpoint,
+                ];
+            } else {
+                $failed[] = [
+                    'id'     => $endpoint,
+                    'reason' => $report->getReason(),
+                ];
+            }
+        }
 
         return [
-            'title'         => $this->title,
-            'body'          => $this->body,
-            'url'           => $this->url,
-            'image'         => $this->image,
-            'badge'         => self::getBadge(),
-            'subscriptions' => $subscriptions,
+            'type'    => 'success',
+            'message' => '',
+            'success' => $success,
+            'failed'  => $failed,
         ];
     }
 
@@ -36,6 +84,7 @@ class WebPushNotification
      * @param string $body
      * @param string $url
      * @param int $imageId a Post ID of an Image (Attachment)
+     *
      * @return void
      */
 
@@ -55,12 +104,13 @@ class WebPushNotification
 
     /**
      * @param array $receiver
+     *
      * @return void
      */
 
-    public function setReceiver($receiver = [])
+    public function setSubscriptionsByIDs($receiver = [])
     {
-        $this->receiver = $receiver;
+        $this->receiver = PushSubscriptions::getPushSubscriptionsByIds($receiver);
     }
 
     /**
@@ -78,10 +128,5 @@ class WebPushNotification
         }
 
         return '';
-    }
-
-    private function getPushSubscriptions()
-    {
-        // returns all Push subscriptions or only the ones in the desired group or with the desired ID
     }
 }

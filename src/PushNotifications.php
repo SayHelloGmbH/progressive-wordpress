@@ -130,7 +130,7 @@ class PushNotifications
         $params = $req->get_params();
         $push   = new WebPushNotification();
         $push->setData($params['title'], $params['body'], $params['url'], $params['image']);
-        $push->setReceiver($params['receiver']);
+        $push->setSubscriptionsByIDs($params['receiver']);
 
         return $push->send();
     }
