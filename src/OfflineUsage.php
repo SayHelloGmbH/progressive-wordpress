@@ -22,7 +22,7 @@ class OfflineUsage
     {
         add_filter('pwp_register_settings', [$this, 'settings']);
         add_filter('pwp_admin_footer_js', [$this, 'addPossibleStrategies']);
-        add_filter('pwp_serviceworker', [$this, 'serviceWorker']);
+        add_action('pwp_serviceworker', [$this, 'serviceWorker']);
         add_filter('pwp_precache_urls', [$this, 'precacheUrlsFromSettings']);
     }
 
@@ -114,10 +114,12 @@ class OfflineUsage
 
         $precache_urls   = apply_filters('pwp_precache_urls', ['/']);
         $precache_routes = array_map(function ($url) {
-            return [
-                'url'      => $url,
-                'revision' => null, // should be ok since WP handles cache invalidation using the "ver" param
-            ];
+            if ($url) {
+                return [
+                    'url'      => $url,
+                    'revision' => null, // should be ok since WP handles cache invalidation using the "ver" param
+                ];
+            }
         }, $precache_urls);
 
         echo sprintf("workbox.precaching.precacheAndRoute( %s );\n", wp_json_encode($precache_routes));

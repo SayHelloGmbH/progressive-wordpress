@@ -18,6 +18,8 @@ body {
     bottom: 1em;
     border: none;
     border-radius: 50%;
+    z-index: 9999;
+    padding: 0;
 
     &__icon {
         position: absolute;

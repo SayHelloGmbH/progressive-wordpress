@@ -10,7 +10,7 @@ class WebPushNotification
     private $title = '';
     private $body = '';
     private $url = '';
-    private $image = null;
+    private $icon = null;
     private $receiver = [];
 
     public function __construct()
@@ -23,7 +23,7 @@ class WebPushNotification
             'title'    => addslashes($this->title), // Notification title
             'badge'    => self::getBadge(), // small Icon for the notificaion bar (96x96 px, png)
             'body'     => addslashes($this->body), // Notification message
-            'icon'     => $this->image, // small image
+            'icon'     => $this->icon, // small image
             'image'    => '', // bigger image
             'redirect' => $this->url, // url
         ];
@@ -38,13 +38,14 @@ class WebPushNotification
             ]
         ]);
 
-        foreach ($this->receiver as $subscription) {
+        foreach ($this->receiver as $receiver) {
+            $subscription = $receiver['subscription'];
             $webPush->queueNotification(
                 Subscription::create([
-                    'endpoint' => $subscription->endpoint,
+                    'endpoint' => $subscription['endpoint'],
                     'keys'     => [
-                        'p256dh' => $subscription->keys->p256dh,
-                        'auth'   => $subscription->keys->auth
+                        'p256dh' => $subscription['keys']['p256dh'],
+                        'auth'   => $subscription['keys']['auth']
                     ],
                 ]),
                 json_encode($data)
@@ -74,6 +75,7 @@ class WebPushNotification
             'message' => '',
             'success' => $success,
             'failed'  => $failed,
+            'data'    => $data
         ];
     }
 
@@ -83,21 +85,21 @@ class WebPushNotification
      * @param string $title
      * @param string $body
      * @param string $url
-     * @param int $imageId a Post ID of an Image (Attachment)
+     * @param int $iconId a Post ID of an Image (Attachment)
      *
      * @return void
      */
 
-    public function setData($title, $body, $url, $imageId)
+    public function setData($title, $body, $url, $iconId)
     {
         $this->title = $title;
         $this->body  = $body;
         $this->url   = $url;
 
-        if ('attachment' == get_post_type($imageId)) {
-            $image = Helpers::imageResize($imageId, 500, 500, true);
-            if ($image) {
-                $this->image = $image[0];
+        if ('attachment' == get_post_type($iconId)) {
+            $icon = Helpers::imageResize($iconId, 500, 500, true);
+            if ($icon) {
+                $this->icon = $icon[0];
             }
         }
     }

@@ -10,6 +10,7 @@ class PushNotifications
     {
         add_filter('pwp_register_settings', [$this, 'settings']);
         add_filter('pwp_admin_footer_js', [$this, 'footerJs']);
+        add_action('pwp_serviceworker', [$this, 'serviceWorker']);
         add_action('rest_api_init', [$this, 'registerRoute']);
         add_action('wp_footer', [$this, 'addPushButton']);
     }
@@ -55,6 +56,28 @@ class PushNotifications
         $vars['pushProvider'] = self::getPushProvider();
 
         return $vars;
+    }
+
+    public function serviceWorker()
+    {
+        if ( ! PushCredentialsWebPush::issetVapid()) {
+            return;
+        }
+        $pushContent = '';
+        $pushFile    = plugin_dir_path(pwpGetInstance()->file) . '/assets/serviceworker/webpush.js';
+        if (file_exists($pushFile)) {
+            $pushContent .= file_get_contents($pushFile);
+        }
+
+        /*
+        $path = plugin_dir_path(pwp_get_instance()->file) . 'Classes/Libs';
+        require_once $path . '/minify/autoload.php';
+        require_once $path . '/path-converter/autoload.php';
+        $minifier     = new \MatthiasMullie\Minify\JS($push_content);
+        $push_content = $minifier->minify();
+        */
+
+        echo $pushContent;
     }
 
     public function addPushButton()

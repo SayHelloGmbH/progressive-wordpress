@@ -3,12 +3,12 @@
 namespace nicomartin\ProgressiveWordPress;
 
 /*
-Assets Name: Progressive WordPress (PWA)
-Assets URI: https://github.com/SayHelloGmbH/progressive-wordpress
+Plugin Name: Progressive WordPress (PWA)
+Plugin URI: https://github.com/SayHelloGmbH/progressive-wordpress
 Description: Turn your website into a Progressive Web App and make it installable, offline ready and send push notifications.
 Author: Nico Martin
 Author URI: https://nicomartin.ch
-Version: 3.0.0.beta
+Version: 3.0.0-beta
 Text Domain: progressive-wp
 Domain Path: /languages
  */
