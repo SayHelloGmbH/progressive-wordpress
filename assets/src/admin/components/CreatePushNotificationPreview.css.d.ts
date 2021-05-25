@@ -21,6 +21,7 @@ declare namespace CreatePushNotificationPreviewCssNamespace {
     notificationUrlIcon: string;
     statusBar: string;
     time: string;
+    warning: string;
   }
 }
 

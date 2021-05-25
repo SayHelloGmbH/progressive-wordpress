@@ -934,9 +934,7 @@
     .CreatePushNotificationPreview__container___3iJsQ .CreatePushNotificationPreview__deviceInner___fdZl2 {
         background-color: #212121;
         position: absolute;
-        //bottom: 23px;
-        bottom: 0;
-        right: 12px;
+    //bottom: 23px; bottom: 0; right: 12px;
         left: 12px;
         top: 46px;
         background-size: cover;
@@ -991,17 +989,29 @@
             align-items: flex-start;
         }
 
+    .CreatePushNotificationPreview__container___3iJsQ .CreatePushNotificationPreview__notification___2vK4m .CreatePushNotificationPreview__notificationContent___1TVMH {
+            width: calc(100% - 40px);
+        }
+
     .CreatePushNotificationPreview__container___3iJsQ .CreatePushNotificationPreview__notification___2vK4m .CreatePushNotificationPreview__notificationContent___1TVMH .CreatePushNotificationPreview__notificationTitle___3S2kH {
                 margin: 0;
                 font-weight: 500;
+                font-size: 10px;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+                width: 100%;
+                overflow: hidden;
             }
 
     .CreatePushNotificationPreview__container___3iJsQ .CreatePushNotificationPreview__notification___2vK4m .CreatePushNotificationPreview__notificationContent___1TVMH .CreatePushNotificationPreview__notificationBody___2PCyS {
                 margin: 0;
+                font-size: 10px;
             }
 
     .CreatePushNotificationPreview__container___3iJsQ .CreatePushNotificationPreview__notification___2vK4m .CreatePushNotificationPreview__notificationImage___PN0xG {
             flex-shrink: 0;
+            width: 36px;
+            margin-left: 4px;
         }
 
     .CreatePushNotificationPreview__container___3iJsQ .CreatePushNotificationPreview__notification___2vK4m .CreatePushNotificationPreview__notificationImagePlaceholder___2GhnW {
@@ -1030,6 +1040,11 @@
     .CreatePushNotificationPreview__container___3iJsQ .CreatePushNotificationPreview__notificationUrlIcon___ZffRq {
         margin-right: 0.3em;
     }
+
+.CreatePushNotificationPreview__warning___GIKrS {
+    font-size: 11px;
+    line-height: 1.5;
+}
 .CreatePushNotification__content___2mf9L {
     display: flex;
     align-items: center;

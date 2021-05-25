@@ -1,4 +1,6 @@
 import React from 'react';
+import { __ } from '@wordpress/i18n';
+
 import cn from '../utils/classnames';
 import { PushNotificationDataI } from '../utils/types';
 import { Icon, Image, MaskedImage, SVG } from '../theme';
@@ -81,6 +83,12 @@ const CreatePushNotificationPreview = ({
           </p>
         </div>
       </div>
+      <p className={cn(styles.warning)}>
+        {__(
+          'This demo tries to give an hint how the push notification will look like. The length of the text and the line breaks may vary depending on the device.',
+          'progressive-wp'
+        )}
+      </p>
     </div>
   );
 };

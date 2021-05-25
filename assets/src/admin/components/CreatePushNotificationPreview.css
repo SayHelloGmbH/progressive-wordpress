@@ -18,9 +18,7 @@
     .deviceInner {
         background-color: #212121;
         position: absolute;
-        //bottom: 23px;
-        bottom: 0;
-        right: 12px;
+    //bottom: 23px; bottom: 0; right: 12px;
         left: 12px;
         top: 46px;
         background-size: cover;
@@ -75,18 +73,28 @@
         }
 
         .notificationContent {
+            width: calc(100% - 40px);
+
             .notificationTitle {
                 margin: 0;
                 font-weight: 500;
+                font-size: 10px;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+                width: 100%;
+                overflow: hidden;
             }
 
             .notificationBody {
                 margin: 0;
+                font-size: 10px;
             }
         }
 
         .notificationImage {
             flex-shrink: 0;
+            width: 36px;
+            margin-left: 4px;
         }
 
         .notificationImagePlaceholder {
@@ -116,4 +124,9 @@
     .notificationUrlIcon {
         margin-right: 0.3em;
     }
+}
+
+.warning {
+    font-size: 11px;
+    line-height: 1.5;
 }
