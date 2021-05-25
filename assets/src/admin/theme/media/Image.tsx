@@ -9,16 +9,18 @@ const Image = ({
   id,
   size = 150,
   className = '',
+  raw = false,
 }: {
   id: number;
   size?: number;
   className?: string;
+  raw?: boolean;
 }) => {
   const src = useWpImageUrl(id);
 
   return (
     <div
-      className={cn(className, styles.image)}
+      className={cn(className, styles.image, { [styles.raw]: raw })}
       style={{ width: size, height: size }}
     >
       {src && (

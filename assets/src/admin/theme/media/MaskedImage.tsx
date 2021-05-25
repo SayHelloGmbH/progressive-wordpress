@@ -9,16 +9,22 @@ const MaskedImage = ({
   id,
   size = 150,
   className = '',
+  color = '#000',
+  raw = false,
 }: {
   id: number;
   size?: number;
   className?: string;
+  color?: string;
+  raw?: boolean;
 }) => {
   const src = useWpImageUrl(id);
 
   return (
     <div
-      className={cn(className, styles.container)}
+      className={cn(className, styles.container, {
+        [styles.raw]: raw,
+      })}
       style={{ width: size, height: size }}
     >
       {src && (
@@ -26,7 +32,7 @@ const MaskedImage = ({
           style={{
             width: size,
             height: size,
-            backgroundColor: '#000',
+            backgroundColor: color,
             WebkitMaskImage: `url(${src})`,
             maskImage: `url(${src})`,
             maskSize: size,

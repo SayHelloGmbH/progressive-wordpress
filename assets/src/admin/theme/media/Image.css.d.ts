@@ -4,6 +4,7 @@ declare namespace ImageCssNamespace {
   export interface IImageCss {
     image: string;
     imageImg: string;
+    raw: string;
   }
 }
 

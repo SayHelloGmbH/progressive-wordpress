@@ -92,9 +92,16 @@ class Assets
         );*/
 
         wp_enqueue_style(
+            pwpGetInstance()->prefix . '-roboto',
+            $dir_uri . 'assets/fonts/roboto.css',
+            [],
+            $script_version
+        );
+
+        wp_enqueue_style(
             pwpGetInstance()->prefix . '-admin-style',
             $dir_uri . 'assets/dist/admin.css',
-            [],
+            [pwpGetInstance()->prefix . '-roboto'],
             $script_version
         );
 
@@ -118,6 +125,7 @@ class Assets
         $defaults = [
             'ajaxUrl'             => admin_url('admin-ajax.php'),
             'homeUrl'             => trailingslashit(get_site_url()),
+            'pluginUrl'           => trailingslashit(plugin_dir_url(pwpGetInstance()->file)),
             'pluginPrefix'        => pwpGetInstance()->prefix,
             'generalError'        => __('An unexpected error occured', 'progressive-wp'),
             'settings'            => pwpGetInstance()->Settings->getSettings(),

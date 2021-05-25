@@ -21,6 +21,7 @@ declare global {
       homeUrl: string;
       adminUrl: string;
       generalError: string;
+      pluginUrl: string;
       pluginPrefix: string;
       settings: ISettings;
       restBase: string;
@@ -43,6 +44,7 @@ declare global {
       pushProvider: PushProvider;
       settingsParentKey: string;
       menu: IMenuItems;
+      faviconId: string;
     };
   }
 }

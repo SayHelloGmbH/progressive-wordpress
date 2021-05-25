@@ -1,0 +1,119 @@
+.container {
+    position: relative;
+    height: 250px;
+    overflow: hidden;
+    font-family: 'Roboto', sans-serif;
+
+    p {
+        margin: 0;
+        font-family: 'Roboto', sans-serif;
+        font-weight: 400;
+    }
+
+    .mock {
+        position: relative;
+        z-index: 10;
+    }
+
+    .deviceInner {
+        background-color: #212121;
+        position: absolute;
+        //bottom: 23px;
+        bottom: 0;
+        right: 12px;
+        left: 12px;
+        top: 46px;
+        background-size: cover;
+    }
+
+    .statusBar {
+        background-color: #000;
+        color: #fff;
+        font-size: 12px;
+        padding: 10px 16px;
+        display: flex;
+        line-height: 1;
+
+        .time {
+            margin-right: 10px;
+        }
+
+        .icon {
+        }
+
+        .battery {
+            margin-left: auto;
+        }
+    }
+
+    .notification {
+        background-color: #fff;
+        border-radius: 5px;
+        margin: 10px;
+        padding: 10px;
+        display: block;
+
+        .notificationHeader {
+            display: flex;
+            align-items: center;
+            margin-bottom: 7px;
+            line-height: 1;
+
+            .notificationHeaderImage {
+            }
+
+            .notificationHeaderName {
+                margin-left: 1em;
+                font-size: 10px;
+            }
+        }
+
+        .notificationMain {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+
+        .notificationContent {
+            .notificationTitle {
+                margin: 0;
+                font-weight: 500;
+            }
+
+            .notificationBody {
+                margin: 0;
+            }
+        }
+
+        .notificationImage {
+            flex-shrink: 0;
+        }
+
+        .notificationImagePlaceholder {
+            width: 32px;
+            height: 32px;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #ccc;
+            color: #fff;
+            font-weight: 500;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+    }
+
+    .notificationUrl {
+        margin: 3px 10px;
+        font-size: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        color: #fff;
+    }
+
+    .notificationUrlIcon {
+        margin-right: 0.3em;
+    }
+}

@@ -3,3 +3,9 @@
     border: 1px solid #b0b0b0;
     border-radius: 3px;
 }
+
+.raw {
+    background-color: transparent;
+    border: none;
+    border-radius: 0px;
+}

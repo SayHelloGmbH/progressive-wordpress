@@ -5,6 +5,11 @@
   box-sizing: border-box;
 }
 
+.raw {
+  background-color: transparent;
+  border: none;
+}
+
 .imageImg {
   display: block;
 }

@@ -43,7 +43,6 @@ const CreatePushNotification = ({
   const sendPush = (data: PushNotificationDataI) => {
     setLoading(true);
     setError('');
-    console.log(data);
     apiPost(pluginNamespace + 'push-send', {
       ...data,
       image: parseInt(data.image) || 0,

@@ -54,6 +54,7 @@ class PushNotifications
     public function footerJs($vars)
     {
         $vars['pushProvider'] = self::getPushProvider();
+        $vars['faviconId']    = get_option('site_icon');
 
         return $vars;
     }

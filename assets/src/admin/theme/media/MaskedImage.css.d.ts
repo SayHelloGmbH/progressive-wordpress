@@ -3,6 +3,7 @@
 declare namespace MaskedImageCssNamespace {
   export interface IMaskedImageCss {
     container: string;
+    raw: string;
   }
 }
 
