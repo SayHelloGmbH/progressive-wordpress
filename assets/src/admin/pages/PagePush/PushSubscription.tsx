@@ -1,12 +1,9 @@
 import React from 'react';
 import { __ } from '@wordpress/i18n';
-
+import CreatePushNotification from '../../components/CreatePushNotification';
+import { Button, Icon, Tooltip } from '../../theme';
 import cn from '../../utils/classnames';
 import { SubscriptionI } from '../../utils/types';
-import { Button, Icon, Tooltip } from '../../theme';
-
-import CreatePushNotification from '../../components/CreatePushNotification';
-
 import styles from './PushSubscription.css';
 
 const PushSubscription = ({

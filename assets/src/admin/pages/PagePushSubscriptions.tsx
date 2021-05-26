@@ -1,9 +1,5 @@
 import React from 'react';
 import { __ } from '@wordpress/i18n';
-
-import DayJS from '../utils/dayjs';
-import { SubscriptionI, SubscriptionApiI } from '../utils/types';
-import { apiGet, pluginNamespace } from '../utils/apiFetch';
 import {
   Card,
   FormFeedback,
@@ -11,9 +7,10 @@ import {
   NOTICE_TYPES,
   PageContent,
 } from '../theme';
-
+import { apiGet, pluginNamespace } from '../utils/apiFetch';
+import DayJS from '../utils/dayjs';
+import { SubscriptionI, SubscriptionApiI } from '../utils/types';
 import PushSubscription from './PagePush/PushSubscription';
-
 import styles from './PagePushSubscriptions.css';
 
 const PagePushSubscriptions = () => {

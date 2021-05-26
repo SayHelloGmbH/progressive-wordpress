@@ -1,10 +1,6 @@
 import React from 'react';
-import { __ } from '@wordpress/i18n';
-
-import { IVapid } from '../../utils/types';
-
-import { VARS } from '../../utils/constants';
 import { useForm } from 'react-hook-form';
+import { __ } from '@wordpress/i18n';
 import {
   Button,
   ButtonGroup,
@@ -16,9 +12,10 @@ import {
   InputText,
   NOTICE_TYPES,
 } from '../../theme';
-
-import CredentialsResetModal from './CredentialsResetModal';
 import { apiDelete, apiPut, pluginNamespace } from '../../utils/apiFetch';
+import { VARS } from '../../utils/constants';
+import { IVapid } from '../../utils/types';
+import CredentialsResetModal from './CredentialsResetModal';
 
 const PushCredentialsWebPush = ({
   credentials,

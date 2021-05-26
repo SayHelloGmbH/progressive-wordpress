@@ -1,10 +1,8 @@
 import React from 'react';
-
-import cn from '../../utils/classnames';
-
-import styles from './FormElement.css';
 import { useController } from 'react-hook-form';
 import { useSettings } from '../../settings';
+import cn from '../../utils/classnames';
+import styles from './FormElement.css';
 
 const FormElement = ({
   form,

@@ -1,14 +1,13 @@
 import md5 from 'md5';
-
-import { setPushButtonState } from './buttonHelpers';
 import { apiDelete, apiPut, pluginNamespace } from '../utils/apiFetch';
+import { VARS } from '../utils/constants';
 import {
   getClientData,
   getPushManagerSubscription,
   getServiceWorkerRegistration,
   urlBase64ToUint8Array,
 } from '../utils/helpers';
-import { VARS } from '../utils/constants';
+import { setPushButtonState } from './buttonHelpers';
 
 const getPushSubscriptionId = (subscription: PushSubscription): string =>
   md5(subscription.endpoint);

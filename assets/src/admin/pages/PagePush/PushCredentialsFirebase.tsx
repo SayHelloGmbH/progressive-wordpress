@@ -1,8 +1,6 @@
 import React from 'react';
+import { useForm } from 'react-hook-form';
 import { __ } from '@wordpress/i18n';
-
-import { apiDelete, apiPut, pluginNamespace } from '../../utils/apiFetch';
-import { IFirebasePushCredentials, IVapid } from '../../utils/types';
 import {
   Button,
   ButtonGroup,
@@ -13,10 +11,9 @@ import {
   FormFeedback,
   InputText,
   NOTICE_TYPES,
-  PageContent,
 } from '../../theme';
-import { useForm } from 'react-hook-form';
-
+import { apiDelete, apiPut, pluginNamespace } from '../../utils/apiFetch';
+import { IFirebasePushCredentials, IVapid } from '../../utils/types';
 import CredentialsResetModal from './CredentialsResetModal';
 
 const PushCredentialsFirebase = ({

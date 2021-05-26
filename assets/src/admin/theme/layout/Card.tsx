@@ -1,11 +1,8 @@
 import React from 'react';
-
 import cn from '../../utils/classnames';
-
-import styles from './Card.css';
-import contentStyles from '../Content.css';
-
 import { isCardClosed, setCardClosed } from '../../utils/localstorage';
+import contentStyles from '../Content.css';
+import styles from './Card.css';
 
 const Card = ({
   className = '',

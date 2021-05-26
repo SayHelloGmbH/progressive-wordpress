@@ -1,8 +1,7 @@
 import React from 'react';
 import cn from '../../utils/classnames';
-import SVG from './SVG';
-
 import styles from './Icon.css';
+import SVG from './SVG';
 
 const Icon = ({
   icon,

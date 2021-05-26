@@ -1,10 +1,9 @@
-import './push/styles.css';
-
 import { setPushButtonState, getPushButtonState } from './push/buttonHelpers';
 import {
   registerPushDevice,
   deregisterPushDevice,
 } from './push/registerDevice';
+import './push/styles.css';
 import {
   getServiceWorkerRegistration,
   getPushManagerSubscription,

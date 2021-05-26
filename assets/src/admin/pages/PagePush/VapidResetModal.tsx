@@ -1,6 +1,5 @@
 import React from 'react';
 import { __ } from '@wordpress/i18n';
-
 import {
   Button,
   ButtonGroup,
@@ -10,7 +9,6 @@ import {
 } from '../../theme';
 import { apiDelete, pluginNamespace } from '../../utils/apiFetch';
 import { IVapid } from '../../utils/types';
-import { useMenu } from '../../utils/router';
 
 const VapidResetModal = ({
   setCredentials,

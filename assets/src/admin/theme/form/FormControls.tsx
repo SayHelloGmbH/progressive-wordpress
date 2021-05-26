@@ -1,7 +1,6 @@
 import React from 'react';
-
-import styles from './FormControls.css';
 import { Button, ButtonGroup } from '../index';
+import styles from './FormControls.css';
 
 const FormControls = ({
   value = 'Submit',

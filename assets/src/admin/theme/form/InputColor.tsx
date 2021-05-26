@@ -1,8 +1,6 @@
 import React from 'react';
 import { ColorPicker } from '@wordpress/components';
-
 import cn from '../../utils/classnames';
-
 import styles from './InputColor.css';
 
 const InputColor = ({

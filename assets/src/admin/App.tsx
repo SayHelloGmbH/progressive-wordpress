@@ -1,20 +1,16 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-
-import { Route, RouterProvider, useMenu } from './utils/router';
-import { SettingsProvider } from './settings';
-
-import { Page, TabNavigation } from './theme';
+import './App.css';
 import PageAbout from './pages/PageAbout';
 import PageManifest from './pages/PageManifest';
 import PageOffline from './pages/PageOffline';
 import PagePush from './pages/PagePush';
-import { pluginString } from './utils/pluginStrings';
-
-import { VARS } from './utils/constants';
-
-import './App.css';
 import PagePushSubscriptions from './pages/PagePushSubscriptions';
+import { SettingsProvider } from './settings';
+import { Page, TabNavigation } from './theme';
+import { VARS } from './utils/constants';
+import { pluginString } from './utils/pluginStrings';
+import { Route, RouterProvider } from './utils/router';
 
 const app = document.querySelector('#pwp-app');
 const shadowbox = document.querySelector('#pwp-shadowbox');

@@ -1,5 +1,4 @@
 import React from 'react';
-
 import cn from './classnames';
 import { VARS } from './constants';
 import { IMenuItems } from './types';

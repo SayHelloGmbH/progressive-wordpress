@@ -1,17 +1,14 @@
 import React from 'react';
+import { useForm } from 'react-hook-form';
 import { __ } from '@wordpress/i18n';
-
 import { FormFeedback, ShadowBox, NOTICE_TYPES, Icon } from '../theme';
-
 import { apiPost, pluginNamespace } from '../utils/apiFetch';
 import { VARS } from '../utils/constants';
 import { PushNotificationDataI } from '../utils/types';
-
+import styles from './CreatePushNotification.css';
 import CreatePushNotificationForm from './CreatePushNotificationForm';
 import CreatePushNotificationPreview from './CreatePushNotificationPreview';
 
-import styles from './CreatePushNotification.css';
-import { useForm } from 'react-hook-form';
 const initialFormState = {
   title: 'title',
   body: 'body',

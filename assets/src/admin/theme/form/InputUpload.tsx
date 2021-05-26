@@ -1,9 +1,6 @@
 import React from 'react';
-
 import cn from '../../utils/classnames';
-
 import { Image } from '../index';
-
 import styles from './InputUpload.css';
 
 const InputUpload = ({

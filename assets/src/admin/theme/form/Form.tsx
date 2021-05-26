@@ -1,7 +1,6 @@
 import React from 'react';
-
-import styles from './Form.css';
 import cn from '../../utils/classnames';
+import styles from './Form.css';
 
 const Form = ({
   className = '',

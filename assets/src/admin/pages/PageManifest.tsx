@@ -1,7 +1,6 @@
 import React from 'react';
-
 import { __ } from '@wordpress/i18n';
-
+import { useTempSettings, useSettingsForm } from '../settings';
 import {
   Card,
   Form,
@@ -15,9 +14,7 @@ import {
   NOTICE_TYPES,
   PageContent,
 } from '../theme';
-import { useTempSettings, useSettingsForm } from '../settings';
 import { VARS } from '../utils/constants';
-
 import styles from './PageManifest.css';
 
 const PageManifest = ({ settingsKeys }: { settingsKeys: string[] }) => {

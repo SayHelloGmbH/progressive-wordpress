@@ -1,13 +1,11 @@
 import React from 'react';
 import { __ } from '@wordpress/i18n';
-
-import cn from '../utils/classnames';
-import { PushNotificationDataI } from '../utils/types';
-import { Icon, Image, MaskedImage, SVG } from '../theme';
-
-import styles from './CreatePushNotificationPreview.css';
 import { useSettings } from '../settings';
+import { Icon, Image, MaskedImage, SVG } from '../theme';
+import cn from '../utils/classnames';
 import { VARS } from '../utils/constants';
+import { PushNotificationDataI } from '../utils/types';
+import styles from './CreatePushNotificationPreview.css';
 
 const CreatePushNotificationPreview = ({
   className = '',

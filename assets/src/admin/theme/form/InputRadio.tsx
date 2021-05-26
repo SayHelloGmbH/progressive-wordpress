@@ -1,7 +1,5 @@
 import React from 'react';
-
 import cn from '../../utils/classnames';
-
 import styles from './InputRadio.css';
 
 const InputRadio = ({

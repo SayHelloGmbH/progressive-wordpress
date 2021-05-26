@@ -1,7 +1,5 @@
 import React from 'react';
-
 import cn from '../../utils/classnames';
-
 import styles from './Notice.css';
 
 export const NOTICE_TYPES = {

@@ -1,4 +1,5 @@
 import DayJS from 'dayjs';
+
 export type ISettingValue = string | boolean;
 
 export interface ISetting {

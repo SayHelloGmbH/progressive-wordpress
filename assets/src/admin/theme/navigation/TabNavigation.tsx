@@ -1,8 +1,6 @@
 import React from 'react';
-
 import cn from '../../utils/classnames';
 import { Link, useLocation, useMenu } from '../../utils/router';
-
 import styles from './TabNavigation.css';
 
 const TabNavigation = ({ className = '' }: { className?: string }) => {

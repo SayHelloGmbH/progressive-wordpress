@@ -1,6 +1,4 @@
 import React from 'react';
-
-import { IVapid } from '../utils/types';
 import PushCredentials from './PagePush/PushCredentials';
 import PushSettings from './PagePush/PushSettings';
 

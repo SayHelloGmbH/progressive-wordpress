@@ -1,13 +1,10 @@
 import React from 'react';
-
-import { IFirebasePushCredentials, IVapid } from '../../utils/types';
-
 import { PageContent } from '../../theme';
+import { apiGet, pluginNamespace } from '../../utils/apiFetch';
 import { PushProvider, VARS } from '../../utils/constants';
-
+import { IFirebasePushCredentials, IVapid } from '../../utils/types';
 import PushCredentialsFirebase from './PushCredentialsFirebase';
 import PushCredentialsWebPush from './PushCredentialsWebPush';
-import { apiGet, pluginNamespace } from '../../utils/apiFetch';
 
 const PushCredentials = ({
   setPushCredentialsSet,

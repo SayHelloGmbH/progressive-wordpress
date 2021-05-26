@@ -1,7 +1,5 @@
 import React from 'react';
-
 import cn from '../../utils/classnames';
-
 import styles from './Image.css';
 import useWpImageUrl from './useWpImageUrl';
 

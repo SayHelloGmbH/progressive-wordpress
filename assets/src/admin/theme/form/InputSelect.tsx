@@ -1,5 +1,4 @@
 import React from 'react';
-
 import cn from '../../utils/classnames';
 import { ISetting } from '../../utils/types';
 

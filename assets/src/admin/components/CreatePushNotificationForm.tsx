@@ -1,6 +1,6 @@
 import React from 'react';
+import { UseFormMethods } from 'react-hook-form';
 import { __ } from '@wordpress/i18n';
-
 import {
   Form,
   FormControls,
@@ -8,7 +8,6 @@ import {
   InputText,
   InputUpload,
 } from '../theme';
-import { UseFormMethods } from 'react-hook-form';
 import { PushNotificationDataI } from '../utils/types';
 
 const CreatePushNotificationForm = ({

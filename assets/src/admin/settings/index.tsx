@@ -1,14 +1,13 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
-
+import { apiPost, pluginNamespace } from '../utils/apiFetch';
 import { VARS } from '../utils/constants';
-import { ISetting, ISettings } from '../utils/types';
 import {
   compareObjects,
   filterObject,
   keyValueFromSettings,
 } from '../utils/objects';
-import { apiPost, pluginNamespace } from '../utils/apiFetch';
+import { ISettings } from '../utils/types';
 
 const SettingsContext = React.createContext({
   settings: VARS.settings,

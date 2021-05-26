@@ -1,11 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-
 import cn from '../../utils/classnames';
-import { Card } from '../index';
-
-import styles from './ShadowBox.css';
 import { isFunction } from '../../utils/helpers';
+import { Card } from '../index';
+import styles from './ShadowBox.css';
 
 const Portal = ({ children }: { children?: any }) =>
   ReactDOM.createPortal(children, document.querySelector('#pwp-shadowbox'));

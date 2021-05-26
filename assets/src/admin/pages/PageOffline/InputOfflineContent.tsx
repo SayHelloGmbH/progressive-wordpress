@@ -1,10 +1,9 @@
 import React from 'react';
 import { __ } from '@wordpress/i18n';
 import cn from '../../utils/classnames';
-
-import styles from './InputOfflineContent.css';
 import { VARS } from '../../utils/constants';
 import { untrailingSlashIt } from '../../utils/helpers';
+import styles from './InputOfflineContent.css';
 
 const InputOfflineContent = ({
   name,

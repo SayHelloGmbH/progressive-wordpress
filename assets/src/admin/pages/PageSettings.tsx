@@ -1,5 +1,5 @@
 import React from 'react';
-
+import { useSettingsForm } from '../settings';
 import {
   Form,
   FormControls,
@@ -13,7 +13,6 @@ import {
   InputUpload,
   NOTICE_TYPES,
 } from '../theme';
-import { useSettingsForm } from '../settings';
 
 const PageSettings = ({ settingsKeys }: { settingsKeys: string[] }) => {
   const { form, submit, error, loading } = useSettingsForm(settingsKeys);

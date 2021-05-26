@@ -1,6 +1,5 @@
 import React from 'react';
 import { __ } from '@wordpress/i18n';
-
 import { useSettingsForm } from '../settings';
 import {
   Card,
@@ -12,12 +11,11 @@ import {
   InputColor,
   InputSelect,
   InputText,
-  InputTextarea,
   NOTICE_TYPES,
   PageContent,
 } from '../theme';
-import InputOfflineContent from './PageOffline/InputOfflineContent';
 import { VARS } from '../utils/constants';
+import InputOfflineContent from './PageOffline/InputOfflineContent';
 
 const PageOffline = ({ settingsKeys }: { settingsKeys: string[] }) => {
   const { form, submit, error, loading } = useSettingsForm(settingsKeys);

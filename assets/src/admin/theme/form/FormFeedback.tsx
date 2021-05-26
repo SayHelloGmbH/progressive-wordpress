@@ -1,8 +1,6 @@
 import React from 'react';
-
 import cn from '../../utils/classnames';
 import { Notice, NOTICE_TYPES } from '../index';
-
 import styles from './FormFeedback.css';
 
 const FormFeedback = ({
