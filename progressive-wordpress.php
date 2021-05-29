@@ -59,6 +59,7 @@ if (version_compare($wp_version, '4.7', '<') || version_compare(PHP_VERSION, '7.
     require_once 'src/PushCredentialsFirebase.php';
     require_once 'src/PushNotifications.php';
     require_once 'src/PushSubscriptions.php';
+    require_once 'src/PushPost.php';
 
     require_once 'src/Push/WebPushNotification.php';
 
@@ -119,4 +120,7 @@ if (version_compare($wp_version, '4.7', '<') || version_compare(PHP_VERSION, '7.
 
     pwpGetInstance()->PushSubscriptions = new PushSubscriptions();
     pwpGetInstance()->PushSubscriptions->run();
+
+    pwpGetInstance()->PushPost = new PushPost();
+    pwpGetInstance()->PushPost->run();
 } // End if().

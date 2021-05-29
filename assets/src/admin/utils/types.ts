@@ -55,3 +55,19 @@ export interface PushNotificationDataI {
   url: string;
   image?: string;
 }
+
+export interface PushPostTypeI {
+  postType: string;
+  name: string;
+  active: boolean;
+  title: string;
+  body: string;
+  autoPush: boolean;
+}
+
+export interface PushPostSettingsTypeI {
+  active: boolean;
+  title: string;
+  body: string;
+  autoPush: boolean;
+}

@@ -1,0 +1,4 @@
+.postType + .postType {
+    border-top: 1px solid #ccd0d4;
+    margin-top: 1rem;
+}

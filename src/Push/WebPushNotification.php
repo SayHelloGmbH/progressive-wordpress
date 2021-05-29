@@ -13,10 +13,6 @@ class WebPushNotification
     private $icon = null;
     private $receiver = [];
 
-    public function __construct()
-    {
-    }
-
     public function send()
     {
         $data = [

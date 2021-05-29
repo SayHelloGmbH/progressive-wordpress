@@ -9,22 +9,28 @@ import styles from './CreatePushNotification.css';
 import CreatePushNotificationForm from './CreatePushNotificationForm';
 import CreatePushNotificationPreview from './CreatePushNotificationPreview';
 
-const initialFormState = {
-  title: 'title',
-  body: 'body',
-  url: VARS.homeUrl,
-  image: '',
-};
-
-// todo: should be able to pass default data
-
 const CreatePushNotification = ({
   onClose,
   receiver = null,
+  title = 'title',
+  body = 'body',
+  url = VARS.homeUrl,
+  imageId = 0,
 }: {
   onClose: () => void;
   receiver?: Array<string>;
+  title?: string;
+  body?: string;
+  url?: string;
+  imageId?: number;
 }) => {
+  const initialFormState = {
+    title,
+    body,
+    url,
+    image: imageId.toString(),
+  };
+
   const form = useForm<PushNotificationDataI>({
     defaultValues: initialFormState,
   });

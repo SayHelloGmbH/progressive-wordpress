@@ -5,6 +5,7 @@ import PageAbout from './pages/PageAbout';
 import PageManifest from './pages/PageManifest';
 import PageOffline from './pages/PageOffline';
 import PagePush from './pages/PagePush';
+import PagePushPost from './pages/PagePushPost';
 import PagePushSubscriptions from './pages/PagePushSubscriptions';
 import { SettingsProvider } from './settings';
 import { Page, TabNavigation } from './theme';
@@ -81,6 +82,9 @@ const App = () => {
       </Route>
       <Route page="push" hash="subscriptions">
         <PagePushSubscriptions />
+      </Route>
+      <Route page="push" hash="pushpost">
+        <PagePushPost />
       </Route>
     </Page>
   );

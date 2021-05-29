@@ -2,8 +2,6 @@
 
 namespace nicomartin\ProgressiveWordPress;
 
-use SayHello\Theme\Package\Error;
-
 class PushNotifications
 {
     public function run()

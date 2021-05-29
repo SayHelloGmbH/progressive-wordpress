@@ -1,3 +1,11 @@
+:root {
+    --pwp-form-spacing-xsmall: 0.5rem;
+    --pwp-form-spacing-small: 1rem;
+    --pwp-form-spacing: 1.5rem;
+    --pwp-form-label-width: 180px;
+    --pwp-form-max-width: 700px;
+}
+
 .Page__page___vQh7j {
   padding-top: 0 !important;
 }
@@ -22,6 +30,23 @@
 
     margin-top: var(--pwp-form-spacing);
 }
+.Content__content___2ErA3 > * {
+    margin: 0;
+  }
+  .Content__content___2ErA3 > * + * {
+      margin-top: 1em;
+    }
+  .Content__content___2ErA3 ul {
+    list-style: disc;
+    padding-left: 1em;
+  }
+  .Content__content___2ErA3 ul li {
+      margin-bottom: 0;
+    }
+  .Content__content___2ErA3 ul li + li {
+        margin-top: 0.5em;
+      }
+
 .Card__card___3pcSL {
     position: relative;
     border: 1px solid #ccd0d4;
@@ -83,23 +108,6 @@
 .Card__cardClosed___g-FMj .Card__content___UvNPu {
         display: none;
     }
-
-.Content__content___2ErA3 > * {
-    margin: 0;
-  }
-  .Content__content___2ErA3 > * + * {
-      margin-top: 1em;
-    }
-  .Content__content___2ErA3 ul {
-    list-style: disc;
-    padding-left: 1em;
-  }
-  .Content__content___2ErA3 ul li {
-      margin-bottom: 0;
-    }
-  .Content__content___2ErA3 ul li + li {
-        margin-top: 0.5em;
-      }
 
 .Notice__notice___2GQrp {
   background: #fff;
@@ -905,14 +913,54 @@
 .PushSettings__maskedBadgeContainer___3gsVX {
     margin-left: 1rem;
 }
-:root {
-    --pwp-form-spacing-xsmall: 0.5rem;
-    --pwp-form-spacing-small: 1rem;
-    --pwp-form-spacing: 1.5rem;
-    --pwp-form-label-width: 180px;
-    --pwp-form-max-width: 700px;
+.PushPostForm__postType___1GfLB + .PushPostForm__postType___1GfLB {
+    border-top: 1px solid #ccd0d4;
+    margin-top: 1rem;
+}
+.CreatePushNotification__content___2mf9L {
+    display: flex;
+    align-items: center;
+    position: relative;
+    min-height: 8rem;
 }
 
+    .CreatePushNotification__content___2mf9L .CreatePushNotification__form___2bTFg {
+        flex: 0 0 250px;
+    }
+
+    .CreatePushNotification__content___2mf9L .CreatePushNotification__preview___3Ya33 {
+        width: auto;
+        padding: var(--pwp-form-spacing) 0 var(--pwp-form-spacing) var(--pwp-form-spacing);
+        margin-left: var(--pwp-form-spacing);
+        border-left: 1px solid #ccc;
+        flex: 1 1 auto;
+    }
+
+
+.CreatePushNotification__sent___2BRsD {
+    position: absolute;
+    bottom: -2px;
+    right: -2px;
+    left: -2px;
+    top: -2px;
+    background-color: #fff;
+    z-index: 999;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.CreatePushNotification__sentIcon___2TakT {
+    font-size: 5rem;
+    color: #078f22;
+}
+
+.CreatePushNotification__sentText___MPrjm {
+    margin: 1rem 20%;
+    font-size: 1.2rem;
+    text-align: center;
+}
 .CreatePushNotificationPreview__container___3iJsQ {
     position: relative;
     height: 250px;
@@ -1044,50 +1092,6 @@
 .CreatePushNotificationPreview__warning___GIKrS {
     font-size: 11px;
     line-height: 1.5;
-}
-.CreatePushNotification__content___2mf9L {
-    display: flex;
-    align-items: center;
-    position: relative;
-    min-height: 8rem;
-}
-
-    .CreatePushNotification__content___2mf9L .CreatePushNotification__form___2bTFg {
-        flex: 0 0 250px;
-    }
-
-    .CreatePushNotification__content___2mf9L .CreatePushNotification__preview___3Ya33 {
-        width: auto;
-        padding: var(--pwp-form-spacing) 0 var(--pwp-form-spacing) var(--pwp-form-spacing);
-        margin-left: var(--pwp-form-spacing);
-        border-left: 1px solid #ccc;
-        flex: 1 1 auto;
-    }
-
-
-.CreatePushNotification__sent___2BRsD {
-    position: absolute;
-    bottom: -2px;
-    right: -2px;
-    left: -2px;
-    top: -2px;
-    background-color: #fff;
-    z-index: 999;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-}
-
-.CreatePushNotification__sentIcon___2TakT {
-    font-size: 5rem;
-    color: #078f22;
-}
-
-.CreatePushNotification__sentText___MPrjm {
-    margin: 1rem 20%;
-    font-size: 1.2rem;
-    text-align: center;
 }
 .PushSubscription__row___2hKyB {
     display: flex;
