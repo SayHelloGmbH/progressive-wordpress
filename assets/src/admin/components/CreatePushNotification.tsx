@@ -16,6 +16,8 @@ const CreatePushNotification = ({
   body = 'body',
   url = VARS.homeUrl,
   imageId = 0,
+  postId = 0,
+  onPushSent = () => {},
 }: {
   onClose: () => void;
   receiver?: Array<string>;
@@ -23,6 +25,8 @@ const CreatePushNotification = ({
   body?: string;
   url?: string;
   imageId?: number;
+  postId?: number;
+  onPushSent?: () => void;
 }) => {
   const initialFormState = {
     title,
@@ -50,8 +54,12 @@ const CreatePushNotification = ({
       ...data,
       image: parseInt(data.image) || 0,
       receiver,
+      postId,
     })
-      .then(() => setSent(true))
+      .then(() => {
+        setSent(true);
+        onPushSent();
+      })
       .catch((error) => setError(error.toString()))
       .finally(() => setLoading(false));
   };

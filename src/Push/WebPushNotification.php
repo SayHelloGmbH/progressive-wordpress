@@ -11,10 +11,13 @@ class WebPushNotification
     private $body = '';
     private $url = '';
     private $icon = null;
-    private $receiver = [];
+    private $receiver = null;
 
     public function send()
     {
+        if ($this->receiver === null) {
+            $this->receiver = PushSubscriptions::getPushSubscriptionsByIds();
+        }
         $data = [
             'title'    => addslashes($this->title), // Notification title
             'badge'    => self::getBadge(), // small Icon for the notificaion bar (96x96 px, png)

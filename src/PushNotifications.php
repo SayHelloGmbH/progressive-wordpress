@@ -150,11 +150,37 @@ class PushNotifications
     public function apiSendPush($req)
     {
         $params = $req->get_params();
-        $push   = new WebPushNotification();
-        $push->setData($params['title'], $params['body'], $params['url'], $params['image']);
-        $push->setSubscriptionsByIDs($params['receiver']);
+        self::sendPush(
+            $params['title'],
+            $params['body'],
+            $params['url'],
+            $params['image'],
+            $params['receiver'],
+            $params['postId']
+        );
+    }
 
-        return $push->send();
+    public static function sendPush($title, $body, $url, $image, $receiver = null, $postId = 0)
+    {
+        $push = new WebPushNotification();
+        $push->setData($title, $body, $url, $image);
+        if ($receiver) {
+            $push->setSubscriptionsByIDs($receiver);
+        }
+
+        $sent = $push->send();
+        do_action(
+            'pwp_on_push_sent',
+            $sent,
+            [
+                'title' => $title,
+                'body'  => $body,
+                'url'   => $url,
+                'image' => $image,
+            ],
+            $receiver,
+            $postId
+        );
     }
 
     /**

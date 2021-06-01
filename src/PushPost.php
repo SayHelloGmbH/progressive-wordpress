@@ -5,12 +5,7 @@ namespace nicomartin\ProgressiveWordPress;
 class PushPost
 {
     private static $optionKey = 'pwp_pushpost_types';
-
-    /**
-     * todo:
-     *  - auto push
-     *  - Set push done for posts, different UI if already happened
-     */
+    private static $sentMetaKey = 'pwp_pushpost_sent';
 
     public function run()
     {
@@ -19,6 +14,8 @@ class PushPost
         add_filter('pwp_pushpost_title', [$this, 'filterDaraVars'], 10, 2);
         add_filter('pwp_pushpost_body', [$this, 'filterDaraVars'], 10, 2);
         add_filter('pwp_submenu_push', [$this, 'addSubmenuItem']);
+        add_action('transition_post_status', [$this, 'autoPush'], 10, 3);
+        add_action('pwp_on_push_sent', [$this, 'afterPushSent'], 10, 4);
     }
 
     public function metaBox()
@@ -28,7 +25,8 @@ class PushPost
                 'pwp-pushpost-meta-box',
                 __('Push Notification', 'progressive-wp'),
                 function ($post) use ($postType) {
-                    echo "<div class='pushpost-meta-container' id='pwp-pushpost' data-post-id='{$post->ID}'></div>";
+                    $sent = self::isPushPostSent($post->ID) ? 'true' : 'false';
+                    echo "<div class='pushpost-meta-container' id='pwp-pushpost' data-post-id='{$post->ID}' data-pushpost-sent='{$sent}'></div>";
                 },
                 $postType,
                 'side'
@@ -101,6 +99,34 @@ class PushPost
         return $string;
     }
 
+    public function addSubmenuItem($items)
+    {
+        $items['pushpost'] = __('Push Post', 'progressive-wp');
+
+        return $items;
+    }
+
+    public function autoPush($new_status, $old_status, $post)
+    {
+        if (in_array($post->post_type, self::getActiveAutoPushPostTypes()) &&
+            (($old_status != 'publish') && ($new_status == 'publish'))
+        ) {
+            $data = self::getData($post->ID);
+            PushNotifications::sendPush($data['title'], $data['body'], $data['url'], $data['imageId'], null, $post->ID);
+        }
+    }
+
+    public function afterPushSent($sent, $data, $receiver, $postId)
+    {
+        if ($postId !== 0) {
+            update_post_meta($postId, self::$sentMetaKey, 'true');
+        }
+    }
+
+    /**
+     * Helpers
+     */
+
     private static function getData($postId)
     {
         $post              = get_post($postId);
@@ -123,13 +149,6 @@ class PushPost
             'url'     => get_permalink($post),
             'imageId' => get_post_thumbnail_id($post)
         ];
-    }
-
-    public function addSubmenuItem($items)
-    {
-        $items['pushpost'] = __('Push Post', 'progressive-wp');
-
-        return $items;
     }
 
     private static function getPostTypes()
@@ -191,5 +210,12 @@ class PushPost
         }
 
         return $data;
+    }
+
+    private static function isPushPostSent($postId)
+    {
+        $meta = get_post_meta($postId, self::$sentMetaKey, true);
+
+        return $meta === true;
     }
 }
