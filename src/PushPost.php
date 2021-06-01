@@ -216,6 +216,6 @@ class PushPost
     {
         $meta = get_post_meta($postId, self::$sentMetaKey, true);
 
-        return $meta === true;
+        return $meta === 'true';
     }
 }

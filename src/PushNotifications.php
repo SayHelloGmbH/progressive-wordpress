@@ -150,7 +150,7 @@ class PushNotifications
     public function apiSendPush($req)
     {
         $params = $req->get_params();
-        self::sendPush(
+        return self::sendPush(
             $params['title'],
             $params['body'],
             $params['url'],
@@ -181,6 +181,8 @@ class PushNotifications
             $receiver,
             $postId
         );
+
+        return $sent;
     }
 
     /**
