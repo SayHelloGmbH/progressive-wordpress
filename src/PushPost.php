@@ -109,7 +109,8 @@ class PushPost
     public function autoPush($new_status, $old_status, $post)
     {
         if (in_array($post->post_type, self::getActiveAutoPushPostTypes()) &&
-            (($old_status != 'publish') && ($new_status == 'publish'))
+            (($old_status != 'publish') && ($new_status == 'publish')) &&
+            ! self::isPushPostSent($post->ID)
         ) {
             $data = self::getData($post->ID);
             PushNotifications::sendPush($data['title'], $data['body'], $data['url'], $data['imageId'], null, $post->ID);

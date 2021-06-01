@@ -38,6 +38,7 @@ const PushPostForm = ({ postTypes }: { postTypes: Array<PushPostTypeI> }) => {
   const submit = (data) => {
     setLoading(true);
     setError('');
+    console.log(data);
     const enrichedData: Record<
       string,
       PushPostSettingsTypeI
@@ -47,7 +48,10 @@ const PushPostForm = ({ postTypes }: { postTypes: Array<PushPostTypeI> }) => {
           active: data[postType.postType].active || false,
           title: data[postType.postType].title || postType.title,
           body: data[postType.postType].body || postType.body,
-          autoPush: data[postType.postType].autoPush || postType.autoPush,
+          autoPush:
+            data[postType.postType].autoPush === undefined
+              ? postType.autoPush
+              : data[postType.postType].autoPush,
         },
         ...acc,
       }),
@@ -55,7 +59,7 @@ const PushPostForm = ({ postTypes }: { postTypes: Array<PushPostTypeI> }) => {
     );
 
     apiPost(pluginNamespace + 'push-post-types', enrichedData)
-      .then((data) => console.log('data', data))
+      .then(() => {})
       .catch((e) => setError(e.toString()))
       .finally(() => setLoading(false));
   };

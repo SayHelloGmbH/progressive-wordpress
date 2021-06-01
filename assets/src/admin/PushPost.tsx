@@ -29,10 +29,6 @@ const PushPost = ({
   const [loading, setLoading] = React.useState<boolean>(false);
   const [sent, setSent] = React.useState<boolean>(initSent);
 
-  const { 'manifest-name': manifestName = { value: '' } } = useSettings([
-    'manifest-name',
-  ]);
-
   const loadData = (): void => {
     setLoading(true);
     setShowModal(false);
