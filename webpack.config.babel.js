@@ -1,9 +1,8 @@
-import path from 'path';
-import fs from 'fs';
-
-import MiniCssExtractPlugin from 'mini-css-extract-plugin';
-import CopyWebpackPlugin from 'copy-webpack-plugin';
 import { CleanWebpackPlugin } from 'clean-webpack-plugin';
+import CopyWebpackPlugin from 'copy-webpack-plugin';
+import fs from 'fs';
+import MiniCssExtractPlugin from 'mini-css-extract-plugin';
+import path from 'path';
 import LiveReloadPlugin from 'webpack-livereload-plugin';
 
 module.exports = (env, argv) => {
@@ -17,6 +16,7 @@ module.exports = (env, argv) => {
       admin: `${dirSrc}/admin/index.ts`,
       'ui-offline-indicator': `${dirSrc}/ui/offline-indicator.ts`,
       'ui-push': `${dirSrc}/ui/push.ts`,
+      'ui-installprompt': `${dirSrc}/ui/installprompt.ts`,
     },
     output: {
       path: dirDist,

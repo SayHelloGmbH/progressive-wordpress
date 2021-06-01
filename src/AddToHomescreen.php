@@ -8,6 +8,7 @@ class AddToHomescreen
     {
         add_filter('pwp_plugin_strings', [$this, 'pluginStrings']);
         add_filter('pwp_register_settings', [$this, 'settings']);
+        add_filter('pwp_footer_js', [$this, 'footerVars']);
         add_filter(RegisterManifest::$filter, [$this, 'manifestValues']);
     }
 
@@ -106,6 +107,20 @@ class AddToHomescreen
         ];
 
         return $settings;
+    }
+
+    public function footerVars($vars)
+    {
+        $mode            = $this->getSetting('installable-mode');
+        $elementSelector = $this->getSetting('installable-onclick');
+
+        $vars['installpromptMode']    = $mode;
+        $vars['installpromptElement'] = null;
+        if ($mode === 'trigger' && $elementSelector !== '') {
+            $vars['installpromptElement'] = $elementSelector;
+        }
+
+        return $vars;
     }
 
     public function manifestValues($manifest)

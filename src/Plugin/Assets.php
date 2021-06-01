@@ -66,6 +66,21 @@ class Assets
                 true
             );
         }
+
+        wp_enqueue_style(
+            pwpGetInstance()->prefix . '-ui-installprompt',
+            $dir_uri . 'assets/dist/ui-installprompt.css',
+            [],
+            $script_version
+        );
+
+        wp_enqueue_script(
+            pwpGetInstance()->prefix . '-ui-installprompt',
+            $dir_uri . 'assets/dist/ui-installprompt.js',
+            [],
+            $script_version,
+            true
+        );
     }
 
     public function addAdminAssets()

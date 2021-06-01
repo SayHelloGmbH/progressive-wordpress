@@ -8,6 +8,8 @@ declare global {
       restPluginBase: string;
       restPluginNamespace: string;
       vapidPublcKey: null | string;
+      installpromptMode: 'normal' | 'trigger' | 'none';
+      installpromptElement: null | string;
     };
   }
 }
