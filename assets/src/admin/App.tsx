@@ -8,6 +8,7 @@ import PagePush from './pages/PagePush';
 import PagePushPost from './pages/PagePushPost';
 import PagePushSubscriptions from './pages/PagePushSubscriptions';
 import { SettingsProvider } from './settings';
+import { PushSettingsProvider } from './settings/pushSettings';
 import { Page, TabNavigation } from './theme';
 import { VARS } from './utils/constants';
 import { pluginString } from './utils/pluginStrings';
@@ -56,46 +57,38 @@ const pushSettingsKeys = [
   'notification-button-bkg-color',
 ];
 
-const App = () => {
-  const [pushCredentialsSet, setPushCredentialsSet] = React.useState<boolean>(
-    false
-  );
-
-  return (
-    <Page title={pluginString('plugin.name')}>
-      <TabNavigation />
-      <Route page="settings">
-        <PageAbout />
-      </Route>
-      <Route page="manifest">
-        <PageManifest settingsKeys={manifestSettingsKeys} />
-      </Route>
-      <Route page="offline">
-        <PageOffline settingsKeys={offlineSettingsKeys} />
-      </Route>
-      <Route page="push">
-        <PagePush
-          settingsKeys={pushSettingsKeys}
-          pushCredentialsSet={pushCredentialsSet}
-          setPushCredentialsSet={setPushCredentialsSet}
-        />
-      </Route>
-      <Route page="push" hash="subscriptions">
-        <PagePushSubscriptions />
-      </Route>
-      <Route page="push" hash="pushpost">
-        <PagePushPost />
-      </Route>
-    </Page>
-  );
-};
+const App = () => (
+  <Page title={pluginString('plugin.name')}>
+    <TabNavigation />
+    <Route page="settings">
+      <PageAbout />
+    </Route>
+    <Route page="manifest">
+      <PageManifest settingsKeys={manifestSettingsKeys} />
+    </Route>
+    <Route page="offline">
+      <PageOffline settingsKeys={offlineSettingsKeys} />
+    </Route>
+    <Route page="push">
+      <PagePush settingsKeys={pushSettingsKeys} />
+    </Route>
+    <Route page="push" hash="subscriptions">
+      <PagePushSubscriptions />
+    </Route>
+    <Route page="push" hash="pushpost">
+      <PagePushPost />
+    </Route>
+  </Page>
+);
 
 if (app) {
   ReactDOM.render(
     <SettingsProvider>
-      <RouterProvider>
-        <App />
-      </RouterProvider>
+      <PushSettingsProvider>
+        <RouterProvider>
+          <App />
+        </RouterProvider>
+      </PushSettingsProvider>
     </SettingsProvider>,
     app
   );

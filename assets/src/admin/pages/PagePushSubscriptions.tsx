@@ -1,9 +1,11 @@
 import React from 'react';
 import { __ } from '@wordpress/i18n';
+import { usePushCredentialsSet } from '../settings/pushSettings';
 import {
   Card,
   FormFeedback,
   Loader,
+  Notice,
   NOTICE_TYPES,
   PageContent,
 } from '../theme';
@@ -14,6 +16,7 @@ import PushSubscription from './PagePush/PushSubscription';
 import styles from './PagePushSubscriptions.css';
 
 const PagePushSubscriptions = () => {
+  const pushCredentialsSet = usePushCredentialsSet();
   const [loading, setLoading] = React.useState<boolean>(true);
   const [error, setError] = React.useState<string>('');
   const [subscriptions, setSubscriptions] = React.useState<
@@ -43,6 +46,16 @@ const PagePushSubscriptions = () => {
   React.useEffect(() => {
     loadSubscriptions();
   }, []);
+
+  if (!pushCredentialsSet) {
+    return (
+      <PageContent>
+        <Notice type={NOTICE_TYPES.ERROR}>
+          {__('Please set the credentials first', 'progressive-wp')}
+        </Notice>
+      </PageContent>
+    );
+  }
 
   return (
     <PageContent>

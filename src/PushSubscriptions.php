@@ -194,4 +194,9 @@ class PushSubscriptions
 
         return $subscriptions;
     }
+
+    public static function removeSubscriptions()
+    {
+        update_option(self::$subscriptions_option, []);
+    }
 }

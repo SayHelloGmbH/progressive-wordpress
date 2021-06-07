@@ -3,7 +3,18 @@ import ReactDOM from 'react-dom';
 import { __ } from '@wordpress/i18n';
 import CreatePushNotification from './components/CreatePushNotification';
 import { SettingsProvider, useSettings } from './settings';
-import { Button, ButtonGroup, ShadowBox } from './theme';
+import {
+  PushSettingsProvider,
+  usePushCredentialsSet,
+} from './settings/pushSettings';
+import {
+  Button,
+  ButtonGroup,
+  Notice,
+  NOTICE_TYPES,
+  PageContent,
+  ShadowBox,
+} from './theme';
 import { apiGet, pluginNamespace } from './utils/apiFetch';
 import { VARS } from './utils/constants';
 
@@ -43,6 +54,18 @@ const PushPost = ({
 
   if (!postId || postId === 0) {
     return;
+  }
+
+  const pushCredentialsSet = usePushCredentialsSet();
+
+  if (!pushCredentialsSet) {
+    return (
+      <PageContent>
+        <Notice type={NOTICE_TYPES.ERROR}>
+          {__('Please set the credentials first', 'progressive-wp')}
+        </Notice>
+      </PageContent>
+    );
   }
 
   return (
@@ -129,7 +152,9 @@ if (app) {
 
   ReactDOM.render(
     <SettingsProvider>
-      <PushPost postId={postId} sent={sent} />
+      <PushSettingsProvider>
+        <PushPost postId={postId} sent={sent} />
+      </PushSettingsProvider>
     </SettingsProvider>,
     app
   );

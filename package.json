@@ -4,6 +4,7 @@
   "description": "This WordPress plugin adds progressive web app features to your WordPress site",
   "scripts": {
     "dev": "webpack -d --watch",
+    "prod": "npm run workbox && webpack -p",
     "workbox": "workbox copyLibraries assets/dist/workbox/"
   },
   "repository": {

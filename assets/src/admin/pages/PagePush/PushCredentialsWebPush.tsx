@@ -2,6 +2,10 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import { __ } from '@wordpress/i18n';
 import {
+  usePushCredentialsSet,
+  useVapidCredentials,
+} from '../../settings/pushSettings';
+import {
   Button,
   ButtonGroup,
   Card,
@@ -17,15 +21,10 @@ import { VARS } from '../../utils/constants';
 import { IVapid } from '../../utils/types';
 import CredentialsResetModal from './CredentialsResetModal';
 
-const PushCredentialsWebPush = ({
-  credentials,
-  setCredentials,
-  pushCredentialsSet,
-}: {
-  credentials: IVapid;
-  setCredentials: (credentials: IVapid) => void;
-  pushCredentialsSet: boolean;
-}) => {
+const PushCredentialsWebPush = () => {
+  const pushCredentialsSet = usePushCredentialsSet();
+  const [credentials, setCredentials] = useVapidCredentials();
+
   const [loading, setLoading] = React.useState<boolean>(false);
   const [error, setError] = React.useState<string>('');
   const [resetModal, setResetModal] = React.useState<boolean>(false);

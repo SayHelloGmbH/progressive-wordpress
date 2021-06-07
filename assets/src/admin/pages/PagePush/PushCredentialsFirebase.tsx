@@ -2,6 +2,10 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import { __ } from '@wordpress/i18n';
 import {
+  useFirebasePushCredentials,
+  usePushCredentialsSet,
+} from '../../settings/pushSettings';
+import {
   Button,
   ButtonGroup,
   Card,
@@ -16,15 +20,9 @@ import { apiDelete, apiPut, pluginNamespace } from '../../utils/apiFetch';
 import { IFirebasePushCredentials, IVapid } from '../../utils/types';
 import CredentialsResetModal from './CredentialsResetModal';
 
-const PushCredentialsFirebase = ({
-  credentials,
-  setCredentials,
-  credentialsSet,
-}: {
-  credentials: IFirebasePushCredentials;
-  setCredentials: (credentials: IFirebasePushCredentials) => void;
-  credentialsSet: boolean;
-}) => {
+const PushCredentialsFirebase = () => {
+  const [credentials, setCredentials] = useFirebasePushCredentials();
+  const credentialsSet = usePushCredentialsSet();
   const [loading, setLoading] = React.useState<boolean>(false);
   const [error, setError] = React.useState<string>('');
   const [resetModal, setResetModal] = React.useState<boolean>(false);

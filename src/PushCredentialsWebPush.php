@@ -106,6 +106,7 @@ class PushCredentialsWebPush
     public function apiDeleteVapid()
     {
         self::deleteVapid();
+        PushSubscriptions::removeSubscriptions();
 
         return self::getVapid();
     }
@@ -122,9 +123,11 @@ class PushCredentialsWebPush
 
     public static function regenerateVapid($subject = '')
     {
-        $generatedVapid      = VAPID::createVapidKeys();
-        $vapid['publicKey']  = $generatedVapid['publicKey'];
-        $vapid['privateKey'] = $generatedVapid['privateKey'];
+        //$generatedVapid      = VAPID::createVapidKeys();
+        //$vapid['publicKey']  = $generatedVapid['publicKey'];
+        //$vapid['privateKey'] = $generatedVapid['privateKey'];
+        $vapid['publicKey']  = 'BF11iUaNviX0y6QMqT8utWMFIXJrQyfHTQqPWwUUN0yk1ldcKcleedqKlZJ_RPOh3Pw0p0nFVeDtn9XiIxWsAo8';
+        $vapid['privateKey'] = '1kysgu6UVmbJgW24NWA0bzAvAVoCY3NCKjopgxqBOKM';
         $vapid['subject']    = $subject;
 
         return update_option(self::$vapid_option, $vapid);
