@@ -1,7 +1,9 @@
 import React from 'react';
 import { __ } from '@wordpress/i18n';
+import CreatePushNotification from '../components/CreatePushNotification';
 import { usePushCredentialsSet } from '../settings/pushSettings';
 import {
+  Button,
   Card,
   FormFeedback,
   Loader,
@@ -22,6 +24,7 @@ const PagePushSubscriptions = () => {
   const [subscriptions, setSubscriptions] = React.useState<
     Array<SubscriptionI>
   >([]);
+  const [showSendAll, setShowSendAll] = React.useState<boolean>(false);
 
   const loadSubscriptions = () => {
     setLoading(true);
@@ -75,6 +78,18 @@ const PagePushSubscriptions = () => {
                   className={styles.element}
                 />
               ))}
+              {subscriptions.length >= 0 && (
+                <React.Fragment>
+                  {showSendAll && (
+                    <CreatePushNotification
+                      onClose={() => setShowSendAll(false)}
+                    />
+                  )}
+                  <Button onClick={() => setShowSendAll(true)}>
+                    {__('Send push notification to everyone', 'progressive-wp')}
+                  </Button>
+                </React.Fragment>
+              )}
             </div>
           )}
         </Card>
