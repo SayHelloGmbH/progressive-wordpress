@@ -123,12 +123,6 @@ class PushCredentialsWebPush
     public static function regenerateVapid($subject = '')
     {
         $generatedVapid      = VAPID::createVapidKeys();
-        /*
-        $generatedVapid      = [
-            'publicKey'  => 'BCDDyJGde94pQn802U8zZPZIzbTT8LYzaDcGLxL2-ipoXY8QTQS-zvC7QXJXf4sKHf2N8fVP0-7eBnFExe2nAMk',
-            'privateKey' => 'Zli-ptfBaCudV-jWrhrhPdR3ESUXQTqXVCIM8HI4GPw',
-        ];
-        */
         $vapid['publicKey']  = $generatedVapid['publicKey'];
         $vapid['privateKey'] = $generatedVapid['privateKey'];
         $vapid['subject']    = $subject;
