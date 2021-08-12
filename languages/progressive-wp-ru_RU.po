@@ -1,0 +1,1136 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-08-12 10:38+0700\n"
+"PO-Revision-Date: 2021-08-12 11:52+0700\n"
+"Last-Translator: Nikita Shuklin <axeltyt@mail.ru>\n"
+"Language-Team: \n"
+"Language: ru_RU\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<12 || n%100>14) ? 1 : 2);\n"
+"X-Generator: Poedit 2.0.7\n"
+
+#: Classes/Libs/class-settings.php:64
+msgid "Settings saved."
+msgstr "Настройки сохранены."
+
+#: Classes/class-init.php:15
+msgid "Progressive WP"
+msgstr "Progressive WP"
+
+#: Classes/class-init.php:65 inc/funcs.php:60
+msgid "About"
+msgstr "О плагине"
+
+#: Classes/class-init.php:72 Classes/class-installable.php:29
+msgid "Add to homescreen"
+msgstr "Добавить на рабочий стол"
+
+#: Classes/class-init.php:75
+msgid "Provide an <b>integrated</b> user experience!"
+msgstr "Обеспечьте <b>интегрированный</b> пользовательский интерфейс!"
+
+#: Classes/class-init.php:76
+msgid ""
+"Progressive WordPress makes it easy to encourage users to add your website "
+"to their homescreen. But that's not all. It also allows you to control the "
+"display behaviour of your website so it will be shown without any browser "
+"elements. Just like a native app."
+msgstr ""
+"Progressive WordPress позволяет пользователям добавлять ваш сайт на свой "
+"рабочий стол. Но это еще не все. Он также позволяет вам контролировать "
+"поведение отображения вашего веб-сайта, чтобы он отображался без каких-либо "
+"элементов браузера. Так же, как в нативные приложения."
+
+#: Classes/class-init.php:83
+msgid "You manually set \"Show add to homescreen banner\" to \"never\"."
+msgstr ""
+"Вы вручную установили \"Показывать баннер\" Добавить на рабочий стол\" на "
+"\"никогда\"."
+
+#: Classes/class-init.php:88
+msgid "Please select a Site Icon (Favicon)."
+msgstr "Пожалуйста, выберите значок сайта (Favicon)."
+
+#: Classes/class-init.php:93
+msgid "Your Site Icon should be at least 192px."
+msgstr "Значок вашего сайта должен быть не менее 192px."
+
+#: Classes/class-init.php:98
+msgid "Your Website matches the Progressive Web App criteria."
+msgstr "Ваш браузер не поддерживает прогрессивные web-приложения."
+
+#: Classes/class-init.php:106 Classes/class-init.php:137
+#: Classes/class-init.php:189
+msgid "configure"
+msgstr "конфигурировать"
+
+#: Classes/class-init.php:111 inc/funcs.php:68
+msgid "Offline usage"
+msgstr "Оффлайн работа"
+
+#: Classes/class-init.php:114
+msgid "Make your website <b>reliable</b>. Even on flaky internet connections!"
+msgstr ""
+"Сделайте свой веб-сайт <b>надежным</b>. Даже при слабом подключении к "
+"Интернету!"
+
+#: Classes/class-init.php:116
+msgid ""
+"No connection? No problem. Progressive WordPress pre-caches all critical "
+"assets of your website, as well as all visited resources. So if there's no "
+"internet connection it will serve the resources from the local storage. No "
+"more error downasaur!"
+msgstr ""
+"Нет соединения? Не проблема. Progressive WordPress предварительно кэширует "
+"все важные ресурсы вашего сайта, а также все посещенные ресурсы. Поэтому, "
+"если нет интернета, сайт все равно будет работать из локального хранилища. "
+"Больше никаких оффлайн ошибок!"
+
+#: Classes/class-init.php:123
+msgid "Please create and select an offline fallback page"
+msgstr "Пожалуйста, создайте и выберите оффлайн страницы"
+
+#. translators: %s = page title
+#: Classes/class-init.php:129
+#, php-format
+msgid ""
+"\"%s\" has been selected as a page for offline fallback. Other resources "
+"will be cached automatically."
+msgstr ""
+"\"%s\" был выбран в качестве страницы для резервного копирования в оффлайн "
+"режиме. Другие ресурсы будут автоматически кэшироваться."
+
+#: Classes/class-init.php:142
+msgid "Push notifications"
+msgstr "Push-уведомления"
+
+#: Classes/class-init.php:145
+msgid "Keep your users <b>engaged</b> by sending push notifications!"
+msgstr ""
+"Держите своих пользователей <b>уведомлёнными</b>, отправляя push-уведомления!"
+
+#: Classes/class-init.php:148
+#, php-format
+msgid "It looks like you are using %s to send push notifications."
+msgstr "Похоже, вы используете %s для отправки push-уведомлений."
+
+#: Classes/class-init.php:151
+msgid "Progressive WordPress is fully compatible with OneSignal!"
+msgstr "Progressive WordPress полностью совместим с OneSignal!"
+
+#: Classes/class-init.php:154
+msgid ""
+"You just published new content and you want to let everyone know? Why not "
+"send a push notification? Progressive WordPress has an integrated connection "
+"to Firebase that lets you manage registered devices and send push "
+"notifications to all or selected devices!"
+msgstr ""
+"Вы только что опубликовали новый контент и хотите, чтобы все о нём узнали? "
+"Почему бы не отправить push-уведомление? Progressive WordPress имеет "
+"встроенное подключение к Firebase, которое позволяет управлять "
+"зарегистрированными устройствами и отправлять push-уведомления!"
+
+#: Classes/class-init.php:165
+msgid "OneSignal Settings"
+msgstr "OneSignal настройки"
+
+#: Classes/class-init.php:171
+msgid ""
+"Please enter your Firebase cloud messaging credentials to enable push "
+"notifications."
+msgstr ""
+"Пожалуйста, введите свои учетные данные для обмена сообщениями в облаке "
+"Firebase, чтобы включить push-уведомления."
+
+#: Classes/class-init.php:176
+msgid ""
+"There are no registered devices. You might consider using the built in "
+"\"Push Button\"."
+msgstr ""
+"Зарегистрированных устройств нет. Вы можете рассмотреть возможность "
+"использования встроенной \"Кнопки\"."
+
+#: Classes/class-init.php:181
+msgid "All set up. Go ahead and inform your readers."
+msgstr "Все готово. Продолжайте и проинформируйте своих читателей."
+
+#. translators: Thank you for using plugin_name
+#: Classes/class-init.php:200
+#, php-format
+msgid "Thank you for using %s!"
+msgstr "Спасибо за использование %s!"
+
+#. translators: Why it was developed.
+#: Classes/class-init.php:205
+#, php-format
+msgid ""
+"This plugin was developed by %s to use progressive web app features for your "
+"WordPress website."
+msgstr ""
+"Этот плагин был разработан %s для предоставления фишек PWA для вашего "
+"WordPress сайта."
+
+#: Classes/class-init.php:212
+msgid ""
+"To deliver app-like features this plugin uses a Service Worker. This "
+"technology is not yet supported in all browsers!"
+msgstr ""
+"Для работы в режиме нативного приложения плагин использует serviceWorker'ы. "
+"Данная технология не поддерживается вашим браузером!"
+
+#. translators: If you like this plugin feel free to buy me a beer or get involved in the development on GitHub
+#: Classes/class-init.php:220
+#, php-format
+msgid ""
+"If you like this plugin feel free to get involved with the development on "
+"%1$s"
+msgstr ""
+"Если вам нравится этот плагин, не стесняйтесь участвовать в разработке на "
+"%1$s"
+
+#: Classes/class-init.php:230
+msgid "Need Help?"
+msgstr "Требуется помощь?"
+
+#. translators: Please make sure your device supports progressive web apps and the status above is green.
+#: Classes/class-init.php:234
+#, php-format
+msgid "Please make sure your device supports %s."
+msgstr ""
+"Пожалуйста, убедитесь, что указанный выше статус полностью зеленый и ваше "
+"устройство поддерживает %s."
+
+#. translators: Still not working? Please visit the support forum or contact us.
+#: Classes/class-init.php:237
+#, php-format
+msgid "Still not working? Please visit the %1$1s or %2$2s."
+msgstr "Все еще не работает? Пожалуйста, посетите %1$1s или %2$2s."
+
+#: Classes/class-init.php:238
+msgid "support forum"
+msgstr "форум поддержки"
+
+#: Classes/class-init.php:240
+msgid "contact us"
+msgstr "свяжитесь с нами"
+
+#: Classes/class-init.php:247
+msgid "Download Push-Log"
+msgstr "Скачать push-лог"
+
+#: Classes/class-init.php:250
+msgid "Download Debug-Log"
+msgstr "Скачать лог отладки"
+
+#: Classes/class-init.php:265
+msgid ""
+"Welcome to the future! Progressive WordPress makes your website installable, "
+"offline ready and lets you send push notifications!"
+msgstr ""
+"Добро пожаловать в будущее! Progressive WordPress делает ваш сайт доступным "
+"для установки, готовым к работе в автономном режиме и позволяет отправлять "
+"push-уведомления!"
+
+#: Classes/class-init.php:268 Classes/class-init.php:290
+msgid "Configure"
+msgstr "Сконфигурировать"
+
+#. translators: %s = Plugin Name
+#: Classes/class-init.php:276
+#, php-format
+msgid "%s Version 2.0 is here!"
+msgstr "%s Версия 2.0 уже здесь!"
+
+#: Classes/class-init.php:278
+msgid ""
+"We are more than happy to announce the biggest update so far! To make it "
+"short, we had one big goal: to rewrite the plugin so it fits the needs of "
+"non-Developers while it stays very flexble and easy to extend!"
+msgstr ""
+"Мы более чем рады объявить о самом большом обновлении на сегодняшний день! "
+"Короче говоря, у нас была одна большая цель: переписать плагин так, чтобы он "
+"соответствовал потребностям не разработчиков, оставаясь при этом очень "
+"гибким и простым в расширении!"
+
+#: Classes/class-init.php:281
+msgid "explore changes"
+msgstr "изучить изменения"
+
+#: Classes/class-init.php:352
+msgid "An unexpected error occured"
+msgstr "Произошла непредвиденная ошибка"
+
+#: Classes/class-installable.php:21
+msgid "Make your website installable!"
+msgstr "Сделайте ваш сайт устанавливаемым!"
+
+#: Classes/class-installable.php:22
+msgid ""
+"With this feature you are able to display an \"add to homescreen\" prompt. "
+"This way your website gets a prominent place on the users home screen right "
+"next to the native apps."
+msgstr ""
+"С помощью этой функции вы можете отобразить уведомление \"добавить на "
+"рабочий стол\". Таким образом, ваш веб-сайт займет видное место на главном "
+"экране пользователя рядом с собственными приложениями."
+
+#: Classes/class-installable.php:25 Classes/class-installable.php:34
+msgid "Normal"
+msgstr "Нормально"
+
+#: Classes/class-installable.php:25
+msgid "The browser will show a mini-infobar which opens the install promt"
+msgstr ""
+"В браузере появится мини-информационная панель, которая откроет приглашение "
+"на установку"
+
+#: Classes/class-installable.php:26 Classes/class-installable.php:35
+msgid "On element click"
+msgstr "Нажмите на элемент"
+
+#: Classes/class-installable.php:26
+msgid "Define an element as an install-prompt trigger"
+msgstr "Определите элемент в качестве триггера запроса на установку"
+
+#: Classes/class-installable.php:27 Classes/class-installable.php:36
+msgid "Never"
+msgstr "Никогда"
+
+#: Classes/class-installable.php:27
+msgid ""
+"This will override the display mode to `browser`, so the browser will not "
+"try to add an install-prompt"
+msgstr ""
+"Это изменит режим отображения на \"браузер\", поэтому браузер не будет "
+"пытаться добавить приглашение на установку"
+
+#: Classes/class-installable.php:32
+msgid "Show \"add to homescreen\" banner"
+msgstr "Показать баннер \"добавить на рабочий стол\""
+
+#: Classes/class-installable.php:39
+msgid "Number of pageloads"
+msgstr "Количество загрузок страниц"
+
+#: Classes/class-installable.php:40
+msgid "Element"
+msgstr "Элемент"
+
+#: Classes/class-installable.php:41
+msgid "should be a jQuery selector (.my-click-element)"
+msgstr "должен быть селектор jQuery (.my-click-element)"
+
+#: Classes/class-installable.php:41
+msgid ""
+"As soon as your web app can be installed, a class `installable-active` will "
+"be added to this element and the prompt will be shown on click."
+msgstr ""
+"Как только ваше веб-приложение будет установлено, к этому элементу будет "
+"добавлен класс \"installable-active\", и при нажатии на него появится "
+"приглашение."
+
+#: Classes/class-manifest.php:36
+msgid ""
+"This values are used to create a manifest.json file, which then controls the "
+"appearance of you progressive web app."
+msgstr ""
+"Эти значения используются для создания файла manifest.json, который "
+"предоставляет данные для установки вашего веб-сайта."
+
+#: Classes/class-manifest.php:38
+msgid "Read all about the web app manifest:."
+msgstr "Прочитайте о PWA манифесте."
+
+#: Classes/class-manifest.php:39
+msgid "Homescreen values"
+msgstr "Параметры приложения"
+
+#: Classes/class-manifest.php:41
+msgid "Name"
+msgstr "Имя"
+
+#: Classes/class-manifest.php:42
+msgid "Short Name"
+msgstr "Короткое название"
+
+#: Classes/class-manifest.php:43
+msgid "max. 12 Chars"
+msgstr "не более 12 символов"
+
+#: Classes/class-manifest.php:46
+msgid "Start Page"
+msgstr "Начальная страница"
+
+#: Classes/class-manifest.php:48
+msgid "AMP Start Page"
+msgstr "AMP начальная страница"
+
+#: Classes/class-manifest.php:49
+msgid "Use the AMP Version of the Start Page if available."
+msgstr "Используйте версию AMP начальной страницы, если она доступна."
+
+#: Classes/class-manifest.php:52
+msgid "Description"
+msgstr "Описание"
+
+#: Classes/class-manifest.php:56
+msgid "Customizer -> Site Icon"
+msgstr "Настройки -> Иконка сайта"
+
+#. translators: $s = url
+#: Classes/class-manifest.php:58
+#, php-format
+msgid ""
+"This Option has been removed. Please use the Site Icon from the customizer "
+"instead: %s."
+msgstr ""
+"Эта опция была удалена. Пожалуйста, используйте вместо этого значок сайта в "
+"настройщике: %s."
+
+#: Classes/class-manifest.php:59
+msgid "Icon"
+msgstr "Иконка"
+
+#: Classes/class-manifest.php:62
+msgid "Fullscreen - App takes whole display"
+msgstr "Fullscreen - приложение занимает весь дисплей"
+
+#: Classes/class-manifest.php:63
+msgid "Standalone - Native App feeling"
+msgstr "Standalone - Нативное приложение"
+
+#: Classes/class-manifest.php:64
+msgid "Minimal browser controls"
+msgstr "Минимум браузерных кнопок"
+
+#: Classes/class-manifest.php:67
+msgid "Display mode"
+msgstr "Режим отображения"
+
+#: Classes/class-manifest.php:68
+msgid "possible display modes"
+msgstr "доступные режимы отображения"
+
+#: Classes/class-manifest.php:71
+msgid "Orientation"
+msgstr "Ориентация"
+
+#: Classes/class-manifest.php:72
+msgid "Both"
+msgstr "Оба"
+
+#: Classes/class-manifest.php:73
+msgid "Landscape"
+msgstr "Альбомный"
+
+#: Classes/class-manifest.php:74
+msgid "Portrait"
+msgstr "Вертикально"
+
+#: Classes/class-manifest.php:77
+msgid "Theme Color"
+msgstr "Цвет темы"
+
+#: Classes/class-manifest.php:78
+msgid "Background Color"
+msgstr "Цвет фона"
+
+#: Classes/class-manifest.php:159
+msgid "Sorry, you are not allowed to edit the manifest."
+msgstr "Извините, вам не разрешено редактировать манифест."
+
+#: Classes/class-offlineusage.php:18 Classes/class-offlineusage.php:71
+msgid "Stale While Revalidate"
+msgstr "Стратегия \"старое - лучше нового\""
+
+#: Classes/class-offlineusage.php:19 Classes/class-offlineusage.php:72
+msgid "Network First"
+msgstr "Из сети первоочередное"
+
+#: Classes/class-offlineusage.php:20 Classes/class-offlineusage.php:73
+msgid "Cache First"
+msgstr "Кэш первоочередное"
+
+#: Classes/class-offlineusage.php:21 Classes/class-offlineusage.php:74
+msgid "Network Only"
+msgstr "Только сеть"
+
+#: Classes/class-offlineusage.php:42
+msgid "This feature allows you to provide offline usage for your website."
+msgstr "Это позволяет использовать ваш сайт даже в оффлайн режиме."
+
+#: Classes/class-offlineusage.php:43
+msgid ""
+"By default, a copy of each page is stored in the browser cache as the "
+"visitor views it. This allows a visitor to load any previously viewed page "
+"while they are offline. The plugin also defines a special “offline page”, "
+"which allows you to customize a message and the experience if the app is "
+"offline and the page is not in the cache. Additionally, you can define other "
+"pre-cached resources using the \"offline content\" textarea."
+msgstr ""
+"Копия каждой страницы сохраняется в кэше браузера по мере ее просмотра "
+"пользователем. Это позволяет пользователю загружать любую ранее "
+"просмотренную страницу, пока он находится в автономном режиме. Плагин также "
+"определяет специальную “автономную страницу”, которая позволяет настраивать "
+"сообщение и взаимодействие, если приложение находится в автономном режиме, а "
+"страница отсутствует в кэше."
+
+#: Classes/class-offlineusage.php:44
+msgid "Offline Usage"
+msgstr "Оффлайн работа"
+
+#: Classes/class-offlineusage.php:53
+#, fuzzy
+#| msgid "Offline Page"
+msgid "Offline fallback Page"
+msgstr "Оффлайн страница"
+
+#: Classes/class-offlineusage.php:54
+msgid ""
+"This page should contain a message explaining why the requested content is "
+"not available."
+msgstr ""
+"Эта страница должна содержать сообщение, объясняющее, почему запрошенный "
+"контент недоступен."
+
+#: Classes/class-offlineusage.php:57
+msgid ""
+"Pages and files that should be saved for offline usage on first interaction. "
+"One URL per line."
+msgstr ""
+"Pages and files that should be saved for offline usage on first interaction. "
+"One URL per line.\n"
+"Страницы и файлы, которые должны быть сохранены для оффлайн режима. Одна "
+"ссылка - одна строчка."
+
+#. translators: Every URL has to start with: [home_url]
+#: Classes/class-offlineusage.php:59
+#, php-format
+msgid "Every URL has to start with: %1$s"
+msgstr "Каждая URL будет начинаться с: %1$s"
+
+#: Classes/class-offlineusage.php:61
+msgid "Offline Content"
+msgstr "Оффлайн контент"
+
+#: Classes/class-offlineusage.php:65
+msgid "Offline Google Analytics"
+msgstr "Оффлайн работа активирована"
+
+#: Classes/class-offlineusage.php:66
+msgid ""
+"If the user is offline, analytics data can't be sent to google analytcs. "
+"This option will store the data and sync them as soon as the user is online "
+"again."
+msgstr ""
+"Если пользователь в оффлайне, то данные не будет отправлены в Google "
+"analutics. Опция позволяет сохранить данные и синхронизировать их, когда "
+"появится соединение."
+
+#: Classes/class-offlineusage.php:69
+msgid ""
+"All network requests are cached by progressive WordPress. Here you are able "
+"to manually change the caching strategy for some request types."
+msgstr ""
+"Progressive WordPress кэширует все интернет-запросы. Вы можете выбрать метод "
+"работы с кэшом."
+
+#: Classes/class-offlineusage.php:71
+msgid ""
+"This strategy will use a cached response for a request if it is available "
+"and update the cache in the background with a response form the network. (If "
+"it’s not cached it will wait for the network response and use that). This is "
+"a fairly safe strategy as it means users are regularly updating their cache. "
+"The downside of this strategy is that it’s always requesting an asset from "
+"the network, using up the user’s bandwidth."
+msgstr ""
+"Эта стратегия будет использовать сначала кэш, если он доступен, и обновлять "
+"данные в фоновом режиме из сети. Если кэша нет, то он будет ждать данные из "
+"сети и использовать их. Это довольно безопасная стратегия, поскольку она "
+"означает, что пользователи регулярно обновляют свой кэш. Недостатком этой "
+"стратегии является то, что она всегда запрашивает ресурс из сети, используя "
+"пропускную способность пользователя."
+
+#: Classes/class-offlineusage.php:72
+msgid ""
+"This will try and get a request from the network first. If it receives a "
+"response, it’ll pass that to the browser and also save it to a cache. If the "
+"network request fails, the last cached response will be used."
+msgstr ""
+"Позволяет сначала попробовать получить данные из сети. Если данные есть, то "
+"они будут использованы, а также сохранятся в кэш. Если сеть не работает, то "
+"будут использованы последние закэшированные данные."
+
+#: Classes/class-offlineusage.php:73
+msgid ""
+"This strategy will check the cache for a response first and use that if one "
+"is available. If the request isn’t in the cache, the network will be used "
+"and any valid response will be added to the cache before being passed to the "
+"browser."
+msgstr ""
+"Сначала будет запрошен кэш и, если он есть, то будет использован. Если кэша "
+"нет, будет использована сеть, и любой допустимый ответ будет добавлен в кэш "
+"перед передачей в браузер."
+
+#: Classes/class-offlineusage.php:74
+msgid ""
+"This strategy won't chache anything. The network will be used and the "
+"response will be passed directly to the browser (That's how the browser "
+"would handle the request without the Service Worker)."
+msgstr ""
+"Эта стратегия ничего не кэширует. Будет использоваться сеть, и данные будут "
+"переданы непосредственно браузеру (именно так браузер будет обрабатывать "
+"запрос без ServiceWorker'а)."
+
+#: Classes/class-offlineusage.php:76
+msgid "Caching strategies"
+msgstr "Стратегии кэширования"
+
+#: Classes/class-offlineusage.php:104
+msgid ""
+"This adds a little notice which will be displayed if the device is offline."
+msgstr ""
+"Это добавляет небольшое уведомление, которое будет отображаться, если "
+"устройство находится в оффлайне."
+
+#: Classes/class-offlineusage.php:105
+msgid "offline indicator  "
+msgstr "оффлайн индикатор "
+
+#: Classes/class-offlineusage.php:106
+msgid "Offline indicator"
+msgstr "Оффлайн индикатор"
+
+#: Classes/class-offlineusage.php:107
+msgid "Message"
+msgstr "Сообщение"
+
+#: Classes/class-offlineusage.php:108
+msgid "Position"
+msgstr "Расположение"
+
+#: Classes/class-offlineusage.php:109
+msgid "Bottom"
+msgstr "Кнопка"
+
+#: Classes/class-offlineusage.php:110
+msgid "Top"
+msgstr "Верх"
+
+#: Classes/class-offlineusage.php:113
+msgid "Textcolor"
+msgstr "Цвет текста"
+
+#: Classes/class-offlineusage.php:114
+msgid "Background-Color"
+msgstr "Цвет фона"
+
+#: Classes/class-offlineusage.php:140
+msgid "Default caching strategy"
+msgstr "Стратегия кэширования по-умолчанию"
+
+#: Classes/class-offlineusage.php:145
+msgid "Caching strategy for CSS and JS Files"
+msgstr "Метод кэширования для CSS и JS файлов"
+
+#: Classes/class-offlineusage.php:150
+msgid "Caching strategy for images"
+msgstr "Метод кэширования для изображений"
+
+#: Classes/class-offlineusage.php:155
+msgid "Caching strategy for fonts"
+msgstr "Метод кэширования для шрифтов"
+
+#: Classes/class-offlineusage.php:160
+msgid "Caching strategy for WP Rest"
+msgstr "Метод кэширования для WP Rest"
+
+#: Classes/class-push.php:87
+msgid "Push Notification settings"
+msgstr "Настройки Push-уведомлений"
+
+#: Classes/class-push.php:89
+msgid "Remove devices if failed once"
+msgstr "Удалить устройство при первом сбое"
+
+#: Classes/class-push.php:90
+msgid "Notification Bar Icon"
+msgstr "Иконка уведомления"
+
+#: Classes/class-push.php:94
+msgid ""
+"This image will represent the notification when there is not enough space to "
+"display the notification itself such as, for example, the Android "
+"Notification Bar. It will be automatically masked. For the best result use a "
+"single-color graphic with transparent background."
+msgstr ""
+"Это изображение будет представлять уведомление, когда не хватает места для "
+"отображения самого уведомления, такого как, например, панель уведомлений "
+"Android. Он будет автоматически замаскирован. Для достижения наилучшего "
+"результата используйте одноцветную графику с прозрачным фоном."
+
+#: Classes/class-push.php:94
+msgid "Has to be at least 92x92px"
+msgstr "Должно быть не менее 92x92 пикселей"
+
+#: Classes/class-push.php:99
+msgid "This adds a fixed push notification button to the bottom of your page."
+msgstr "Это добавить зафиксированную кнопку push-уведомлений вниз страницы."
+
+#: Classes/class-push.php:100
+msgid "Push Button"
+msgstr "Кнопка уведомления"
+
+#: Classes/class-push.php:102
+msgid "Add notification button"
+msgstr "Кнопка добавления уведомления"
+
+#: Classes/class-push.php:103
+msgid "Button appearance"
+msgstr "Внешний вид кнопки"
+
+#: Classes/class-push.php:104
+msgid "Icon color"
+msgstr "Цвет иконки"
+
+#: Classes/class-push.php:105
+msgid "Background color"
+msgstr "Цвет фона"
+
+#: Classes/class-push.php:110
+msgid "Send to all devices"
+msgstr "Отправить на все устройства"
+
+#: Classes/class-push.php:116
+msgid "Device"
+msgstr "Устройство"
+
+#: Classes/class-push.php:116
+msgid "Registered"
+msgstr "Зарегистрировано"
+
+#: Classes/class-push.php:119
+msgid "No devices registered"
+msgstr "Ни одного устройства не зарегистрировано"
+
+#: Classes/class-push.php:129
+msgid "Browser"
+msgstr "Браузер"
+
+#: Classes/class-push.php:155
+msgid "Remove device"
+msgstr "Удалить устройство"
+
+#: Classes/class-push.php:163
+msgid "Devices"
+msgstr "Устройства"
+
+#: Classes/class-push.php:167
+msgid "Device could not be removed."
+msgstr "Устройство не удалось удалить."
+
+#: Classes/class-push.php:168
+msgid "Device could not be registered."
+msgstr "Устройство не удалось зарегистрировать."
+
+#: Classes/class-push.php:346 Classes/class-status.php:44
+msgid "Logfile could not be created"
+msgstr "Не удалось создать лог"
+
+#: Classes/class-push.php:349 Classes/class-status.php:47
+msgid "Error"
+msgstr "Ошибка"
+
+#: Classes/class-push.php:375
+msgid "Title"
+msgstr "Заголовок"
+
+#: Classes/class-push.php:379
+msgid "Body"
+msgstr "Содержимое"
+
+#: Classes/class-push.php:383
+msgid "URL"
+msgstr "URL"
+
+#: Classes/class-push.php:387
+msgid "Image"
+msgstr "Картинка"
+
+#: Classes/class-push.php:401
+msgid "Create push notification"
+msgstr "Создать push-уведомление"
+
+#: Classes/class-push.php:404
+msgid "New Push-Notification"
+msgstr "Новое push-уведомление"
+
+#: Classes/class-push.php:406
+msgid "This notification will be sent to the selected device."
+msgstr "Это уведомление будет отправлено на выбранное устройство."
+
+#: Classes/class-push.php:413
+msgid "upload image"
+msgstr "загрузить изображение"
+
+#: Classes/class-push.php:413
+msgid "remove image"
+msgstr "удалить изображение"
+
+#: Classes/class-push.php:424
+msgid "Send push"
+msgstr "Отправить push-уведомлени"
+
+#: Classes/class-push.php:426
+msgid "Notifications have been sent"
+msgstr "Уведомления были отправлены"
+
+#: Classes/class-push.php:441
+msgid "Invalid firebase server key"
+msgstr "Неверный firebase server key"
+
+#: Classes/class-push.php:470
+msgid "No devices set"
+msgstr "Нет набора устройств"
+
+#: Classes/class-push.php:526
+msgid "Could not write latest_push_json"
+msgstr "Не удалось записать latest_push_json"
+
+#: Classes/class-pushcredentials.php:20
+msgid "Server Key"
+msgstr "Server Key"
+
+#: Classes/class-pushcredentials.php:21
+msgid "Sender ID"
+msgstr "Sender ID"
+
+#: Classes/class-pushcredentials.php:30
+msgid "This plugin uses Firebase Cloud Messaging as a messaging service."
+msgstr ""
+"Этот плагин использует облачные сообщения Firebase в качестве службы обмена "
+"сообщениями."
+
+#. translators: Go to url
+#: Classes/class-pushcredentials.php:33
+#, php-format
+msgid "Go to %s"
+msgstr "Перейти на %s"
+
+#: Classes/class-pushcredentials.php:34
+msgid "Click \"create new project\""
+msgstr "Нажмите \"create new project\""
+
+#: Classes/class-pushcredentials.php:35
+msgid "Follow the instructions to create your project"
+msgstr "Следуйте инструкции по созданию нового проекта"
+
+#: Classes/class-pushcredentials.php:36
+msgid "Now navigate to Project setting page"
+msgstr "Теперь перейдите в Project setting"
+
+#: Classes/class-pushcredentials.php:37
+msgid "Navigate to Cloud Messaging Tab"
+msgstr "Перейдите во вкладку Cloud Messaging"
+
+#: Classes/class-pushcredentials.php:38
+msgid "There you will get two important key’s \"Server Key\" and \"Sender Id\""
+msgstr "Вы должны получить два важных ключа - \"Server Key\" и \"Sender Id\""
+
+#: Classes/class-pushcredentials.php:42
+msgid "Firebase credentials"
+msgstr "Firebase credentials"
+
+#: Classes/class-pushcredentials.php:59
+msgid "remove credentials"
+msgstr "удалить учетные данные"
+
+#: Classes/class-pushcredentials.php:102
+msgid "Access denied."
+msgstr "В доступе отказано."
+
+#: Classes/class-pushcredentials.php:126
+msgid "Server Key or Sender ID could not be verified."
+msgstr "Server Key или Sender ID не были верифицированы."
+
+#: Classes/class-pushpost.php:29
+msgid "PWA Push"
+msgstr "PWA Push"
+
+#: Classes/class-pushpost.php:42
+msgid "This function opens the push notification modal for this post."
+msgstr "Эта функция открывает push-уведомление для этого поста."
+
+#: Classes/class-pushpost.php:47
+msgid "Push notification has already been sent. Do you want to send it again?"
+msgstr "Push-уведомление уже отправлено. Вы хотите отправить его снова?"
+
+#: Classes/class-pushpost.php:48
+msgid "Are you sure you want to send a new push notification?"
+msgstr "Вы уверены, что хотите отправить новое push-уведомление?"
+
+#: Classes/class-pushpost.php:48
+msgid "Send again"
+msgstr "Отправить снова"
+
+#: Classes/class-pushpost.php:91
+msgid ""
+"This will add a meta box to the post edit screen, where you can easily send "
+"a push notification for this post."
+msgstr ""
+"Это добавит метабокс на экран редактирования поста, где вы можете легко "
+"отправить push-уведомление для этого поста."
+
+#. translators: `{post_title}` will be replaced with the post title.
+#: Classes/class-pushpost.php:93
+#, php-format
+msgid "%s will be replaced with the post title."
+msgstr "%s будет заменено название поста."
+
+#: Classes/class-pushpost.php:94
+msgid "Push Post"
+msgstr "Автоматическое push-уведомление новой публикации"
+
+#. translators: "PushPost" for Post
+#: Classes/class-pushpost.php:106
+#, php-format
+msgid "Push Post for \"%s\""
+msgstr "Push-уведомление для \"%s\""
+
+#. translators: Post: Title
+#: Classes/class-pushpost.php:110
+#, php-format
+msgid "%s: Title"
+msgstr "%s: Заголовок"
+
+#. translators: Post: Body
+#: Classes/class-pushpost.php:115
+#, php-format
+msgid "%s: Body"
+msgstr "%s: Содержимое"
+
+#. translators: New Post-Type published
+#: Classes/class-pushpost.php:117
+#, php-format
+msgid "New %s published!"
+msgstr "Новое %s опубликовано!"
+
+#: Classes/class-serviceworker.php:47
+msgid ""
+"Your site has to be served over https to use progressive web app features."
+msgstr ""
+"Ваш сайт должен работать по защищённому протоколу HTTPS, чтобы поддерживать "
+"все функции PWA."
+
+#: Classes/class-tracking.php:14
+msgid "Start URL tracking"
+msgstr "Стартовая ссылка"
+
+#. translators: %s = tracking
+#: Classes/class-tracking.php:16
+#, php-format
+msgid "%s will be added to the start URL"
+msgstr "%s будет заменено название поста"
+
+#: Classes/class-tracking.php:22
+msgid "Push URL tracking"
+msgstr "Push URL tracking"
+
+#. translators: %s = tracking
+#: Classes/class-tracking.php:24
+#, php-format
+msgid "%s will be added to the push notification redirect URL"
+msgstr "%s будут добавлены в URL-адрес перенаправления push-уведомлений"
+
+#: Classes/class-tracking.php:60
+msgid "Campaign Source"
+msgstr "Источник кампании"
+
+#: Classes/class-tracking.php:61
+msgid "The referrer: (e.g. google, newsletter)"
+msgstr "Реферер: (например, google, рассылка новостей)"
+
+#: Classes/class-tracking.php:63
+msgid "Campaign Medium"
+msgstr "Средство проведения Кампании"
+
+#: Classes/class-tracking.php:64
+msgid "Marketing medium: (e.g. cpc, banner, email)"
+msgstr "Маркетинговая среда: (например, cpc, баннер, электронная почта)"
+
+#: Classes/class-tracking.php:66
+msgid "Campaign Name"
+msgstr "Название кампании"
+
+#: Classes/class-tracking.php:67
+msgid "Product, promo code, or slogan (e.g. spring_sale)"
+msgstr "Продукт, промо-код или слоган (например, spring_sale)"
+
+#: Classes/class-tracking.php:69
+msgid "Campaign Term"
+msgstr "Срок проведения кампании"
+
+#: Classes/class-tracking.php:70
+msgid "Campaign Content"
+msgstr "Оффлайн контент"
+
+#: Classes/class-tracking.php:71
+msgid "Use to differentiate ads"
+msgstr "Используйте для дифференциации рекламы"
+
+#: inc/funcs.php:64
+msgid "Add to Homescreen"
+msgstr "Добавить на рабочий стол"
+
+#: inc/funcs.php:72
+msgid "Push Notifications"
+msgstr "Push-уведомления"
+
+#. translators: Dependency warning
+#: progressive-wordpress.php:19
+#, php-format
+msgid ""
+"“%1$s” requires PHP %2$s (or newer) and WordPress %3$s (or newer) to "
+"function properly. Your site is using PHP %4$s and WordPress %5$s. Please "
+"upgrade. The plugin has been automatically deactivated."
+msgstr ""
+"“%1$s” требуется PHP версии %2$s (или новее) и WordPress  %3$s (или новее) "
+"для полной работоспособности. Ваш сайт работает на PHP %4$s и WordPress "
+"%5$s. Пожалуйста обновитесь. Плагин был автоматически отключен."
+
+#. Plugin Name of the plugin/theme
+msgid "Progressive WordPress (PWA)"
+msgstr "Progressive WordPress (PWA)"
+
+#. Plugin URI of the plugin/theme
+msgid "https://github.com/SayHelloGmbH/progressive-wordpress"
+msgstr "https://github.com/nico-martin/progressive-wordpress"
+
+#. Description of the plugin/theme
+msgid ""
+"Turn your website into a Progressive Web App and make it installable, "
+"offline ready and send push notifications."
+msgstr ""
+"Сделайте из вашего сайта прогрессивное web-приложение (PWA), это позволит: "
+"устанавливать ваш сайт как обычное приложение, работать оффлайн и отправлять "
+"push-уведомления."
+
+#. Author of the plugin/theme
+msgid "Nico Martin"
+msgstr "Нико Мартин"
+
+#. Author URI of the plugin/theme
+msgid "https://nicomartin.ch"
+msgstr "https://nicomartin.ch"
+
+#~ msgid ""
+#~ "You are able to create a web-app-manifest, which makes your website "
+#~ "installable."
+#~ msgstr ""
+#~ "Вы можете создать манифест веб-приложения, который делает ваш веб-сайт "
+#~ "доступным для установки."
+
+#~ msgid "buy me a beer"
+#~ msgstr "купи мне пивка"
+
+#~ msgid "Installable"
+#~ msgstr "Устанавливаемый"
+
+#~ msgid "Enable installation"
+#~ msgstr "Включить установливаемость"
+
+#~ msgid "Manifest.json values"
+#~ msgstr "Manifest.json values"
+
+#~ msgid "hex value"
+#~ msgstr "шестнадцатеричное значение"
+
+#~ msgid ""
+#~ "There was a problem generating your manifest file. Please check your "
+#~ "permissions for %s"
+#~ msgstr ""
+#~ "Проблемы с созданием файла манифеста. Пожалуйста, проверить ваши права "
+#~ "доступа для %s"
+
+#~ msgid "Web App Manifest regenerated"
+#~ msgstr "Манифест пересоздан"
+
+#~ msgid "Latest Push Log"
+#~ msgstr "Последний лог push-уведомлений"
+
+#~ msgid ""
+#~ "Your site needs to be served via HTTPS to use Progressive Web App "
+#~ "functionality"
+#~ msgstr ""
+#~ "Ваш сайт должен работать по защищённому протоколу HTTPS, чтобы "
+#~ "поддерживать все функции PWA"
+
+#~ msgid "Registration failed"
+#~ msgstr "Не удалось зарегистрировать"
+
+#~ msgid ""
+#~ "There was a problem generating your serviceworker file. Please check your "
+#~ "permissions for %s"
+#~ msgstr ""
+#~ "Проблемы с созданием файла serviceworker'a. Пожалуйста, проверить ваши "
+#~ "права доступа для %s"
+
+#~ msgid "ServiceWorker regenerated"
+#~ msgstr "ServiceWorker пересоздан"
+
+#~ msgid "Status"
+#~ msgstr "Статус"
+
+#~ msgid "Unregister all other serviceworkers"
+#~ msgstr "Отключить все остальные serviceWorker'ы"
+
+#~ msgid "Attention!"
+#~ msgstr "Внимание!"
+
+#~ msgid "The Debug Log contains information that should not be public."
+#~ msgstr ""
+#~ "Отладочный лог содержит информацию, которая не должна быть опубликована."
+
+#~ msgid "Debug Log"
+#~ msgstr "Отладочный лог"
+
+#~ msgid "Manifest"
+#~ msgstr "Манифест"
+
+#~ msgid "Manifest generated successfully."
+#~ msgstr "Манифест успешно создан."
+
+#~ msgid "Manifest not generated."
+#~ msgstr "Манифест не создан."
+
+#~ msgid "ServiceWorker"
+#~ msgstr "ServiceWorker"
+
+#~ msgid "ServiceWorker generated successfully."
+#~ msgstr "ServiceWorker успешно создан."
+
+#~ msgid "ServiceWorker not generated."
+#~ msgstr "ServiceWorker не зарегистрирован."
+
+#~ msgid "Root Folder"
+#~ msgstr "Корневая папка"
+
+#~ msgid "Root Folder is writable."
+#~ msgstr "Корневая папка доступна для записи."
+
+#~ msgid "Root Folder is not writable."
+#~ msgstr "Корневая папка недоступна для записи."
+
+#~ msgid "HTTPS"
+#~ msgstr "HTTPS"
+
+#~ msgid "Your site is serverd over HTTPS."
+#~ msgstr "Ваш сайт поддерживает HTTPS."
+
+#~ msgid "Your site has to be served over HTTPS."
+#~ msgstr "Ваш сайт должен работать по защищённому протоколу HTTPS."
