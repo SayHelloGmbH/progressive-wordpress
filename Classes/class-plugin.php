@@ -88,7 +88,7 @@ class Plugin {
 	 * Load translation files from the indicated directory.
 	 */
 	public function load_plugin_textdomain() {
-		load_plugin_textdomain( 'pwp', false, dirname( plugin_basename( pwp_get_instance()->file ) ) . '/languages' );
+		load_plugin_textdomain( 'progressive-wp', false, dirname( plugin_basename( pwp_get_instance()->file ) ) . '/languages' );
 	}
 
 	/**
