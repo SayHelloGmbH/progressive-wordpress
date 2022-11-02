@@ -16,7 +16,7 @@
         "babel-preset-env": "^1.7.0",
         "babel-register": "^6.26.0",
         "fs": "0.0.1-security",
-        "gulp": "^3.9.1",
+        "gulp": "^4.0.2",
         "gulp-autoprefixer": "^6.0.0",
         "gulp-concat": "^2.6.1",
         "gulp-debug": "^4.0.0",
